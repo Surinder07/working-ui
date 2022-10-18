@@ -9,7 +9,7 @@ const App = () => (
         <Navbar />
       </div>
     </div>
-
+    <hr className="sm:hidden bg-black" />
 
     <div className={`bg-primary ${styles.flexStart}`}>
       <div className={`${styles.boxWidth}`}>
