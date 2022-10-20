@@ -164,7 +164,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div class=" text-center sm:text-left mt-[5rem]">
+          <div class=" text-center sm:text-left mt-[5rem] mb-[2rem]">
             <p class="text-lg font-medium text-gray-900">Connect Us</p>
 
             <div className="flex flex-row items-center justify-between footer-sm">
@@ -261,7 +261,7 @@ const Footer = () => {
                 <img
                   src={logo}
                   alt="hoobank"
-                  className="w-[173px] h-[66px] sm:flex hidden "
+                  className="w-[173px] h-[66px] sm:flex hidden"
                 />
               </div>
             </div>

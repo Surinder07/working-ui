@@ -16,10 +16,10 @@ const Hero = () => {
           </p>
         </div>
 
-        <h3 class="text-3xl font-bold dark:text-white">
+        <h3 class="text-3xl font-bold ">
           Designed to inspire people and business to grow and thrive together
         </h3>
-        <div className="bg-[#0091D0] mt-6 flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[8rem] lg:py-[4rem]">
+        <div className="bg-[#0091D0] mt-6 flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[8rem] lg:py-[4rem] searchcontainer">
           <div className="flex flex-row gap-4 justify-center align-center">
             <div>
               <input

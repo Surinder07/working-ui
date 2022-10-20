@@ -160,6 +160,9 @@
   background-position: left;
 }
 
+/* .loginbutton{
+  margin-top: 5px;
+} */
 
 
 @media only screen and (max-width:767px){
@@ -170,5 +173,23 @@
   }
   .footer-sm{
   flex-direction: column;
+  }
+}
+
+@media only screen and (max-width:280px){
+  .businesscontainer{
+    top: 444px;
+    padding-left: 59px;
+    padding-right: 59px;
+
+  }
+  .cardsmall{
+    height: 330px;
+    width: 140px;
+  }
+
+  .searchcontainer{
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }

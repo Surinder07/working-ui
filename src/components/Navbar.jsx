@@ -33,7 +33,7 @@ const Navbar = () => {
       <div className="sm:flex hidden justify-end items-center flex-1 gap-6">
         <button
           type="button"
-          className="py-2.5 px-5 mr-2 mb-2 text-[14px] font-medium text-[#0091D0] focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          className="py-2.5 px-5 mr-2 text-[14px] font-medium text-[#0091D0] focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200  "
         >
           Log in
         </button>
@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
 
         <img src={logo} alt="hoobank" className="w-[124px] h-[42px]" />
-        <a href="#" className="text-[#0091D0] bg-white border-none">
+        <a href="#" className="text-[#0091D0] bg-white border-none loginbutton">
           Log in
         </a>
       </div>
