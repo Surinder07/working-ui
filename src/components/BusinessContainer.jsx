@@ -9,10 +9,11 @@ import {
   } from "../assets";
   import Card from "./Card";
 const BusinessContainer = () => {
+  const tablet = "820";
   return (
     <div>
-      <div className="relative sm:flex flex-col hidden">
-        <img src={business_2} />
+      <div className={`relative sm:flex flex-col hidden tablet:h-[600px]`}>
+        <img src={business_2} className='tablet:h-[600px]' />
         <h3 className="absolute font-bold text-black top-[70px] left-1/2 -translate-x-1/2">
           WE ARE THE WORLDS FIRST PLATFORM
         </h3>
@@ -20,7 +21,7 @@ const BusinessContainer = () => {
           Manage your business and kind workforce full time/hourly anytime
           anywhere
         </h2>
-        <div className="flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="tablet:mt-[22px] flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Card icon={icon_1} text="Manage Your Business" />
           <Card icon={icon_2} text="Post A Full Time Opportunity" />
           <Card icon={icon_3} text="Post A Part Time Opportunity" />

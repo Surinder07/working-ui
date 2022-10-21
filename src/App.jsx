@@ -1,7 +1,7 @@
 import styles from "./style";
-import { Navbar, Hero, BusinessContainer } from "./components";
-import TalentContainer from "./components/TalentContainer";
-import Footer from "./components/Footer";
+import { Navbar, Hero, BusinessContainer, TalentContainer, Footer } from "./components";
+// import TalentContainer from "./components/TalentContainer";
+// import Footer from "./components/Footer";
 const App = () => (
   <div className="bg-primary w-full overflow-hidden">
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>

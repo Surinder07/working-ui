@@ -19,7 +19,7 @@ module.exports = {
       },
     },
     screens: {
-      xxs:"280px",
+      tablet:{'min': '810px', 'max': '820px'},
       xs: "480px",
       ss: "620px",
       sm: "768px",
