@@ -4,10 +4,10 @@ import { SearchOutlined } from "@mui/icons-material";
 const Searchbar = ({ text, icon, color }) => {
   const [field, setField] = useState("");
   return (
-    <div class="flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <form method="GET">
         <div className={`relative text-gray-600 focus-within:text-gray-400`}>
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
             <button
               type="submit"
               className="p-1 focus:outline-none focus:shadow-outline"

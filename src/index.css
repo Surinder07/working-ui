@@ -140,20 +140,19 @@
 }
 .business-2 {
   background: url("./assets/business-2.png") no-repeat center;
-  
+
   height: 610px;
   background-size: cover;
 }
 
-
-.anotherdiv{
+.anotherdiv {
   background: url("./assets/business-2.png") no-repeat center;
   height: 610px;
   background-size: cover;
   background-position: right;
 }
 
-.anotherdivfortalent{
+.anotherdivfortalent {
   background: url("./assets/talent-2.png") no-repeat center;
   height: 610px;
   background-size: cover;
@@ -164,38 +163,36 @@
   margin-top: 5px;
 } */
 
-
-@media only screen and (max-width:767px){
-  .business-2{
+@media only screen and (max-width: 767px) {
+  .business-2 {
     background: url("./assets/business-1.png") no-repeat center;
 
     background-position: right;
   }
-  .footer-sm{
-  flex-direction: column;
+  .footer-sm {
+    flex-direction: column;
   }
 }
 
-@media only screen and (max-width:280px){
-  .businesscontainer{
+@media only screen and (max-width: 280px) {
+  .businesscontainer {
     top: 444px;
     padding-left: 59px;
     padding-right: 59px;
-
   }
-  .cardsmall{
+  .cardsmall {
     height: 330px;
     width: 140px;
   }
 
-  .searchcontainer{
+  .searchcontainer {
     padding-left: 12px;
     padding-right: 12px;
   }
 }
 
 @media screen and (max-width: 820px) and (min-width: 810px) {
-  .cardsmall{
+  .cardsmall {
     height: 330px;
     width: 40px;
   }

@@ -16,7 +16,7 @@ const Hero = () => {
           </p>
         </div>
 
-        <h3 class="text-3xl font-bold ">
+        <h3 className="text-3xl font-bold ">
           Designed to inspire people and business to grow and thrive together
         </h3>
         <div className="bg-[#0091D0] mt-6 flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[5rem] lg:py-[4rem] searchcontainer">
@@ -27,7 +27,7 @@ const Hero = () => {
                 name="option"
                 id="1"
                 className="peer hidden"
-                checked
+                // checked
               />
               <label
                 htmlFor="1"
@@ -37,7 +37,12 @@ const Hero = () => {
               </label>
             </div>
             <div>
-              <input type="radio" name="option" id="2" class="peer hidden" />
+              <input
+                type="radio"
+                name="option"
+                id="2"
+                className="peer hidden"
+              />
               <label
                 htmlFor="2"
                 className="block lg:w-[8rem] cursor-pointer select-none rounded-xl p-2 text-center bg-[#8AD2D1]   peer-checked:font-bold peer-checked:text-black"
@@ -46,7 +51,11 @@ const Hero = () => {
               </label>
             </div>
           </div>
-          <Searchbar text="Search..." color="gray-600" icon={<SearchOutlined />} />
+          <Searchbar
+            text="Search..."
+            color="gray-600"
+            icon={<SearchOutlined />}
+          />
         </div>
       </div>
 

@@ -41,8 +41,6 @@ const Navbar = () => {
         <h3>English</h3>
       </div>
 
-     
-
       <div className="sm:hidden flex flex-1 justify-between items-center">
         <img
           src={toggle ? close : menu}
@@ -76,7 +74,6 @@ const Navbar = () => {
           Log in
         </a>
       </div>
-      
     </nav>
   );
 };

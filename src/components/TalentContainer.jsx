@@ -14,7 +14,7 @@ const TalentContainer = () => {
   return (
     <div>
       <div className="relative sm:flex flex-col hidden tablet:h-[600px]">
-        <img src={talent_2} className='tablet:h-[600px]' />
+        <img src={talent_2} className="tablet:h-[600px]" />
         <h3 className="absolute font-bold text-white top-[70px] left-1/2 -translate-x-1/2">
           FOR TALENT COMMUNITY
         </h3>

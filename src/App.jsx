@@ -1,5 +1,11 @@
 import styles from "./style";
-import { Navbar, Hero, BusinessContainer, TalentContainer, Footer } from "./components";
+import {
+  Navbar,
+  Hero,
+  BusinessContainer,
+  TalentContainer,
+  Footer,
+} from "./components";
 // import TalentContainer from "./components/TalentContainer";
 // import Footer from "./components/Footer";
 const App = () => (
@@ -34,7 +40,6 @@ const App = () => (
         <Footer />
       </div>
     </div>
-   
   </div>
 );
 

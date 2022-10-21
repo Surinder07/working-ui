@@ -1,19 +1,19 @@
 import React from "react";
 import {
-    business_1,
-    business_2,
-    icon_1,
-    icon_2,
-    icon_3,
-    icon_4,
-  } from "../assets";
-  import Card from "./Card";
+  business_1,
+  business_2,
+  icon_1,
+  icon_2,
+  icon_3,
+  icon_4,
+} from "../assets";
+import Card from "./Card";
 const BusinessContainer = () => {
   const tablet = "820";
   return (
     <div>
       <div className={`relative sm:flex flex-col hidden tablet:h-[600px]`}>
-        <img src={business_2} className='tablet:h-[600px]' />
+        <img src={business_2} className="tablet:h-[600px]" />
         <h3 className="absolute font-bold text-black top-[70px] left-1/2 -translate-x-1/2">
           WE ARE THE WORLDS FIRST PLATFORM
         </h3>

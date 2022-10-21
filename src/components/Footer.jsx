@@ -17,17 +17,17 @@ import Searchbar from "./Searchbar";
 const Footer = () => {
   return (
     <div>
-      <footer aria-label="Site Footer" class="bg-white">
-        <div class="mx-auto max-w-6xl px-10 sm:px-6 lg:px-8">
-          <div class="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="text-center sm:text-left">
-              <p class="text-lg font-medium text-gray-900">Company</p>
+      <footer aria-label="Site Footer" className="bg-white">
+        <div className="mx-auto max-w-6xl px-10 sm:px-6 lg:px-8">
+          <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium text-gray-900">Company</p>
 
-              <nav aria-label="Footer About Nav" class="mt-8">
-                <ul class="space-y-4 text-sm">
+              <nav aria-label="Footer About Nav" className="mt-8">
+                <ul className="space-y-4 text-sm">
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       About Us
@@ -36,7 +36,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       Investor Relations
@@ -45,7 +45,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       Career
@@ -54,7 +54,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       Legal
@@ -64,14 +64,14 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div class="text-center sm:text-left">
-              <p class="text-lg font-medium text-gray-900">Resources</p>
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium text-gray-900">Resources</p>
 
-              <nav aria-label="Footer Services Nav" class="mt-8">
-                <ul class="space-y-4 text-sm">
+              <nav aria-label="Footer Services Nav" className="mt-8">
+                <ul className="space-y-4 text-sm">
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       Training Center
@@ -80,7 +80,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       Submit A Ticket
@@ -89,7 +89,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       How it Works
@@ -98,7 +98,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      class="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75"
                       href="/"
                     >
                       API Documentation
@@ -108,8 +108,8 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div class="text-center sm:text-left ">
-              <p class="text-lg font-medium text-gray-900">Contact Us</p>
+            <div className="text-center sm:text-left ">
+              <p className="text-lg font-medium text-gray-900">Contact Us</p>
 
               <nav aria-label="Footer Resources Nav">
                 <a href="#">waaw.management@waaw.co</a>
@@ -133,27 +133,27 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div class="text-center sm:text-left">
-              <p class="text-lg font-medium text-gray-900">
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium text-gray-900">
                 Subscribe us to know more
               </p>
 
-              <nav aria-label="Footer Helpful Nav" class="mt-8">
-                <div class="relative max-w-lg">
-                  <label class="sr-only" for="email">
+              <nav aria-label="Footer Helpful Nav" className="mt-8">
+                <div className="relative max-w-lg">
+                  <label className="sr-only" htmlFor="email">
                     {" "}
                     Email{" "}
                   </label>
 
                   <input
-                    class="w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium"
+                    className="w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium"
                     id="email"
                     type="email"
                     placeholder="Your Email"
                   />
 
                   <button
-                    class="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+                    className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
                     type="button"
                   >
                     {<ArrowForward />}
@@ -164,8 +164,8 @@ const Footer = () => {
             </div>
           </div>
 
-          <div class=" text-center sm:text-left mt-[5rem] mb-[2rem]">
-            <p class="text-lg font-medium text-gray-900">Connect Us</p>
+          <div className=" text-center sm:text-left mt-[5rem] mb-[2rem]">
+            <p className="text-lg font-medium text-gray-900">Connect Us</p>
 
             <div className="flex flex-row items-center justify-between footer-sm">
               <div className="links flex">
@@ -175,9 +175,9 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    class="text-[#8AD2D1] transition hover:text-teal-700/75"
+                    className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
-                    <span class="sr-only">Facebook</span>
+                    <span className="sr-only">Facebook</span>
                     <img src={facebook} alt="facebook" className="h-[35px]" />
                   </a>
                 </div>
@@ -186,9 +186,9 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    class="text-[#8AD2D1] transition hover:text-teal-700/75"
+                    className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
-                    <span class="sr-only">Instagram</span>
+                    <span className="sr-only">Instagram</span>
                     <img src={instagram} alt="instagram" className="h-[35px]" />
                   </a>
                 </div>
@@ -197,9 +197,9 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    class="text-[#8AD2D1] transition hover:text-teal-700/75"
+                    className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
-                    <span class="sr-only">Twitter</span>
+                    <span className="sr-only">Twitter</span>
                     <img src={twitter} alt="twitter" className="h-[35px]" />
                   </a>
                 </div>
@@ -208,9 +208,9 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    class="text-[#8AD2D1] transition hover:text-teal-700/75"
+                    className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
-                    <span class="sr-only">LinkedIn</span>
+                    <span className="sr-only">LinkedIn</span>
                     <img src={linkedin} alt="linkedin" className="h-[35px]" />
                   </a>
                 </div>
@@ -219,9 +219,9 @@ const Footer = () => {
                     href="/"
                     rel="noreferrer"
                     target="_blank"
-                    class="text-[#8AD2D1] transition hover:text-teal-700/75"
+                    className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
-                    <span class="sr-only">Youtube</span>
+                    <span className="sr-only">Youtube</span>
                     <img src={youtube} alt="youtube" className="h-[35px]" />
                   </a>
                 </div>
