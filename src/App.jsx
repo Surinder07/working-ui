@@ -15,7 +15,7 @@ const App = () => (
         <Navbar />
       </div>
     </div>
-    <hr className="sm:hidden bg-black" />
+    <hr className="mt-[-10px] bg-black" />
 
     <div className={`bg-primary ${styles.flexStart}`}>
       <div className={`${styles.boxWidth}`}>

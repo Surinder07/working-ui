@@ -3,7 +3,8 @@ import { useState } from "react";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
 import Button from "./Button";
-
+import {MenuIcon} from '@mui/icons-material/Menu';
+import {CloseIcon} from '@mui/icons-material/Close';
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
