@@ -21,7 +21,7 @@ const BusinessContainer = () => {
           Manage your business and kind workforce full time/hourly anytime
           anywhere
         </h2>
-        <div className="tablet:mt-[22px] flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="tablet:w-[710px] tablet:mt-[22px] flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Card icon={icon_1} text="Manage Your Business" />
           <Card icon={icon_2} text="Post A Full Time Opportunity" />
           <Card icon={icon_3} text="Post A Part Time Opportunity" />
@@ -38,7 +38,7 @@ const BusinessContainer = () => {
           Manage your business and kind workforce full time/hourly anytime
           anywhere
         </h2>
-        <div className="businesscontainer w-[390px] h-[300px] grid grid-cols-2 gap-3 absolute text-white top-[400px] mt-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className=" businesscontainer w-[390px] h-[300px] grid grid-cols-2 gap-3 absolute text-white top-[400px] mt-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Card icon={icon_1} text="Manage Your Business" />
           <Card icon={icon_2} text="Post A Full Time Opportunity" />
           <Card icon={icon_3} text="Post A Part Time Opportunity" />
