@@ -175,7 +175,7 @@
   }
 }
 
-@media only screen and (max-width: 280px) {
+@media only screen and (max-width: 320px) {
   .businesscontainer {
     top: 444px;
     padding-left: 59px;
@@ -185,10 +185,9 @@
     height: 330px;
     width: 140px;
   }
-
   .searchcontainer {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
 
@@ -198,3 +197,15 @@
     padding-right: 45px;
   }
 }
+
+@media screen and (max-width: 770px) and (min-width: 768px) {
+  .image-containers {
+    height: 569px;
+  }
+  .businessContainerMain{
+    width: 756px;
+    margin-top: 10px;
+  }
+}
+
+
