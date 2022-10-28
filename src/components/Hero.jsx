@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className={`flex md:flex-row flex-col ${styles.paddingY}`}
+      className={`flex md:flex-row flex-col ${styles.paddingY} lg:mt-6`}
     >
       <div className={`flex-1 flex items-start flex-col xl:px-0 sm:px-16 px-6`}>
         {/* <div className="flex flex-row items-center py-[6px] mb-2">
@@ -31,7 +31,7 @@ const Hero = () => {
               />
               <label
                 htmlFor="1"
-                className="block lg:w-[9rem]  cursor-pointer select-none rounded-[25px] p-2 text-center bg-[#8AD2D1]   peer-checked:font-bold peer-checked:text-orange-700/75"
+                className="block lg:w-[9rem]  cursor-pointer select-none rounded-[25px] p-2 text-center bg-[#8AD2D1]  peer-checked:text-white peer-checked:bg-black"
               >
                 Find Work
               </label>
@@ -45,7 +45,7 @@ const Hero = () => {
               />
               <label
                 htmlFor="2"
-                className="block lg:w-[9rem] cursor-pointer select-none rounded-[25px] p-2 text-center bg-[#8AD2D1]   peer-checked:font-bold peer-checked:text-orange-700/75"
+                className="block lg:w-[9rem] cursor-pointer select-none rounded-[25px] p-2 text-center bg-[#8AD2D1]  peer-checked:text-white peer-checked:bg-black"
               >
                 Find Talent
               </label>

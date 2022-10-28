@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { close, logo, menu } from "../assets";
+import {  logo, menu, Close } from "../assets";
+
 import { navLinks } from "../constants";
 import Button from "./Button";
 import {MenuIcon} from '@mui/icons-material/Menu';
@@ -44,7 +45,7 @@ const Navbar = () => {
 
       <div className="sm:hidden flex flex-1 justify-between items-center">
         <img
-          src={toggle ? close : menu}
+          src={toggle ? Close : menu}
           alt="menu"
           className="w-[28px] h-[28px] object-contain bg-black"
           onClick={() => setToggle(!toggle)}

@@ -19,9 +19,11 @@ const Footer = () => {
     <div>
       <footer aria-label="Site Footer" className="bg-white">
         <div className="mx-auto max-w-6xl px-10 sm:px-6 lg:px-8">
-          <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900 font-poppins">Company</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">
+                Company
+              </p>
 
               <nav aria-label="Footer About Nav" className="mt-8">
                 <ul className="space-y-4 text-sm">
@@ -65,7 +67,9 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900 font-poppins">Resources</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">
+                Resources
+              </p>
 
               <nav aria-label="Footer Services Nav" className="mt-8">
                 <ul className="space-y-4 text-sm">
@@ -109,11 +113,17 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left ">
-              <p className="text-lg font-medium text-gray-900 font-poppins">Contact Us</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">
+                Contact Us
+              </p>
 
               <nav aria-label="Footer Resources Nav">
-                <a href="#" className="font-poppins">waaw.management@waaw.ca</a>
-                <h3 className="font-bold text-black mt-[38px] font-poppins">Mobile App</h3>
+                <a href="#" className="font-poppins">
+                  waaw.management@waaw.ca
+                </a>
+                <h3 className="font-bold text-black mt-[38px] font-poppins">
+                  Mobile App
+                </h3>
                 <div className="flex flex-row gap-4">
                   <a href="#">
                     <img
@@ -146,27 +156,32 @@ const Footer = () => {
                   </label>
 
                   <input
-                    className="w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium"
+                    className="w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium h-[47px]"
                     id="email"
                     type="email"
                     placeholder="Your Email"
                   />
 
                   <button
-                    className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700"
+                    className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
                     type="button"
                   >
                     {<ArrowForward />}
                   </button>
                 </div>
-                <h3 className="font-poppins"> Join our team and continue your hassle journey</h3>
+                <h3 className="font-poppins mt-4">
+                  {" "}
+                  Join our team and continue your hassle journey
+                </h3>
               </nav>
             </div>
           </div>
 
-          <div className=" text-center sm:text-left mt-[5rem] mb-[2rem]">
-          <hr className=" bg-black" />
-            <p className="text-lg font-medium text-gray-900 font-poppins mt-8">Connect Us</p>
+          <div className="mt-12 text-center sm:text-left mb-[2rem]">
+            <hr className=" bg-black" />
+            <p className="text-lg font-medium text-gray-900 font-poppins mt-8">
+              Connect Us
+            </p>
 
             <div className="flex flex-row items-center justify-between footer-sm">
               <div className="links flex">

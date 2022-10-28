@@ -24,13 +24,13 @@ const App = () => (
       </div>
     </div>
 
-    <div className={`bg-primary ${styles.flexStart}`}>
+    <div className={`bg-primary ${styles.flexStart} lg:h-[100vh]`}>
       <div className={`${styles.boxWidth}`}>
         <BusinessContainer />
       </div>
     </div>
 
-    <div className={`bg-primary ${styles.flexStart}`}>
+    <div className={`bg-primary ${styles.flexStart} lg:h-[100vh]`}>
       <div className={`${styles.boxWidth}`}>
         <TalentContainer />
       </div>
