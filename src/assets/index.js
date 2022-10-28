@@ -25,6 +25,10 @@ import linkedin from "./linkedin.png";
 import youtube from "./youtube.png";
 import Globe from "./Globe.png";
 import Location from "./Location.png";
+import Close from "./close.png";
+import icon_5 from "./5icon.png";
+import icon_6 from "./6icon.png";
+
 export {
   card,
   logo,
@@ -49,5 +53,8 @@ export {
   talent_2,
   youtube,
   Globe,
-  Location
+  Location,
+  Close,
+  icon_5,
+  icon_6
 };
