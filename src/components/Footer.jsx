@@ -21,13 +21,13 @@ const Footer = () => {
         <div className="mx-auto max-w-6xl px-10 sm:px-6 lg:px-8">
           <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900">Company</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">Company</p>
 
               <nav aria-label="Footer About Nav" className="mt-8">
                 <ul className="space-y-4 text-sm">
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       About Us
@@ -36,7 +36,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       Investor Relations
@@ -45,7 +45,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       Career
@@ -54,7 +54,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       Legal
@@ -65,13 +65,13 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900">Resources</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">Resources</p>
 
               <nav aria-label="Footer Services Nav" className="mt-8">
                 <ul className="space-y-4 text-sm">
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       Training Center
@@ -80,7 +80,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       Submit A Ticket
@@ -89,7 +89,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       How it Works
@@ -98,7 +98,7 @@ const Footer = () => {
 
                   <li>
                     <a
-                      className="text-gray-700 transition hover:text-gray-700/75"
+                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
                     >
                       API Documentation
@@ -109,11 +109,11 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left ">
-              <p className="text-lg font-medium text-gray-900">Contact Us</p>
+              <p className="text-lg font-medium text-gray-900 font-poppins">Contact Us</p>
 
               <nav aria-label="Footer Resources Nav">
-                <a href="#">waaw.management@waaw.co</a>
-                <h3 className="font-bold text-black mt-[38px]">Mobile App</h3>
+                <a href="#" className="font-poppins">waaw.management@waaw.ca</a>
+                <h3 className="font-bold text-black mt-[38px] font-poppins">Mobile App</h3>
                 <div className="flex flex-row gap-4">
                   <a href="#">
                     <img
@@ -134,11 +134,11 @@ const Footer = () => {
             </div>
 
             <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900">
+              <p className="text-lg font-medium text-gray-900 font-poppins">
                 Subscribe us to know more
               </p>
 
-              <nav aria-label="Footer Helpful Nav" className="mt-8">
+              <nav aria-label="Footer Helpful Nav" className="mt-8 w-[350px]">
                 <div className="relative max-w-lg">
                   <label className="sr-only" htmlFor="email">
                     {" "}
@@ -159,13 +159,14 @@ const Footer = () => {
                     {<ArrowForward />}
                   </button>
                 </div>
-                <h3> Join our team and continue your hassle journey</h3>
+                <h3 className="font-poppins"> Join our team and continue your hassle journey</h3>
               </nav>
             </div>
           </div>
 
           <div className=" text-center sm:text-left mt-[5rem] mb-[2rem]">
-            <p className="text-lg font-medium text-gray-900">Connect Us</p>
+          <hr className=" bg-black" />
+            <p className="text-lg font-medium text-gray-900 font-poppins mt-8">Connect Us</p>
 
             <div className="flex flex-row items-center justify-between footer-sm">
               <div className="links flex">
