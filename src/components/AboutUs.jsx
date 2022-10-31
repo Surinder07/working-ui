@@ -5,12 +5,12 @@ const AboutUs = () => {
   return (
     <div>
       <section id="home" className={`flex flex-col ${styles.paddingY}`}>
-        <h1 className="text-center text-3xl font-bold text-black font-[Myriad-Pro]">
+        <h1 className="text-center text-3xl font-bold text-black ">
           Why WAAW?
         </h1>
 
         <div className="mt-4 max-w-[700px]">
-          <p className="text-[#686868] text-[16px] font-bold">
+          <p className="text-[#686868] text-[16px] font-bold text-justify">
             At WAAW, our purpose is to inspire people and business to grow and
             thrive together. We firmly believe in our mission to create economic
             opportunities, so people have better lives. As a result, we've
@@ -19,7 +19,7 @@ const AboutUs = () => {
             accomplish incredible things.
           </p>
 
-          <p className="mt-8 text-[#686868] text-[16px] font-bold">
+          <p className="mt-8 text-[#686868] text-[16px] font-bold text-justify">
             Everything about the way we work at is fundamentally transforming
             around us, and the line between work and life is continually
             redrawn. Sometimes daily or hourly it seems. To survive in this
@@ -44,7 +44,7 @@ const AboutUs = () => {
         </h1>
 
         <div className="mt-4 ">
-          <p className="max-w-[700px] text-[#686868] text-[16px] font-bold">
+          <p className="max-w-[700px] text-[#686868] text-[16px] font-bold text-justify">
             WAAW Global inc is a global software company that is on a mission to
             help both business and talent community alike. Led by a team
             committed to helping businesses find more flexibility and connecting
