@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <div>
       <section id="home" className={`flex flex-col ${styles.paddingY}`}>
-        <h1 className="text-center text-3xl font-bold text-black font-[Myriad-Pro]">
+        <h1 className="text-center text-3xl font-bold text-black ">
           Why WAAW?
         </h1>
         <div className="mt-4 max-w-[700px]">
@@ -29,6 +29,30 @@ const AboutUs = () => {
             talent available locally / globally who need to work in unison can
             truly help your business. This makes the local community you are
             serving happy and your business great.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="home"
+        className={`bg-[#F4F2F2] flex flex-col ${styles.paddingY}`}
+      >
+        <h1 className="text-center text-3xl font-bold text-black font-[Myriad-Pro]">
+          About Us
+        </h1>
+
+        <div className="mt-4 ">
+          <p className="max-w-[700px] text-[#686868] text-[16px] font-bold">
+            WAAW Global inc is a global software company that is on a mission to
+            help both business and talent community alike. Led by a team
+            committed to helping businesses find more flexibility and connecting
+            talent with more opportunities. We deliver on this mission through
+            our flogship cloud platform WAAW by Providing hourly workplaces with
+            an integrated scheduling, time tracking, team messaging and also
+            talent management capabilities all in a single solution. This
+            enhances the employee experience, drives better business outcomes
+            and creates economic opportunities for the talent community
+            worldwide. Our platform supports businesses of all sizes.
           </p>
         </div>
       </section>
