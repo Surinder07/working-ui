@@ -12,9 +12,9 @@ const Card = ({ icon, text }) => {
         href="#"
         className="inline-flex items-center text-[#0091D0] hover:underline mt-[40px] ml-[16px]"
       > */}
-      <p className="inline-flex items-center text-[#0091D0] mt-[40px] ml-[16px]">
+      <p className="inline-flex items-center text-black mt-[40px] ml-[16px]">
         Coming soon
-        <span>{<ArrowForward />}</span>
+        {/* <span>{<ArrowForward />}</span> */}
       </p>
       {/* </a> */}
     </div>

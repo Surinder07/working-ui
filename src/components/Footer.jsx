@@ -10,10 +10,18 @@ import {
   twitter,
   youtube,
   Globe,
-  Location,
+  // Location,
   logo,
 } from "../assets";
 import Searchbar from "./Searchbar";
+import FacebookIcon from "../assets/SVG/FacebookIcon.svg"
+import Instagram from "../assets/SVG/InstagramIcon.svg"
+import Youtube from "../assets/SVG/YoutubeIcon.svg"
+import Twitter from "../assets/SVG/TwitterIcon.svg"
+import LinkedIn from "../assets/SVG/LinkedInIcon.svg"
+import Global from "../assets/SVG/GlobeIcon.svg"
+import Location from "../assets/SVG/LocationIcon.svg"
+
 
 const Footer = () => {
   return (
@@ -205,7 +213,7 @@ const Footer = () => {
 
             <div className="flex flex-row items-center justify-between footer-sm">
               <div className="links flex">
-                <div>
+                <div className="mr-[18px]">
                   {" "}
                   <a
                     href="/"
@@ -214,10 +222,10 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">Facebook</span>
-                    <img src={facebook} alt="facebook" className="h-[35px]" />
+                    <img src={FacebookIcon} alt="facebook" className="h-[25px]" />
                   </a>
                 </div>
-                <div>
+                <div className="mr-[18px]">
                   <a
                     href="/"
                     rel="noreferrer"
@@ -225,10 +233,10 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">Instagram</span>
-                    <img src={instagram} alt="instagram" className="h-[35px]" />
+                    <img src={Instagram} alt="instagram" className="h-[25px]" />
                   </a>
                 </div>
-                <div>
+                <div className="mr-[18px]">
                   <a
                     href="/"
                     rel="noreferrer"
@@ -236,10 +244,10 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">Twitter</span>
-                    <img src={twitter} alt="twitter" className="h-[35px]" />
+                    <img src={Twitter} alt="twitter" className="h-[25px]" />
                   </a>
                 </div>
-                <div>
+                <div className="mr-[18px]">
                   <a
                     href="/"
                     rel="noreferrer"
@@ -247,10 +255,10 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">LinkedIn</span>
-                    <img src={linkedin} alt="linkedin" className="h-[35px]" />
+                    <img src={LinkedIn} alt="linkedin" className="h-[25px]" />
                   </a>
                 </div>
-                <div>
+                <div className="mr-[18px]">
                   <a
                     href="/"
                     rel="noreferrer"
@@ -258,19 +266,19 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">Youtube</span>
-                    <img src={youtube} alt="youtube" className="h-[35px]" />
+                    <img src={Youtube} alt="youtube" className="h-[25px]" />
                   </a>
                 </div>
               </div>
               <div className="links flex flex-1 ml-[90px]">
                 <a href="#">
                   <img
-                    src={Globe}
+                    src={Global}
                     alt="Globe"
                     style={{
                       height: 25,
                       marginRight: 15,
-                      backgroundColor: "black",
+                      // backgroundColor: "black",
                     }}
                   />
                 </a>
@@ -284,7 +292,7 @@ const Footer = () => {
                     style={{
                       height: 25,
                       marginRight: 15,
-                      backgroundColor: "black",
+                      // backgroundColor: "black",
                     }}
                   />
                 </a>

@@ -4,6 +4,7 @@ import { Searchbar } from "./";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchOutlined } from "@mui/icons-material";
 const Hero = () => {
+  
   return (
     <section
       id="home"
