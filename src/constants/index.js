@@ -1,12 +1,14 @@
 
 export const navLinks = [
   {
-    id: "Why WAAW",
+    id: 1,
     title: "Why WAAW",
+    link:"why-waaw"
   },
   {
-    id: "Pricing",
+    id: 2,
     title: "Pricing",
+    link:"pricing"
   },
 ];
 

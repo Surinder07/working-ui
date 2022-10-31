@@ -28,6 +28,7 @@ import Location from "./Location.png";
 import Close from "./close.png";
 import icon_5 from "./5icon.png";
 import icon_6 from "./6icon.png";
+import S1 from "./S1.png";
 
 export {
   card,
@@ -56,5 +57,6 @@ export {
   Location,
   Close,
   icon_5,
-  icon_6
+  icon_6,
+  S1
 };

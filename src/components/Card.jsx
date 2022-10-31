@@ -8,13 +8,15 @@ const Card = ({ icon, text }) => {
       <h5 className="mb-2 flex-1 text-2xl font-semibold tracking-tight text-gray-900  ml-[16px]">
         {text}
       </h5>
-      <a
+      {/* <a
         href="#"
         className="inline-flex items-center text-[#0091D0] hover:underline mt-[40px] ml-[16px]"
-      >
+      > */}
+      <p className="inline-flex items-center text-black mt-[40px] ml-[16px]">
         Coming soon
-        <span>{<ArrowForward />}</span>
-      </a>
+        {/* <span>{<ArrowForward />}</span> */}
+      </p>
+      {/* </a> */}
     </div>
   );
 };

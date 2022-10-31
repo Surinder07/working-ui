@@ -6,17 +6,19 @@ import { navLinks } from "../constants";
 import Button from "./Button";
 import {MenuIcon} from '@mui/icons-material/Menu';
 import {CloseIcon} from '@mui/icons-material/Close';
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar gap-6">
+      <Link to='/'>
       <img
         src={logo}
         alt="hoobank"
         className="w-[173px] h-[66px] sm:flex hidden "
-      />
+      /></Link>
 
       <ul className="list-none sm:flex hidden justify-end items-center ">
         {navLinks.map((nav, index) => (
@@ -27,7 +29,8 @@ const Navbar = () => {
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"} ml-12`}
             onClick={() => setActive(nav.title)}
           >
-            <a href={`#${nav.id}`}>{nav.title}</a>
+            {/* <a href={`#${nav.id}`}>{nav.title}</a> */}
+            <Link to={`${nav.link}`}>{nav.title}</Link>
           </li>
         ))}
       </ul>
