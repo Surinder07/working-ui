@@ -33,7 +33,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section
+      {/* <section
         id="home"
         className={`bg-[#F4F2F2] flex flex-col ${styles.paddingY}`}
       >
@@ -55,7 +55,7 @@ const AboutUs = () => {
             worldwide. Our platform supports businesses of all sizes.
           </p>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
