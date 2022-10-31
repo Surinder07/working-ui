@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../style";
 import AboutComponent from "../components/AboutUs";
+import WhyVector from "../assets/why-vector.png"
 const AboutUs = () => {
   return (
     <div>
@@ -11,29 +12,38 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-
-      {/* here should be background svg and a name of waaw */}
-      {/* <div className="bg-[#F4F2F2] h-[80vh] flex flex-col justify-center">
-        <h1 className=" mt-[100px] text-3xl font-bold text-black font-[Myriad-Pro]">
+      <div className={`relative sm:flex flex-col hidden tablet:h-[600px] `}>
+        <p className="mb-[-19px] font-bambino font-semibold text-[#F4F2F2] text-[410px] h-[471px] text-center">
+          WAAW
+        </p>
+        {/* <h3 className="absolute font-bold text-black top-[170px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
+          FOR BUSINESS COMMUNITY
+        </h3> */}
+        <img src={WhyVector} alt="why-vector" className="absolute bottom-0 w-[950px] font-bold text-black left-1/2 -translate-x-1/2 " />
+      </div>
+      <section
+        id="home"
+        className={`bg-[#F4F2F2] flex items-center flex-col ${styles.paddingY}`}
+      >
+        <h1 className=" text-3xl font-bold text-black font-[Myriad-Pro]">
           About Us
         </h1>
 
-        <div className="mt-4">
-          <p className="max-w-[700px] mt-8 text-[#686868] text-[16px] font-bold">
-            Everything about the way we work at is fundamentally transforming
-            around us, and the line between work and life is continually
-            redrawn. Sometimes daily or hourly it seems. To survive in this
-            ever-evolving world of work, you need a partner that can provide
-            businesses the right tools and guidance to keep employees productive
-            and connected as well as manage variable capacity efficiently.
-            However, to truly thrive in this environment you also need a partner
-            who has a deep understanding of not just your employees, but the
-            talent available locally / globally who need to work in unison can
-            truly help your business. This makes the local community you are
-            serving happy and your business great.
-          </p>
-        </div>
-      </div> */}
+        {/* <div className="mt-4"> */}
+        <p className="max-w-[700px] mt-4 text-[#686868] text-[16px] font-bold">
+          WAAW Global inc is a global software company that is on a mission to
+          help both business and talent community alike. Led by a team committed
+          to helping businesses find more flexibility and connecting talent with
+          more opportunities. We deliver on this mission through our flogship
+          cloud platform WAAW by Providing hourly workplaces with an integrated
+          scheduling, time tracking, team messaging and also talent management
+          capabilities all in a single solution. This enhances the employee
+          experience, drives better business outcomes and creates economic
+          opportunities for the talent community worldwide. Our platform
+          supports businesses of all sizes.
+        </p>
+        {/* </div> */}
+      </section>
     </div>
   );
 };
