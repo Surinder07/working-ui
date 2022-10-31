@@ -1,5 +1,6 @@
 import { ArrowForward } from "@mui/icons-material";
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   apple,
   facebook,
@@ -18,8 +19,8 @@ const Footer = () => {
   return (
     <div>
       <footer aria-label="Site Footer" className="bg-white">
-        <div className="mx-auto max-w-6xl px-10 sm:px-6 lg:px-8">
-          <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto max-w-7xl px-10 sm:px-6 lg:px-8">
+          <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:flex lg:flex-row lg:gap-[96px]">
             <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-gray-900 font-poppins">
                 Company
@@ -27,16 +28,14 @@ const Footer = () => {
 
               <nav aria-label="Footer About Nav" className="mt-8">
                 <ul className="space-y-4 text-sm">
-                  <li>
-                    <a
-                      className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
-                      href="/"
-                    >
-                      About Us
-                    </a>
-                  </li>
+                  <Link
+                    to="/why-waaw"
+                    className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
+                  >
+                    About Us
+                  </Link>
 
-                  <li>
+                  {/* <li>
                     <a
                       className="text-gray-700 transition hover:text-gray-700/75 font-poppins"
                       href="/"
@@ -61,12 +60,12 @@ const Footer = () => {
                     >
                       Legal
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </nav>
             </div>
 
-            <div className="text-center sm:text-left">
+            {/* <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-gray-900 font-poppins">
                 Resources
               </p>
@@ -110,6 +109,29 @@ const Footer = () => {
                   </li>
                 </ul>
               </nav>
+            </div> */}
+
+            <div className="text-center sm:text-left">
+              <p className="text-lg font-medium text-gray-900 font-poppins">
+                Mobile App
+              </p>
+
+              <div className="flex flex-row gap-4 mt-8">
+                  <a href="">
+                    <img
+                      src={apple}
+                      alt="google_play"
+                      className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
+                    />
+                  </a>
+                  <a href="">
+                    <img
+                      src={google}
+                      alt="google_play"
+                      className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
+                    />
+                  </a>
+                </div>
             </div>
 
             <div className="text-center sm:text-left ">
@@ -117,11 +139,9 @@ const Footer = () => {
                 Contact Us
               </p>
 
-              <nav aria-label="Footer Resources Nav">
-                <a href="#" className="font-poppins">
-                  waaw.management@waaw.ca
-                </a>
-                <h3 className="font-bold text-black mt-[38px] font-poppins">
+              <nav aria-label="Footer Resources Nav"  className="mt-8">
+                <a href="mailto:waaw.management@waaw.ca" className="text-gray-700 transition hover:text-gray-700/75">waaw.management@waaw.ca</a>
+                {/* <h3 className="font-bold text-black mt-[38px] font-poppins">
                   Mobile App
                 </h3>
                 <div className="flex flex-row gap-4">
@@ -139,7 +159,7 @@ const Footer = () => {
                       className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
                     />
                   </a>
-                </div>
+                </div> */}
               </nav>
             </div>
 
@@ -171,7 +191,7 @@ const Footer = () => {
                 </div>
                 <h3 className="font-poppins mt-4">
                   {" "}
-                  Join our team and continue your hassle journey
+                  Join our team and continue your hassle free journey
                 </h3>
               </nav>
             </div>
@@ -242,19 +262,19 @@ const Footer = () => {
                   </a>
                 </div>
               </div>
-              <div className="links flex">
+              <div className="links flex flex-1 ml-[90px]">
                 <a href="#">
                   <img
                     src={Globe}
                     alt="Globe"
                     style={{
                       height: 25,
-                      marginRight: 25,
+                      marginRight: 15,
                       backgroundColor: "black",
                     }}
                   />
                 </a>
-                <h3 href="#" style={{ marginRight: 15 }}>
+                <h3 href="#" style={{ marginRight: 35 }}>
                   English
                 </h3>
                 <a href="#">
@@ -263,7 +283,7 @@ const Footer = () => {
                     alt="Location"
                     style={{
                       height: 25,
-                      marginRight: 25,
+                      marginRight: 15,
                       backgroundColor: "black",
                     }}
                   />
@@ -274,11 +294,13 @@ const Footer = () => {
               </div>
 
               <div>
-                <img
-                  src={logo}
-                  alt="hoobank"
-                  className="w-[173px] h-[66px] sm:flex hidden"
-                />
+                <Link to="/">
+                  <img
+                    src={logo}
+                    alt="hoobank"
+                    className="w-[173px] h-[66px] sm:flex hidden"
+                  />
+                </Link>
               </div>
             </div>
           </div>

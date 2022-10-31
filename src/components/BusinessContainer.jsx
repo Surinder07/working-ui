@@ -13,9 +13,12 @@ const BusinessContainer = () => {
   return (
     <div>
       <div className={`relative sm:flex flex-col hidden tablet:h-[600px] `}>
-        <img src={business_2} className="tablet:h-[600px] image-containers lg:h-[100vh] " />
+        <img
+          src={business_2}
+          className="tablet:h-[600px] image-containers lg:h-[100vh] "
+        />
         <h3 className="absolute font-bold text-black top-[70px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
-        FOR BUSINESS COMMUNITY
+          FOR BUSINESS COMMUNITY
         </h3>
         <h2 className="text-3xl max-w-[35ch] absolute font-bold text-black top-[110px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
           Manage your business and kind workforce full time/hourly anytime
