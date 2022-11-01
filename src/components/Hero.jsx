@@ -1,8 +1,10 @@
+import React, { useState, useEffect } from "react";
 import styles from "../style";
 import { vector } from "../assets";
 import { Searchbar } from "./";
 import SearchIcon from "@mui/icons-material/Search";
 import { ArrowForward, SearchOutlined } from "@mui/icons-material";
+import { db } from "../firebase";
 
 const emailInfo = {
   email: "waaw.management@waaw.ca",
@@ -11,6 +13,34 @@ const emailInfo = {
 };
 
 const Hero = () => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [loader, setLoader] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoader(true);
+
+    db.collection("contacts")
+      .add({
+        email: email,
+        message: message,
+      })
+      .then(() => {
+        setLoader(false);
+        alert("Your message has been submitted👍");
+      })
+      .catch((error) => {
+        alert(error.message);
+        setLoader(false);
+      });
+
+    setName("");
+    setEmail("");
+    setMessage("");
+  };
+
   return (
     <section
       id="home"
@@ -82,23 +112,31 @@ const Hero = () => {
                   type="email"
                   placeholder="Your Email"
                   autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
 
-                {/* <button
+                <button
                   className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#5a5555] px-5 py-3 text-sm font-medium text-white transition w-[80px]"
                   type="button"
+                  onClick={handleSubmit}
                 >
                   {<ArrowForward />}
-                </button> */}
-                <a
+                </button>
+                {/* <a
                   href={`mailto:${emailInfo.email}?subject=${emailInfo.subject}&body=${emailInfo.body}`}
                   className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#5a5555] px-5 py-3 text-sm font-medium text-white transition w-[80px]"
                 >
                   {<ArrowForward />}
-                </a>
+                </a> */}
               </div>
             </nav>
-            <textarea placeholder="Type a custom message (Optional)" className="mt-4 resize-none w-[95%] h-[70px] rounded-[10px] text-black bg-gray-100 outline-none p-1" />
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type a custom message (Optional)"
+              className="mt-4 resize-none w-[95%] h-[70px] rounded-[10px] text-black bg-gray-100 outline-none p-1"
+            />
           </div>
         </div>
       </div>
