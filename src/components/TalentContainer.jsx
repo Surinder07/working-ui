@@ -21,11 +21,11 @@ const TalentContainer = () => {
           FOR TALENT COMMUNITY
         </h3>
         <h2 className="text-3xl max-w-[35ch] absolute font-bold text-white top-[110px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
-          Find greate work you are passionate about and earn you own terms
+          Find great work you are passionate about and earn on your own terms
           anytime anywhere
         </h2>
         <div className="businessContainerMain tablet:w-[710px] tablet:mt-[22px] flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-[50px]">
-          <Card icon={icon_5} text="Create Your Talent" />
+          <Card icon={icon_5} text="Create Your Talent Profile" />
           <Card icon={icon_2} text="Find A Full Time Opportunity" />
           <Card icon={icon_3} text="Find A Part Time Opportunity" />
           <Card icon={icon_6} text="Find A Project" />
@@ -38,11 +38,11 @@ const TalentContainer = () => {
           FOR TALENT COMMUNITY
         </h3>
         <h2 className="text-3xl absolute font-bold text-white top-[130px] left-1/2 -translate-x-1/2 ">
-          Find greate work you are passionate about and earn you own terms
+          Find great work you are passionate about and earn on your own terms
           anytime anywhere
         </h2>
         <div className="businesscontainer w-[390px] h-[300px] grid grid-cols-2 gap-3  absolute text-white top-[400px] mt-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Card icon={icon_5} text="Create Your Talent" />
+          <Card icon={icon_5} text="Create Your Talent Profile" />
           <Card icon={icon_2} text="Find A Full Time Opportunity" />
           <Card icon={icon_3} text="Find A Part Time Opportunity" />
           <Card icon={icon_6} text="Find A Project" />
