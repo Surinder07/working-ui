@@ -14,13 +14,13 @@ import {
   // logo,
 } from "../assets";
 import Searchbar from "./Searchbar";
-import FacebookIcon from "../assets/SVG/facebookicon.svg";
-import Instagram from "../assets/SVG/instagramicon.svg";
-import Youtube from "../assets/SVG/youtubeicon.svg";
-import Twitter from "../assets/SVG/twittericon.svg";
-import LinkedIn from "../assets/SVG/linkedinicon.svg";
-import Global from "../assets/SVG/globeicon.svg";
-import Location from "../assets/SVG/locationicon.svg";
+import FacebookIcon from "../assets/SVG/Facebookicon.svg";
+import Instagram from "../assets/SVG/Instagramicon.svg";
+import Youtube from "../assets/SVG/Youtubeicon.svg";
+import Twitter from "../assets/SVG/Twittericon.svg";
+import LinkedIn from "../assets/SVG/Linkedinicon.svg";
+import Global from "../assets/SVG/Globeicon.svg";
+import Location from "../assets/SVG/Locationicon.svg";
 import logo from "../assets/SVG/logo.svg";
 
 const emailInfo = {
