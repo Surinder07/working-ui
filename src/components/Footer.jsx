@@ -18,7 +18,7 @@ import FacebookIcon from "../assets/SVG/FacebookIcon.svg";
 import Instagram from "../assets/SVG/InstagramIcon.svg";
 import Youtube from "../assets/SVG/YoutubeIcon.svg";
 import Twitter from "../assets/SVG/TwitterIcon.svg";
-import LinkedIn from "../assets/SVG/LinkedinIcon.svg";
+import LinkedIn from "../assets/SVG/LinkedInIcon.svg";
 import Global from "../assets/SVG/GlobeIcon.svg";
 import Location from "../assets/SVG/LocationIcon.svg";
 import logo from "../assets/SVG/logo.svg";
