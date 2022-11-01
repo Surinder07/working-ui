@@ -21,7 +21,7 @@ const BusinessContainer = () => {
           FOR BUSINESS COMMUNITY
         </h3>
         <h2 className="text-3xl max-w-[35ch] absolute font-bold text-black top-[110px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
-          Manage your business and kind workforce full time/hourly anytime
+          Manage your business and find workforce full time/hourly anytime
           anywhere
         </h2>
         <div className="businessContainerMain tablet:w-[710px] tablet:mt-[22px] flex flex-row gap-6 absolute text-white top-[400px] left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-[50px]">
@@ -38,7 +38,7 @@ const BusinessContainer = () => {
           FOR BUSINESS COMMUNITY
         </h3>
         <h2 className="text-3xl absolute font-bold text-black top-[130px] left-1/2 -translate-x-1/2">
-          Manage your business and kind workforce full time/hourly anytime
+          Manage your business and find workforce full time/hourly anytime
           anywhere
         </h2>
         <div className=" businesscontainer w-[390px] h-[300px] grid grid-cols-2 gap-3 absolute text-white top-[400px] mt-[200px] left-1/2 -translate-x-1/2 -translate-y-1/2">
