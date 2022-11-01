@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import {  logo, menu, Close } from "../assets";
-
+import { menu, Close } from "../assets";
+import logo from "../assets/SVG/logo.svg";
 import { navLinks } from "../constants";
 import Button from "./Button";
-import {MenuIcon} from '@mui/icons-material/Menu';
-import {CloseIcon} from '@mui/icons-material/Close';
+import { MenuIcon } from "@mui/icons-material/Menu";
+import { CloseIcon } from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
@@ -13,12 +13,13 @@ const Navbar = () => {
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar gap-6">
-      <Link to='/'>
-      <img
-        src={logo}
-        alt="hoobank"
-        className="w-[173px] h-[66px] sm:flex hidden "
-      /></Link>
+      <a href="/">
+        <img
+          src={logo}
+          alt="logo"
+          className="w-[163px] h-[56px] sm:flex hidden "
+        />
+      </a>
 
       <ul className="list-none sm:flex hidden justify-end items-center ">
         {navLinks.map((nav, index) => (
@@ -74,7 +75,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <img src={logo} alt="hoobank" className="w-[124px] h-[42px]" />
+        <img src={logo} alt="logo" className="w-[124px] h-[42px]" />
         <a href="#" className="text-[#0091D0] bg-white border-none loginbutton">
           Log in
         </a>
