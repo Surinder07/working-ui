@@ -9,7 +9,7 @@ const AboutUs = () => {
           Why WAAW?
         </h1>
         <div className="mt-4 max-w-[700px]">
-          <p className="text-[#686868] text-[16px] font-bold">
+          <p className="text-[#686868] text-[16px] font-bold text-justify">
             At WAAW, our purpose is to inspire people and business to grow and
             thrive together. We firmly believe in our mission to create economic
             opportunities, so people have better lives. As a result, we've
@@ -17,7 +17,7 @@ const AboutUs = () => {
             sizes and independent talent from around the globe meet here to
             accomplish incredible things.
           </p>
-          <p className="mt-8 text-[#686868] text-[16px] font-bold">
+          <p className="mt-8 text-[#686868] text-[16px] font-bold text-justify">
             Everything about the way we work at is fundamentally transforming
             around us, and the line between work and life is continually
             redrawn. Sometimes daily or hourly it seems. To survive in this

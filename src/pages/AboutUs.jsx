@@ -25,12 +25,12 @@ const AboutUs = () => {
         id="home"
         className={`bg-[#F4F2F2] flex items-center flex-col ${styles.paddingY}`}
       >
-        <h1 className=" text-3xl font-bold text-black font-[Myriad-Pro]">
+        <h1 className=" text-3xl font-bold text-black">
           About Us
         </h1>
 
         {/* <div className="mt-4"> */}
-        <p className="max-w-[700px] mt-4 text-[#686868] text-[16px] font-bold">
+        <p className="max-w-[700px] mt-4 text-[#686868] text-[16px] font-bold text-justify">
           WAAW Global inc is a global software company that is on a mission to
           help both business and talent community alike. Led by a team committed
           to helping businesses find more flexibility and connecting talent with
