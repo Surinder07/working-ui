@@ -11,10 +11,10 @@ import {
   talent_1,
   talent_2,
 } from "../assets";
-import icon_2 from "../assets/SVG/icon2.svg";
-import icon_3 from "../assets/SVG/icon3.svg";
-import icon_5 from "../assets/SVG/icon5.svg";
-import icon_6 from "../assets/SVG/icon6.svg";
+import icon_2 from "../assets/SVG/Icon2.svg";
+import icon_3 from "../assets/SVG/Icon3.svg";
+import icon_5 from "../assets/SVG/Icon5.svg";
+import icon_6 from "../assets/SVG/Icon6.svg";
 
 import Card from "./Card";
 const TalentContainer = () => {
