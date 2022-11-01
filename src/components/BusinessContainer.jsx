@@ -2,12 +2,17 @@ import React from "react";
 import {
   business_1,
   business_2,
-  icon_1,
-  icon_2,
-  icon_3,
-  icon_4,
+  // icon_1,
+  // icon_2,
+  // icon_3,
+  // icon_4,
 } from "../assets";
 import Card from "./Card";
+import icon_1 from "../assets/SVG/icon1.svg"
+import icon_2 from "../assets/SVG/icon2.svg"
+import icon_3 from "../assets/SVG/icon3.svg"
+import icon_4 from "../assets/SVG/icon4.svg"
+
 const BusinessContainer = () => {
   // const tablet = "820";
   return (

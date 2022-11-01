@@ -18,7 +18,7 @@ const Home = () => (
     </div>
     <hr className="mt-[-10px] bg-black" /> */}
 
-    <div className={`bg-primary ${styles.flexStart} h-[100vh]`}>
+    <div className={`bg-primary ${styles.flexStart} h-[calc(100vh-90px)]`}>
       <div className={`${styles.boxWidth}`}>
         <Hero />
       </div>

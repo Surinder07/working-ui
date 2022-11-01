@@ -2,9 +2,8 @@ import styles from "../style";
 import { vector } from "../assets";
 import { Searchbar } from "./";
 import SearchIcon from "@mui/icons-material/Search";
-import { SearchOutlined } from "@mui/icons-material";
+import { ArrowForward, SearchOutlined } from "@mui/icons-material";
 const Hero = () => {
-  
   return (
     <section
       id="home"
@@ -19,7 +18,7 @@ const Hero = () => {
           The world's first platform to inspire people and business to grow and
           thrive together
         </h3>
-        <div className="bg-[#0091D0] mt-[60px] flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[3rem] lg:py-[4rem] searchcontainer">
+        {/* <div className="bg-[#0091D0] mt-[60px] flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[3rem] lg:py-[4rem] searchcontainer">
           <div className="flex flex-row gap-4 justify-evenly align-center">
             <div>
               <input
@@ -56,6 +55,37 @@ const Hero = () => {
             color="gray-600"
             icon={<SearchOutlined />}
           />
+        </div> */}
+        <div className="bg-[#0091D0] mt-[60px] flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[3rem] lg:py-[4rem] searchcontainer">
+          <div className="text-center ">
+            <p className="text-lg mb-[15px] font-medium text-white font-poppins">
+              Subscribe to stay updated
+            </p>
+
+            <nav aria-label="Footer Helpful Nav" className="mt-2 w-[350px]">
+              <div className="relative max-w-lg">
+                <label className="sr-only" htmlFor="email">
+                  {" "}
+                  Email{" "}
+                </label>
+
+                <input
+                  className="w-full outline-none text-black rounded-full caret-black border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium h-[47px]"
+                  id="email"
+                  type="email"
+                  placeholder="Your Email"
+                  autocomplete="off"
+                />
+
+                <button
+                  className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#ffffff] px-5 py-3 text-sm font-medium text-black transition w-[80px]"
+                  type="button"
+                >
+                  {<ArrowForward />}
+                </button>
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
 

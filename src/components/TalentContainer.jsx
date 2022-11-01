@@ -3,14 +3,19 @@ import {
   business_1,
   business_2,
   icon_1,
-  icon_2,
-  icon_3,
+  // icon_2,
+  // icon_3,
   icon_4,
-  icon_5,
-  icon_6,
+  // icon_5,
+  // icon_6,
   talent_1,
   talent_2,
 } from "../assets";
+import icon_2 from "../assets/SVG/icon2.svg";
+import icon_3 from "../assets/SVG/icon3.svg";
+import icon_5 from "../assets/SVG/icon5.svg";
+import icon_6 from "../assets/SVG/icon6.svg";
+
 import Card from "./Card";
 const TalentContainer = () => {
   return (

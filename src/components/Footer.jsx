@@ -11,7 +11,7 @@ import {
   youtube,
   Globe,
   // Location,
-  logo,
+  // logo,
 } from "../assets";
 import Searchbar from "./Searchbar";
 import FacebookIcon from "../assets/SVG/FacebookIcon.svg"
@@ -21,6 +21,7 @@ import Twitter from "../assets/SVG/TwitterIcon.svg"
 import LinkedIn from "../assets/SVG/LinkedInIcon.svg"
 import Global from "../assets/SVG/GlobeIcon.svg"
 import Location from "../assets/SVG/LocationIcon.svg"
+import logo from "../assets/SVG/logo.svg";
 
 
 const Footer = () => {
@@ -184,14 +185,15 @@ const Footer = () => {
                   </label>
 
                   <input
-                    className="w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium h-[47px]"
+                    className="outline-none w-full rounded-full border-gray-200 bg-gray-100 p-4 pr-32 text-sm font-medium h-[47px]"
                     id="email"
                     type="email"
                     placeholder="Your Email"
+                    autocomplete="off"
                   />
 
                   <button
-                    className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
+                    className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
                     type="button"
                   >
                     {<ArrowForward />}
@@ -302,13 +304,13 @@ const Footer = () => {
               </div>
 
               <div>
-                <Link to="/">
+                <a href="/">
                   <img
                     src={logo}
-                    alt="hoobank"
-                    className="w-[173px] h-[66px] sm:flex hidden"
+                    alt="logo"
+                    className="w-[163px] h-[56px] sm:flex hidden"
                   />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
