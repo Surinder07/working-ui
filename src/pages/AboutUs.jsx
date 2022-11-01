@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "../style";
 import AboutComponent from "../components/AboutUs";
-import WhyVector from "../assets/why-vector.png"
+// import WhyVector from "../assets/why-vector.png"
+import WhyVector from "../assets/SVG/WhyVector.svg";
 const AboutUs = () => {
   return (
     <div>
@@ -16,10 +17,9 @@ const AboutUs = () => {
         <p className="mb-[-19px] font-bambino font-semibold text-[#F4F2F2] text-[410px] h-[471px] text-center">
           WAAW
         </p>
-        {/* <h3 className="absolute font-bold text-black top-[170px] left-1/2 -translate-x-1/2 lg:mt-[50px]">
-          FOR BUSINESS COMMUNITY
-        </h3> */}
-        <img src={WhyVector} alt="why-vector" className="absolute bottom-0 w-[950px] font-bold text-black left-1/2 -translate-x-1/2 " />
+        {/* <img src={WhyVector} alt="why-vector" className="absolute bottom-0 w-[950px] font-bold text-black left-1/2 -translate-x-1/2 " /> */}
+        <img src={WhyVector} alt="why-vector" className="absolute bottom-[-69px] w-[1296px] h-[664px] font-bold text-black left-[42%] -translate-x-1/2 " />
+
       </div>
       <section
         id="home"

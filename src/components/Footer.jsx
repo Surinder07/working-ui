@@ -14,15 +14,20 @@ import {
   // logo,
 } from "../assets";
 import Searchbar from "./Searchbar";
-import FacebookIcon from "../assets/SVG/FacebookIcon.svg"
-import Instagram from "../assets/SVG/InstagramIcon.svg"
-import Youtube from "../assets/SVG/YoutubeIcon.svg"
-import Twitter from "../assets/SVG/TwitterIcon.svg"
-import LinkedIn from "../assets/SVG/LinkedInIcon.svg"
-import Global from "../assets/SVG/GlobeIcon.svg"
-import Location from "../assets/SVG/LocationIcon.svg"
+import FacebookIcon from "../assets/SVG/FacebookIcon.svg";
+import Instagram from "../assets/SVG/InstagramIcon.svg";
+import Youtube from "../assets/SVG/YoutubeIcon.svg";
+import Twitter from "../assets/SVG/TwitterIcon.svg";
+import LinkedIn from "../assets/SVG/LinkedInIcon.svg";
+import Global from "../assets/SVG/GlobeIcon.svg";
+import Location from "../assets/SVG/LocationIcon.svg";
 import logo from "../assets/SVG/logo.svg";
 
+const emailInfo = {
+  email: "waaw.management@waaw.ca",
+  subject: "Subscribing For WAAW Updates",
+  body: "I am interested in your services. Keep me updated.",
+};
 
 const Footer = () => {
   return (
@@ -126,21 +131,21 @@ const Footer = () => {
               </p>
 
               <div className="flex flex-row gap-4 mt-8">
-                  <a href="">
-                    <img
-                      src={apple}
-                      alt="google_play"
-                      className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
-                    />
-                  </a>
-                  <a href="">
-                    <img
-                      src={google}
-                      alt="google_play"
-                      className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
-                    />
-                  </a>
-                </div>
+                <a href="">
+                  <img
+                    src={apple}
+                    alt="google_play"
+                    className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
+                  />
+                </a>
+                <a href="">
+                  <img
+                    src={google}
+                    alt="google_play"
+                    className="w-[128.86px] h-[42.05px] object-contain mr-5 cursor-pointer"
+                  />
+                </a>
+              </div>
             </div>
 
             <div className="text-center sm:text-left ">
@@ -148,8 +153,15 @@ const Footer = () => {
                 Contact Us
               </p>
 
-              <nav aria-label="Footer Resources Nav"  className="mt-8">
-                <a href="mailto:waaw.management@waaw.ca" className="text-gray-700 transition hover:text-gray-700/75">waaw.management@waaw.ca</a>
+              <nav aria-label="Footer Resources Nav" className="mt-8">
+                {/* <a href="mailto:waaw.management@waaw.ca" className="text-gray-700 transition hover:text-gray-700/75">waaw.management@waaw.ca</a> */}
+                <a
+                  href={`mailto:${emailInfo.email}?subject=${emailInfo.subject}&body=${emailInfo.body}`}
+                  className="text-gray-700 transition hover:text-gray-700/75"
+                >
+                  waaw.management@waaw.ca
+                </a>
+
                 {/* <h3 className="font-bold text-black mt-[38px] font-poppins">
                   Mobile App
                 </h3>
@@ -189,15 +201,22 @@ const Footer = () => {
                     id="email"
                     type="email"
                     placeholder="Your Email"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
 
-                  <button
+                  {/* <button
                     className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
                     type="button"
                   >
                     {<ArrowForward />}
-                  </button>
+                  </button> */}
+
+                  <a
+                    href={`mailto:${emailInfo.email}?subject=${emailInfo.subject}&body=${emailInfo.body}`}
+                    className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[70px]"
+                  >
+                    {<ArrowForward />}
+                  </a>
                 </div>
                 <h3 className="font-poppins mt-4">
                   {" "}
@@ -224,7 +243,11 @@ const Footer = () => {
                     className="text-[#8AD2D1] transition hover:text-teal-700/75"
                   >
                     <span className="sr-only">Facebook</span>
-                    <img src={FacebookIcon} alt="facebook" className="h-[25px]" />
+                    <img
+                      src={FacebookIcon}
+                      alt="facebook"
+                      className="h-[25px]"
+                    />
                   </a>
                 </div>
                 <div className="mr-[18px]">
