@@ -14,7 +14,6 @@ const emailInfo = {
 
 const Hero = () => {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
   const [loader, setLoader] = useState(false);
 
@@ -22,14 +21,14 @@ const Hero = () => {
     e.preventDefault();
     setLoader(true);
 
-    db.collection("contacts")
+    db.collection("waitlist")
       .add({
-        email: email,
-        message: message,
+        email: email
       })
       .then(() => {
         setLoader(false);
-        alert("Your message has been submitted👍");
+        alert("Thankyou for your interest. We will notify you whenever we are in the market.👍");
+        setEmail("");
       })
       .catch((error) => {
         alert(error.message);
@@ -55,6 +54,10 @@ const Hero = () => {
           The world's first platform to inspire people and business to grow and
           thrive together
         </h3>
+
+        <h1 className="text-5xl lg:mt-6" style={{color:'#444', fontFamily:'Kanit', fontWeight: '900', fontStyle: 'italic'}}>
+          Coming Soon...
+        </h1>
         {/* <div className="bg-[#0091D0] mt-[60px] flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[3rem] lg:py-[4rem] searchcontainer">
           <div className="flex flex-row gap-4 justify-evenly align-center">
             <div>
@@ -96,7 +99,7 @@ const Hero = () => {
         <div className="bg-[#0091D0] mt-[60px] flex flex-col justify-center align-center rounded-[25px] gap-6 px-[4rem] py-[3rem] sm:px-[11rem] sm:py-[5rem] md:px-[4rem] md:py-[3rem] lg:px-[3rem] lg:py-[4rem] searchcontainer">
           <div className="text-center ">
             <p className="text-lg mb-[15px] max-w-[30ch] font-medium text-white font-poppins">
-              Subscribe to stay updated, or request a service
+              Submit your email to join the wait list.
             </p>
 
             <nav aria-label="Footer Helpful Nav" className="mt-2 w-[350px]">
@@ -131,12 +134,12 @@ const Hero = () => {
                 </a> */}
               </div>
             </nav>
-            <textarea
+            {/* <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Type a custom message (Optional)"
               className="mt-4 resize-none w-[95%] h-[70px] rounded-[10px] text-black bg-gray-100 outline-none p-1"
-            />
+            /> */}
           </div>
         </div>
       </div>
