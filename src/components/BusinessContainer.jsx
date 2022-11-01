@@ -8,10 +8,10 @@ import {
   // icon_4,
 } from "../assets";
 import Card from "./Card";
-import icon_1 from "../assets/SVG/icon1.svg"
-import icon_2 from "../assets/SVG/icon2.svg"
-import icon_3 from "../assets/SVG/icon3.svg"
-import icon_4 from "../assets/SVG/icon4.svg"
+import icon_1 from "../assets/SVG/Icon1.svg"
+import icon_2 from "../assets/SVG/Icon2.svg"
+import icon_3 from "../assets/SVG/Icon3.svg"
+import icon_4 from "../assets/SVG/Icon4.svg"
 
 const BusinessContainer = () => {
   // const tablet = "820";
