@@ -8,7 +8,6 @@ const AboutUs = () => {
         <h1 className="text-center text-3xl font-bold text-black ">
           Why WAAW?
         </h1>
-
         <div className="mt-4 max-w-[700px]">
           <p className="text-[#686868] text-[16px] font-bold text-justify">
             At WAAW, our purpose is to inspire people and business to grow and
@@ -18,7 +17,6 @@ const AboutUs = () => {
             sizes and independent talent from around the globe meet here to
             accomplish incredible things.
           </p>
-
           <p className="mt-8 text-[#686868] text-[16px] font-bold text-justify">
             Everything about the way we work at is fundamentally transforming
             around us, and the line between work and life is continually
@@ -35,7 +33,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section
+      {/* <section
         id="home"
         className={`bg-[#F4F2F2] flex flex-col ${styles.paddingY}`}
       >
@@ -57,7 +55,7 @@ const AboutUs = () => {
             worldwide. Our platform supports businesses of all sizes.
           </p>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
