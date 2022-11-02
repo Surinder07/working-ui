@@ -7,8 +7,8 @@ const Modal = (props) => {
     const modalClass = props.showModal ? 'flex' : 'hidden';
 
     return (
-        <div className={`${modalClass} h-screen w-screen items-center justify-center p-4 text-center bg-black/30`} 
-        onClick={closeModal} style={{position:'absolute', zIndex:'30', top:'0'}}>
+        <div className={`${modalClass} h-screen w-screen items-center justify-center text-center bg-black/30 box-border`} 
+        onClick={closeModal} style={{position:'fixed', zIndex:'30', top:'0', left:'0'}}>
             <div className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all opacity-100 scale-100">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">{props.title}</h3>
                 <div className="mt-2">

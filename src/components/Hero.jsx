@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../style";
 import { vector } from "../assets";
 import { Searchbar } from "./";

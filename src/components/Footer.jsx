@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { ArrowForward } from "@mui/icons-material";
-import React from "react";
 import { Link } from "react-router-dom";
 import {
     apple,
@@ -22,6 +22,8 @@ import LinkedIn from "../assets/SVG/LinkedInIcon.svg";
 import Global from "../assets/SVG/GlobeIcon.svg";
 import Location from "../assets/SVG/LocationIcon.svg";
 import logo from "../assets/SVG/logo.svg";
+import { db } from "../firebase";
+import Modal from "./Modal";
 
 const emailInfo = {
     email: "waaw.management@waaw.ca",
@@ -30,8 +32,40 @@ const emailInfo = {
 };
 
 const Footer = () => {
+    const [email, setEmail] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [loader, setLoader] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoader(true);
+
+        db.collection("waitlist")
+            .add({
+                email: email
+            })
+            .then(() => {
+                setLoader(false);
+                setShowModal(true);
+                setEmail("");
+            })
+            .catch((error) => {
+                alert(error.message);
+                setLoader(false);
+            });
+
+        setEmail("");
+    };
+
     return (
         <div>
+            <Modal
+                showModal={showModal}
+                title={'Thankyou for your interest'}
+                setShowModal={setShowModal}
+            >
+                We will notify you whenever we are in the market.
+            </Modal>
             <footer aria-label="Site Footer" className="bg-white">
                 <div className="mx-auto max-w-7xl px-10 sm:px-6 lg:px-8">
                     <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:flex lg:flex-row lg:gap-[96px]">
@@ -127,9 +161,8 @@ const Footer = () => {
 
                         <div className="text-center sm:text-left">
                             <div className="h-full w-full bg-white/80 flex justify-center items-center font-bold text-xl text-center"
-                                style={{ zIndex: '20', position: 'absolute', width:'250px', height:'105px'}}>
-                                    {/* Comming Soon */}
-                                </div>
+                                style={{ zIndex: '20', position: 'absolute', width: '250px', height: '105px' }}>
+                            </div>
                             <p className="text-lg font-medium text-gray-900 font-poppins">
                                 Mobile App
                             </p>
@@ -206,21 +239,18 @@ const Footer = () => {
                                         type="email"
                                         placeholder="Your Email"
                                         autoComplete="off"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
 
-                                    {/* <button
-                    className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
-                    type="button"
-                  >
-                    {<ArrowForward />}
-                  </button> */}
-
-                                    <a
-                                        href={`mailto:${emailInfo.email}?subject=${emailInfo.subject}&body=${emailInfo.body}`}
-                                        className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[70px]"
+                                    <button
+                                        className="absolute top-1/2 right-[0px] -translate-y-1/2 rounded-full bg-[#0091D0] px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 w-[80px]"
+                                        type="button"
+                                        onClick={handleSubmit}
                                     >
                                         {<ArrowForward />}
-                                    </a>
+                                    </button>
+
                                 </div>
                                 <h3 className="font-poppins mt-4">
                                     {" "}
