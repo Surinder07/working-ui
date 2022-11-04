@@ -3,6 +3,7 @@ import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
 import Modal from './Modal';
 import firebase from "firebase";
+import Loader from './Loader';
 
 const SubscribeBar = (props) => {
 
@@ -19,6 +20,7 @@ const SubscribeBar = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [modalMessage, setModalMessage] = useState('');
+    const [showLoader, setShowLoader] = useState(false);
 
     var firebaseApp = !firebase.apps.length ? firebase.initializeApp({
         // Your firebase credentials
@@ -35,6 +37,7 @@ const SubscribeBar = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setShowLoader(true);
         db.collection("waitlist")
             .add({
                 email: email
@@ -43,13 +46,13 @@ const SubscribeBar = (props) => {
                 setModalTitle('Thankyou for your interest');
                 setModalMessage('We have successfuly added you to our wait list.');
                 setShowModal(true);
-                setEmail("");
-
+                setShowLoader(false);
             })
             .catch((error) => {
                 setModalTitle('Error');
                 setModalMessage('There was some issue while connecting to sever. Please try again later.');
                 setShowModal(true);
+                setShowLoader(false);
             });
         setEmail("");
     };
@@ -63,6 +66,7 @@ const SubscribeBar = (props) => {
             >
                 {modalMessage}
             </Modal>
+            <Loader visible={showLoader} />
             <input id='email' type="email" autoComplete='off' placeholder='Your Email'
                 value={email} onChange={(e) => setEmail(e.target.value)} />
             <button className={styles.button} type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>

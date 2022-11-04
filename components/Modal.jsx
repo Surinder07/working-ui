@@ -3,7 +3,6 @@ import styles from '../styles/Modal.module.css';
 const Modal = (props) => {
 
     const closeModal = () => {
-        console.log(props.showModal);
         props.setShowModal(false);
     }
 
