@@ -1,0 +1,103 @@
+.footer {
+    width: 100%;
+    background-color: white;
+    color: var(--footer-text-color);
+}
+
+.footerTop, .footerBottom {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.footerTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerComponent h1 {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.footerComponent .link {
+    font-size: .875rem;
+}
+
+.footerComponent .mobileIcons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footerComponent .mobileIcons img {
+    width: 48%;
+    cursor: pointer;
+}
+
+.footerComponent h3 {
+    font-weight: 400;
+    font-size: 1.15rem;
+    max-width: 23vw;
+}
+
+.appContainer {
+    position: relative;
+}
+
+.appCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 100%;
+    width: 100%;
+}
+
+.footerBottom {
+    border-top: solid 1px var(--grey-border-color);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.footerBottom .leftContainer {
+    display:flex;
+    align-items: flex-end;
+    min-width: 50%;
+    justify-content: space-between;
+}
+
+.footerComponent .socialIcons {
+    font-weight: 400;
+    font-size: 1.15rem;
+    max-width: 23vw;
+    display: table-cell;
+}
+
+.footerComponent .socialIcons img {
+    height: 25px;
+    margin-right: 20px;
+}
+
+.leftContainer .iconTextContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    transform: translateY(-5px);
+}
+
+.iconTextContainer img {
+    height: 25px;
+    margin-right: 10px;
+}
+
+.iconTextContainer p {
+    margin: 0;
+    padding: 0;
+}
+
+.footerComponent a img {
+    height: 55px;
+}

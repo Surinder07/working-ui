@@ -1,0 +1,38 @@
+.inputBar {
+    border: solid 2px #F3F4F6;
+    height: 47px;
+    border-radius: 9999px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 5px;
+}
+
+.inputBar input {
+    border: none;
+    outline: none;
+    font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding: 1rem;
+    height: 100%;
+    background-color: #FFFFFF00;
+    width: calc(100% - 55px);
+}
+
+.inputBar input::placeholder {
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.inputBar button {
+    height: 37px;
+    width: 50px;
+    border: none;
+    background-color: var(--button-blue-color);
+    border-radius: 9999px;
+    color: white;
+    cursor: pointer;
+}

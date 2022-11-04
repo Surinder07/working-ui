@@ -1,0 +1,34 @@
+.aboutUsPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contentContainer {
+    max-width: 700px;
+}
+
+.contentContainer h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.contentContainer p {
+    text-align: justify;
+    font-weight: 700;
+    color: #686868;
+}
+
+.middleBackground {
+    width: 100%;
+    max-width: 100vw;
+}
+
+.greyContainer {
+    transform: translateY(-20px);
+    background-color: #f4f2f2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 0;
+}
