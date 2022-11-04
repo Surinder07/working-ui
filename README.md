@@ -1,0 +1,1 @@
+# Frontend App created with NEXT.JS

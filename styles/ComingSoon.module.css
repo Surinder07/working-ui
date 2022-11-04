@@ -1,0 +1,63 @@
+.background {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #0D3676;
+    background-image: url('/bg/coming-soon.jpg');
+    background-repeat: no-repeat;
+    background-position: center bottom 20%;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.background a {
+    height: 100px;
+    width: 300px;
+    background-color: rgba(180, 180, 180, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    margin-top: 50px;
+    box-shadow: 0 0 10px 5px rgba(33, 33, 33, 0.2);
+}
+
+.background a img {
+    height: 80px;
+}
+
+.background h3 {
+    margin: 0;
+    margin-top: 50px;
+    font-size: large;
+    text-align: center;
+    font-weight: 400;
+}
+
+.background h1 {
+    margin: 0;
+    margin-top: 10px;
+    letter-spacing: 20px;
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: 400;
+}
+
+.loader {
+    width: 250px;
+    height: 10px;
+    background-color: #02133F;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.loader_progress {
+    width: 125px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 5px;background: rgb(109,245,243);
+    background: linear-gradient(275deg, rgba(109,245,243,1) 0%, rgba(28,106,230,1) 100%);
+}
