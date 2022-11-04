@@ -8,13 +8,13 @@ const Modal = (props) => {
     }
 
     const modalClass = props.showModal ? 'flex' : 'none';
-
+    
     return (
         <div className={styles.modalBackdrop} onClick={closeModal} style={{ display: `${modalClass}` }}>
             <div className={styles.modal}>
                 <h3 className={styles.title}>{props.title}</h3>
                 <p>{props.children}</p>
-                <button type="button" onClick={closeModal} >Accept and Close</button>
+                <button className={styles.button} type="button" onClick={closeModal} >Accept and Close</button>
             </div>
         </div>
     )

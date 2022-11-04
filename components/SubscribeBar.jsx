@@ -65,7 +65,7 @@ const SubscribeBar = (props) => {
             </Modal>
             <input id='email' type="email" autoComplete='off' placeholder='Your Email'
                 value={email} onChange={(e) => setEmail(e.target.value)} />
-            <button type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>
+            <button className={styles.button} type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>
         </div>
     )
 }
