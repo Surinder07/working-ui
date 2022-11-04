@@ -10,7 +10,7 @@ const Card = (props) => {
     return(
         <div className={styles.card}>
             <img src={props.img} alt='icon'/>
-            <h2 style={{marginBottom: '60px'}}>{props.text}</h2>
+            <h2 style={{marginBottom: '50px'}}>{props.text}</h2>
             <p>Coming Soon</p>
         </div>
     )

@@ -28,8 +28,6 @@
 
 .businessSection, .talentSection {
     height: 100vh;
-    background-repeat: no-repeat;
-    background-size: cover;
     position: relative;
 }
 
@@ -51,17 +49,19 @@
 }
 
 .businessSection {
-    background: rgb(174, 190, 196);
     background: linear-gradient(231deg, rgba(174, 190, 196, 1) 0%, rgba(224, 226, 230, 1) 100%);
     background-image: url('/bg/business-bg.png');
     background-position: right center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .talentSection {
-    background: rgb(12, 79, 154);
     background: linear-gradient(231deg, rgba(12, 79, 154, 1) 0%, rgba(64, 164, 212, 1) 100%);
     background-image: url('/bg/talent-bg.png');
     background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .sectionDescription {
