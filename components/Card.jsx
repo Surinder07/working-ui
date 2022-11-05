@@ -1,4 +1,4 @@
-import styles from '../styles/Card.module.css';
+import styles from '../styles/elements/Card.module.css';
 
 const Card = (props) => {
 
@@ -10,7 +10,7 @@ const Card = (props) => {
     return(
         <div className={styles.card}>
             <img src={props.img} alt='icon'/>
-            <h2 style={{marginBottom: '50px'}}>{props.text}</h2>
+            <h2>{props.text}</h2>
             <p>Coming Soon</p>
         </div>
     )

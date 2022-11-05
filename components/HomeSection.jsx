@@ -1,18 +1,14 @@
 import Card from './Card';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/pages/Home.module.css';
 
 const HomeSection = (props) => {
 
-    const textColor = { color: props.info.textColor }
-    const overlayStyle = { backgroundColor: props.info.overlay }
-
     return (
-        <div className={props.className}>
-            <div className={styles.overlay} style={overlayStyle}></div>
-            <div className={`${styles.container} pagePadding`}>
-                <div style={{ height: '50px' }}></div>
-                <h4 style={textColor}>{props.info.title}</h4>
-                <h1 className={styles.sectionDescription} style={textColor}>{props.info.description}</h1>
+        <div className={styles.sectionContainer} style={props.info.styles.text}>
+            <div className={styles.overlay} style={props.info.styles.overlay}></div>
+            <div className={`${styles.container} pagePadding`} style={props.info.styles.color}>
+                <h4>{props.info.title}</h4>
+                <h1 className={styles.sectionDescription}>{props.info.description}</h1>
                 <div className={styles.cardContainer}>
                     {
                         props.info.tiles.map((tile, i) => (
@@ -21,6 +17,7 @@ const HomeSection = (props) => {
                     }
                 </div>
             </div>
+            <div className={styles.background} style={props.info.styles.image}></div>
         </div>
     )
 }

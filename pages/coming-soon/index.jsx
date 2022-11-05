@@ -1,11 +1,14 @@
 import Link from "next/link";
-import styles from '../../styles/ComingSoon.module.css';
+import styles from '../../styles/pages/ComingSoon.module.css';
 
 const ComingSoon = (props) => {
 
     return (
         <div className={styles.background}>
-            <Link href="/" onClick={() => props.setActiveMenu('/')}>
+            <Link href="/" onClick={() => {
+                props.setActiveMenu('/');
+                props.setOpenMenu(false);
+            }}>
                 <img src='/logo/LogoInverted.svg' alt="HOME" />
             </Link>
             <h3>WE ARE PREPARING SOMETHING AWESOME</h3>

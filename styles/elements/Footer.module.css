@@ -4,7 +4,8 @@
     color: var(--footer-text-color);
 }
 
-.footerTop, .footerBottom {
+.footerTop,
+.footerBottom {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -63,7 +64,7 @@
 }
 
 .footerBottom .leftContainer {
-    display:flex;
+    display: flex;
     align-items: flex-end;
     min-width: 50%;
     justify-content: space-between;
@@ -73,7 +74,6 @@
     font-weight: 400;
     font-size: 1.15rem;
     max-width: 23vw;
-    display: table-cell;
 }
 
 .footerComponent .socialIcons img {
@@ -100,4 +100,66 @@
 
 .footerComponent a img {
     height: 55px;
+}
+
+@media only screen and (max-width: 480px) {
+    .footerTop {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .footerComponent {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .socialIcons {
+        display: inline;
+    }
+
+    .footerComponent h3 {
+        font-weight: 400;
+        font-size: 1.15rem;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .footerBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .leftContainer {
+        flex-wrap: wrap;
+    }
+
+    .leftContainer .iconTextContainer {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        transform: translateY(0);
+    }
+
+    .footerComponent .socialIcons {
+        font-weight: 400;
+        font-size: 1.15rem;
+        max-width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .footerTop,
+.footerBottom {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+    .footerBottom {
+        padding-bottom: 0;
+    }
+
 }

@@ -1,4 +1,4 @@
-import styles from '../styles/SubscribeBar.module.css';
+import styles from '../styles/elements/SubscribeBar.module.css';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
 import Modal from './Modal';

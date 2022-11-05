@@ -2,17 +2,17 @@ import ComingSoonEl from '../components/ComingSoonEl';
 import HomeSection from '../components/HomeSection';
 import { business, talent } from '../lib/constants/HomeSectionInfo';
 import SubscribeBar from '../components/SubscribeBar';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/pages/Home.module.css';
 
-export default function Home() {
+const Home = (props) => {
 
     return (
         <div className={`${''} page`}>
             <div className={`${styles.introSection} pagePadding`}>
                 <div className={styles.leftContainer}>
                     <div style={{ height: '30px' }}></div>
-                    <h1 className={styles.intro}>The world's first platform to inspire people and business
-                        to grow and thrive together</h1>
+                    <h1 className={styles.intro}>The <span className={styles.colorBlue}>world's first</span> platform to inspire people and business
+                        to <span className={styles.colorBlue}>grow</span> and <span className={styles.colorBlue}>thrive together</span></h1>
                     <div className={styles.introBottom}>
                         <ComingSoonEl />
                         <div className={styles.subscribeBox}>
@@ -34,3 +34,5 @@ export default function Home() {
         </div>
     )
 }
+
+export default Home;
