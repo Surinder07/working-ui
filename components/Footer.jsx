@@ -1,5 +1,5 @@
 import SubscribeBar from './SubscribeBar';
-import styles from '../styles/Footer.module.css';
+import styles from '../styles/elements/Footer.module.css';
 import Link from 'next/link';
 import { SocialLinks } from '../lib/constants/SocialLinks';
 
@@ -55,7 +55,7 @@ const Footer = (props) => {
                         <p>Toronto</p>
                     </div>
                 </div>
-                <div className={styles.footerComponent} >
+                <div className={styles.footerComponent} style={{marginTop: '30px'}}>
                     <Link href="/" onClick={() => props.setActiveMenu('/')}>
                         <img src='/logo/Logo.svg' alt="HOME" />
                     </Link>

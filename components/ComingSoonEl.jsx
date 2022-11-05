@@ -1,4 +1,4 @@
-import styles from '../styles/ComingSoonEl.module.css';
+import styles from '../styles/elements/ComingSoonEl.module.css';
 
 const ComingSoonEl = () => {
     return (

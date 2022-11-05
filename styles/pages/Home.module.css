@@ -9,7 +9,11 @@
 .introSection .intro {
     width: 50%;
     line-height: 2.25rem;
-    font-size: 1.875rem;
+    font-size: 1.75rem;
+}
+
+.colorBlue {
+    color: var(--button-blue-color);
 }
 
 .introSection .leftContainer {
@@ -26,9 +30,20 @@
     align-items: center;
 }
 
-.businessSection, .talentSection {
+.sectionContainer {
     height: 100vh;
+    width: 100vw;
     position: relative;
+}
+
+.background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .container {
@@ -39,29 +54,14 @@
     flex-direction: column;
     align-items: center;
     z-index: 5;
+    padding-top: 50px;
 }
 
 .overlay {
     position: absolute;
     height: 100%;
     width: 100%;
-    z-index: 2
-}
-
-.businessSection {
-    background: linear-gradient(231deg, rgba(174, 190, 196, 1) 0%, rgba(224, 226, 230, 1) 100%);
-    background-image: url('/bg/business-bg.png');
-    background-position: right center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.talentSection {
-    background: linear-gradient(231deg, rgba(12, 79, 154, 1) 0%, rgba(64, 164, 212, 1) 100%);
-    background-image: url('/bg/talent-bg.png');
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    z-index: 2;
 }
 
 .sectionDescription {
@@ -70,6 +70,7 @@
     margin-top: 0;
     line-height: 2.25rem;
     margin-bottom: 80px;
+    font-size: 1.75rem;
 }
 
 .leftContainer .subscribeBox {
@@ -91,4 +92,56 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: #000;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width: 480px) {
+    .introSection {
+        height: auto;
+        background-position: bottom center;
+        background-size: contain;
+        padding-bottom: 60vw;
+    }
+
+    .introSection .intro {
+        width: 100%;
+        line-height: 2rem;
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .leftContainer .subscribeBox {
+        padding: 2.5rem 1.75rem;
+    }
+
+    .sectionDescription {
+        width: 100%;
+        text-align: center;
+        margin-top: 0;
+        line-height: 2rem;
+        font-size: 1.rem;
+        margin-bottom: 50px;
+    }
+
+    .sectionContainer {
+        height: 160vh;
+    }
+
+    .container {
+        height: 61%;
+    }
+
+    .overlay {
+        height: 100%;
+    }
+
+    .background {
+        background-size: auto 40%;
+    }
+
+    .cardContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

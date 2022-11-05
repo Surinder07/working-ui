@@ -32,3 +32,22 @@
     justify-content: center;
     padding: 4rem 0;
 }
+
+@media only screen and (max-width: 480px) {
+    .greyContainer {
+        padding: 2rem 0;
+    }
+
+    .aboutUsPage h1 {
+        font-size: 1.8rem;
+        margin: 0;
+    }
+
+    .aboutUsPage {
+        margin-top: 1.5rem;
+    }
+
+    .aboutUsPage p {
+        font-size: 0.8rem;
+    }
+}
