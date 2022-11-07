@@ -1,7 +1,8 @@
 import SubscribeBar from './SubscribeBar';
 import styles from '../styles/elements/Footer.module.css';
 import Link from 'next/link';
-import { SocialLinks } from '../lib/constants/SocialLinks';
+import { ImagesInfo } from '../lib/constants/ImagesInfo';
+import LinkedImage from './LinkedImage';
 
 const Footer = (props) => {
 
@@ -9,17 +10,32 @@ const Footer = (props) => {
 
     return (
         <footer className={styles.footer}>
+            {/* Top Part of the footer  */}
             <div className={`${styles.footerTop} pagePadding`}>
                 <div className={styles.footerComponent} >
                     <h1>Company</h1>
                     <Link className={styles.link} href='/why-waaw' onClick={() => props.setsetActiveMenu('Why WaAAW')}>About Us</Link>
                 </div>
-                <div className={`${styles.footerComponent} ${styles.appContainer}`} >
+                <div className={`${styles.footerComponent} ${styles.appContainer}`}>
                     <div className={styles.appCover}></div>
                     <h1>Mobile App</h1>
                     <div className={styles.mobileIcons}>
-                        <img src='/icons/apple.svg' alt='Download IOS App' />
-                        <img src='/icons/google.svg' alt='Download Android App' />
+                        <LinkedImage
+                            link={ImagesInfo.footerIcons.mobileApps.apple.link}
+                            src={ImagesInfo.footerIcons.mobileApps.apple.src}
+                            alt={ImagesInfo.footerIcons.mobileApps.apple.alt}
+                            height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
+                            style={{marginRight: '5px'}}
+                            disabled
+                        />
+                        <LinkedImage
+                            link={ImagesInfo.footerIcons.mobileApps.google.link}
+                            src={ImagesInfo.footerIcons.mobileApps.google.src}
+                            alt={ImagesInfo.footerIcons.mobileApps.google.alt}
+                            height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
+                            style={{marginLeft: '5px'}}
+                            disabled
+                        />
                     </div>
                 </div>
                 <div className={styles.footerComponent} >
@@ -28,37 +44,65 @@ const Footer = (props) => {
                 </div>
                 <div className={styles.footerComponent} >
                     <h1>Subscribe us to know more</h1>
-                    <SubscribeBar />
+                    <SubscribeBar style={{marginBottom: '20px'}} />
                     <h3>Join our team and continue your hassle free journey</h3>
                 </div>
             </div>
+            {/* Bottom Part of the footer  */}
             <div className={`${styles.footerBottom} pageMargin`}>
-                <div className={styles.leftContainer}>
-                    <div className={styles.footerComponent} >
-                        <h1>Connect Us</h1>
-                        <div className={styles.socialIcons}>
-                            {
-                                SocialLinks.map((social, i) => (
-                                    <Link key={i} styles={{ margin: '0' }} id={i} href={social.link} target='_blank'>
-                                        <img src={social.image} alt={social.social} />
-                                    </Link>
-                                ))
-                            }
-                        </div>
+                <div className={styles.footerComponent} >
+                    <h1>Connect Us</h1>
+                    <div className={styles.socialIcons}>
+                        {
+                            ImagesInfo.footerIcons.socialIcons.map((social, i) => (
+                                <LinkedImage
+                                    key={i}
+                                    link={social.link}
+                                    src={social.src}
+                                    alt={social.alt}
+                                    height={ImagesInfo.footerIcons.height[props.screenType]}
+                                    style={{ marginRight: '20px' }}
+                                    newTab
+                                />
+                            ))
+                        }
                     </div>
+                </div>
+                <div className={`${styles.footerComponent} `} >
+                    <div className={styles.iconContainer}>
                     <div className={styles.iconTextContainer}>
-                        <img src='/icons/GlobeIcon.svg' />
+                        <LinkedImage
+                            link={ImagesInfo.footerIcons.language.link}
+                            src={ImagesInfo.footerIcons.language.src}
+                            alt={ImagesInfo.footerIcons.language.alt}
+                            height={ImagesInfo.footerIcons.height[props.screenType]}
+                            style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
+                            disabled
+                        />
                         <p>English</p>
                     </div>
                     <div className={styles.iconTextContainer}>
-                        <img src='/icons/LocationIcon.svg' />
+                        <LinkedImage
+                            link={ImagesInfo.footerIcons.location.link}
+                            src={ImagesInfo.footerIcons.location.src}
+                            alt={ImagesInfo.footerIcons.location.alt}
+                            height={ImagesInfo.footerIcons.height[props.screenType]}
+                            style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
+                            disabled
+                        />
                         <p>Toronto</p>
                     </div>
+                    </div>
                 </div>
-                <div className={styles.footerComponent} style={{marginTop: '30px'}}>
-                    <Link href="/" onClick={() => props.setActiveMenu('/')}>
-                        <img src='/logo/Logo.svg' alt="HOME" />
-                    </Link>
+                <div className={styles.footerComponent} style={{margin: '0'}}></div>
+                <div className={`${styles.footerComponent} ${styles.footerLogo}`}>
+                    <LinkedImage
+                        link={ImagesInfo.logo.link}
+                        src={ImagesInfo.logo.src}
+                        alt={ImagesInfo.logo.alt}
+                        height={ImagesInfo.logo.footerHeight[props.screenType]}
+                        onClick={() => props.setActiveMenu('/')}
+                    />
                 </div>
             </div>
         </footer>

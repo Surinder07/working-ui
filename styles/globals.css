@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap');
+
 :root {
     --grey-border-color: #e5e7eb;
     --button-hover-grey-color: #f7f7f7;
@@ -8,13 +7,17 @@
     --footer-text-color: #111827;
     --navigation-height: 80px;
     --business-bg-position: right center;
+    --business-bg-gradient: #FFFFFF00;
     --talent-bg-position: left center;
+    --talent-bg-gradient: #FFFFFF00;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 640px) {
     :root {
         --business-bg-position: right bottom;
+        --business-bg-gradient: linear-gradient(90deg, rgba(215,219,225,1) 0%, rgba(216,221,226,1) 16%, rgba(211,215,218,1) 35%, rgba(210,216,217,1) 56%, rgba(211,215,218,1) 77%, rgba(211,215,218,1) 100%);
         --talent-bg-position: left bottom;
+        --talent-bg-gradient: linear-gradient(90deg, rgba(52, 145, 199, 1) 0%, rgba(47, 137, 193, 1) 30%, rgba(42, 127, 186, 1) 69%, rgba(37, 121, 182, 1) 100%);
     }
 }
 
@@ -37,10 +40,6 @@ body {
     margin: 0;
     font-family: "Poppins", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-div {
-    transition: all .5s ease;
 }
 
 a {
@@ -70,7 +69,48 @@ a {
         padding-right: 1rem;
     }
 
+    .pageMargin {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
     .page {
         min-height: auto;
+    }
+}
+
+@media only screen and (max-width: 640px) and (min-width: 480px) {
+    .pagePadding {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .pageMargin {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+    .pagePadding {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .pageMargin {
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .pagePadding {
+        padding-left: calc((100vw - 1100px) / 2);
+        padding-right: calc((100vw - 1100px) / 2);
+    }
+
+    .pageMargin {
+        margin-left: calc((100vw - 1100px) / 2);
+        margin-right: calc((100vw - 1100px) / 2);
     }
 }

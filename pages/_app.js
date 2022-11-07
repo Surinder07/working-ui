@@ -1,17 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { navLinks } from '../lib/constants/navLinks';
-import Navigation from '../components/Navigation';
+import { NavLinks } from '../lib/constants/NavLinks';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/globals.css';
 import Head from 'next/head';
 import router from 'next/router';
-import { Hidden } from '@mui/material';
 
 function MyApp({ Component, pageProps }) {
 
     const [activeMenu, setActiveMenu] = useState('home');
     const [openMenu, setOpenMenu] = useState(false);
+    // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
+    const [screenType, setScreenType] = useState(1)
 
     const menuHeight = 70;
 
@@ -25,6 +26,16 @@ function MyApp({ Component, pageProps }) {
                 return 'Pricing';
         }
     }
+
+    useEffect(() => {
+        if (window.innerWidth < 640) {
+            setScreenType(3)
+        } else if (window.innerWidth > 1000) {
+            setScreenType(1)
+        } else {
+            setScreenType(2)
+        }
+    })
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -43,26 +54,28 @@ function MyApp({ Component, pageProps }) {
                 <title>WaaW | Automated Workforce Scheduling</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
                 <meta name="description" content="Automated Workforce Scheduling created by WAAW to make businness hassle-free" />
-                <link rel="icon" href="/favicon.png" />
+                <link rel="icon" href="/favicon.svg" />
             </Head>
             <div>
                 {
                     !(activeMenu === 'login' || activeMenu === 'Pricing') &&
-                    <Navigation
+                    <Navbar
                         activeMenu={activeMenu}
                         setActiveMenu={setActiveMenu}
                         openMenu={openMenu}
                         setOpenMenu={setOpenMenu}
                         menuHeight={menuHeight}
-                        navLinks={navLinks}
+                        navLinks={NavLinks}
+                        screenType={screenType}
                     />
                 }
-                <Component {...pageProps} setActiveMenu={setActiveMenu} />
+                <Component {...pageProps} setActiveMenu={setActiveMenu} screenType={screenType}/>
                 {
                     !(activeMenu === 'login' || activeMenu === 'Pricing') &&
                     <Footer
                         activeMenu={activeMenu}
                         setActiveMenu={setActiveMenu}
+                        screenType={screenType}
                     />
                 }
             </div>

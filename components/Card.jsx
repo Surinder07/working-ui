@@ -1,18 +1,23 @@
-import styles from '../styles/elements/Card.module.css';
+import Link from "next/link";
 
 const Card = (props) => {
 
     const style = {
-        backgroundColor: props.backgroundColor,
-        color: props.color
+        ...props.style,
+        boxShadow: '0 0 10px 2px rgba(33, 33, 33, 0.2)',
+        borderRadius: '1rem'
     }
 
-    return(
-        <div className={styles.card}>
-            <img src={props.img} alt='icon'/>
-            <h2>{props.text}</h2>
-            <p>Coming Soon</p>
-        </div>
+    return (
+        <Link
+            href={props.href ? props.href : '#'}
+            scroll={props.href ? true : false}
+            style={{
+                cursor: props.href ? 'pointer': 'default'
+            }}
+        >
+            <div style={style} className={props.className}>{props.children}</div>
+        </Link>
     )
 }
 

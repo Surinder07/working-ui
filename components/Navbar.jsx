@@ -1,21 +1,29 @@
-import Hamburger from './Hamburger';
-import styles from '../styles/elements/Navigation.module.css';
 import Link from 'next/link';
+import Hamburger from './Hamburger';
+import LinkedImage from './LinkedImage';
+import styles from '../styles/elements/Navbar.module.css';
+import { ImagesInfo } from '../lib/constants/ImagesInfo';
 
-const Navigation = (props) => {
+const Navbar = (props) => {
 
     return (
-        <div className={styles.nav}>
+        <nav className='nav'>
             <div className={`${styles.bigNav} pagePadding`}>
-                <div className={styles.navLeftContainer} >
-                    <Link href='/' onClick={() => props.setActiveMenu('home')}>
-                        <img src='/logo/Logo.svg' alt="HOME" />
-                    </Link>
+                <div className={styles.navEl}>
+                    <LinkedImage
+                        link={ImagesInfo.logo.link}
+                        src={ImagesInfo.logo.src}
+                        alt={ImagesInfo.logo.alt}
+                        height={ImagesInfo.logo.headerHeight[props.screenType]}
+                        onClick={() => props.setActiveMenu('/')}
+                    />
+                </div>
+                <div className={styles.navEl}>
                     <ul className={styles.menuItems}>
                         {props.navLinks.map((nav, i) => (
                             <Link key={i} href={nav.link} onClick={() => props.setActiveMenu(nav.title)}>
                                 <li
-                                    className={`${styles.menuItem} ${styles.navFont}`}
+                                    className={styles.menuItem}
                                     style={{ color: props.activeMenu == nav.title ? 'var(--button-blue-color)' : 'inherit' }}
                                 >{nav.title}
                                 </li>
@@ -23,14 +31,15 @@ const Navigation = (props) => {
                         ))}
                     </ul>
                 </div>
-                <div className={styles.navRightContainer}>
+                <div></div>
+                <div className={`${styles.navEnd} ${styles.navEl}`}>
                     <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
-                        <div className={`${styles.button} ${styles.navFont}`}>Log In</div>
+                        <div className={styles.button}>Log In</div>
                     </Link>
                     <p>English</p>
                 </div>
             </div>
-            <div className={styles.smallNavContainer} >
+            <div style={{ position: 'relative', width: '100%' }}>
                 <ul className={`${props.openMenu ? styles.navMenuMobile : styles.navMenuMobileClose}`}>
                     {props.navLinks.map((nav, i) => (
                         <Link key={i} href={nav.link} onClick={() => {
@@ -38,7 +47,7 @@ const Navigation = (props) => {
                             props.setOpenMenu(false);
                         }}>
                             <li
-                                className={`${styles.mobileMenuItem} ${styles.navFont}`}
+                                className={styles.mobileMenuItem}
                                 style={{
                                     color: props.activeMenu == nav.title ? '#ddd' : 'inherit',
                                     height: `${props.menuHeight}px`
@@ -51,22 +60,25 @@ const Navigation = (props) => {
                 </ul>
                 <div className={`${styles.smallNav} pagePadding`}>
                     <Hamburger setOpenMenu={props.setOpenMenu} openMenu={props.openMenu} />
-                    <Link className={styles.mobileLogo} href='/' onClick={() => {
-                        props.setActiveMenu('home');
-                        props.setOpenMenu(false);
-                    }}>
-                        <img src='/logo/Logo.svg' alt="HOME" />
-                    </Link>
-                    <Link href={'coming-soon'} onClick={() => {
-                        props.setActiveMenu("login");
-                        props.setOpenMenu(true);
-                    }}>
-                        <div className={`${styles.button} ${styles.navFont}`}>Log In</div>
-                    </Link>
+                    <div className={styles.navEl}>
+                        <LinkedImage
+                            link={ImagesInfo.logo.link}
+                            src={ImagesInfo.logo.src}
+                            alt={ImagesInfo.logo.alt}
+                            height={ImagesInfo.logo.headerHeight[props.screenType]}
+                            onClick={() => props.setActiveMenu('/')}
+                        />
+                    </div>
+                    <div className={`${styles.navEnd} ${styles.navEl}`}>
+                        <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
+                            <div className={styles.button}>Log In</div>
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </div>
+        </nav>
     )
+
 }
 
-export default Navigation;
+export default Navbar;
