@@ -7,7 +7,7 @@ import { ImagesInfo } from '../lib/constants/ImagesInfo';
 const Navbar = (props) => {
 
     return (
-        <nav className='nav'>
+        <nav className={styles.nav}>
             <div className={`${styles.bigNav} pagePadding`}>
                 <div className={styles.navEl}>
                     <LinkedImage
