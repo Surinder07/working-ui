@@ -3,6 +3,12 @@ variables:
   APP_PATH: '$CI_PROJECT_DIR'
   OUTPUT_PATH: '$CI_PROJECT_DIR/out'
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - .next/cache/
+
 deploy:
   stage: deploy
   image: registry.gitlab.com/static-web-apps/azure-static-web-apps-deploy
