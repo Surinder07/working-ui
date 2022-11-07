@@ -11,7 +11,7 @@
     font-size: 2rem;
     font-weight: 600;
     border: solid 2px var(--button-blue-color);
-    padding: 5px 20px;
+    padding: 7px 20px;
     margin: 0;
     text-shadow: var(--grey-border-color) 2px 0 10px;
     box-shadow: 0 0 2px 2px var(--grey-border-color), inset 0 0 2px 2px var(--grey-border-color);
@@ -36,4 +36,11 @@
 
 .blueTextColor {
     color: var(--button-blue-color);
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+    .containerComingSoon {
+        font-size: 1.75rem;
+        padding: 10px 25px;
+    }
 }

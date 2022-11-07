@@ -4,51 +4,48 @@
     color: var(--footer-text-color);
 }
 
-.footerTop,
-.footerBottom {
+.footer h1,
+.footer h2,
+.footer h3,
+.footer p {
+    margin: 0;
+}
+
+.footer h1 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.footer h3 {
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.footer .link {
+    font-size: 0.85rem;
+}
+
+.footer .footerTop,
+.footer .footerBottom {
     padding-top: 2rem;
     padding-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
 }
 
-.footerTop {
-    display: flex;
-    justify-content: space-between;
-}
-
-.footerComponent h1 {
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-}
-
-.footerComponent .link {
-    font-size: .875rem;
-}
-
-.footerComponent .mobileIcons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.footerComponent .mobileIcons img {
-    width: 48%;
-    cursor: pointer;
-}
-
-.footerComponent h3 {
-    font-weight: 400;
-    font-size: 1.15rem;
-    max-width: 23vw;
-}
-
-.appContainer {
+.footerTop .appContainer {
     position: relative;
 }
 
-.appCover {
+.footerTop .mobileIcons {
+    display: flex;
+}
+
+.footerTop .appCover {
     position: absolute;
+    z-index: 10;
     top: 0;
     left: 0;
     background-color: rgba(255, 255, 255, 0.9);
@@ -56,110 +53,72 @@
     width: 100%;
 }
 
-.footerBottom {
+.footer .footerBottom {
     border-top: solid 1px var(--grey-border-color);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
-.footerBottom .leftContainer {
+.footer .footerBottom .iconContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+}
+
+.footer .footerBottom .iconContainer .iconTextContainer {
     display: flex;
     align-items: flex-end;
-    min-width: 50%;
-    justify-content: space-between;
 }
 
 .footerComponent .socialIcons {
-    font-weight: 400;
-    font-size: 1.15rem;
-    max-width: 23vw;
-}
-
-.footerComponent .socialIcons img {
-    height: 25px;
-    margin-right: 20px;
-}
-
-.leftContainer .iconTextContainer {
     display: flex;
-    align-items: center;
-    margin-right: 20px;
-    transform: translateY(-5px);
 }
 
-.iconTextContainer img {
-    height: 25px;
-    margin-right: 10px;
+.footerLogo {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
-.iconTextContainer p {
-    margin: 0;
-    padding: 0;
-}
+@media only screen and (max-width: 640px) {
 
-.footerComponent a img {
-    height: 55px;
-}
-
-@media only screen and (max-width: 480px) {
-    .footerTop {
-        flex-direction: column;
-        justify-content: space-between;
+    .footer .footerTop,
+    .footer .footerBottom {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        grid-template-columns: 1fr;
     }
 
     .footerComponent {
-        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 2.5rem;
     }
 
-    .socialIcons {
-        display: inline;
+    .footerLogo {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .footerComponent h3 {
-        font-weight: 400;
-        font-size: 1.15rem;
-        max-width: 100%;
+    .footer h3 {
         text-align: center;
     }
 
-    .footerBottom {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .leftContainer {
-        flex-wrap: wrap;
-    }
-
-    .leftContainer .iconTextContainer {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        transform: translateY(0);
-    }
-
-    .footerComponent .socialIcons {
-        font-weight: 400;
-        font-size: 1.15rem;
-        max-width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .footerTop,
-.footerBottom {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
 }
 
-    .footerBottom {
-        padding-bottom: 0;
+@media only screen and (max-width: 1000px) and (min-width:641px) {
+    .iconTextContainer p {
+        font-size: 0.9rem;
     }
 
+    .footer h3 {
+        font-size: 0.9rem;
+    }
+
+    .footer .link {
+        font-size: 0.75rem;
+    }
 }

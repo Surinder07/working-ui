@@ -13,7 +13,7 @@
     color: white;
 }
 
-.background a {
+.background .logoContainer {
     height: 100px;
     width: 300px;
     background-color: rgba(180, 180, 180, 0.4);
@@ -23,10 +23,6 @@
     border-radius: 1.5rem;
     margin-top: 50px;
     box-shadow: 0 0 10px 5px rgba(33, 33, 33, 0.2);
-}
-
-.background a img {
-    height: 80px;
 }
 
 .background h3 {

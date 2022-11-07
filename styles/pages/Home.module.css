@@ -4,30 +4,46 @@
     background-repeat: no-repeat;
     background-size: 50% auto;
     background-position: right center;
-}
-
-.introSection .intro {
-    width: 50%;
-    line-height: 2.25rem;
-    font-size: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .colorBlue {
     color: var(--button-blue-color);
 }
 
-.introSection .leftContainer {
+.introSection .introContent {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: space-around;
-    height: 100%;
+    align-items: flex-start;
 }
 
-.introSection .leftContainer .introBottom {
+.introSection .introContent .introText {
+    width: 100%;
+    line-height: 2.25rem;
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.introSection .introContent .introBottom {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.introSection .introContent .subscribeBox {
+    background-color: var(--button-blue-color);
+    padding: 4rem 2.5rem;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.introSection .introContent .subscribeBox h3 {
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 1rem;
 }
 
 .sectionContainer {
@@ -36,17 +52,14 @@
     position: relative;
 }
 
-.background {
-    background-repeat: no-repeat;
-    background-size: cover;
+.sectionContainer .overlay {
     position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
+    z-index: 2;
 }
 
-.container {
+.sectionContainer .container {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -57,91 +70,153 @@
     padding-top: 50px;
 }
 
-.overlay {
-    position: absolute;
-    height: 100%;
+.sectionContainer .container .sectionInfo {
     width: 100%;
-    z-index: 2;
-}
-
-.sectionDescription {
-    width: 60%;
     text-align: center;
-    margin-top: 0;
     line-height: 2.25rem;
-    margin-bottom: 80px;
-    font-size: 1.75rem;
-}
-
-.leftContainer .subscribeBox {
-    background-color: var(--button-blue-color);
-    box-shadow: 0 0 10px 1px rgba(33, 33, 33, 0.3);
-    padding: 4rem 2.5rem;
-    border-radius: 1.5rem;
-    color: white;
-    margin-top: 30px;
-}
-
-.leftContainer .subscribeBox h3 {
-    font-weight: 500;
+    font-size: 1rem;
     margin: 0;
     margin-bottom: 1rem;
 }
 
-.cardContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #000;
-    box-sizing: border-box;
+.sectionContainer .container .sectionDescription {
+    width: 60%;
+    text-align: center;
+    line-height: 2.25rem;
+    margin-bottom: 80px;
+    font-size: 1.6rem;
 }
 
-@media only screen and (max-width: 480px) {
+.sectionContainer .container .tileContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
+.sectionContainer .background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (max-width: 640px) {
     .introSection {
         height: auto;
-        background-position: bottom center;
+        background-image: url('/bg/intro-bg.png');
+        background-repeat: no-repeat;
         background-size: contain;
-        padding-bottom: 60vw;
+        background-position: bottom center;
+        display: grid;
+        grid-template-columns: 1fr;
     }
 
-    .introSection .intro {
-        width: 100%;
-        line-height: 2rem;
-        font-size: 1.25rem;
+    .introSection .introContent .introText {
+        line-height: 1.75rem;
+        font-size: 1.5rem;
+        margin-top: 3rem;
         margin-bottom: 2rem;
+        text-align: center;
     }
 
-    .leftContainer .subscribeBox {
-        padding: 2.5rem 1.75rem;
+    .introSection .introContent .subscribeBox {
+        padding: 2.5rem 1.5rem;
     }
 
-    .sectionDescription {
+    .introSection .introFiller {
+        height: 60vw;
+    }
+
+    .sectionContainer {
+        height: auto;
+    }
+
+    .sectionContainer .container {
+        position: relative;
+        width: 100%;
+    }
+
+    .sectionContainer .container .sectionInfo {
+        font-size: 0.85rem;
+    }
+
+    .sectionContainer .container .sectionDescription {
         width: 100%;
         text-align: center;
         margin-top: 0;
         line-height: 2rem;
-        font-size: 1.rem;
+        font-size: 1.125rem;
         margin-bottom: 50px;
+    }
+    
+    .sectionContainer .container .tileContainer {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+
+    .sectionContainer .background {
+        position: initial;
+        top: 0;
+        left: 0;
+        height: 60vh;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 640px) and (min-width: 481px) {   
+    .sectionContainer .container .tileContainer {
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+
+    .introBottom {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+    .introSection {
+        height: auto;
+    }
+
+    .introSection .introContent .introText {
+        line-height: 1.75rem;
+        font-size: 1.5rem;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    .introSection .introContent .subscribeBox {
+        padding: 2.5rem 1.5rem;
     }
 
     .sectionContainer {
-        height: 160vh;
+        height: 600px;
     }
 
-    .container {
-        height: 61%;
+    .sectionContainer .container .sectionInfo {
+        font-size: 1rem;
     }
 
-    .overlay {
-        height: 100%;
+    .sectionContainer .container .sectionDescription {
+        width: 80%;
+        font-size: 1.275rem;
     }
+}
 
-    .background {
-        background-size: auto 40%;
+@media only screen and (min-width: 1200px) {
+    .sectionContainer {
+        height: 600px;
     }
+}
 
-    .cardContainer {
-        display: flex;
-        flex-wrap: wrap;
+@media only screen and (min-width: 1500px) {
+    .introSection {
+        height: 700px;
     }
 }

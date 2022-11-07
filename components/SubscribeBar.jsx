@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import firebase from "firebase";
 import Loader from './Loader';
+import { padding } from '@mui/system';
 
 const SubscribeBar = (props) => {
 
@@ -13,7 +14,8 @@ const SubscribeBar = (props) => {
     }
 
     const barStyle = {
-        backgroundColor: props.background
+        ...props.style,
+        backgroundColor: props.background,
     }
 
     const [email, setEmail] = useState('');
@@ -37,6 +39,12 @@ const SubscribeBar = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateEmail(email)) {
+            setModalTitle('Error');
+            setModalMessage('Please enter a valid email.');
+            setShowModal(true);
+            return;
+        }
         setShowLoader(true);
         db.collection("waitlist")
             .add({
@@ -55,6 +63,14 @@ const SubscribeBar = (props) => {
                 setShowLoader(false);
             });
         setEmail("");
+    };
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
     };
 
     return (
