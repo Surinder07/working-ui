@@ -35,30 +35,27 @@ const LinkedImage = (props) => {
         ...props.style,
         width: `${imageSize.width}px`,
         height: `${imageSize.height}px`,
-        position: 'relative'
+        cursor: props.link ? 'pointer' : 'default'
     }
 
     return (
-        <div style={style}>
+        // <div style={style}>
             <Link
             href={props.link ? props.link : '#'}
             scroll={props.link ? true : false}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    cursor: props.link ? 'pointer' : 'default'
-                }}
+                style={style}
                 onClick={props.onClick}
                 target={props.newTab ? '_blank' : '_self'}
             >
                 <Image
                     src={props.src}
-                    fill
+                    width={imageSize.width}
+                    height={imageSize.height}
                     alt={props.alt}
                     onLoadingComplete={target => updateDimensions(target.naturalHeight, target.naturalWidth)}
                 />
             </Link>
-        </div>
+        // </div>
     )
 }
 
