@@ -25,7 +25,7 @@ const Footer = (props) => {
                             src={ImagesInfo.footerIcons.mobileApps.apple.src}
                             alt={ImagesInfo.footerIcons.mobileApps.apple.alt}
                             height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
-                            style={{marginRight: '5px'}}
+                            style={{ marginRight: '5px' }}
                             disabled
                         />
                         <LinkedImage
@@ -33,7 +33,7 @@ const Footer = (props) => {
                             src={ImagesInfo.footerIcons.mobileApps.google.src}
                             alt={ImagesInfo.footerIcons.mobileApps.google.alt}
                             height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
-                            style={{marginLeft: '5px'}}
+                            style={{ marginLeft: '5px' }}
                             disabled
                         />
                     </div>
@@ -44,13 +44,14 @@ const Footer = (props) => {
                 </div>
                 <div className={styles.footerComponent} >
                     <h1>Subscribe us to know more</h1>
-                    <SubscribeBar style={{marginBottom: '20px'}} />
+                    <SubscribeBar style={{ marginBottom: '20px' }} />
                     <h3>Join our team and continue your hassle free journey</h3>
                 </div>
             </div>
             {/* Bottom Part of the footer  */}
             <div className={`${styles.footerBottom} pageMargin`}>
-                <div className={styles.footerComponent} >
+                <div className={`${styles.footerComponent} ${styles.socialContainer}`} >
+                    <div className={styles.appCover}></div>
                     <h1>Connect Us</h1>
                     <div className={styles.socialIcons}>
                         {
@@ -70,31 +71,31 @@ const Footer = (props) => {
                 </div>
                 <div className={`${styles.footerComponent} `} >
                     <div className={styles.iconContainer}>
-                    <div className={styles.iconTextContainer}>
-                        <LinkedImage
-                            link={ImagesInfo.footerIcons.language.link}
-                            src={ImagesInfo.footerIcons.language.src}
-                            alt={ImagesInfo.footerIcons.language.alt}
-                            height={ImagesInfo.footerIcons.height[props.screenType]}
-                            style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
-                            disabled
-                        />
-                        <p>English</p>
-                    </div>
-                    <div className={styles.iconTextContainer}>
-                        <LinkedImage
-                            link={ImagesInfo.footerIcons.location.link}
-                            src={ImagesInfo.footerIcons.location.src}
-                            alt={ImagesInfo.footerIcons.location.alt}
-                            height={ImagesInfo.footerIcons.height[props.screenType]}
-                            style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
-                            disabled
-                        />
-                        <p>Toronto</p>
-                    </div>
+                        <div className={styles.iconTextContainer}>
+                            <LinkedImage
+                                link={ImagesInfo.footerIcons.language.link}
+                                src={ImagesInfo.footerIcons.language.src}
+                                alt={ImagesInfo.footerIcons.language.alt}
+                                height={ImagesInfo.footerIcons.height[props.screenType]}
+                                style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
+                                disabled
+                            />
+                            <p>English</p>
+                        </div>
+                        <div className={styles.iconTextContainer}>
+                            <LinkedImage
+                                link={ImagesInfo.footerIcons.location.link}
+                                src={ImagesInfo.footerIcons.location.src}
+                                alt={ImagesInfo.footerIcons.location.alt}
+                                height={ImagesInfo.footerIcons.height[props.screenType]}
+                                style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
+                                disabled
+                            />
+                            <p>Toronto</p>
+                        </div>
                     </div>
                 </div>
-                <div className={styles.footerComponent} style={{margin: '0'}}></div>
+                <div className={styles.footerComponent} style={{ margin: '0' }}></div>
                 <div className={`${styles.footerComponent} ${styles.footerLogo}`}>
                     <LinkedImage
                         link={ImagesInfo.logo.link}

@@ -19,7 +19,7 @@ const Navbar = (props) => {
                     />
                 </div>
                 <div className={styles.navEl}>
-                    <ul className={styles.menuItems}>
+                    <ul className={styles.menuItems} style={{justifyContent: 'flex-start', marginLeft:'20px'}}>
                         {props.navLinks.map((nav, i) => (
                             <Link key={i} href={nav.link} onClick={() => props.setActiveMenu(nav.title)}>
                                 <li
@@ -34,7 +34,7 @@ const Navbar = (props) => {
                 <div></div>
                 <div className={`${styles.navEnd} ${styles.navEl}`}>
                     <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
-                        <div className={styles.button}>Log In</div>
+                        <button disabled style={{color: '#999', cursor:'default'}} className={styles.button}>Log In</button>
                     </Link>
                     <p>English</p>
                 </div>
@@ -71,7 +71,7 @@ const Navbar = (props) => {
                     </div>
                     <div className={`${styles.navEnd} ${styles.navEl}`}>
                         <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
-                            <div className={styles.button}>Log In</div>
+                            <button disabled className={styles.button}>Log In</button>
                         </Link>
                     </div>
                 </div>
