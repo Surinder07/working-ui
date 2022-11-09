@@ -4,15 +4,6 @@ const nextConfig = {
     reactStrictMode: true,
     distDir: './build',
     images: { unoptimized: true },
-    async redirects() {
-        return [
-            {
-                source: '/',
-                destination: '/home',
-                permanent: true,
-            }
-        ]
-    },
     env: {
         appTitle: 'WaaW | Automated Workforce Scheduling',
         appDescription: 'Automated Workforce Scheduling app created by WAAW to help people and business to grow and thrive together',
