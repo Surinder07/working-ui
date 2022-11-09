@@ -3,7 +3,7 @@
 const nextConfig = {
     reactStrictMode: true,
     distDir: './build',
-    // images: { unoptimized: true },
+    images: { unoptimized: true },
     async redirects() {
         return [
             {
