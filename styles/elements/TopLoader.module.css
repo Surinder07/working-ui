@@ -1,0 +1,66 @@
+.bar {
+    background-color: var(--button-blue-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+}
+
+.loadStart {
+    -webkit-animation: loadStart 1s linear forwards;
+    animation: loadStart 1s linear forwards;
+}
+
+.loadEnd {
+    -webkit-animation: loadEnd 1s linear;
+    animation: loadEnd 1s linear;
+}
+
+@-webkit-keyframes loadStart {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 75vw;
+    }
+}
+
+@keyframes loadStart{
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 75vw;
+    }
+}
+
+@-webkit-keyframes loadEnd {
+    0% {
+        width: 75vw;
+    }
+
+    99% {
+        width: 100vw;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes loadEnd{
+    0% {
+        width: 75vw;
+    }
+
+    99% {
+        width: 100vw;
+    }
+
+    100% {
+        width: 0;
+    }
+}

@@ -1,9 +1,9 @@
-import ComingSoonEl from '../components/ComingSoonEl';
-import HomeSection from '../components/HomeSection';
-import Card from '../components/Card';
-import { business, talent } from '../lib/constants/HomeSectionInfo';
-import SubscribeBar from '../components/SubscribeBar';
-import styles from '../styles/pages/Home.module.css';
+import ComingSoonEl from '../../components/ComingSoonEl';
+import HomeSection from '../../components/HomeSection';
+import Card from '../../components/Card';
+import { business, talent } from '../../lib/constants/HomeSectionInfo';
+import SubscribeBar from '../../components/SubscribeBar';
+import styles from '../../styles/pages/Home.module.css';
 
 const Home = (props) => {
 

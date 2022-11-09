@@ -6,15 +6,31 @@ import Footer from '../components/Footer';
 import '../styles/globals.css';
 import Head from 'next/head';
 import router from 'next/router';
+import TopLoader from '../components/TopLoader';
 
 function MyApp({ Component, pageProps }) {
 
     const [activeMenu, setActiveMenu] = useState('home');
     const [openMenu, setOpenMenu] = useState(false);
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
-    const [screenType, setScreenType] = useState(1)
-
+    const [screenType, setScreenType] = useState(1);
+    const [pageLoading, setPageLoading] = useState(false);
     const menuHeight = 70;
+
+    useEffect(() => {
+        const handleStart = (url) => (url !== router.asPath) && setPageLoading(true);
+        const handleComplete = (url) => (url === router.asPath) && setPageLoading(false);
+
+        router.events.on('routeChangeStart', handleStart)
+        router.events.on('routeChangeComplete', handleComplete)
+        router.events.on('routeChangeError', handleComplete)
+
+        return () => {
+            router.events.off('routeChangeStart', handleStart)
+            router.events.off('routeChangeComplete', handleComplete)
+            router.events.off('routeChangeError', handleComplete)
+        }
+    })
 
     const getActiveMenuFromPath = (path) => {
         switch (path) {
@@ -57,6 +73,7 @@ function MyApp({ Component, pageProps }) {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <div>
+                <TopLoader pageLoading={pageLoading} />
                 {
                     !(activeMenu === 'login' || activeMenu === 'Pricing') &&
                     <Navbar
@@ -69,7 +86,7 @@ function MyApp({ Component, pageProps }) {
                         screenType={screenType}
                     />
                 }
-                <Component {...pageProps} setActiveMenu={setActiveMenu} screenType={screenType}/>
+                <Component {...pageProps} setActiveMenu={setActiveMenu} screenType={screenType} />
                 {
                     !(activeMenu === 'login' || activeMenu === 'Pricing') &&
                     <Footer
