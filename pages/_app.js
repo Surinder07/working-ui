@@ -4,7 +4,7 @@ import { NavLinks } from '../lib/constants/NavLinks';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/globals.css';
-import Head from 'next/head';
+import WaawHead from '../components/WaawHead';
 import router from 'next/router';
 import TopLoader from '../components/TopLoader';
 
@@ -66,12 +66,7 @@ function MyApp({ Component, pageProps }) {
 
     return (
         <React.Fragment>
-            <Head>
-                <title>WaaW | Automated Workforce Scheduling</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-                <meta name="description" content="Automated Workforce Scheduling created by WAAW to make businness hassle-free" />
-                <link rel="icon" href="/favicon.svg" />
-            </Head>
+            <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 {
