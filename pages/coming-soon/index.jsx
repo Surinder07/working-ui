@@ -8,7 +8,7 @@ const ComingSoon = (props) => {
         <div className={styles.background}>
             <div className={styles.logoContainer}>
                 <LinkedImage
-                    link='/'
+                    link='/home'
                     src='/logoInverted.svg'
                     alt='Logo(link to home)'
                     height={80}

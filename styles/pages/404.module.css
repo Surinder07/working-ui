@@ -1,0 +1,78 @@
+.notFoundPage {
+    position: relative;
+    height: calc(100vh - var(--navigation-height));
+}
+
+.notFoundPage h1,
+.notFoundPage h2,
+.notFoundPage h3 {
+    margin: 0;
+}
+
+.notFoundPage .notFound {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    max-width: 520px;
+    width: 100%;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.notFoundPage .notFound .notFound404 {
+    position: relative;
+    height: 240px;
+}
+
+.notFound .notFound404 h3 {
+    font-family: cabin, sans-serif;
+    position: relative;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #262626;
+    margin: 0;
+    letter-spacing: 3px;
+    padding-left: 6px;
+}
+
+.notFound .notFound404 h1 {
+    font-family: montserrat, sans-serif;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 252px;
+    font-weight: 900;
+    margin: 0;
+    color: #262626;
+    text-transform: uppercase;
+    letter-spacing: -40px;
+    margin-left: -20px;
+}
+
+.notFound .notFound404 h1>span {
+    text-shadow: -8px 0 0 #fff;
+}
+
+.notFound h2 {
+    font-family: cabin, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.notFound p {
+    font-family: cabin, sans-serif;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 0;
+}

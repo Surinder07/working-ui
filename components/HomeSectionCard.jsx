@@ -29,18 +29,13 @@ const HomeSectionCard = (props) => {
     return (
         <Card className={styles.infoTile}>
             <div style={{ width: '100%' }}>
-                <div style={{
-                    width: `${imageSize.width}px`,
-                    height: `${imageSize.height}px`,
-                    position: 'relative'
-                }}>
-                    <Image
-                        src={props.tile.icon}
-                        fill
-                        alt={props.tile.text}
-                        onLoadingComplete={target => updateDimensions(target.naturalHeight, target.naturalWidth)}
-                    />
-                </div>
+                <Image
+                    src={props.tile.icon}
+                    width={imageSize.width}
+                    height={imageSize.height}
+                    alt={props.tile.text}
+                    onLoadingComplete={target => updateDimensions(target.naturalHeight, target.naturalWidth)}
+                />
                 <h2>{props.tile.text}</h2>
             </div>
             <p>Coming Soon</p>
