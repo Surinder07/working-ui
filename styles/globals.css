@@ -105,13 +105,23 @@ a {
 }
 
 @media only screen and (min-width: 1200px) {
-    .pagePadding {
-        padding-left: calc((100vw - 1100px) / 2);
-        padding-right: calc((100vw - 1100px) / 2);
+    /* .pagePadding {
+        padding-left: calc((100vw - 69em) / 2);
+        padding-right: calc((100vw - 69em) / 2);
     }
 
     .pageMargin {
-        margin-left: calc((100vw - 1100px) / 2);
-        margin-right: calc((100vw - 1100px) / 2);
+        margin-left: calc((100vw - 69em) / 2);
+        margin-right: calc((100vw - 69em) / 2);
+    } */
+
+    .pagePadding {
+        padding-left: 7.5%;
+        padding-right: 7.5%;
+    }
+
+    .pageMargin {
+        margin-left: 7.5%;
+        margin-right: 7.5%;
     }
 }

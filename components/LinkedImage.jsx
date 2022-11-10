@@ -41,7 +41,6 @@ const LinkedImage = (props) => {
     }
 
     return (
-        // <div style={style}>
         <Link
             href={props.link ? props.link : '#'}
             scroll={props.link ? true : false}
@@ -56,7 +55,6 @@ const LinkedImage = (props) => {
                 alt={props.alt}
             />
         </Link>
-        // </div>
     )
 }
 

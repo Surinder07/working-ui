@@ -4,7 +4,6 @@ import { NavLinks } from '../lib/constants/NavLinks';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/globals.css';
-import WaawHead from '../components/WaawHead';
 import router from 'next/router';
 import TopLoader from '../components/TopLoader';
 
@@ -66,7 +65,6 @@ function MyApp({ Component, pageProps }) {
 
     return (
         <React.Fragment>
-            <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 {

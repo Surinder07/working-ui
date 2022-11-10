@@ -1,20 +1,33 @@
 import Head from 'next/head';
 
-const WaawHead = () => {
+const WaawHead = ({ title, description, meta }) => {
+    const headerInfo = process.env.header;
     return (
         <Head>
-            <title>{process.env.appTitle}</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-            <meta name="description" content={process.env.appDescription} />
-            <meta property="og:title" content={process.env.appTitle} />
-            <meta property="og:description" content={process.env.appDescription} />
-            <meta property="og:url" content={process.env.appUrl} />
-            <meta property="og:image" content={process.env.appImage} />
-            <meta property="og:type" content="webapp" />
-            <meta property="keywords" content={process.env.seoTags} />
-            <meta property="robots" content="index,follow" />
-            <meta property="copyright" content="webapp" />
-            <link rel="icon" href="/favicon.svg" />
+            <title>{title ? title : headerInfo.title}</title>
+            <meta name="description" content={description ? description : headerInfo.description} />
+            <meta name="og:description" content={description ? description : headerInfo.description} />
+            <meta name="og:title" content={title ? title : headerInfo.title} />
+            {
+                Object.entries(headerInfo.meta).map((metaInfo, key) => {
+                    let name = metaInfo[0];
+                    let content = metaInfo[1];
+                    if (name === 'openGraph') {
+                        return Object.entries(content).map((ogMeta, key1) => {
+                            return <meta key={"og".concat(key1)} name={'og:'.concat(ogMeta[0])} content={meta &&
+                                meta.openGraph && meta.openGraph[ogMeta[0]] ? meta.openGraph[ogMeta[0]] : ogMeta[1]} />
+                        })
+                    }
+                    return <meta key={key} name={name} content={meta && meta[name] ? 
+                        meta[name] : content} />
+                })
+            }
+            {
+                !title && <>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+                    <link rel="icon" href="/favicon.svg" />
+                </>
+            }
         </Head>
     )
 }

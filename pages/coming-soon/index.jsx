@@ -1,4 +1,3 @@
-import Link from "next/link";
 import LinkedImage from "../../components/LinkedImage";
 import styles from '../../styles/pages/ComingSoon.module.css';
 

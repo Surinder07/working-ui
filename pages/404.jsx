@@ -1,13 +1,11 @@
-import Head from "next/head";
 import Link from "next/link";
+import WaawHead from "../components/WaawHead";
 import styles from '../styles/pages/404.module.css'
 
 const NotFound = () => {
     return (
         <div>
-            <Head>
-                <title>WaaW | 404 - Page Not Found</title>
-            </Head>
+            <WaawHead title='WaaW | 404 - Page Not Found' meta={{robots:'noindex, nofollow'}} />
             <div className={styles.notFoundPage}>
                 <div className={styles.notFound}>
                     <div className={styles.notFound404}>

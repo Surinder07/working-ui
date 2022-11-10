@@ -1,8 +1,11 @@
 import styles from '../../styles/pages/WhyWaaw.module.css';
 import { WhyWaawContent } from '../../lib/constants/WhyWaawContent';
+import WaawHead from '../../components/WaawHead';
 
 const WhyWaaw = () => {
     return (
+        <>
+        <WaawHead title={'WaaW | About us'} description={process.env.header.aboutUsDescription} meta={{openGraph:{url:'https://waaw.ca/why-waaw'}}}/>
         <div className={`page ${styles.aboutUsPage}`}>
             <div className={`pageMargin ${styles.contentContainer}`}>
                 <h1>Why WAAW?</h1>
@@ -24,6 +27,7 @@ const WhyWaaw = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 
