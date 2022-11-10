@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const LinkedImage = (props) => {
 
@@ -9,9 +10,10 @@ const LinkedImage = (props) => {
         height: 1
     });
 
-    const updateDimensions = (height, width) => {
+    useEffect(() => {
         let newWidth;
         let newHeight;
+        const {height, width} = props.src;
         if (typeof props.height == 'undefined' && typeof props.width == 'undefined') {
             newWidth = width;
             newHeight = height;
@@ -29,7 +31,7 @@ const LinkedImage = (props) => {
             width: newWidth,
             height: newHeight
         })
-    }
+    }, []) 
 
     const style = {
         ...props.style,
@@ -40,21 +42,20 @@ const LinkedImage = (props) => {
 
     return (
         // <div style={style}>
-            <Link
+        <Link
             href={props.link ? props.link : '#'}
             scroll={props.link ? true : false}
-                style={style}
-                onClick={props.onClick}
-                target={props.newTab ? '_blank' : '_self'}
-            >
-                <Image
-                    src={props.src}
-                    width={imageSize.width}
-                    height={imageSize.height}
-                    alt={props.alt}
-                    onLoadingComplete={target => updateDimensions(target.naturalHeight, target.naturalWidth)}
-                />
-            </Link>
+            style={style}
+            onClick={props.onClick}
+            target={props.newTab ? '_blank' : '_self'}
+        >
+            <Image
+                src={props.src}
+                width={imageSize.width}
+                height={imageSize.height}
+                alt={props.alt}
+            />
+        </Link>
         // </div>
     )
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Card from './Card';
 import styles from '../styles/elements/HomeSectionCard.module.css';
@@ -10,7 +10,8 @@ const HomeSectionCard = (props) => {
         height: 1
     });
 
-    const updateDimensions = (height, width) => {
+    useEffect(() => {
+        const { width, height } = props.tile.icon
         let newWidth;
         let newHeight;
         if (typeof props.height != 'undefined') {
@@ -24,7 +25,7 @@ const HomeSectionCard = (props) => {
             width: newWidth,
             height: newHeight
         })
-    }
+    }, [])
 
     return (
         <Card className={styles.infoTile}>
@@ -34,7 +35,6 @@ const HomeSectionCard = (props) => {
                     width={imageSize.width}
                     height={imageSize.height}
                     alt={props.tile.text}
-                    onLoadingComplete={target => updateDimensions(target.naturalHeight, target.naturalWidth)}
                 />
                 <h2>{props.tile.text}</h2>
             </div>
