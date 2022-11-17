@@ -1,0 +1,31 @@
+.inputBox {
+    width : 100%;
+    display: grid;
+    grid-template-columns: 40px auto 40px;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.inputBox input {
+    font-family: poppins;
+    padding: 7px 0;
+    font-size: 0.9rem;
+    outline: none;
+    border: none;
+    background-color: #FFFFFF00;
+}
+
+.inputBox input::placeholder {
+    font-family: poppins;
+    color: #555;
+}
+
+.inputBox .inputIconContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: #555;
+}

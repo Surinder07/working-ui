@@ -1,4 +1,4 @@
-import TileIcons from "../../public/icons/homeGridIcons/TileIcons";
+import TileIcons from '../public/icons/homeGridIcons/TileIcons';
 
 export const business = {
     title: 'FOR BUSINESS COMMUNITY',

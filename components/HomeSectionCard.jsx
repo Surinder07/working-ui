@@ -9,6 +9,7 @@ const HomeSectionCard = (props) => {
         width: 1,
         height: 1
     });
+    let style = {};
 
     useEffect(() => {
         const { width, height } = props.tile.icon
@@ -17,6 +18,7 @@ const HomeSectionCard = (props) => {
         if (typeof props.height != 'undefined') {
             newWidth = (props.height * width) / height;
             newHeight = props.height;
+            style={width: 'auto'}
         } else {
             newWidth = width;
             newHeight = height;
@@ -35,6 +37,7 @@ const HomeSectionCard = (props) => {
                     width={imageSize.width}
                     height={imageSize.height}
                     alt={props.tile.text}
+                    style={style}
                 />
                 <h2>{props.tile.text}</h2>
             </div>

@@ -1,0 +1,100 @@
+.page {
+    transition: 0.2s all linear;
+    overflow-x: hidden;
+    min-height: calc(100vh - var(--navigation-height));
+}
+
+.pagePadding {
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.pageMargin {
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+.flexPageColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.smallContentContainer {
+    max-width: 700px;
+}
+
+.smallContentContainer h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.smallContentContainer p {
+    text-align: justify;
+    font-weight: 500;
+    color: #686868;
+}
+
+@media only screen and (max-width: 480px) {
+    .page h1 {
+        font-size: 1.8rem;
+        margin: 0;
+    }
+
+    .page {
+        margin-top: 1.5rem;
+    }
+
+    .page p {
+        font-size: 0.8rem;
+    }
+    .pagePadding {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .pageMargin {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .page {
+        min-height: auto;
+    }
+}
+
+@media only screen and (max-width: 640px) and (min-width: 480px) {
+    .pagePadding {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .pageMargin {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+    .pagePadding {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .pageMargin {
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .pagePadding {
+        padding-left: 7.5%;
+        padding-right: 7.5%;
+    }
+
+    .pageMargin {
+        margin-left: 7.5%;
+        margin-right: 7.5%;
+    }
+}

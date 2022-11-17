@@ -1,7 +1,8 @@
 import SubscribeBar from './SubscribeBar';
 import styles from '../styles/elements/Footer.module.css';
+import pageStyles from '../styles/Pages.module.css';
 import Link from 'next/link';
-import { ImagesInfo } from '../lib/constants/ImagesInfo';
+import { ImagesInfo } from '../constants/ImagesInfo';
 import LinkedImage from './LinkedImage';
 
 const Footer = (props) => {
@@ -11,7 +12,7 @@ const Footer = (props) => {
     return (
         <footer className={styles.footer}>
             {/* Top Part of the footer  */}
-            <div className={`${styles.footerTop} pagePadding`}>
+            <div className={`${styles.footerTop} ${pageStyles.pagePadding}`}>
                 <div className={styles.footerComponent} >
                     <h1>Company</h1>
                     <Link className={styles.link} href='/why-waaw' onClick={() => props.setsetActiveMenu('Why WaAAW')}>About Us</Link>
@@ -21,20 +22,18 @@ const Footer = (props) => {
                     <h1>Mobile App</h1>
                     <div className={styles.mobileIcons}>
                         <LinkedImage
-                            link={ImagesInfo.footerIcons.mobileApps.apple.link}
+                            // link={ImagesInfo.footerIcons.mobileApps.apple.link}
                             src={ImagesInfo.footerIcons.mobileApps.apple.src}
                             alt={ImagesInfo.footerIcons.mobileApps.apple.alt}
                             height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
                             style={{ marginRight: '5px' }}
-                            disabled
                         />
                         <LinkedImage
-                            link={ImagesInfo.footerIcons.mobileApps.google.link}
+                            // link={ImagesInfo.footerIcons.mobileApps.google.link}
                             src={ImagesInfo.footerIcons.mobileApps.google.src}
                             alt={ImagesInfo.footerIcons.mobileApps.google.alt}
                             height={ImagesInfo.footerIcons.mobileApps.height[props.screenType]}
                             style={{ marginLeft: '5px' }}
-                            disabled
                         />
                     </div>
                 </div>
@@ -49,7 +48,7 @@ const Footer = (props) => {
                 </div>
             </div>
             {/* Bottom Part of the footer  */}
-            <div className={`${styles.footerBottom} pageMargin`}>
+            <div className={`${styles.footerBottom}  ${pageStyles.pageMargin}`}>
                 <div className={`${styles.footerComponent} ${styles.socialContainer}`} >
                     <div className={styles.appCover}></div>
                     <h1>Connect Us</h1>
@@ -73,23 +72,19 @@ const Footer = (props) => {
                     <div className={styles.iconContainer}>
                         <div className={styles.iconTextContainer}>
                             <LinkedImage
-                                link={ImagesInfo.footerIcons.language.link}
                                 src={ImagesInfo.footerIcons.language.src}
                                 alt={ImagesInfo.footerIcons.language.alt}
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
-                                disabled
                             />
                             <p>English</p>
                         </div>
                         <div className={styles.iconTextContainer}>
                             <LinkedImage
-                                link={ImagesInfo.footerIcons.location.link}
                                 src={ImagesInfo.footerIcons.location.src}
                                 alt={ImagesInfo.footerIcons.location.alt}
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
-                                disabled
                             />
                             <p>Toronto</p>
                         </div>

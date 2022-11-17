@@ -1,37 +1,26 @@
 .nav {
     width: 100%;
     border-bottom: solid 1px var(--grey-border-color);
-}
-
-.bigNav, .smallNav {
     height: var(--navigation-height);
-}
-
-.bigNav {
     display: grid;
     grid-template-columns: 1fr 1.5fr 2fr 1.5fr;
+    position: relative;
 }
 
-.smallNav {
-    display: none;
-}
-
-.navEl {
+.nav .navEl {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
-}
-
-.bigNav .navEl {
     font-size: 0.9rem;
     font-weight: 500;
 }
 
-.navEnd {
+.nav .navEnd {
     justify-content: end;
 }
 
-.bigNav .menuItems {
+.nav .menu .menuItems {
     list-style: none;
     list-style-type: none;
     width: 100%;
@@ -39,11 +28,13 @@
     align-items: center;
     justify-content: space-around;
     height: 100%;
+    transition: all .5s ease;
 }
 
-.bigNav .menuItem {
+.nav .menu .menuItem {
     font-size: 0.9rem;
     font-weight: 500;
+    position: relative;
 }
 
 .navEl .button {
@@ -51,7 +42,9 @@
     border: solid 1px var(--grey-border-color);
     color: var(--button-blue-color);
     cursor: pointer;
+    background-color: #FFFFFF00;
     border-radius: 0.5rem;
+    font-weight: 600;
 }
 
 .navEl .button:hover {
@@ -64,76 +57,114 @@
     margin-left: 2rem;
 }
 
-.navMenuMobile {
-    width: 90%;
-    height: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 1rem;
-    position: absolute;
-    top: var(--navigation-height);
-    list-style: none;
-    list-style-type: none;
+.menu .expandableMenu {
+    cursor: pointer;
+}
+
+.menu .subMenu {
+    height: 120px;
+    width: fit-content;
     background-color: var(--button-blue-color);
     color: white;
+    list-style: none;
+    list-style-type: none;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: all .5s ease;
-}
-
-.navMenuMobileClose {
-    height: 0;
-    overflow: hidden;
     position: absolute;
-    top: var(--navigation-height);
-    width: 90%;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: 2;
+    overflow: hidden;
+    transform: translateX(-35px);
 }
 
-.mobileMenuItem {
-    height: 100%;
+.menu .subMenu a {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: inherit;
 }
 
+.menu .subMenu .menuItem {
+    padding: 20px 30px;
+    width: 100%;
+    color: white !important;
+}
+
+.menu .subMenu .menuItem:hover {
+    background-color: #00000010;
+}
 
 @media only screen and (max-width: 640px) {
-    .bigNav {
-        display: none;
+    .nav .menu {
+        position: absolute;
+        height: fit-content;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 1rem;
+        top: var(--navigation-height);
+        background-color: var(--button-blue-color);
+        color: white;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .smallNav {
-        display: grid;
+    .nav .menu .menuItems {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav .menu .menuItem {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.2rem;
+    }
+
+    .nav {
         grid-template-columns: 1fr 1fr 1fr;
     }
-    
+
     .navEl .button {
         padding: 0.5rem 0.8rem;
         font-size: 0.9rem;
     }
+
+    .menu .subMenu {
+        height: 120px;
+        width: 100%;
+        background-color: var(--lighter-blue-color);
+        color: white;
+        align-items: flex-start;
+        overflow: hidden;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        border-radius: 0;
+    }
+
+    .menu .subMenu .menuItem {
+        height: 60px;
+        color: #333;
+    }
 }
 
 @media only screen and (max-width: 800px) and (min-width: 641px) {
-    .bigNav .navEl {
+    .nav .navEl {
         font-size: 0.8rem;
     }
 
-    .bigNav .menuItem {
+    .nav .menuItem {
         font-size: 0.8rem;
 
     }
-    
+
     .navEl .button {
         padding: 0.5rem 0.7rem;
         font-size: 0.8rem;
     }
 }
 
-@media only screen and (max-width: 1000px) and (min-width: 641px) {
-
-}
+@media only screen and (max-width: 1000px) and (min-width: 641px) {}

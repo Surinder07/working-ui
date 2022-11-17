@@ -2,81 +2,94 @@ import Link from 'next/link';
 import Hamburger from './Hamburger';
 import LinkedImage from './LinkedImage';
 import styles from '../styles/elements/Navbar.module.css';
-import { ImagesInfo } from '../lib/constants/ImagesInfo';
+import pageStyles from '../styles/Pages.module.css';
+import { NavLinks } from '../constants';
+import { ImagesInfo } from '../constants/ImagesInfo';
+import { userService } from '../services/user.service';
+import { useEffect, useState } from 'react';
 
 const Navbar = (props) => {
 
+    const [showSubMenu, setShowSubMenu] = useState(false);
+
+    useEffect(() => {
+        setShowSubMenu(props.screenType === 3 ? true : false);
+    }, [props.screenType])
+
+    const getMenuLink = (key, color, text, link) => {
+        return (
+            <Link key={key} href={link}>
+                <li className={styles.menuItem} style={{ color: color }} >{text}</li>
+            </Link>
+        )
+    }
+
     return (
-        <nav className={styles.nav}>
-            <div className={`${styles.bigNav} pagePadding`}>
+        <nav className={`${styles.nav} ${pageStyles.pagePadding}`}>
+            {
+                props.screenType === 3 &&
                 <div className={styles.navEl}>
-                    <LinkedImage
-                        link={ImagesInfo.logo.link}
-                        src={ImagesInfo.logo.src}
-                        alt={ImagesInfo.logo.alt}
-                        height={ImagesInfo.logo.headerHeight[props.screenType]}
-                        onClick={() => props.setActiveMenu('/')}
-                    />
+                    <Hamburger setOpenMenu={props.setOpenMenu} openMenu={props.openMenu} />
                 </div>
-                <div className={styles.navEl}>
-                    <ul className={styles.menuItems} style={{justifyContent: 'flex-start', marginLeft:'20px'}}>
-                        {props.navLinks.map((nav, i) => (
-                            <Link key={i} href={nav.link} onClick={() => props.setActiveMenu(nav.title)}>
-                                <li
-                                    className={styles.menuItem}
-                                    style={{ color: props.activeMenu == nav.title ? 'var(--button-blue-color)' : 'inherit' }}
-                                >{nav.title}
-                                </li>
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
-                <div></div>
-                <div className={`${styles.navEnd} ${styles.navEl}`}>
-                    <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
-                        <button disabled style={{color: '#999', cursor:'default'}} className={styles.button}>Log In</button>
-                    </Link>
-                    <p>English</p>
-                </div>
+            }
+            <div className={styles.navEl}>
+                <LinkedImage
+                    link={ImagesInfo.logo.link}
+                    src={ImagesInfo.logo.src}
+                    alt={ImagesInfo.logo.alt}
+                    height={ImagesInfo.logo.headerHeight[props.screenType]}
+                />
             </div>
-            <div style={{ position: 'relative', width: '100%' }}>
-                <ul className={`${props.openMenu ? styles.navMenuMobile : styles.navMenuMobileClose}`}>
-                    {props.navLinks.map((nav, i) => (
-                        <Link key={i} href={nav.link} onClick={() => {
-                            props.setActiveMenu(nav.title);
-                            props.setOpenMenu(false);
-                        }}>
+            <div className={`${styles.navEl} ${styles.menu}`}>
+                <ul className={styles.menuItems} style={props.screenType === 3 ? props.openMenu ?
+                    { height: `${(80 * NavLinks.length) + 160}px` } : { height: 0, overflow: 'hidden' } : {}}>
+                    {NavLinks.map((nav, i) => (
+                        nav.link ? getMenuLink(`menu${i}`, (props.activeMenu == nav.title && props.screenType !== 3) ? 'var(--button-blue-color)' : 'inherit',
+                            nav.title, nav.link) :
                             <li
-                                className={styles.mobileMenuItem}
+                                key={`menu${i}`}
+                                className={`${styles.menuItem} ${styles.expandableMenu}`}
                                 style={{
-                                    color: props.activeMenu == nav.title ? '#ddd' : 'inherit',
-                                    height: `${props.menuHeight}px`
+                                    color: (props.activeMenu == nav.title && props.screenType !== 3) ? 'var(--button-blue-color)' : 'inherit',
+                                    paddingBottom: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height))` : '0',
+                                    height: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height) + 80px)` : 'auto'
                                 }}
+                                onMouseEnter={() => { if (props.screenType !== 3) setShowSubMenu(true) }}
+                                onMouseLeave={() => { if (props.screenType !== 3) setShowSubMenu(false) }}
                             >
                                 {nav.title}
+                                {
+                                    showSubMenu &&
+                                    <ul className={styles.subMenu}>
+                                        {
+                                            nav.dropdown.map((drop, i) => (
+                                                getMenuLink(`sub-menu${i}`, 'inherit', drop.title, drop.link)
+                                            ))
+                                        }
+                                    </ul>
+                                }
                             </li>
-                        </Link>
                     ))}
                 </ul>
-                <div className={`${styles.smallNav} pagePadding`}>
-                    <Hamburger setOpenMenu={props.setOpenMenu} openMenu={props.openMenu} />
-                    <div className={styles.navEl}>
-                        <LinkedImage
-                            link={ImagesInfo.logo.link}
-                            src={ImagesInfo.logo.src}
-                            alt={ImagesInfo.logo.alt}
-                            height={ImagesInfo.logo.headerHeight[props.screenType]}
-                            onClick={() => props.setActiveMenu('/')}
-                        />
-                    </div>
-                    <div className={`${styles.navEnd} ${styles.navEl}`}>
-                        <Link href={'coming-soon'} onClick={() => props.setActiveMenu("login")}>
-                            <button disabled className={styles.button}>Log In</button>
-                        </Link>
-                    </div>
-                </div>
             </div>
-        </nav>
+            {
+                props.screenType !== 3 && <div className={styles.navEl}></div>
+            }
+            <div className={`${styles.navEnd} ${styles.navEl}`}>
+                {
+                    (props.showLogin || !(props.user && props.user.email)) ?
+                        <>
+                            <Link href={'login'} >
+                                <button className={styles.button}>Log In</button>
+                            </Link>
+                            {
+                                props.screenType !== 3 && <p>English</p>
+                            }
+                        </> :
+                        <button className={styles.button} onClick={() => userService.logout()}>Log Out</button>
+                }
+            </div>
+        </nav >
     )
 
 }

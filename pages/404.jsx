@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { useEffect } from "react";
 import WaawHead from "../components/WaawHead";
 import styles from '../styles/pages/404.module.css'
 
-const NotFound = () => {
+const NotFound = (props) => {
+
+    useEffect(() => {
+        props.setActiveMenu('404');
+    })
+
     return (
-        <div>
+        <>
             <WaawHead title='WaaW | 404 - Page Not Found' meta={{robots:'noindex, nofollow'}} />
             <div className={styles.notFoundPage}>
                 <div className={styles.notFound}>
@@ -22,7 +28,7 @@ const NotFound = () => {
                     </Link>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

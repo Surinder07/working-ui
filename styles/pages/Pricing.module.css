@@ -1,0 +1,75 @@
+.background {
+    width: 100%;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.pricingBackground {
+    background-color: var(--lighter-blue-color);
+    width: 100%;
+}
+
+.pricingContainer {
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+.leftContainer, .rightContainer {
+    margin: 2rem 0;
+}
+
+.leftContainer {
+    border-right: solid 2px var(--grey-border-color);
+}
+
+.leftContainer li {
+    list-style: none;
+    display: flex;
+    font-size: 0.9rem;
+    margin: 0.5rem 0
+}
+
+.leftContainer li p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.rightContainer {
+    padding-left: 2rem;
+}
+
+.rightContainer table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+.rightContainer table td {
+    text-align: center;
+    border: solid 2px var(--grey-border-color);
+}
+
+.rightContainer p {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: right;
+}
+
+@media only screen and (max-width: 640px) {
+    .pricingContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .leftContainer {
+        border: none;
+        width: 100%;
+    }
+
+    .rightContainer {
+        padding: 0;
+    }
+}

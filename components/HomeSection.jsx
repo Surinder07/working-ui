@@ -1,5 +1,6 @@
 import HomeSectionCard from './HomeSectionCard';
 import styles from '../styles/pages/Home.module.css';
+import pageStyles from '../styles/Pages.module.css';
 
 const HomeSection = (props) => {
 
@@ -13,7 +14,7 @@ const HomeSection = (props) => {
     return (
         <div className={styles.sectionContainer} style={props.info.styles.text}>
             <div className={styles.overlay} style={props.info.styles.overlay}></div>
-            <div className={`${styles.container} pagePadding`} style={props.info.styles.color}>
+            <div className={`${styles.container} ${pageStyles.pagePadding}`} style={props.info.styles.color}>
                 <h4 className={styles.sectionInfo}>{props.info.title}</h4>
                 <h1 className={styles.sectionDescription}>{props.info.description}</h1>
                 <div className={styles.tileContainer}>

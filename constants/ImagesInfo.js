@@ -1,7 +1,7 @@
-import Images from '../../public/Images';
-import Icons from '../../public/icons/Icons';
-import SocialIcons from '../../public/icons/socials/SocialIcons';
-import MobileAppIcons from '../../public/icons/mobileApps/MobileAppIcons';
+import Images from '../public/Images';
+import Icons from '../public/icons/Icons';
+import SocialIcons from '../public/icons/socials/SocialIcons';
+import MobileAppIcons from '../public/icons/mobileApps/MobileAppIcons';
 
 export const ImagesInfo = {
     logo: {
