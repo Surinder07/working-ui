@@ -54,7 +54,6 @@ export const userService = {
     login,
     logout,
     getUser,
-    updateUserDetails,
     TOKEN_KEY,
     USER_KEY
 };
