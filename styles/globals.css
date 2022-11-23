@@ -5,6 +5,7 @@
     --grey-border-color: #e5e7eb;
     --button-hover-grey-color: #f7f7f7;
     --button-blue-color: #0091d0;
+    --logo-blue-color: #28A8E0;
     --lighter-blue-color: #90d9d3;
     --footer-text-color: #111827;
     --navigation-height: 80px;
@@ -12,6 +13,7 @@
     --business-bg-gradient: #FFFFFF00;
     --talent-bg-position: left center;
     --talent-bg-gradient: #FFFFFF00;
+    --error-message-color: #cc1111;
 }
 
 @media only screen and (max-width: 640px) {
@@ -42,6 +44,7 @@ body {
     margin: 0;
     font-family: "Poppins", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        height: 100%;
 }
 
 a {

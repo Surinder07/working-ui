@@ -1,15 +1,14 @@
-import styles from '../styles/elements/InputBox.module.css';
-import { Person, Email, Key, Visibility, VisibilityOff } from '@mui/icons-material';
+import styles from '../../styles/elements/InputBox.module.css';
+import { Person, Email, Key, Visibility, VisibilityOff, CorporateFare } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
 const InputBox = (props) => {
 
     const [type, setType] = useState(props.type);
     const [visibilityIcon, setVisibilityIcon] = useState(<Visibility />);
-    const [active, setActive] = useState(false);
 
     useEffect(() => {
-        if(props.type === 'user') {
+        if (props.type === 'user' || props.type === 'org') {
             setType('text')
         }
     })
@@ -22,6 +21,8 @@ const InputBox = (props) => {
                 return <Key />
             case 'user':
                 return <Person />
+            case 'org':
+                return <CorporateFare />
             default:
                 return <></>
         }
@@ -37,18 +38,9 @@ const InputBox = (props) => {
         }
     }
 
-    const style={
-        borderBottom: 'solid #555 2px',
-        backgroundColor:' #eee'
-    }
-
-    const activeStyle={
-        borderBottom: 'solid var(--button-blue-color) 2px',
-        backgroundColor:'#FFF'
-    }
-
     return (
-        <div className={`${styles.inputBox} ${props.className}`} style={active ? activeStyle : style}>
+        <div className={`${styles.inputBox} ${props.className} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+            style={props.style}>
             <div className={styles.inputIconContainer}>{getIcon()}</div>
             <input
                 type={type}
@@ -56,9 +48,10 @@ const InputBox = (props) => {
                 name={props.name}
                 placeholder={props.placeholder}
                 value={props.value}
-                onChange={(e) => props.setValue(e.target.value)}
-                onFocus={() => setActive(true)}
-                onBlur={() => setActive(false)}
+                onChange={(e) => {
+                    props.setValue(e.target.value);
+                    props.setShowError && props.setShowError(false);
+                }}
                 autoComplete='off' />
             {
                 props.type.toLowerCase() === 'password' &&
@@ -66,6 +59,7 @@ const InputBox = (props) => {
                     {props.type.toLowerCase() === 'password' && visibilityIcon}
                 </div>
             }
+            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
         </div>
     );
 }

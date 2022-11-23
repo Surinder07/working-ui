@@ -12,17 +12,23 @@ const getApiUrl = (endpoint) => {
     return `${baseUrl}${endpoint}`
 }
 
-const login = async (login, password, rememberMe) => {
+const login = async (login, password, rememberMe, setToken, setUser) => {
     return fetchWrapper.post(getApiUrl(endpoints.authorization),
         { login, password, rememberMe })
         .then(res => {
+            if (res.error) {
+                return res;
+            }
             secureLocalStorage.saveData(TOKEN_KEY, res.token);
+            setToken(res.token);
         })
-        .then(() => getUser()
-            .then(res => {
+        .then((res) => {
+            return res.error ? res : getUser().then(res => {
                 secureLocalStorage.saveData(USER_KEY, JSON.stringify(res));
+                setUser(res);
                 return res;
             })
+        }
         );
 }
 
@@ -33,17 +39,8 @@ const logout = async () => {
 }
 
 const registerUser = async (email, password, contractor) => {
-    fetchWrapper.post(getApiUrl(endpoints.registerNewUser),
+    return fetchWrapper.post(getApiUrl(endpoints.registerNewUser),
         { email, password, contractor })
-        .then(res => {
-            if (!res.ok) {
-                /**
-                 * @todo add responses
-                 */
-            } else {
-                Router.push('/email-validation')
-            }
-        })
 }
 
 const getUser = async () => {
@@ -52,6 +49,7 @@ const getUser = async () => {
 
 export const userService = {
     login,
+    registerUser,
     logout,
     getUser,
     TOKEN_KEY,

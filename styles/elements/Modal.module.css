@@ -1,14 +1,15 @@
 .modalBackdrop {
     overflow: hidden;
-    z-index: 100;
     position: fixed;
     top:0;
     left:0;
-    background-color: rgba(0,0,0,0.4);
     height: 100vh;
     width: 100vw;
+    display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+    background-color: #88888880;
 }
 
 .modal {
@@ -50,4 +51,56 @@
     justify-content: center;
     display: inline-flex;
     width: fit-content;
+}
+
+/* Success Modal */
+.successModal {
+    min-height: 200px;
+    max-width: 700px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.successCircle {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    background: #2996C3;
+    box-shadow: 7px 2px 45px 7px #2996C3;
+    border-radius: 100%;
+}
+
+.successTick {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    width: 50px;
+    height: 25px;
+    transform: rotate(-45deg);
+    border-left: solid 5px #F3F3F3;
+    border-bottom: solid 5px #F3F3F3;
+}
+
+.successModal h1 {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 42px;
+    color: #2996C3;
+    margin-top: 2rem;
+}
+
+.successModal p {
+    font-weight: 500!important;
+    font-size: 20px!important;
+    line-height: 30px!important;
+    text-align: center!important;
+    color: #000000!important;
+    opacity: 0.5!important;
+    width: 80%!important;
+    margin-bottom: 20px!important;
 }

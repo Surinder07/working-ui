@@ -61,21 +61,24 @@
     cursor: pointer;
 }
 
+.menu .expandableMenu:hover .subMenu {
+    display: flex;
+    height: 150px;
+}
+
 .menu .subMenu {
-    height: 120px;
+    height: 0;
     width: fit-content;
-    background-color: var(--button-blue-color);
-    color: white;
+    padding-top: 30px;
     list-style: none;
     list-style-type: none;
-    border-radius: 1rem;
-    display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
     z-index: 2;
     overflow: hidden;
     transform: translateX(-35px);
+    transition: all 0.5s ease;
 }
 
 .menu .subMenu a {
@@ -83,13 +86,21 @@
 }
 
 .menu .subMenu .menuItem {
-    padding: 20px 30px;
+    padding: 20px 50px;
     width: 100%;
-    color: white !important;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #0C0C0C;
+    background-color: whitesmoke;
 }
 
 .menu .subMenu .menuItem:hover {
-    background-color: #00000010;
+    background: #DFEFF6;
+    color: #2996C3;
+    font-weight: 600;
+    border-left: 2px solid #2996C3;
 }
 
 @media only screen and (max-width: 640px) {
@@ -99,12 +110,12 @@
         width: 90%;
         left: 50%;
         transform: translateX(-50%);
-        border-radius: 1rem;
         top: var(--navigation-height);
         background-color: var(--button-blue-color);
         color: white;
         flex-direction: column;
         align-items: center;
+        z-index: 100;
     }
 
     .nav .menu .menuItems {
@@ -138,6 +149,7 @@
         color: white;
         align-items: flex-start;
         overflow: hidden;
+        padding: 0;
         top: 80px;
         left: 50%;
         transform: translateX(-50%);

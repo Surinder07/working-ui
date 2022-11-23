@@ -17,8 +17,7 @@ const post = async (url, body) => {
         credentials: 'include',
         body: JSON.stringify(body)
     };
-    const response = await fetch(url, requestOptions);
-    return handleResponse(response);
+    return await fetch(url, requestOptions).then(response => handleResponse(response));
 }
 
 const put = async (url, body) => {
@@ -51,12 +50,10 @@ const authHeader = (url) => {
     }
 }
 
-const handleResponse = (response) => {
-    return response.text().then(text => {
+const handleResponse = async (response) => {
+    return response.text().then((text) => {
         const data = text && JSON.parse(text);
-
         if (!response.ok) {
-            console.log(text)
             /** 
              * @todo: Add custom error code check
              **/
@@ -64,12 +61,21 @@ const handleResponse = (response) => {
             //     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
             //     userService.logout();
             // }
-
-            // const error = (data && data.message) || response.statusText;
-            // return Promise.reject(error);
+            const error = Math.floor(response.status / 100) === 5 ? 'Something went wrong. Please try again later' :
+                (data && data.message) || response.statusText;
+            return {
+                error: true,
+                message: error
+            }
         }
-
-        return data;
+        return response;
+    },
+    (error) => {
+        console.log("wrapper error", error)
+        return {
+            error: true,
+            message: error.message
+        }
     });
 }
 

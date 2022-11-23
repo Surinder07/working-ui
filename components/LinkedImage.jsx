@@ -50,6 +50,7 @@ const LinkedImage = (props) => {
             scroll={props.link ? true : false}
             style={style}
             onClick={props.onClick}
+            className={props.className}
             target={props.newTab ? '_blank' : '_self'}
         >
             <Image

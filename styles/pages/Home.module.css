@@ -106,7 +106,6 @@
 @media only screen and (max-width: 640px) {
     .introSection {
         height: auto;
-        background-image: url('/bg/intro-bg.png');
         background-repeat: no-repeat;
         background-size: contain;
         background-position: bottom center;

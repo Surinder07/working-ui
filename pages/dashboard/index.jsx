@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import WaawHead from "../../components/WaawHead";
-import { userService } from "../../services/user.service";
 
 const Dashboard = (props) => {
 

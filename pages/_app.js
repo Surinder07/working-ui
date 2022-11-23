@@ -12,16 +12,15 @@ import { userService } from '../services/user.service';
 
 function MyApp({ Component, pageProps }) {
 
-    const [activeMenu, setActiveMenu] = useState('home');
+    const [activeMenu, setActiveMenu] = useState('');
     const [openMenu, setOpenMenu] = useState(false);
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({})
-    const [token, setToken] = useState(null)
-    const menuHeight = 70;
-    const hideNavigationFor = ['login', 'coming-soon'];
-    const showLoginFor = ['/', 'home', 'Why WAAW', 'Pricing'];
+    const [user, setUser] = useState({});
+    const [token, setToken] = useState(null);
+    const [firstVisit, setFirstVisit] = useState(true);
+    const showLoginFor = ['/', 'home', 'Why WAAW', 'Pricing', '', 'hide'];
 
     const getActiveMenuFromPath = (path) => {
         switch (path) {
@@ -29,10 +28,12 @@ function MyApp({ Component, pageProps }) {
                 return 'home';
             case '/why-waaw':
                 return 'Why WAAW';
-            case '/coming-soon':
+            case '/pricing/business':
                 return 'Pricing';
-            case '/login':
-                return 'login';
+            case '/pricing/talent':
+                return 'Pricing';
+            default:
+                return 'hide';
         }
     }
 
@@ -48,22 +49,15 @@ function MyApp({ Component, pageProps }) {
     }, [router]);
 
     useEffect(() => {
-        if (localStorage.getItem(userService.TOKEN_KEY) != null && localStorage.getItem(userService.TOKEN_KEY) != '') {
-            setToken(secureLocalStorage.getData(userService.TOKEN_KEY));
-        }
-        if (user.email == null && localStorage.getItem(userService.USER_KEY) != null && localStorage.getItem(userService.USER_KEY) != '') {
-            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
-        }
-        if (window.innerWidth < 640) {
-            setScreenType(3)
-        } else if (window.innerWidth > 1000) {
-            setScreenType(1)
-        } else {
-            setScreenType(2)
-        }
+        checkPageLoading();
+        updateScreenTypeProp();
     }, [])
 
     useEffect(() => {
+        checkIfLoggedIn();
+    }, [activeMenu])
+
+    const checkPageLoading = () => {
         const handleStart = (url) => (url !== router.asPath) && setPageLoading(true);
         const handleComplete = (url) => (url === router.asPath) && setPageLoading(false);
 
@@ -76,20 +70,46 @@ function MyApp({ Component, pageProps }) {
             router.events.off('routeChangeComplete', handleComplete)
             router.events.off('routeChangeError', handleComplete)
         }
-    }, [])
+    }
+
+    const updateScreenTypeProp = () => {
+        if (window.innerWidth < 640) {
+            setScreenType(3)
+        } else if (window.innerWidth > 1000) {
+            setScreenType(1)
+        } else {
+            setScreenType(2)
+        }
+    }
+
+    const checkIfLoggedIn = () => {
+        if (firstVisit && activeMenu !== '' && !showLoginFor.includes(activeMenu)) {
+            userService.getUser()
+                .then(res => {
+                    secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
+                    setUser(res);
+                })
+                .catch((e) => {
+                    router.push('/login');
+                })
+            setFirstVisit(false);
+        }
+    }
 
     return (
         <React.Fragment>
             <WaawHead />
+            {
+                console.log(activeMenu)
+            }
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 {
-                    !hideNavigationFor.includes(activeMenu) &&
+                    activeMenu !== 'hide' &&
                     <Navbar
                         activeMenu={activeMenu}
                         openMenu={openMenu}
                         setOpenMenu={setOpenMenu}
-                        menuHeight={menuHeight}
                         navLinks={NavLinks}
                         screenType={screenType}
                         user={user}
@@ -100,10 +120,12 @@ function MyApp({ Component, pageProps }) {
                     setActiveMenu={setActiveMenu}
                     screenType={screenType}
                     user={user}
+                    setUser={setUser}
                     token={token}
+                    setToken={setToken}
                 />
                 {
-                    !hideNavigationFor.includes(activeMenu) &&
+                    activeMenu !== 'hide' &&
                     <Footer screenType={screenType} />
                 }
             </div>
@@ -111,4 +133,4 @@ function MyApp({ Component, pageProps }) {
     )
 }
 
-export default MyApp
+export default MyApp;

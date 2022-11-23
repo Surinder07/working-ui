@@ -8,7 +8,7 @@ const nextConfig = {
     publicRuntimeConfig: {
         apiUrl: process.env.NODE_ENV === 'development'
             ? 'http://localhost:8080/api' // development api
-            : 'https://api.waaw.ca' // production api
+            : 'https://api.waaw.ca/api' // production api
     },
     env: {
         header: {
@@ -30,13 +30,16 @@ const nextConfig = {
         endpoints: {
             user: {
                 authorization: '/v1/unAuth/authenticate',
-                registerNewUser: '/api/v1/unAuth/user/registration/new',
-                verifyEmail: '/api/v1/unAuth/user/registration/verifyEmail',
-                checkUserNameExistence: '/api/v1/unAuth/user/checkUserNameExistence',
-                completeProfile: '/api/v1/registration/user/completeProfile',
-                validateInviteKey: '/api/v1/unAuth/user/invitation/validateKey',
-                registerByInvite: '/api/v1/unAuth/user/invitation/register',
-                getUserDetails: '/v1/getAccount'
+                registerNewUser: '/v1/unAuth/user/registration/new',
+                verifyEmail: '/v1/unAuth/user/registration/verifyEmail',
+                checkUserNameExistence: '/v1/unAuth/user/checkUserNameExistence',
+                completeProfile: '/v1/registration/user/completeProfile',
+                validateInviteKey: '/v1/unAuth/user/invitation/validateKey',
+                registerByInvite: '/v1/unAuth/user/invitation/register',
+                getUserDetails: '/v1/user/getAccount'
+            },
+            dropdown: {
+                getTimezones: '/v1/unAuth/timezone/get'
             }
         }
     }

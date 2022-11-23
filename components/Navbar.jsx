@@ -6,20 +6,13 @@ import pageStyles from '../styles/Pages.module.css';
 import { NavLinks } from '../constants';
 import { ImagesInfo } from '../constants/ImagesInfo';
 import { userService } from '../services/user.service';
-import { useEffect, useState } from 'react';
 
 const Navbar = (props) => {
-
-    const [showSubMenu, setShowSubMenu] = useState(false);
-
-    useEffect(() => {
-        setShowSubMenu(props.screenType === 3 ? true : false);
-    }, [props.screenType])
 
     const getMenuLink = (key, color, text, link) => {
         return (
             <Link key={key} href={link}>
-                <li className={styles.menuItem} style={{ color: color }} >{text}</li>
+                <li className={styles.menuItem} style={color !== '' ? { color: color } : {}} >{text}</li>
             </Link>
         )
     }
@@ -54,16 +47,14 @@ const Navbar = (props) => {
                                     paddingBottom: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height))` : '0',
                                     height: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height) + 80px)` : 'auto'
                                 }}
-                                onMouseEnter={() => { if (props.screenType !== 3) setShowSubMenu(true) }}
-                                onMouseLeave={() => { if (props.screenType !== 3) setShowSubMenu(false) }}
                             >
                                 {nav.title}
                                 {
-                                    showSubMenu &&
-                                    <ul className={styles.subMenu}>
+                                    <ul className={styles.subMenu} style={props.screenType === 3 ? props.openMenu ?
+                                        { height: `120px` } : { height: 0, overflow: 'hidden' } : {}}>
                                         {
                                             nav.dropdown.map((drop, i) => (
-                                                getMenuLink(`sub-menu${i}`, 'inherit', drop.title, drop.link)
+                                                getMenuLink(`sub-menu${i}`, '', drop.title, drop.link)
                                             ))
                                         }
                                     </ul>
