@@ -62,3 +62,11 @@
     padding: 0 10px;
     margin: 1rem 0 !important;
 }
+
+.innerContainer {
+    width: 50%;
+}
+
+.innerContainer2 {
+    width: 43%;
+}

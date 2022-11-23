@@ -1,16 +1,11 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 const FullPageWithImageLayout = (props) => {
+  useEffect(() => {
+    props.setActiveMenu("hide");
+  }, []);
 
-    useEffect(() => {
-        props.setActiveMenu('hide');
-    }, []);
-
-    return(
-        <div>
-            {props.children}
-        </div>
-    )
-}
+  return <div>{props.children}</div>;
+};
 
 export default FullPageWithImageLayout;
