@@ -3,7 +3,7 @@ import styles from '../../styles/pages/LoginRegister.module.css';
 import layoutStyles from '../../styles/layouts/LoginRegistration.module.css';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { userService } from '../../services/user.service';
 import { validateEmail, validatePassword } from '../../helpers';
 import PasswordPolicy from '../../components/PasswordPolicy';
@@ -12,6 +12,11 @@ import Button from '../../components/Button';
 import SuccessModal from '../../components/SuccessModal';
 
 const Register = (props) => {
+
+    useEffect(() => {
+        props.setAuthenticationRequired(false);
+        props.setShowTopNavigation(false);
+    }, []);
 
     const Router = useRouter();
     const [email, setEmail] = useState('');
@@ -25,7 +30,9 @@ const Register = (props) => {
     const [passwordMessage, setPasswordMessage] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
     const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-    const [registrationSuccess, setregistrationSuccess] = useState(false);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
+    const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
     const checkConfirmPasswordError = () => {
         if (confirmPassword === '') {
@@ -63,7 +70,7 @@ const Register = (props) => {
         } else {
             error = !validatePassword(password);
             setPasswordMessage('Invalid Password');
-            setPasswordError();
+            setPasswordError(error);
         }
         return error;
     }
@@ -75,20 +82,21 @@ const Register = (props) => {
         return err1 || err2 || err3;
     }
 
-    const handleRegister = (e) => {
-        e.preventDefault;
+    const handleRegister = () => {
         if (loading) return;
+        setLoading(true);
         validateForms()
             .then((error) => {
                 if (!error) {
-                    setLoading(true);
                     userService.registerUser(email, password, userRole === 'contractor')
                         .then((res) => {
                             if (res.error) {
-                                alert(`error, ${res.message}`)
+                                setSubmitErrorMessage(res.message);
+                                setSubmitError(true);
+                                setTimeout(() => setSubmitError(false), 3000);
                                 setLoading(false);
                             } else {
-                                setregistrationSuccess(true);
+                                setRegistrationSuccess(true);
                             }
                         });
                 }
@@ -147,7 +155,11 @@ const Register = (props) => {
                 />
             </div>
             <PasswordPolicy password={password} showError={passwordError} />
-            <p style={{ textAlign: 'left', margin: 0 }}>Already have an account?? <Link href='/login'>Log In</Link></p>
+            <p style={{ position: 'relative', textAlign: 'left', margin: 0 }}>
+                Already have an account?? <Link href='/login'>Log In</Link>
+                {submitError && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
+            </p>
+
             <Button
                 type='default'
                 disabled={loading}
@@ -158,7 +170,7 @@ const Register = (props) => {
             </Button>
             <p style={{ width: '80%', textAlign: 'left', marginBottom: 0 }}>By clicking Register, you agree to our <Link href='/#'>Terms</Link> and acknowledge that you have read and accepted our <Link href='/#'>Privacy Poilcy</Link></p>
             {registrationSuccess &&
-                <SuccessModal 
+                <SuccessModal
                     title='Registration Successfull!'
                     message={`We have sent a verification email at ${email}. Please verify your email to continue.`}
                     onButtonClick={() => Router.push('/login')}

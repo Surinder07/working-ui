@@ -15,8 +15,8 @@ const Button = (props) => {
     }, []);
 
     const onClick = (e) => {
+        e.preventDefault();
         if (!props.disabled) {
-            e.preventDefault();
             props.onClick && props.onClick();
             if (props.href) router.push(props.href);
         }
@@ -38,7 +38,7 @@ const Button = (props) => {
                             height={props.icon.height}
                             style={{ width: 'auto' }}
                         />
-                        : <div style={{display:'flex', alignItems:'center'}} className={`${styles.icon} ${props.type === 'social' ? styles.socialIcon : styles.defaultIcon}`}>
+                        : <div style={{ display: 'flex', alignItems: 'center' }} className={`${styles.icon} ${props.type === 'social' ? styles.socialIcon : styles.defaultIcon}`}>
                             {props.icon.element}
                         </div>
                 )

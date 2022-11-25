@@ -32,7 +32,7 @@ const ContactInput = (props) => {
                 options={CountryCodes}
                 inputHeight={inputHeight}
                 style={{
-                    borderRight: '1px solid #2996C3',
+                    borderRight: props.showError ? '1px solid var(--error-message-color)' : '1px solid #2996C3',
                 }} />
             <input
                 type='tel'
@@ -41,7 +41,10 @@ const ContactInput = (props) => {
                 maxLength='10'
                 placeholder='Enter Mobile No.'
                 value={props.mobile}
-                onChange={(e) => props.setMobile(e.target.value)}
+                onChange={(e) => {
+                    props.setMobile(e.target.value);
+                    props.setShowError(false);
+                }}
                 style={{ paddingLeft: '15px' }}
                 autoComplete='off' />
             {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}

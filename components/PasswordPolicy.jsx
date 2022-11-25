@@ -37,13 +37,18 @@ const PasswordPolicy = (props) => {
         color: '#0091d0'
     }
 
+    const errorStyle = {
+        color: 'var(--error-message-color)',
+        fontWeight: 600
+    }
+
     return (
         <p style={style}>Password should be atleast
-            <span style={charLimit ? satisfiedStyle : {}}> 8 characters</span>, and should contain atleast
-            <span style={uppercase ? satisfiedStyle : {}}> 1 Uppercase letter</span>,
-            <span style={lowercase ? satisfiedStyle : {}}> 1 Lowercase letter</span>,
-            <span style={number ? satisfiedStyle : {}}> 1 Number</span> and
-            <span style={specialCharacter ? satisfiedStyle : {}}> 1 Special Character{`${'(@$!%*?&)'}`}</span>
+            <span style={charLimit ? satisfiedStyle : props.showError ? errorStyle : {}}> 8 characters</span>, and should contain atleast
+            <span style={uppercase ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Uppercase letter</span>,
+            <span style={lowercase ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Lowercase letter</span>,
+            <span style={number ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Number</span> and
+            <span style={specialCharacter ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Special Character{`${'(@$!%*?&)'}`}</span>
         </p>
     )
 }

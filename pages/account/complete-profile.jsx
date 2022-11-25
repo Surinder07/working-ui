@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useRouter } from 'next/router';
 import InputBox from '../../components/inputComponents/InputBox';
 import ContactInput from "../../components/inputComponents/ContactInput";
 import styles from '../../styles/pages/LoginRegister.module.css';
@@ -10,46 +11,106 @@ import { DayOfWeeks } from "../../constants";
 import InputWithButton from "../../components/inputComponents/InputWithButton";
 import LoginRegistrationLayout from "../../layouts/LoginRegistrationLayout";
 import Button from "../../components/Button";
+import { validateUsername } from "../../helpers";
 
 const CompleteProfile = (props) => {
 
+    const router = useRouter();
     const [timezones, setTimezones] = useState([]); // List to display
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
-    const [countryCode, setCountryCode] = useState('');
+    const [countryCode, setCountryCode] = useState('+1');
     const [mobile, setMobile] = useState('');
     const [organization, setOrganization] = useState('');
     const [weekStartOn, setWeekStartOn] = useState('Monday');
     const [timezone, setTimezone] = useState('');
+    const [promoCode, setPromoCode] = useState('');
     const [showErrorFirstName, setShowErrorFirstName] = useState(false);
     const [showErrorLastName, setShowErrorLastName] = useState(false);
     const [showErrorUsername, setShowErrorUsername] = useState(false);
-    const [showErrorUsernameMessage, setShowErrorUsernameMessage] = useState(false);
+    const [errorUsernameMessage, setErrorUsernameMessage] = useState('');
     const [showErrorMobile, setShowErrorMobile] = useState(false);
     const [showErrorOrganization, setShowErrorOrganization] = useState(false);
-    const [showErrorTimezone, setShowErrorTimezone] = useState('');
+    const [showErrorTimezone, setShowErrorTimezone] = useState(false);
     const [promoError, setPromoError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [submitErrorMessage, setSubmitErrorMessage] = useState('');
+    const [submitError, setSubmitError] = useState(false);
+
+    const validateFields = async () => {
+        let error = false;
+        if (firstName === '') {
+            setShowErrorFirstName(true);
+            error = true
+        }
+        if (lastName === '') {
+            setShowErrorLastName(true);
+            error = true
+        }
+        if (username === '') {
+            setErrorUsernameMessage('Field is required');
+            setShowErrorUsername(true);
+            error = true;
+        } else {
+            const err = !validateUsername(username);
+            setErrorUsernameMessage('Invalid username');
+            setShowErrorUsername(err);
+            if (err) error = true;
+        }
+        if (mobile !== '' && mobile.length < 10) {
+            setShowErrorMobile(true);
+            error = true;
+        }
+        if (organization === '') {
+            setShowErrorOrganization(true);
+            error = true;
+        }
+        if (timezone === '') {
+            setShowErrorTimezone(true);
+            error = true;
+        }
+        return error;
+    }
 
     useEffect(() => {
+        props.setAuthenticationRequired(true);
+        props.setShowTopNavigation(false);
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
 
     const onSubmit = () => {
-        if (validateFields()) return;
-        /**
-         * @todo add submit logic
-         */
+        if (loading) return;
+        validateFields()
+            .then(error => {
+                if (!error) {
+                    setLoading(true);
+                    userService.completeProfile({
+                        firstName, lastName, username, countryCode, mobile,
+                        organizationName: organization, firstDayOfWeek: weekStartOn,
+                        timezone, promoCode
+                    })
+                        .then(res => {
+                            if (res.error) {
+                                setSubmitErrorMessage(res.message);
+                                setSubmitError(true);
+                                setTimeout(() => setSubmitError(false), 3000);
+                                setLoading(false);
+                            } else {
+                                router.push('/account/payment-info');
+                            }
+                        })
+                }
+            })
     }
 
     return (
         <LoginRegistrationLayout
-        pageTitle='Complete Profile'
-        setActiveMenu={props.setActiveMenu}
-        background='/bg/complete-registration-bg.svg'
-        logoRight
+            pageTitle='Complete Profile'
+            setActiveMenu={props.setActiveMenu}
+            background='/bg/complete-registration-bg.svg'
+            logoRight
         >
             <legend>COMPLETE <span style={{ color: '#000' }}>YOUR PROFILE</span></legend>
             <div className={styles.formType}>Personal Details / Organization Details </div>
@@ -61,7 +122,8 @@ const CompleteProfile = (props) => {
                     value={firstName}
                     setValue={setFirstName}
                     style={{ marginTop: 0 }}
-                    errorMessage={'First name is required'}
+                    errorMessage={'Field is required'}
+                    showError={showErrorFirstName}
                     setShowError={setShowErrorFirstName}
                 />
                 <InputBox
@@ -71,7 +133,8 @@ const CompleteProfile = (props) => {
                     value={lastName}
                     setValue={setLastName}
                     style={{ marginTop: 0 }}
-                    errorMessage={'Last name is required'}
+                    errorMessage={'Field is required'}
+                    showError={showErrorLastName}
                     setShowError={setShowErrorLastName}
                 />
             </div>
@@ -82,7 +145,8 @@ const CompleteProfile = (props) => {
                 value={username}
                 setValue={setUsername}
                 style={{ marginTop: 0 }}
-                errorMessage={'Username is required'}
+                errorMessage={errorUsernameMessage}
+                showError={showErrorUsername}
                 setShowError={setShowErrorUsername}
             />
             <ContactInput
@@ -92,6 +156,7 @@ const CompleteProfile = (props) => {
                 setCountryCode={setCountryCode}
                 style={{ marginTop: 0 }}
                 errorMessage={'Enter a valid number'}
+                showError={showErrorMobile}
                 setShowError={setShowErrorMobile}
             />
             <InputBox
@@ -101,7 +166,8 @@ const CompleteProfile = (props) => {
                 value={organization}
                 setValue={setOrganization}
                 style={{ marginTop: 0 }}
-                errorMessage={'Organization name is required'}
+                errorMessage={'Field is required'}
+                showError={showErrorOrganization}
                 setShowError={setShowErrorOrganization}
             />
             <div className={layoutStyles.twoHalves}>
@@ -112,11 +178,12 @@ const CompleteProfile = (props) => {
                 <DropDown options={timezones}
                     defaultDisplay={'Timezone'}
                     setValue={setTimezone}
-                    errorMessage={'Timezone name is required'}
+                    errorMessage={'Field is required'}
+                    showError={showErrorTimezone}
                     setShowError={setShowErrorTimezone}
                 />
             </div>
-            <div className={layoutStyles.twoHalves}>
+            <div className={layoutStyles.twoHalves} style={{ position: 'relative' }}>
                 <InputWithButton
                     style={{ marginTop: '40px' }}
                     placeholder='Promo Code'
@@ -127,6 +194,7 @@ const CompleteProfile = (props) => {
                 // showMessage={true}
                 // setValue={promoValue}
                 />
+                {submitError && <p className={layoutStyles.errorTextUp}>{submitErrorMessage}</p>}
             </div>
             <div className={layoutStyles.twoHalves}>
                 <Button
