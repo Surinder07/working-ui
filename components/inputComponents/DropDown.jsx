@@ -47,7 +47,8 @@ const DropDown = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={`${styles.dropdownContainer} ${styles.dropdownRelative}`} style={props.style}>
+        <div ref={ref} className={`${styles.dropdownContainer} ${styles.dropdownRelative} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+            style={props.style}>
             <div className={styles.selected2} onClick={onClick}>
                 {displayValue}{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
             </div>
@@ -56,15 +57,16 @@ const DropDown = (props) => {
                 {
                     props.options.map((option, i) => (
                         <p key={i} onClick={() => {
-                            console.log('clicked')
                             props.setValue(option);
                             setDisplayValue(option);
+                            props.setShowError && props.setShowError(false);
                             setOpen(!open)
                         }}
                         >{option}</p>
                     ))
                 }
             </div>
+            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
         </div>
     )
 

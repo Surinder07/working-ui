@@ -11,6 +11,9 @@ const nextConfig = {
             : 'https://api.waaw.ca/api' // production api
     },
     env: {
+        apiKey: {
+            firebase: 'AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE'
+        },
         header: {
             title: 'WaaW | Automated Workforce Scheduling',
             description: 'Automated Workforce Scheduling app created by WAAW to help people and business to grow and thrive together',
@@ -36,7 +39,9 @@ const nextConfig = {
                 completeProfile: '/v1/registration/user/completeProfile',
                 validateInviteKey: '/v1/unAuth/user/invitation/validateKey',
                 registerByInvite: '/v1/unAuth/user/invitation/register',
-                getUserDetails: '/v1/user/getAccount'
+                getUserDetails: '/v1/user/getAccount',
+                resetPasswordInit: '/v1/unAuth/user/resetPassword/init',
+                resetPasswordFinish: '/v1/unAuth/user/resetPassword/finish'
             },
             dropdown: {
                 getTimezones: '/v1/unAuth/timezone/get'

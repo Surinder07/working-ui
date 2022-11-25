@@ -10,9 +10,9 @@ import { useEffect } from 'react';
 
 const Home = (props) => {
 
-    useEffect(() => {
-        props.setActiveMenu('home')
-    }, [])
+    // useEffect(() => {
+    //     props.setActiveMenu('home')
+    // }, [])
 
     return (
         <>

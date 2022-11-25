@@ -20,11 +20,15 @@ const Login = (props) => {
     const [rememberMe, setRememberMe] = useState(true);
     const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [emailMessage, setEmailMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
+    const [passwordMessage, setPasswordMessage] = useState('');
     const [submitError, setSubmitError] = useState(false);
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
     useEffect(() => {
+        props.setAuthenticationRequired(false);
+        props.setShowTopNavigation(false);
         if (localStorage.getItem(userService.TOKEN_KEY)) {
             userService.getUser()
                 .then(res => {
@@ -40,35 +44,58 @@ const Login = (props) => {
     }, [])
 
     const checkEmailError = () => {
-        if (login !== '')
-            setEmailError(!validateUsernameEmail(login));
-        else setEmailError(false);
+        let error = false;
+        if (login === '') {
+            setEmailMessage('Field is required');
+            setEmailError(true);
+            error = true;
+        } else {
+            error = !validateUsernameEmail(login);
+            setEmailMessage('Invalid Email or username');
+            setEmailError(error);
+        }
+        return error;
     }
 
     const checkPasswordError = () => {
-        if (password !== '')
-            setPasswordError(!validatePassword(password));
-        else setPasswordError(false);
+        let error = false;
+        if (password === '') {
+            setPasswordMessage('Field is required');
+            setPasswordError(true);
+            error = true;
+        } else {
+            error = !validatePassword(password);
+            setPasswordMessage('Invalid Password');
+            setPasswordError(error);
+        }
+        return error;
     }
 
-    const handleLogin = (e) => {
-        e.preventDefault;
-        checkEmailError();
-        checkPasswordError();
-        if (emailError || passwordError) return;
+    const validateForms = async () => {
+        const err1 = checkEmailError();
+        const err2 = checkPasswordError();
+        return err1 || err2
+    }
+
+    const handleLogin = () => {
         if (loading) return;
-        setLoading(true);
-        userService.login(login, password, rememberMe, props.setToken, props.setUser)
-            .then((res) => {
-                if (res.error) {
-                    setSubmitErrorMessage(res.message);
-                    setSubmitError(true);
-                    setTimeout(() => setSubmitError(false), 1000)
-                    setLoading(false)
-                } else {
-                    router.push('/dashboard')
+        validateForms()
+            .then(error => {
+                if (!error) {
+                    // setLoading(true);
+                    userService.login(login, password, rememberMe, props.setToken, props.setUser)
+                        .then((res) => {
+                            if (res.error) {
+                                setSubmitErrorMessage(res.message);
+                                setSubmitError(true);
+                                setTimeout(() => setSubmitError(false), 3000);
+                                setLoading(false);
+                            } else {
+                                router.push('/dashboard');
+                            }
+                        });
                 }
-            });
+            })
     }
 
     return (
@@ -85,10 +112,9 @@ const Login = (props) => {
                 placeholder='Username or Email'
                 value={login}
                 setValue={setLogin}
-                errorMessage="Please enter valid email or username"
+                errorMessage={emailMessage}
                 showError={emailError}
                 setShowError={setEmailError}
-                onBlur={checkEmailError}
             />
             <InputBox
                 type='password'
@@ -96,15 +122,14 @@ const Login = (props) => {
                 placeholder='Password'
                 value={password}
                 setValue={setPassword}
-                errorMessage="Please enter valid password"
+                errorMessage={passwordMessage}
                 showError={passwordError}
                 setShowError={setPasswordError}
-                onBlur={checkPasswordError}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
                 <Checkbox isChecked={rememberMe} setIsChecked={setRememberMe} label={'Remember Me'} />
                 <Link href='account/reset-password-init'>Forgot Password</Link>
-                {true && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
+                {submitError && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
             </div>
             <Button
                 type='fullWidth'

@@ -1,5 +1,20 @@
+import Router from 'next/router';
 import { userService } from '../services/user.service';
 import { secureLocalStorage } from './secureLocalStorage';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+const baseUrl = publicRuntimeConfig.apiUrl;
+
+const getApiUrl = (endpoint, queryMap) => {
+    let queryString = '';
+    if (queryMap) {
+        Object.entries(queryMap).map(query => (
+            queryString = queryString === '' ? queryString + query[0] + '=' + query[1] : '&' + queryString + query[0] + '=' + query[1]
+        ));
+    }
+    return `${baseUrl}${endpoint}${queryString !== '' ? `?${queryString}` : ''}`;
+}
 
 const get = async (url) => {
     const requestOptions = {
@@ -54,13 +69,21 @@ const handleResponse = async (response) => {
     return response.text().then((text) => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            /** 
-             * @todo: Add custom error code check
-             **/
-            // if ([401, 403].includes(response.status) && userService.userValue) {
-            //     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-            //     userService.logout();
-            // }
+            if (response.status === 401) userService.logout();
+            else if (response.status === 403 && data) {
+                console.log(data.waawErrorCode);
+                switch (data.waawErrorCode) {
+                    case 'WE_001':
+                        Router.push('/account/complete-profile');
+                        break;
+                    case 'WE_002':
+                        Router.push('/account/payment-info');
+                        break;
+                    default:
+                        userService.logout();
+                }
+                return {};
+            }
             const error = Math.floor(response.status / 100) === 5 ? 'Something went wrong. Please try again later' :
                 (data && data.message) || response.statusText;
             return {
@@ -68,20 +91,20 @@ const handleResponse = async (response) => {
                 message: error
             }
         }
-        return response;
+        return data;
     },
-    (error) => {
-        console.log("wrapper error", error)
-        return {
-            error: true,
-            message: error.message
-        }
-    });
+        (error) => {
+            return {
+                error: true,
+                message: error.message
+            }
+        });
 }
 
 export const fetchWrapper = {
     get,
     post,
     put,
-    delete: _delete
+    delete: _delete,
+    getApiUrl
 };
