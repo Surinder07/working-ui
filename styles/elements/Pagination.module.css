@@ -3,6 +3,16 @@
 	border-radius: 5px;
 }
 
-.paginations.prev {
+.paginations:hover {
+	border-color: #2996C3;
+}
+
+.prev {
+	color: #FFF;
 	background-color: #919EAB;
+}
+
+.next {
+	color: #fff;
+	background-color: #2996C3;
 }
