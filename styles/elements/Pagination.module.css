@@ -1,0 +1,8 @@
+.paginations {
+	margin-right: 10px !important;
+	border-radius: 5px;
+}
+
+.paginations.prev {
+	background-color: #919EAB;
+}

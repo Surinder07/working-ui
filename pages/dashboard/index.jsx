@@ -25,7 +25,7 @@ const Dashboard = (props) => {
         ))}
       </div>
       <div className="flex justify-between w-full h-full">
-        <Invoices heading="Invoices" subHeading="Tabular list of the current invoice status." invoiceHeader={DashboardInvoicesHeader} invoiceData={DashboardInvoicesValues} />
+        <Invoices heading="Invoices" subHeading="Tabular list of the current invoice status." invoiceHeader={DashboardInvoicesHeader} invoiceData={DashboardInvoicesValues} button="true" />
       </div>
     </>
   );
