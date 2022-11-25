@@ -1,0 +1,65 @@
+.cardContainer {
+	transition: all 0.5s ease;
+}
+
+.heading {
+	font-weight: 600;
+	font-size: 1rem;
+	transition: all 0.5s ease;
+}
+
+.containerImage {
+	width: 115px;
+}
+
+.subHeading {
+	color: #999999;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 21px;
+}
+
+.symbol {
+	color: #535255;
+	transition: all 0.5s ease;
+}
+
+.banner {
+	width: 124px;
+	height: 42px;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 42px;
+	color: #535255;
+	transition: all 0.5s ease;
+}
+
+.cardContainer:hover {
+	border: 1px solid #2996C3;
+}
+
+.cardContainer:hover .heading,
+.cardContainer:hover .banner,
+.cardContainer:hover .symbol {
+	color: #2996C3;
+}
+
+.invoiceHeading {
+	height: 30px;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 30px;
+	color: #535255;
+}
+
+.tag {
+	width: 29px;
+	height: 20px;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 0.2px;
+	color: #4B506D;
+}

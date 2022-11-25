@@ -1,0 +1,28 @@
+.innerContainer {
+	width: 50%;
+}
+
+.innerContainer2 {
+	width: 44.3%;
+}
+
+.reqFields {
+	color: rgb(220 38 38) !important;
+	position: absolute;
+	top: 86%;
+}
+
+.paymentLabel {
+	position: absolute;
+	color: #7d7d7d;
+	font-weight: 600;
+}
+
+.leftLabel {
+	top: -41%;
+}
+
+.rightLabel {
+	left: 50%;
+	top: -41%;
+}

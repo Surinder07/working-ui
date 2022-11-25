@@ -4,6 +4,9 @@ import WaawHead from '../components/WaawHead';
 import styles from '../styles/layouts/FullPageWithImage.module.css';
 
 const FullPageWithImageLayout = (props) => {
+  useEffect(() => {
+    props.setActiveMenu("hide");
+  }, []);
 
     const contentRef = useRef();
     const containerRef = useRef();
