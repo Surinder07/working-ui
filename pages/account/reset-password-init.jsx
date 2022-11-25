@@ -59,6 +59,7 @@ const ResetPasswordInit = (props) => {
         <FullPageWithImageLayout
             title='Reset Password'
             background='/bg/reset-password-init-bg.svg'
+            setActiveMenu={props.setActiveMenu}
         >
             <h1>Trouble Logging in?</h1>
             <h3>Enter your email and we will, send you a link to reset your password.</h3>

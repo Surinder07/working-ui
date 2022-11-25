@@ -1,14 +1,9 @@
-import { useEffect } from "react";
 import WaawHead from "../components/WaawHead";
 import styles from '../styles/layouts/LoginRegistration.module.css';
 import LinkedImage from '../components/LinkedImage';
 import Images from '../public/Images';
 
 const LoginRegistrationLayout = (props) => {
-
-    useEffect(() => {
-        props.setActiveMenu('hide');
-    }, []);
 
     return (
         <>

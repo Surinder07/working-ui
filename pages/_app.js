@@ -47,6 +47,8 @@ function MyApp({ Component, pageProps }) {
             router.beforePopState(() => true);
         };
     }, [router]);
+    const [authenticationRequired, setAuthenticationRequired] = useState(false);
+    const [showTopNavigation, setShowTopNavigation] = useState(true);
 
     useEffect(() => {
         checkPageLoading();
@@ -55,7 +57,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         checkIfLoggedIn();
-    }, [activeMenu])
+    })
 
     const checkPageLoading = () => {
         const handleStart = (url) => (url !== router.asPath) && setPageLoading(true);
@@ -83,9 +85,10 @@ function MyApp({ Component, pageProps }) {
     }
 
     const checkIfLoggedIn = () => {
-        if (firstVisit && activeMenu !== '' && !showLoginFor.includes(activeMenu)) {
+        if (firstVisit && authenticationRequired) {
             userService.getUser()
                 .then(res => {
+                    if (res.error) router.push('/login');
                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                     setUser(res);
                 })
@@ -94,18 +97,18 @@ function MyApp({ Component, pageProps }) {
                 })
             setFirstVisit(false);
         }
+        if (!secureLocalStorage.getData(userService.USER_KEY) && authenticationRequired) {
+            router.push('/login');
+        }
     }
 
     return (
         <React.Fragment>
             <WaawHead />
-            {
-                console.log(activeMenu)
-            }
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 {
-                    activeMenu !== 'hide' &&
+                    showTopNavigation &&
                     <Navbar
                         activeMenu={activeMenu}
                         openMenu={openMenu}
@@ -121,14 +124,17 @@ function MyApp({ Component, pageProps }) {
                     screenType={screenType}
                     user={user}
                     setUser={setUser}
+                    setAuthenticationRequired={setAuthenticationRequired}
                     token={token}
                     setToken={setToken}
+                    setShowTopNavigation={setShowTopNavigation}
                 />
                 {
-                    activeMenu !== 'hide' &&
+                    showTopNavigation &&
                     <Footer screenType={screenType} />
                 }
             </div>
+                setAuthenticationRequired={setAuthenticationRequired}
         </React.Fragment>
     )
 }
