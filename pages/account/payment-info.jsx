@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import InputBox from "../../components/inputComponents/InputBox";
 import WaawHead from "../../components/WaawHead";
-import styles from "../../styles/pages/LoginRegister.module.css";
+import styles from "../../styles/pages/Payment-info.module.css";
 import layoutStyles from "../../styles/layouts/LoginRegistration.module.css";
 import Link from "next/link";
 import LoginRegistrationLayout from "../../layouts/LoginRegistrationLayout";
