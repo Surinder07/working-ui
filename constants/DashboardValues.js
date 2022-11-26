@@ -34,5 +34,5 @@ export const DashboardInvoicesHeader = [{ name: "Invoice ID" }, { name: "Service
 export const DashboardInvoicesValues = [
   { id: 1, invoicesId: 8977890, service: "xyzabc", startDate: "01/01/2023", endDate: "02/01/2023", billingDate: "03/01/2023", amount: "$960", status: "PAID" },
   { id: 2, invoicesId: 8977898, service: "xyzfbc", startDate: "02/01/2023", endDate: "03/01/2023", billingDate: "05/01/2023", amount: "$965", status: "DUE" },
-  { id: 3, invoicesId: 8977890, service: "xyzabc", startDate: "01/01/2023", endDate: "04/01/2023", billingDate: "06q/01/2023", amount: "$960", status: "PAID" },
+  { id: 3, invoicesId: 8977890, service: "xyzabc", startDate: "01/01/2023", endDate: "04/01/2023", billingDate: "06/01/2023", amount: "$960", status: "PAID" },
 ];

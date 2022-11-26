@@ -1,0 +1,26 @@
+.tableContainer {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.invoiceHeading {
+	height: 30px;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 30px;
+	color: #535255;
+}
+
+.tag {
+	width: 29px;
+	height: 20px;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 0.2px;
+	color: #4B506D;
+}
