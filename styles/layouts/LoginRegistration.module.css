@@ -63,6 +63,13 @@
 .errorText {
     color: var(--error-message-color) !important;
     position: absolute;
+    bottom: -20px
+}
+
+.errorTextUp {
+    color: var(--error-message-color)!important;
+    position: absolute;
+    bottom: 5px
 }
 
 .page a {

@@ -1,34 +1,29 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import styles from '../../styles/pages/Account.module.css';
+import Button from "../../components/Button";
+import FullPageWithImageLayout from "../../layouts/FullPageWithImageLayout";
 
 const LinkExpired = (props) => {
 
-    const router = useRouter();
-
     useEffect(() => {
-        props.setActiveMenu('account');
+        props.setAuthenticationRequired(false);
+        props.setShowTopNavigation(false);
     }, []);
 
     return (
-        <>
-            <div className={styles.page}>
-                <div className={styles.pageContainer}>
-                    <div className={styles.pageBackground} style={{ backgroundImage: `url(/bg/link-expired-bg.svg)` }}></div>
-                    <div className={styles.contentContainer}>
-                        <h1 style={{ color: '#000' }}>Whoops! The link has expired.</h1>
-                        <h3>For security reasons, links expire after a little while. Please register again to continue</h3>
-                        <button
-                            className={`${styles.button}`}
-                            style={{ width: 'fit-content', margin: '20px auto 0 auto' }}
-                            onClick={() => router.push('/register')}
-                        >
-                            Go to Registration
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </>
+        <FullPageWithImageLayout
+            title='Link Expired'
+            background='/bg/link-expired-bg.svg'
+        >
+            <h1 style={{ color: '#000' }}>Whoops! The link has expired.</h1>
+            <h3>For security reasons, links expire after a little while. Please register again to continue</h3>
+            <Button
+                type='default'
+                href='/register'
+                style={{marginTop: '20px'}}
+            >
+                Go to Registration
+            </Button>
+        </FullPageWithImageLayout>
     )
 
 }
