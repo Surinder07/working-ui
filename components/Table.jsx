@@ -1,6 +1,5 @@
 import styles from "../styles/elements/Table.module.css";
 import Image from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 const Table = (props) => {
   return (

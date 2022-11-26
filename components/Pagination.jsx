@@ -1,4 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import styles from "../styles/elements/Pagination.module.css";
 
 const Pagination = () => {
