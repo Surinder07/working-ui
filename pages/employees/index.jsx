@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import WaawHead from "../../components/WaawHead";
 import Table from "../../components/Table";
-import { LocationSheetHeader } from "../../constants/LocationValues";
-import { LocationSheetValues } from "../../constants/LocationValues";
+import { EmployeesHeader } from "../../constants/EmployeesValues";
+import { EmployeesValues } from "../../constants/EmployeesValues";
 import Pagination from "../../components/Pagination";
 
-const Location = (props) => {
+const Employees = (props) => {
   useEffect(() => {
     props.setActiveMenu("hide");
   }, []);
 
   return (
     <>
-      <WaawHead title={"WaaW | Location"} />
+      <WaawHead title={"WaaW | Employees"} />
       {Object.entries(props.user).map((userDetail, i) => (
         <p key={i}>
           {userDetail[0]}: {userDetail[1]}
@@ -20,15 +20,14 @@ const Location = (props) => {
       ))}
       <div className="flex flex-col justify-between w-full h-full">
         <Table
-          heading="Location  sheet"
-          subHeading="Tabular list locationwise employees."
+          heading="Employees"
+          subHeading="Tabular list Employee details."
           sort="true"
           filter="true"
           filterUrl="/icons/Filter.svg"
           sortUrl="/icons/Sort.svg"
-          invoiceHeader={LocationSheetHeader}
-          invoiceData={LocationSheetValues}
-          center="true"
+          invoiceHeader={EmployeesHeader}
+          invoiceData={EmployeesValues}
           pagination="true"
           dropdown="true"
         />
@@ -38,4 +37,4 @@ const Location = (props) => {
   );
 };
 
-export default Location;
+export default Employees;

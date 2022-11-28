@@ -1,7 +1,7 @@
 import Image from "next/image";
-import styles from "../styles/pages/Dashboard.module.css";
+import styles from "../styles/element/CardContainer.module.css";
 
-const Container = (props) => {
+const CardContainer = (props) => {
   return (
     <>
       <div className={`flex flex-col w-full m-2 p-2 border border-solid rounded-lg border-[#DFE0EB] ${styles.cardContainer}`}>
@@ -21,4 +21,4 @@ const Container = (props) => {
   );
 };
 
-export default Container;
+export default CardContainer;

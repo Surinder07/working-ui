@@ -35,31 +35,12 @@
 	transition: all 0.5s ease;
 }
 
-.cardContainer:hover {
+.cardContainer.active {
 	border: 1px solid #2996C3;
 }
 
-.cardContainer:hover .heading,
-.cardContainer:hover .banner,
-.cardContainer:hover .symbol {
+.cardContainer.active .heading,
+.cardContainer.active .banner,
+.cardContainer.active .symbol {
 	color: #2996C3;
-}
-
-.invoiceHeading {
-	height: 30px;
-	font-style: normal;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 30px;
-	color: #535255;
-}
-
-.tag {
-	width: 29px;
-	height: 20px;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 20px;
-	letter-spacing: 0.2px;
-	color: #4B506D;
 }
