@@ -26,7 +26,6 @@
 .inputBox input,
 .inputBoxWithDropdown input,
 .inputBoxWithButton input {
-    font-family: poppins;
     padding: 7px 0;
     outline: none;
     border: none;
@@ -40,7 +39,6 @@
 .inputBox input::placeholder,
 .inputBoxWithDropdown input::placeholder,
 .inputBoxWithButton input::placeholder {
-    font-family: poppins;
     color: rgba(0, 0, 0, 0.6);
     font-weight: 500;
     font-size: 14px;

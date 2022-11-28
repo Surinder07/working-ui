@@ -1,9 +1,9 @@
-import styles from '../styles/elements/SubscribeBar.module.css';
+import styles from '../../styles/elements/SubscribeBar.module.css';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
-import Modal from './Modal';
-import firebase from "firebase";
-import Loader from './Loader';
+import Modal from '../Modal';
+import { firebaseDb } from '../../services/firebase.service';
+import RotatingLoader from '../loaders/RotatingLoader';
 
 const SubscribeBar = (props) => {
 
@@ -23,19 +23,6 @@ const SubscribeBar = (props) => {
     const [modalMessage, setModalMessage] = useState('');
     const [showLoader, setShowLoader] = useState(false);
 
-    var firebaseApp = !firebase.apps.length ? firebase.initializeApp({
-        // Your firebase credentials
-        apiKey: "AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE",
-        authDomain: "waaw-waitlist.firebaseapp.com",
-        projectId: "waaw-waitlist",
-        storageBucket: "waaw-waitlist.appspot.com",
-        messagingSenderId: "213804837638",
-        appId: "1:213804837638:web:074369716cbebca22b0c87",
-        measurementId: "G-YXEDFG0Y60"
-    }) : firebase.app();
-
-    var db = firebaseApp.firestore();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateEmail(email)) {
@@ -45,7 +32,7 @@ const SubscribeBar = (props) => {
             return;
         }
         setShowLoader(true);
-        db.collection("waitlist")
+        firebaseDb.collection("waitlist")
             .add({
                 email: email
             })
@@ -81,8 +68,8 @@ const SubscribeBar = (props) => {
             >
                 {modalMessage}
             </Modal>
-            <Loader visible={showLoader} />
-            <input id='email' type="email" autoComplete='off' placeholder='Your Email'
+            <RotatingLoader visible={showLoader} />
+            <input id='contactEmail' type="email" autoComplete='off' placeholder='Your Email'
                 value={email} onChange={(e) => setEmail(e.target.value)} />
             <button className={styles.button} type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>
         </div>

@@ -9,8 +9,12 @@ import { validateEmail } from "../../helpers";
 
 const ResetPasswordInit = (props) => {
     useEffect(() => {
-        props.setAuthenticationRequired(false);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
     }, []);
 
     const [email, setEmail] = useState('');

@@ -25,8 +25,8 @@ const DropDown = (props) => {
         transform: `translateY(-${inputHeight}px)`
     }
 
-    const handleClickOutside = () => {
-        if (ref.current && !ref.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
             setOpen(false);
         }
     }

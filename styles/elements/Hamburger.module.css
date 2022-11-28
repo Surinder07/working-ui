@@ -72,3 +72,18 @@
 .hamburgerContainer input[type="checkbox"]:checked~.hamburgerLines .line3 {
     transform: rotate(-35deg);
 }
+
+.constantHamburger {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.constantHamburger .line {
+    border: solid 2px #B1B1B1;
+    width: 100%;
+    height: 0;
+}

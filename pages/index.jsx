@@ -1,8 +1,8 @@
 import ComingSoonEl from '../components/ComingSoonEl';
-import HomeSection from '../components/HomeSection';
+import HomeSection from '../components/homeComponents/HomeSection';
 import Card from '../components/Card';
 import { business, talent } from '../constants/HomeSectionInfo';
-import SubscribeBar from '../components/SubscribeBar';
+import SubscribeBar from '../components/homeComponents/SubscribeBar';
 import styles from '../styles/pages/Home.module.css';
 import pageStyles from '../styles/Pages.module.css';
 import WaawHead from '../components/WaawHead';
@@ -10,9 +10,14 @@ import { useEffect } from 'react';
 
 const Home = (props) => {
 
-    // useEffect(() => {
-    //     props.setActiveMenu('home')
-    // }, [])
+    useEffect(() => {
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'loggedOut',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
+    }, [])
 
     return (
         <>

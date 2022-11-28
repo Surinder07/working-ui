@@ -12,8 +12,12 @@ const ResetPasswordFinish = (props) => {
     const router = useRouter();
 
     useEffect(() => {
-        props.setAuthenticationRequired(false);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
     }, []);
 
     const [loading, setLoading] = useState(false);

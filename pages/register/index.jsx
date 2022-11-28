@@ -14,8 +14,12 @@ import SuccessModal from '../../components/SuccessModal';
 const Register = (props) => {
 
     useEffect(() => {
-        props.setAuthenticationRequired(false);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
     }, []);
 
     const Router = useRouter();

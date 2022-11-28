@@ -1,5 +1,11 @@
 import Head from 'next/head';
 
+/**
+ * Create header for Html contatining title and all meta values
+ * @param {*} title If custom Title is needed for the page
+ * @param {*} description If custom Description is needed for the page
+ * @param {*} meta If custom meta is needed for the page
+ */
 const WaawHead = ({ title, description, meta }) => {
     const headerInfo = process.env.header;
     return (

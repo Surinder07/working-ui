@@ -27,8 +27,12 @@ const Login = (props) => {
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
     useEffect(() => {
-        props.setAuthenticationRequired(false);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
         if (localStorage.getItem(userService.TOKEN_KEY)) {
             userService.getUser()
                 .then(res => {
@@ -101,7 +105,6 @@ const Login = (props) => {
     return (
         <LoginRegistrationLayout
             pageTitle='Login'
-            setActiveMenu={props.setActiveMenu}
             background='/bg/login-bg.svg'
             logoLeft
         >

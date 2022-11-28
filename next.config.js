@@ -11,8 +11,15 @@ const nextConfig = {
             : 'https://api.waaw.ca/api' // production api
     },
     env: {
-        apiKey: {
-            firebase: 'AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE'
+        version: '1.0',
+        firebase: {
+            apiKey: "AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE",
+            authDomain: "waaw-waitlist.firebaseapp.com",
+            projectId: "waaw-waitlist",
+            storageBucket: "waaw-waitlist.appspot.com",
+            messagingSenderId: "213804837638",
+            appId: "1:213804837638:web:074369716cbebca22b0c87",
+            measurementId: "G-YXEDFG0Y60"
         },
         header: {
             title: 'WaaW | Automated Workforce Scheduling',

@@ -1,34 +1,32 @@
 import { useEffect } from "react";
 import WaawHead from "../../components/WaawHead";
-import CardContainer from "../../components/CardContainer";
-import { DashboardCardValues } from "../../constants/DashboardValues";
-import Table from "../../components/Table";
-import { DashboardInvoicesHeader } from "../../constants/DashboardValues";
-import { DashboardInvoicesValues } from "../../constants/DashboardValues";
 
 const Dashboard = (props) => {
-  useEffect(() => {
-    props.setActiveMenu("hide");
-  }, []);
 
-  return (
-    <>
-      <WaawHead title={"WaaW | Dashboard"} />
-      {Object.entries(props.user).map((userDetail, i) => (
-        <p key={i}>
-          {userDetail[0]}: {userDetail[1]}
-        </p>
-      ))}
-      <div className="flex justify-between w-full h-full">
-        {DashboardCardValues.map((values, index) => (
-          <CardContainer key={index} heading={values.heading} subHeading={values.subHeading} banner={values.banner} url={values.url} />
-        ))}
-      </div>
-      <div className="flex justify-between w-full h-full">
-        <Table heading="Invoices" subHeading="Tabular list of the current invoice status." invoiceHeader={DashboardInvoicesHeader} invoiceData={DashboardInvoicesValues} button="true" />
-      </div>
-    </>
-  );
+    useEffect(() => {
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'dashboard',
+            activeMenu: 'DASHBOARD',
+            activeSubMenu: 'none'
+        })
+    }, []);
+
+    return (
+        <>
+            <WaawHead title={"WaaW | Dashboard"} />
+            <div style={{ padding: '0 30px', minHeight: '200vh' }}>
+                <h1 style={{
+                    fontWeight: 700,
+                    fontSize: '28px',
+                    lineHeight: '35px',
+                    letterSpacing: '0.3px',
+                    color: '#252733',
+                    margin: '25px 0'
+                }}>Overview and Analytics</h1>
+            </div>
+        </>
+    );
 };
 
 export default Dashboard;

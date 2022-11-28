@@ -5,8 +5,12 @@ import Button from "../../components/Button";
 const EmailVerified = (props) => {
 
     useEffect(() => {
-        props.setAuthenticationRequired(false);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
     }, []);
 
     return (

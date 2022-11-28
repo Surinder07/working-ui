@@ -11,7 +11,12 @@ import Image from "next/image";
 
 const Payment = (props) => {
   useEffect(() => {
-    props.setActiveMenu("hide");
+    props.setPageInfo({
+        authenticationRequired: false,
+        pageView: 'fullPage',
+        activeMenu: 'none',
+        activeSubMenu: 'none'
+    })
   }, []);
 
   return (

@@ -15,8 +15,13 @@ const Pricing = (props) => {
     }
 
     useEffect(() => {
-        props.setActiveMenu('Pricing');
-    }, [])
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'loggedOut',
+            activeMenu: 'PRICING',
+            activeSubMenu: router.query.pricingType === 'business' ? 'BUSINESS' : 'TALENT'
+        })
+    }, [router.query])
 
     return (
         <div className={`${pageStyles.page} ${pageStyles.flexPageColumn}`}>

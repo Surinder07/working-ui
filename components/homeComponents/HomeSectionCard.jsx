@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Card from './Card';
-import styles from '../styles/elements/HomeSectionCard.module.css';
+import Card from '../Card';
+import styles from '../../styles/elements/HomeSectionCard.module.css';
 
 const HomeSectionCard = (props) => {
 

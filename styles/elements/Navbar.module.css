@@ -96,11 +96,12 @@
     background-color: whitesmoke;
 }
 
+.menu .subMenu .menuItemActive,
 .menu .subMenu .menuItem:hover {
-    background: #DFEFF6;
-    color: #2996C3;
-    font-weight: 600;
-    border-left: 2px solid #2996C3;
+    background: #DFEFF6!important;
+    color: #2996C3!important;
+    font-weight: 600!important;
+    border-left: 2px solid #2996C3!important;
 }
 
 @media only screen and (max-width: 640px) {

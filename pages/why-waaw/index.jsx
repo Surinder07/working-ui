@@ -7,7 +7,12 @@ import WaawHead from '../../components/WaawHead';
 const WhyWaaw = (props) => {
 
     useEffect(() => {
-        props.setActiveMenu('Why WAAW')
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'loggedOut',
+            activeMenu: 'WHY_WAAW',
+            activeSubMenu: 'none'
+        })
     }, [])
 
     return (

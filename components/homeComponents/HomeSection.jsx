@@ -1,6 +1,6 @@
 import HomeSectionCard from './HomeSectionCard';
-import styles from '../styles/pages/Home.module.css';
-import pageStyles from '../styles/Pages.module.css';
+import styles from '../../styles/pages/Home.module.css';
+import pageStyles from '../../styles/Pages.module.css';
 
 const HomeSection = (props) => {
 

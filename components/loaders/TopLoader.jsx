@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../styles/elements/TopLoader.module.css'
+import styles from '../../styles/elements/TopLoader.module.css'
 
 const TopLoader = (props) => {
 

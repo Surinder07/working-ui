@@ -75,8 +75,12 @@ const CompleteProfile = (props) => {
     }
 
     useEffect(() => {
-        props.setAuthenticationRequired(true);
-        props.setShowTopNavigation(false);
+        props.setPageInfo({
+            authenticationRequired: true,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
 

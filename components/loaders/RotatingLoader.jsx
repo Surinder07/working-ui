@@ -1,6 +1,6 @@
-import styles from '../styles/elements/Loader.module.css';
+import styles from '../../styles/elements/Loader.module.css';
 
-const Loader = (props) => {
+const RotatingLoader = (props) => {
 
     const style = { display: props.visible ? 'flex' : 'none' };
 
@@ -11,4 +11,4 @@ const Loader = (props) => {
     )
 }
 
-export default Loader;
+export default RotatingLoader;

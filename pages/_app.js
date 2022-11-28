@@ -1,45 +1,40 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { NavLinks } from '../constants/NavLinks';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import '../styles/globals.css';
 import router from 'next/router';
-import TopLoader from '../components/TopLoader';
+import TopLoader from '../components/loaders/TopLoader';
 import WaawHead from '../components/WaawHead';
 import { secureLocalStorage } from '../helpers';
 import { userService } from '../services/user.service';
+import NavFooterPageLayout from '../layouts/NavFooterPageLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 function MyApp({ Component, pageProps }) {
-
-    const [activeMenu, setActiveMenu] = useState('');
-    const [openMenu, setOpenMenu] = useState(false);
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
     const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);
-    const showLoginFor = ['/', 'home', 'Why WAAW', 'Pricing', '', 'hide'];
+    const [pageInfo, setPageinfo] = useState({
+        authenticationRequired: false,
+        // Possible values: {loggedOut, dashboard, fullPage}
+        pageView: 'loggedOut',
+        activeMenu: 'none',
+        activeSubMenu: 'none'
+    });
 
     const getActiveMenuFromPath = (path) => {
-        switch (path) {
-            case '/':
-                return 'home';
-            case '/why-waaw':
-                return 'Why WAAW';
-            case '/pricing/business':
-                return 'Pricing';
-            case '/pricing/talent':
-                return 'Pricing';
-            default:
-                return 'hide';
-        }
+        if (path.includes('why-waaw')) {
+            return 'WHY_WAAW';
+        } else if (path.includes('pricing')) {
+            return 'PRICING';
+        } else return 'none';
     }
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            setActiveMenu(getActiveMenuFromPath(as));
+            setPageinfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
             return true;
         });
 
@@ -47,8 +42,6 @@ function MyApp({ Component, pageProps }) {
             router.beforePopState(() => true);
         };
     }, [router]);
-    const [authenticationRequired, setAuthenticationRequired] = useState(false);
-    const [showTopNavigation, setShowTopNavigation] = useState(true);
 
     useEffect(() => {
         checkPageLoading();
@@ -85,7 +78,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     const checkIfLoggedIn = () => {
-        if (firstVisit && authenticationRequired) {
+        if (firstVisit && pageInfo.authenticationRequired) {
             userService.getUser()
                 .then(res => {
                     if (res.error) router.push('/login');
@@ -97,9 +90,21 @@ function MyApp({ Component, pageProps }) {
                 })
             setFirstVisit(false);
         }
-        if (!secureLocalStorage.getData(userService.USER_KEY) && authenticationRequired) {
+        if (!secureLocalStorage.getData(userService.USER_KEY) && pageInfo.authenticationRequired) {
             router.push('/login');
         }
+    }
+
+    const getComponentForPages = () => {
+        return <Component {...pageProps}
+            screenType={screenType}
+            user={user}
+            setUser={setUser}
+            token={token}
+            setToken={setToken}
+            pageInfo={pageInfo}
+            setPageInfo={setPageinfo}
+        />
     }
 
     return (
@@ -108,33 +113,30 @@ function MyApp({ Component, pageProps }) {
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 {
-                    showTopNavigation &&
-                    <Navbar
-                        activeMenu={activeMenu}
-                        openMenu={openMenu}
-                        setOpenMenu={setOpenMenu}
-                        navLinks={NavLinks}
+                    pageInfo.pageView === 'loggedOut' &&
+                    <NavFooterPageLayout
+                        pageInfo={pageInfo}
+                        setPageinfo={setPageinfo}
                         screenType={screenType}
-                        user={user}
-                        showLogin={showLoginFor.includes(activeMenu)}
-                    />
+                    >
+                        {getComponentForPages()}
+                    </NavFooterPageLayout>
                 }
-                <Component {...pageProps}
-                    setActiveMenu={setActiveMenu}
-                    screenType={screenType}
-                    user={user}
-                    setUser={setUser}
-                    setAuthenticationRequired={setAuthenticationRequired}
-                    token={token}
-                    setToken={setToken}
-                    setShowTopNavigation={setShowTopNavigation}
-                />
                 {
-                    showTopNavigation &&
-                    <Footer screenType={screenType} />
+                    pageInfo.pageView === 'dashboard' &&
+                    <DashboardLayout
+                        pageInfo={pageInfo}
+                        setPageinfo={setPageinfo}
+                        screenType={screenType}
+                    >
+                        {getComponentForPages()}
+                    </DashboardLayout>
+                }
+                {
+                    pageInfo.pageView === 'fullPage' &&
+                    getComponentForPages()
                 }
             </div>
-                setAuthenticationRequired={setAuthenticationRequired}
         </React.Fragment>
     )
 }

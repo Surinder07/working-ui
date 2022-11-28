@@ -35,7 +35,7 @@ const LinkedImage = (props) => {
             width: newWidth,
             height: newHeight
         })
-    }, []) 
+    }, [props.width, props.height]) 
 
     const style = {
         ...props.style,

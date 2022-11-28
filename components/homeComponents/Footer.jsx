@@ -1,9 +1,9 @@
 import SubscribeBar from './SubscribeBar';
-import styles from '../styles/elements/Footer.module.css';
-import pageStyles from '../styles/Pages.module.css';
+import styles from '../../styles/elements/Footer.module.css';
+import pageStyles from '../../styles/Pages.module.css';
 import Link from 'next/link';
-import { ImagesInfo } from '../constants/ImagesInfo';
-import LinkedImage from './LinkedImage';
+import { ImagesInfo } from '../../constants/ImagesInfo';
+import LinkedImage from '../LinkedImage';
 
 const Footer = (props) => {
 

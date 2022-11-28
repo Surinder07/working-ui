@@ -1,0 +1,110 @@
+.dashboardPage {
+    display: grid;
+    grid-template-columns: 200px auto;
+    font-family: Mulish;
+    transition: all 0.2s ease;
+}
+
+.openNavDashboard {
+    grid-template-columns: 200px auto;
+}
+
+.closeNavDashboard {
+    grid-template-columns: 70px auto;
+}
+
+.openNavDashboard .sideNav {
+    max-width: 200px;
+}
+
+.closeNavDashboard .sideNav {
+    max-width: 70px;
+}
+
+.sideNav {
+    width: 100%;
+    background-color: #363740;
+    min-height: 100vh;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.version {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.2px;
+    color: #BFBFBF;
+}
+
+.menuItem {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    height: 56px;
+    color: #A4A6B3;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menuItem:hover,
+.activeMenuItem {
+    border-left: solid 3px #DDE2FF;
+    color: #DDE2FF !important;
+    background-color: #3E4049;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    padding: 15px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FBF9F9;
+    box-shadow: 10px 8px 6px rgba(41, 150, 195, 0.2);
+    width: 100%
+}
+
+.content {
+    padding-top: calc(var(--navigation-height));
+}
+
+.footer {
+    height: fit-content;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 35px;
+    background-color: white;
+}
+
+.openNavDashboard .footer {
+    max-width: calc(100% - 200px);
+}
+
+.closeNavDashboard .footer {
+    max-width: calc(100% - 70px);
+}
+
+.footer .leftContainer {
+    display: flex;
+    align-items: center;
+}
+
+.footer p {
+    color: #535255;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.1px;
+}

@@ -4,9 +4,6 @@ import LinkedImage from "../components/LinkedImage";
 import Images from "../public/Images";
 
 const LoginRegistrationLayout = (props) => {
-  useEffect(() => {
-    props.setActiveMenu("hide");
-  }, []);
 
     return (
         <>
@@ -31,17 +28,9 @@ const LoginRegistrationLayout = (props) => {
                         </div>
                     </div>
                 </div>
-              )}
-              {props.children}
             </div>
-            <div className={styles.gridRightContainer} style={{ backgroundImage: `url(${props.background})` }}>
-              {props.logoRight && <LinkedImage className={styles.rightLogo} src={Images.Logo} height={70} link="/" alt="logo" />}
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default LoginRegistrationLayout;
