@@ -4,18 +4,37 @@ import pageStyles from '../../styles/Pages.module.css';
 import Link from 'next/link';
 import { ImagesInfo } from '../../constants/ImagesInfo';
 import LinkedImage from '../LinkedImage';
+import { useState } from 'react';
+import TermsAndPolicyModal from '../modals/TermsAndPolicyModal';
 
 const Footer = (props) => {
 
-    const contactEmail = 'waaw.management@waaw.ca';
+    const contactEmail = process.env.termsAndPrivacyData.customerSupport;
+    const [termsPrivacyModalType, setTermsPrivacyModalType] = useState('');
+    const [showTermsPrivacyModal, setShowTermsPrivacyModal] = useState(false);
+
+    const showModal = (type) => {
+        setTermsPrivacyModalType(type);
+        setShowTermsPrivacyModal(true);
+    }
 
     return (
         <footer className={styles.footer}>
             {/* Top Part of the footer  */}
+            {
+                showTermsPrivacyModal &&
+                <TermsAndPolicyModal
+                    data={termsPrivacyModalType}
+                    showModal={showTermsPrivacyModal}
+                    setShowModal={setShowTermsPrivacyModal} />
+            }
             <div className={`${styles.footerTop} ${pageStyles.pagePadding}`}>
                 <div className={styles.footerComponent} >
                     <h1>Company</h1>
-                    <Link className={styles.link} href='/why-waaw' onClick={() => props.setsetActiveMenu('Why WaAAW')}>About Us</Link>
+                    <Link className={styles.link} href='/why-waaw'>About Us</Link>
+                    <p className={styles.link} onClick={() => showModal('nda')}>Confidentiality and Non Disclosure</p>
+                    <p className={styles.link} onClick={() => showModal('cookies')}>Cookies and Policy</p>
+                    <p className={styles.link} onClick={() => showModal('disclaimer')}>Disclaimer</p>
                 </div>
                 <div className={`${styles.footerComponent} ${styles.appContainer}`}>
                     <div className={styles.appCover}></div>
@@ -77,7 +96,7 @@ const Footer = (props) => {
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
                             />
-                            <p>English</p>
+                            <p className={styles.noMargin}>English</p>
                         </div>
                         <div className={styles.iconTextContainer}>
                             <LinkedImage
@@ -86,7 +105,7 @@ const Footer = (props) => {
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
                             />
-                            <p>Toronto</p>
+                            <p className={styles.noMargin}>Toronto</p>
                         </div>
                     </div>
                 </div>

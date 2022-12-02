@@ -1,22 +1,22 @@
 import { useEffect } from "react";
-import WaawHead from "../../components/WaawHead";
 import styles from '../../styles/pages/Dashboard.module.css';
-import InfoTileBanner from "../../components/dashboardComponents/InfoTileBanner";
-import TabularInfo from "../../components/dashboardComponents/TabularInfo";
+import WaawHead from "../../components/WaawHead";
+import Button from '../../components/Button';
 import DashboardCard from "../../components/dashboardComponents/DashboardCard";
+import TabularInfo from "../../components/dashboardComponents/TabularInfo";
 
-const Dashboard = (props) => {
+const Locations = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
             pageView: 'dashboard',
-            activeMenu: 'DASHBOARD',
+            activeMenu: 'LOCATIONS',
             activeSubMenu: 'none'
         })
     }, []);
 
-    const invoices = [
+    const locations = [
         {
             invoiceId: '6476475',
             service: 'One time register',
@@ -48,20 +48,22 @@ const Dashboard = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Dashboard"} />
+            <WaawHead title={"WaaW | Locations"} />
             <div className={styles.dashboardTitles}>
-                <h1>Overview and Analytics</h1>
+                <h1>Locations</h1>
+                <Button type='plain'>+ Add new Location</Button>
             </div>
-            <InfoTileBanner />
-            <DashboardCard style={{ marginTop: '20px' }} showOptions>
+            <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
-                title='Invoices' 
-                description='Tabular list of all WAAW invoices with status.' 
-                data={invoices}
+                title='Location Listing' 
+                description='Tabular list of all Locations.' 
+                data={locations}
+                pagination
                 />
             </DashboardCard>
         </>
-    );
-};
+    )
 
-export default Dashboard;
+}
+
+export default Locations;

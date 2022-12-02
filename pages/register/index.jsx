@@ -9,7 +9,8 @@ import { validateEmail, validatePassword } from '../../helpers';
 import PasswordPolicy from '../../components/PasswordPolicy';
 import LoginRegistrationLayout from '../../layouts/LoginRegistrationLayout';
 import Button from '../../components/Button';
-import SuccessModal from '../../components/SuccessModal';
+import SuccessModal from '../../components/modals/SuccessModal';
+import TermsAndPolicyModal from '../../components/modals/TermsAndPolicyModal';
 
 const Register = (props) => {
 
@@ -37,6 +38,13 @@ const Register = (props) => {
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(false);
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
+    const [termsPrivacyModalType, setTermsPrivacyModalType] = useState('');
+    const [showTermsPrivacyModal, setShowTermsPrivacyModal] = useState(false);
+
+    const showModal = (type) => {
+        setTermsPrivacyModalType(type);
+        setShowTermsPrivacyModal(true);
+    }
 
     const checkConfirmPasswordError = () => {
         if (confirmPassword === '') {
@@ -114,6 +122,13 @@ const Register = (props) => {
             background='/bg/registration-bg.svg'
             logoLeft
         >
+            {
+                showTermsPrivacyModal &&
+                <TermsAndPolicyModal
+                    data={termsPrivacyModalType}
+                    showModal={showTermsPrivacyModal}
+                    setShowModal={setShowTermsPrivacyModal} />
+            }
             <legend style={{ color: '#000' }}>start y<span style={{ color: '#90D9D3' }}>our </span><span style={{ color: '#2996C3' }}>journey</span></legend>
             <div className={styles.choiceContainer}>
                 <div className={`${styles.choice} ${userRole === 'admin' && styles.selected}`}
@@ -172,12 +187,14 @@ const Register = (props) => {
             >
                 Register
             </Button>
-            <p style={{ width: '80%', textAlign: 'left', marginBottom: 0 }}>By clicking Register, you agree to our <Link href='/#'>Terms</Link> and acknowledge that you have read and accepted our <Link href='/#'>Privacy Poilcy</Link></p>
+            <p style={{ width: '80%', textAlign: 'left', marginBottom: 0 }}>By clicking Register, you agree to our <Link onClick={() => showModal('terms')} href='#'>Terms</Link> and acknowledge that you have read and accepted our <Link onClick={() => showModal('privacy')} href='#'>Privacy Poilcy</Link></p>
             {registrationSuccess &&
                 <SuccessModal
                     title='Registration Successfull!'
                     message={`We have sent a verification email at ${email}. Please verify your email to continue.`}
-                    onButtonClick={() => Router.push('/login')}
+                    link={'/login'}
+                    showModal={registrationSuccess}
+                    setShowModal={setRegistrationSuccess}
                 />
             }
         </LoginRegistrationLayout>

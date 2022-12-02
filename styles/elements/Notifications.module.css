@@ -1,0 +1,21 @@
+.container {
+    position: relative;
+    margin-left: 15px;
+}
+
+.bell {
+    font-size: 30px;
+    color: #C5C7CD;
+    cursor: pointer;
+}
+
+.unreadInd {
+    width: 7px;
+    height: 7px;
+    background-color: #3751FF;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 55%;
+    border: 1.5px solid #F7F8FC;
+}

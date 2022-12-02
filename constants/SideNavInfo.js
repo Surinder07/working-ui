@@ -5,49 +5,49 @@ export const SideNavInfo = {
         {
             icon: <Dashboard style={{ fontSize: '16px' }} />,
             text: 'Dashboard',
-            link: '',
+            link: '/dashboard',
             activeKey: 'DASHBOARD'
         },
         {
             icon: <CalendarMonth style={{ fontSize: '16px' }} />,
-            text: 'Calender',
-            link: '',
-            activeKey: 'CALENDER'
+            text: 'Calendar',
+            link: '/dashboard/calendar',
+            activeKey: 'CALENDAR'
         },
         {
             icon: <Schedule style={{ fontSize: '16px' }} />,
             text: 'Shifts',
-            link: '',
+            link: '/dashboard/shifts',
             activeKey: 'SHIFTS'
         },
         {
             icon: <Place style={{ fontSize: '16px' }} />,
             text: 'Locations',
-            link: '',
+            link: '/dashboard/locations',
             activeKey: 'LOCATIONS'
         },
         {
             icon: <PeopleAlt style={{ fontSize: '16px' }} />,
             text: 'Employees',
-            link: '',
+            link: '/dashboard/employees',
             activeKey: 'EMPLOYEES'
         },
         {
             icon: <RequestPage style={{ fontSize: '16px' }} />,
             text: 'Requests',
-            link: '',
+            link: '/dashboard/requests',
             activeKey: 'REQUESTS'
         },
         {
             icon: <Receipt style={{ fontSize: '16px' }} />,
             text: 'Invoices',
-            link: '',
+            link: '/dashboard/invoices',
             activeKey: 'INVOICES'
         },
         {
             icon: <Description style={{ fontSize: '16px' }} />,
             text: 'Reports',
-            link: '',
+            link: '/dashboard/reports',
             activeKey: 'REPORTS'
         }
     ],

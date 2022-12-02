@@ -7,7 +7,7 @@
 .footer h1,
 .footer h2,
 .footer h3,
-.footer p {
+.footer .noMargin {
     margin: 0;
 }
 
@@ -24,6 +24,8 @@
 
 .footer .link {
     font-size: 0.85rem;
+    cursor: pointer;
+    margin: 10px 0;
 }
 
 .footer .footerTop,

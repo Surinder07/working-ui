@@ -1,0 +1,27 @@
+.container {
+    display: grid;
+    grid-template-columns: 40px auto;
+    color: #999;
+    background: rgba(217, 217, 217, 0.3);
+    padding: 6px 0;
+}
+
+.container input {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    border: none;
+    outline: none;
+    background-color: #FFFFFF00;
+}
+
+.container input::placeholder {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #999;
+}

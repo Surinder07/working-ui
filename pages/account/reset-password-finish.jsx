@@ -36,7 +36,7 @@ const ResetPasswordFinish = (props) => {
         if (!router.isReady) return;
         if (router.query.key)
             setResetKey(router.query.key);
-        else router.push('/login');
+        // else router.push('/login');
     }, [router.isReady, router.query]);
 
     const checkConfirmPasswordError = () => {
@@ -97,6 +97,13 @@ const ResetPasswordFinish = (props) => {
         <FullPageWithImageLayout
             title='Reset Password'
             background='/bg/reset-password-finish-bg.svg'
+            showSuccessModal={resetSuccess}
+            setShowSuccessModal={setResetSuccess}
+            successModalBg='/bg/password-reset-finish-success-bg.svg'
+            successButtonText='Go to Login'
+            successTitle='Password Updated Successfully!'
+            successMessage='Your WAAW account  password has been updates successfully.'
+            successRedirect='/login'
         >
             <h2>Reset Password</h2>
             <InputBox

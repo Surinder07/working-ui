@@ -27,7 +27,7 @@
     font-family: inherit;
 }
 
-.inputBar button {
+.inputBar .button {
     height: 37px;
     width: 50px;
     border: none;

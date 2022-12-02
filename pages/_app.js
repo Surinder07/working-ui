@@ -128,6 +128,7 @@ function MyApp({ Component, pageProps }) {
                         pageInfo={pageInfo}
                         setPageinfo={setPageinfo}
                         screenType={screenType}
+                        user={user}
                     >
                         {getComponentForPages()}
                     </DashboardLayout>

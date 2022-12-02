@@ -1,0 +1,16 @@
+.container {
+    width: 34px;
+    height: 34px;
+    outline: 1.5px solid #DFE0EB;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.subContainer {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}

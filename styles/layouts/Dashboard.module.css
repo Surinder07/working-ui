@@ -64,17 +64,53 @@
 .header {
     position: fixed;
     top: 0;
-    padding: 15px 35px;
+    padding: 10px 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #FBF9F9;
     box-shadow: 10px 8px 6px rgba(41, 150, 195, 0.2);
-    width: 100%
+    width: 100%;
+    z-index: 5;
+}
+
+.openNavDashboard .header {
+    max-width: calc(100% - 200px);
+}
+
+.closeNavDashboard .header {
+    max-width: calc(100% - 70px);
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+}
+
+.headerRight .userName {
+    margin: 0;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: right;
+    letter-spacing: 0.2px;
+    color: #252733;
+    padding: 0 15px;
+    border-left: 1px solid #DFE0EB;
+    margin-left: 15px;
+}
+
+.searchBar {
+    width: 40vw;
 }
 
 .content {
+    padding: 0 30px;
     padding-top: calc(var(--navigation-height));
+    background-color: #F7F8FC;
+    min-height: 100%;
 }
 
 .footer {
@@ -107,4 +143,17 @@
     font-size: 10px;
     line-height: 15px;
     letter-spacing: 0.1px;
+}
+
+.helpIcon {
+    margin-left: 15px;
+    width: 27px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #C5C7CD;
+    border-radius: 50%;
+    color: #C5C7CD;
+    font-size: 24px;
 }

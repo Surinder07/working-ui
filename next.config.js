@@ -12,6 +12,12 @@ const nextConfig = {
     },
     env: {
         version: '1.0',
+        termsAndPrivacyData: {
+            deployedAddress: 'www.waaw.ca',
+            businessAddress: 'www.waaw.ca',
+            minAge: 16,
+            customerSupport: 'waaw.management@waaw.ca'
+        },
         firebase: {
             apiKey: "AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE",
             authDomain: "waaw-waitlist.firebaseapp.com",

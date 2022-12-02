@@ -38,10 +38,10 @@ const LinkedImage = (props) => {
     }, [props.width, props.height]) 
 
     const style = {
-        ...props.style,
         width: `${imageSize.width}px`,
         height: `${imageSize.height}px`,
-        cursor: props.link ? 'pointer' : 'default'
+        cursor: props.link ? 'pointer' : 'default',
+        ...props.style
     }
 
     return (

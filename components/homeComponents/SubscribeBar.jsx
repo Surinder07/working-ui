@@ -1,7 +1,7 @@
 import styles from '../../styles/elements/SubscribeBar.module.css';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
-import Modal from '../Modal';
+import Modal from '../modals/Modal';
 import { firebaseDb } from '../../services/firebase.service';
 import RotatingLoader from '../loaders/RotatingLoader';
 
@@ -34,7 +34,8 @@ const SubscribeBar = (props) => {
         setShowLoader(true);
         firebaseDb.collection("waitlist")
             .add({
-                email: email
+                email: email,
+                date: new Date()
             })
             .then(() => {
                 setModalTitle('Thankyou for your interest');
@@ -62,11 +63,13 @@ const SubscribeBar = (props) => {
     return (
         <div className={styles.inputBar} style={barStyle}>
             <Modal
+                size='small'
+                buttonText='Accept and Close'
                 showModal={showModal}
-                title={modalTitle}
                 setShowModal={setShowModal}
             >
-                {modalMessage}
+                <h1>{modalTitle}</h1>
+                <h3>{modalMessage}</h3>
             </Modal>
             <RotatingLoader visible={showLoader} />
             <input id='contactEmail' type="email" autoComplete='off' placeholder='Your Email'

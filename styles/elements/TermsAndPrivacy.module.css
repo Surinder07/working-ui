@@ -1,0 +1,29 @@
+.orderedListNumbered {
+    list-style-type: none;
+    counter-reset: item;
+}
+
+.orderedListNumbered > .subListNumbered {
+    display: table;
+    counter-increment: item;
+}
+
+.orderedListNumbered > .subListNumbered:before {
+    content: counters(item, ".") ". ";
+    display: table-cell;
+    padding-right: 0.6em; 
+    font-weight: 600;
+}
+
+.subListNumbered .orderedListNumbered>.subListNumbered:before {
+    content: counters(item, ".") " ";
+}
+
+.orderedListAlphabet {
+    list-style-type: lower-alpha;
+    font-weight: 600;
+}
+
+.orderedListAlphabet li {
+    padding-left: 10px;
+}

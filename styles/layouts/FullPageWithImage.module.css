@@ -85,3 +85,12 @@
     position: absolute;
     top: -20px
 }
+
+.successBg {
+    min-height: 30vh;
+    height: 50%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}

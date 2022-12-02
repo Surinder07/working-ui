@@ -23,6 +23,7 @@ const ResetPasswordInit = (props) => {
     const [submitError, setSubmitError] = useState(false);
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const checkEmailError = async () => {
         let error = false;
@@ -52,7 +53,7 @@ const ResetPasswordInit = (props) => {
                                 setTimeout(() => setSubmitError(false), 3000);
                                 setLoading(false);
                             } else {
-                                alert("Success");
+                                setShowSuccessModal(true);
                             }
                         })
                 }
@@ -63,7 +64,12 @@ const ResetPasswordInit = (props) => {
         <FullPageWithImageLayout
             title='Reset Password'
             background='/bg/reset-password-init-bg.svg'
-            setActiveMenu={props.setActiveMenu}
+            showSuccessModal={showSuccessModal}
+            setShowSuccessModal={setShowSuccessModal}
+            successModalBg='/bg/password-reset-init-success-bg.svg'
+            successButtonText='OK'
+            successTitle='Email Sent Successfully!'
+            successMessage='The reset password link has been successfully sent to your email.'
         >
             <h1>Trouble Logging in?</h1>
             <h3>Enter your email and we will, send you a link to reset your password.</h3>

@@ -6,6 +6,9 @@ import Images from '../public/Images';
 import styles from '../styles/layouts/Dashboard.module.css';
 import { Logout, Settings } from '@mui/icons-material';
 import { useRef, useEffect, useState, useCallback } from 'react';
+import ProfileImage from '../components/dashboardComponents/ProfileImage';
+import NotificationBell from '../components/dashboardComponents/NotificationBell';
+import SearchBar from '../components/inputComponents/SearchBar';
 
 const Dashboard = (props) => {
 
@@ -74,13 +77,20 @@ const Dashboard = (props) => {
             <div style={{ position: 'relative' }}>
                 <div className={styles.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
+                    <div className={styles.headerRight} >
+                        <SearchBar className={styles.searchBar} setValue={console.log}/>
+                        <div className={styles.helpIcon}>?</div>
+                        <NotificationBell />
+                        <h3 className={styles.userName}>{props.user && props.user.firstName + (props.user.lastName ? ' ' + props.user.lastName : '')}</h3>
+                        <ProfileImage size={'small'} header />
+                    </div>
                 </div>
                 <div className={styles.content}>
                     {props.children}
                 </div>
                 <div className={styles.footer}>
                     <div className={styles.leftContainer}>
-                        <p style={{marginRight: '20px'}}>&#169;{` ${(new Date()).getFullYear()} WAAW. All Rights Reserved`}</p>
+                        <p style={{marginRight: '20px'}}>&#169;{` ${(new Date()).getFullYear()} WAAW GLOBAL INC. All Rights Reserved`}</p>
                         {
                             ImagesInfo.footerIcons.socialIcons.map((icon, i) => (
                                 <LinkedImage style={{marginRight: '10px'}} height={20} src={icon.src} alt={icon.alt} link={icon.link} />
