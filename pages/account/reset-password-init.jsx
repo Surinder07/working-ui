@@ -1,4 +1,4 @@
-import Link from "next/Link";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import Button from "../../components/Button";
 import InputBox from "../../components/inputComponents/InputBox";
