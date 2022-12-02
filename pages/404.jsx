@@ -6,8 +6,13 @@ import styles from '../styles/pages/404.module.css'
 const NotFound = (props) => {
 
     useEffect(() => {
-        props.setActiveMenu('404');
-    })
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'loggedOut',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
+      }, []);
 
     return (
         <>

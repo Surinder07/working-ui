@@ -34,10 +34,21 @@ const CompleteProfile = (props) => {
     const [showErrorMobile, setShowErrorMobile] = useState(false);
     const [showErrorOrganization, setShowErrorOrganization] = useState(false);
     const [showErrorTimezone, setShowErrorTimezone] = useState(false);
-    const [promoError, setPromoError] = useState(false);
+    const [promoMessage, setPromoMessage] = useState({});
+    const [promoValue, setPromoValue] = useState('');
     const [loading, setLoading] = useState(false);
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
     const [submitError, setSubmitError] = useState(false);
+
+    useEffect(() => {
+        props.setPageInfo({
+            authenticationRequired: true,
+            pageView: 'fullPage',
+            activeMenu: 'none',
+            activeSubMenu: 'none'
+        })
+        dropdownService.getTimezones().then(res => setTimezones(res));
+    }, [])
 
     const validateFields = async () => {
         let error = false;
@@ -74,15 +85,13 @@ const CompleteProfile = (props) => {
         return error;
     }
 
-    useEffect(() => {
-        props.setPageInfo({
-            authenticationRequired: true,
-            pageView: 'fullPage',
-            activeMenu: 'none',
-            activeSubMenu: 'none'
+    const handlePromoCode = () => {
+        setPromoMessage({
+            error: true,
+            showMessage: true,
+            message: 'Propmo code is expired'
         })
-        dropdownService.getTimezones().then(res => setTimezones(res));
-    }, [])
+    }
 
     const onSubmit = () => {
         if (loading) return;
@@ -192,11 +201,11 @@ const CompleteProfile = (props) => {
                     style={{ marginTop: '40px' }}
                     placeholder='Promo Code'
                     buttonText='Apply'
-                // onClick={handlePromoCode}
-                // message={promoMessage}
-                // error={promoError}
-                // showMessage={true}
-                // setValue={promoValue}
+                    onClick={handlePromoCode}
+                    message={promoMessage.message}
+                    error={promoMessage.error}
+                    showMessage={promoMessage.showMessage}
+                    setValue={promoValue}
                 />
                 {submitError && <p className={layoutStyles.errorTextUp}>{submitErrorMessage}</p>}
             </div>

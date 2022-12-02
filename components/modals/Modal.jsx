@@ -1,5 +1,6 @@
 import styles from '../../styles/elements/Modal.module.css';
 import { useRouter } from 'next/router';
+import { Close } from "@mui/icons-material"
 import Button from '../Button';
 import { useEffect } from 'react';
 
@@ -31,6 +32,11 @@ const Modal = (props) => {
         props.showModal ?
             <div className={styles.modalBackdrop}>
                 <div className={`${styles.modal} ${styles[props.size]}`}>
+                    {props.showCloseButton && <Close className={styles.closeIcon}
+                        onClick={() => {
+                            props.setShowModal(false);
+                            document.body.style.overflow = 'unset';
+                        }} />}
                     <div className={styles.subContainer}>
                         {props.children}
                         <Button

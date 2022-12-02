@@ -40,16 +40,17 @@
 .navEl .button {
     padding: 0.625rem 1.25rem;
     border: solid 1px var(--grey-border-color);
-    color: var(--button-blue-color);
-    cursor: pointer;
+    color: var(--grey-border-color);
+    /* color: var(--button-blue-color); */
+    /* cursor: pointer; */
     background-color: #FFFFFF00;
     border-radius: 0.5rem;
     font-weight: 600;
 }
 
-.navEl .button:hover {
+/* .navEl .button:hover {
     background-color: var(--button-hover-grey-color);
-}
+} */
 
 .navEl p {
     user-select: none;

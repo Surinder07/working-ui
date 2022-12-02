@@ -107,8 +107,7 @@
 }
 
 .content {
-    padding: 0 30px;
-    padding-top: calc(var(--navigation-height));
+    padding: var(--navigation-height) 30px;
     background-color: #F7F8FC;
     min-height: 100%;
 }

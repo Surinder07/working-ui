@@ -9,7 +9,7 @@ const UserPreference = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: 'dashboard',
             activeMenu: 'none',
             activeSubMenu: 'none'

@@ -1,4 +1,4 @@
-import {Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, RequestPage, Receipt, Description} from '@mui/icons-material';
+import {Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, Badge, RequestPage, Receipt, Description} from '@mui/icons-material';
 
 export const SideNavInfo = {
     admin: [
@@ -25,6 +25,12 @@ export const SideNavInfo = {
             text: 'Locations',
             link: '/dashboard/locations',
             activeKey: 'LOCATIONS'
+        },
+        {
+            icon: <Badge style={{ fontSize: '16px' }} />,
+            text: 'Roles',
+            link: '/dashboard/roles',
+            activeKey: 'ROLES'
         },
         {
             icon: <PeopleAlt style={{ fontSize: '16px' }} />,

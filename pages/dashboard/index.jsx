@@ -9,7 +9,7 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: 'dashboard',
             activeMenu: 'DASHBOARD',
             activeSubMenu: 'none'

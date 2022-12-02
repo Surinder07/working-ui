@@ -32,6 +32,13 @@
     grid-template-columns: 250px auto 200px;
 }
 
+.nonProfileContainer {
+    display: grid;
+    height: 100%;
+    min-height: 500px;
+    grid-template-columns: 70% auto;
+}
+
 .picContainer {
     height: 200px;
     width: 200px;
@@ -91,6 +98,21 @@
     margin: 30px 0;
 }
 
+.nonProfileContainer h1 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #535255;
+    margin: 30px 0 15px;
+}
+
+.nonProfileContainer p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #535255;
+}
+
 .twoHalves {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -98,11 +120,14 @@
 }
 
 .userPreferenceCard {
-    height: 100%;
     width: 100%;
     background: #FFFFFF;
     border: 1px solid #DFE0EB;
     border-radius: 8px;
+}
+
+.twoHalves .userPreferenceCard {
+    height: 100%;
 }
 
 .userPreferenceCard h3 {
@@ -117,7 +142,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
-    margin:0;
+    margin: 0;
 }
 
 .cardTitle {
@@ -126,6 +151,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.cardBody {
+    padding: 15px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
+    row-gap: 25px;
+}
+
+.cardBody .fullWidth {
+    grid-column: span 2;
 }
 
 .cardTitle .editOption {
@@ -141,4 +178,74 @@
 
 .editIcon {
     font-size: 12px;
+}
+
+.inputLabelContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.editableInputContainer {
+    height: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.inputLabelContainer p,
+.inputLabelContainer input {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+    font-family: Mulish;
+}
+
+.inputLabelContainer label {
+    color: #7E7D80;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 5px;
+}
+
+.inputLabelContainer input {
+    outline: none;
+    border: none;
+    width: 100%;
+    height: fit-content;
+}
+
+.inputBox {
+    border: 1px solid #D9D9D9;
+}
+
+.socialWarning {
+    display: grid;
+    grid-template-columns: 100px auto;
+    padding: 10px 20px;
+    background: #DBEBF4;
+    border: 1px solid #DFE0EB;
+    border-radius: 8px;
+}
+
+.warning {
+    color: #2996C3;
+    font-size: 50px;
+}
+
+.socialWarning h3 {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #535255;
+    margin: 0;
+}
+
+.socialWarning p {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    color: #535255;
+    opacity: 0.75;
+    margin: 0;
 }

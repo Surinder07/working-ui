@@ -33,6 +33,7 @@ const TermsAndPolicyModal = (props) => {
             showModal={props.showModal}
             setShowModal={props.setShowModal}
             buttonText='Close'
+            showCloseButton
         >
             <h1>{data.title}</h1>
             {data.content.intro && <p>{data.content.intro}</p>}
@@ -125,8 +126,8 @@ const TermsAndPolicyModal = (props) => {
                 data.content.paragraphs &&
                 data.content.paragraphs.map((para, i) => (
                     <>
-                        <h2 style={{width: '100%'}}>{para.title}</h2>
-                        <p style={{paddingLeft: '20px', width:'100%'}}>{para.description}</p>
+                        <h2 style={{ width: '100%' }}>{para.title}</h2>
+                        <p style={{ paddingLeft: '20px', width: '100%' }}>{para.description}</p>
                     </>
                 ))
             }

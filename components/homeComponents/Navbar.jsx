@@ -66,9 +66,9 @@ const Navbar = (props) => {
                 props.screenType !== 3 && <div className={styles.navEl}></div>
             }
             <div className={`${styles.navEnd} ${styles.navEl}`}>
-                <Link href={'login'} >
-                    <button className={styles.button}>Log In</button>
-                </Link>
+                {/* <Link href={'login'} > */}
+                    <button disabled className={styles.button}>Log In</button>
+                {/* </Link> */}
                 {
                     props.screenType !== 3 && <p>English</p>
                 }
