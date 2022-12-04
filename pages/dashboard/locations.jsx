@@ -9,7 +9,7 @@ const Locations = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: true,
+            authenticationRequired: false,
             pageView: 'dashboard',
             activeMenu: 'LOCATIONS',
             activeSubMenu: 'none'
@@ -18,31 +18,34 @@ const Locations = (props) => {
 
     const locations = [
         {
-            invoiceId: '6476475',
-            service: 'One time register',
-            startDate: '-',
-            endDate: '-',
-            billingDate: '01/29/2022',
-            amount: '$960',
-            status: 'Paid'
+            'Location Id' : '6476475',
+            'Location Name': 'Canada',
+            'Creation Date': '01/01/2023',
+            'Timezone': 'EST',
+            'Number of active employees': '200',
+            'Number of inactive employees': '25',
+            status: 'xyz',
+            Actions: 'not added'
         },
         {
-            invoiceId: '6476475',
-            service: 'Monthly Fees',
-            startDate: '01/01/2022',
-            endDate: '02/01/2022',
-            billingDate: '01/29/2022',
-            amount: '$200',
-            status: 'Paid'
+            'Location Id': '6476475',
+            'Location Name': 'India',
+            'Creation Date': '02/01/2023',
+            'Timezone': 'IST',
+            'Number of active employees': '200',
+            'Number of inactive employees': '25',
+            status: 'xyz',
+            Actions: 'not added'
         },
         {
-            invoiceId: '6476475',
-            service: 'Monthly Fees',
-            startDate: '02/01/2022',
-            endDate: '03/01/2022',
-            billingDate: '02/29/2022',
-            amount: '$250',
-            status: 'Due'
+            'Location Id': '6476475',
+            'Location Name': 'Australia',
+            'Creation Date': '03/01/2023',
+            'Timezone': 'EST',
+            'Number of active employees': '200',
+            'Number of inactive employees': '25',
+            status: 'xyz',
+            Actions: 'not added'
         }
     ]
 
@@ -56,7 +59,7 @@ const Locations = (props) => {
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
                 title='Location Listing' 
-                description='Tabular list of all Locations.' 
+                description='Tabular list of Locationwise employees.' 
                 data={locations}
                 pagination
                 />
