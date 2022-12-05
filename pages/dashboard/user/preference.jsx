@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Email from "../../components/dashboardComponents/userPreferences/Email";
-import Profile from "../../components/dashboardComponents/userPreferences/Profile";
-import WaawHead from "../../components/WaawHead";
+import Email from "../../../components/dashboardComponents/userPreferences/Email";
+import Profile from "../../../components/dashboardComponents/userPreferences/Profile";
+import WaawHead from "../../../components/WaawHead";
 import dashboardStyles from "../../styles/pages/Dashboard.module.css";
 import styles from "../../styles/pages/UserPreference.module.css";
 

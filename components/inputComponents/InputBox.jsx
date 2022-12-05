@@ -39,9 +39,10 @@ const InputBox = (props) => {
     }
 
     return (
-        <div className={`${styles.inputBox} ${props.className} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+        <div className={`${props.inputType === 2 ? styles.inputBox2 : styles.inputBox} ${props.className} 
+        ${props.showError ? styles.inputBoxError : props.inputType === 2 ? styles.inputBox2Default : styles.inputBoxDefault}`}
             style={props.style}>
-            <div className={styles.inputIconContainer}>{getIcon()}</div>
+            {props.inputType !== 2 && <div className={styles.inputIconContainer}>{getIcon()}</div>}
             <input
                 type={type}
                 id={props.name}

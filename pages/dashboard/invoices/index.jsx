@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import styles from '../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../components/WaawHead";
-import Button from '../../components/Button';
-import DashboardCard from "../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../components/dashboardComponents/TabularInfo";
+import styles from '../../../styles/pages/Dashboard.module.css';
+import WaawHead from "../../../components/WaawHead";
+import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
+import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 
 const Invoices = (props) => {
 
@@ -54,7 +53,6 @@ const Invoices = (props) => {
             <WaawHead title={"WaaW | Invoices"} />
             <div className={styles.dashboardTitles}>
                 <h1>Invoices</h1>
-                <Button type='plain'>+ Add new Invoice</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
