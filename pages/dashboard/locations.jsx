@@ -1,20 +1,19 @@
 import { useEffect } from "react";
-import styles from '../../styles/pages/Dashboard.module.css';
+import styles from "../../styles/pages/Dashboard.module.css";
 import WaawHead from "../../components/WaawHead";
-import Button from '../../components/Button';
+import Button from "../../components/Button";
 import DashboardCard from "../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../components/dashboardComponents/TabularInfo";
 
 const Locations = (props) => {
-
-    useEffect(() => {
-        props.setPageInfo({
-            authenticationRequired: false,
-            pageView: 'dashboard',
-            activeMenu: 'LOCATIONS',
-            activeSubMenu: 'none'
-        })
-    }, []);
+  useEffect(() => {
+    props.setPageInfo({
+      authenticationRequired: false,
+      pageView: "dashboard",
+      activeMenu: "LOCATIONS",
+      activeSubMenu: "none",
+    });
+  }, []);
 
     const locations = [
         {

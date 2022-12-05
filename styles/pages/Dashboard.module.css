@@ -113,6 +113,7 @@
 
 .tableHeadRow {
     background: #F5F5F5;
+    text-align: center;
 }
 
 .tableBodyRow {
@@ -136,4 +137,85 @@
     letter-spacing: 0.2px;
     color: #535255;
     padding: 15px 0;
+}
+
+.accordion {
+    list-style: none;
+}
+
+
+.accordion_item {
+    background: #FFFFFF;
+    margin-bottom: 20px;
+    border: 1px solid #DFE0EB;
+    border-radius: 8px;
+}
+
+
+.expansionButton {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #000000;
+    background-color: #FFFFFF;
+    border: none;
+    text-align: left;
+    font-weight: 700;
+    width: 100%;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.accordion_header {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+    margin-left: 23px;
+}
+
+.leftAccordion {
+    display: flex;
+    align-items: center;
+}
+
+.rightAccordion {
+    display: flex;
+    justify-content: space-between;
+}
+
+.control {
+    font-size: 20px;
+}
+
+.answer {
+    background-color: #f7f7f7;
+    padding: 20px;
+}
+
+.accordion_item.active .button {
+    background-color: #105057;
+}
+
+.searchBar {
+    background-color: white;
+    border: 1px solid #6A719A;
+    width: 380px;
+}
+
+.filterBar {
+    background-color: white;
+    border: 1px solid #6A719A;
+    width: 170px;
+    margin-left: 70px
+}
+
+.answer_wrapper {
+    height: 0;
+    overflow: hidden;
+    transition: height ease 0.2s;
 }
