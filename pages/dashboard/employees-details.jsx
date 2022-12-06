@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../../styles/pages/Dashboard.module.css";
 import WaawHead from "../../components/WaawHead";
 import Accordion from "../../components/dashboardComponents/Accordion";
-
+import SmallModal from "../../components/modals/SmallModal"; 
 const Employees = (props) => {
   useEffect(() => {
     props.setPageInfo({
@@ -261,7 +261,12 @@ const Employees = (props) => {
   ];
 
   const [clicked, setClicked] = useState("0");
-
+ // modal part 
+  const [showModal,setShowModal] = useState(true)
+  const handleModal = ()=>{
+      setShowModal(true);
+  }
+ /////
   const handleToggle = (index) => {
     if (clicked === index) {
       return setClicked("0");
@@ -274,6 +279,7 @@ const Employees = (props) => {
       <WaawHead title={"WaaW | Employees"} />
       <div className={styles.dashboardTitles}>
         <h1>Personal details</h1>
+        <SmallModal showModal={showModal} setShowModal={setShowModal}/>
       </div>
       <ul className={styles.accordion}>
         {faqs.map((faq, index) => (

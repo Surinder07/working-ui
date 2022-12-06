@@ -24,11 +24,16 @@ const TabularInfo = (props) => {
             }))
         }
     }, [props.data]);
-
+    // let buttonText = ['Continue', 'Cancel']
     return (
         <div className={styles.tableContainer}>
             {props.title && <h2>{props.title}</h2>}
             {props.description && <h4>{props.description}</h4>}
+            {/* <SmallModal showModal={true}  
+             buttonText={buttonText}
+             
+            //   setShowModal={setShowModal}
+            /> */}
             {
                 props.data ?
                     noData ?

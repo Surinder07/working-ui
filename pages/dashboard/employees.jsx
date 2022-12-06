@@ -54,7 +54,7 @@ const Employees = (props) => {
                 <Button type='plain'>+ Invite Users</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
+          <TabularInfo
                 title='Employee Sheet' 
                 description='Tabular list Employee details.' 
                 data={employees}

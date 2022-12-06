@@ -121,3 +121,55 @@
 .successModal h1 {
     color: #2996C3 !important;
 }
+
+
+/* small Modal  */
+.multipleButtonStyle{
+    display: flex;
+    justify-content: start;
+    gap: 40px;
+    margin-top: 15px;
+}
+
+.smallModalUpperdiv{
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    
+}
+.smallModalUpperdiv input{
+  padding: 12px 18px;
+  margin-bottom: 15px;
+}
+.smallModalTextarea{
+    width: 320px;
+    height:40px;
+    border: 1px solid grey;
+    margin-bottom:5px;
+    margin-top: -10px;
+    font-size: 16px;
+}
+.smallModalMainContainer + label{
+  margin-left: -60%;
+  font-size: 16px;
+  margin-bottom:10px;
+}
+.modalDropDown > div{
+    border: 1px solid grey;
+    box-shadow: none;
+    border-radius:0px;
+    
+}
+.smallModalLocationDropDown{
+    width: 320px;
+    height:40px;
+    margin-bottom:5px;
+    margin-top: -10px;
+    font-size: 16px;
+}
+.smallModalLocationDropDown > div{
+    border: 1px solid grey;
+    box-shadow: none;
+    border-radius:0px;
+    
+}
