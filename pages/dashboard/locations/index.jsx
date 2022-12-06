@@ -24,7 +24,6 @@ const Locations = (props) => {
             'Number of active employees': '200',
             'Number of inactive employees': '25',
             status: 'xyz',
-            Actions: 'not added'
         },
         {
             'Location Id': '6476475',
@@ -34,7 +33,6 @@ const Locations = (props) => {
             'Number of active employees': '200',
             'Number of inactive employees': '25',
             status: 'xyz',
-            Actions: 'not added'
         },
         {
             'Location Id': '6476475',
@@ -44,7 +42,6 @@ const Locations = (props) => {
             'Number of active employees': '200',
             'Number of inactive employees': '25',
             status: 'xyz',
-            Actions: 'not added'
         }
     ]
 
@@ -61,6 +58,10 @@ const Locations = (props) => {
                     description='Tabular list of Locationwise employees.'
                     data={locations}
                     pagination
+                    actions={[{
+                        key: 'Edit',
+                        action: () => console.log('edit')
+                    }]}
                 />
             </DashboardCard>
         </>

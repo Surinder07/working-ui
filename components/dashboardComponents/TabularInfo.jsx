@@ -3,6 +3,7 @@ import styles from '../../styles/elements/TabularInfo.module.css';
 import Pagination from './Pagination';
 import SearchBar from '../inputComponents/SearchBar';
 import { FilterAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
+import Options from './Options';
 
 const TabularInfo = (props) => {
 
@@ -22,14 +23,7 @@ const TabularInfo = (props) => {
         } else {
             setTableHeight('50px')
         }
-    }, [tableRef.current])
-
-    const handleToggle = (index) => {
-        if (clicked === index) {
-            return setClicked(0);
-        }
-        setClicked(index);
-    };
+    }, [tableRef.current]);
 
     useEffect(() => {
         setNoData(false);
@@ -101,6 +95,12 @@ const TabularInfo = (props) => {
                                                     </th>
                                                 ))
                                             }
+                                            {
+                                                props.actions &&
+                                                <th className={styles.tableHeadCell}>
+                                                    Actions
+                                                </th>
+                                            }
                                         </tr>
                                         {
                                             props.data.map((row, i) => (
@@ -111,6 +111,12 @@ const TabularInfo = (props) => {
                                                                 {row[cell]}
                                                             </td>
                                                         ))
+                                                    }
+                                                    {
+                                                        props.actions &&
+                                                        <td className={styles.tableBodyCell}>
+                                                            <Options options={props.actions} />
+                                                        </td>
                                                     }
                                                 </tr>
                                             ))

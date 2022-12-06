@@ -71,21 +71,3 @@
     line-height: 21px;
     color: #999999;
 }
-
-.options {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 20px;
-    cursor: pointer;
-}
-
-.options span {
-    width: 4px;
-    height: 4px;
-    background: #535255;
-    border-radius: 50%;
-}
