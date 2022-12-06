@@ -70,10 +70,12 @@ const Employees = (props) => {
                     }
                 ]}
                 title={title}
-                expandable
-                pagination
                 expanded={expandedMenu === title.toLowerCase()}
                 toggleExpansion={() => handleExpansion(title.toLowerCase())}
+                expandable
+                pagination
+                showSearch
+                showFilter
             />
         </DashboardCard>
     }

@@ -59,6 +59,7 @@ const Employees = (props) => {
                 description='Tabular list Employee details.' 
                 data={employees}
                 pagination
+                showSearch
                 />
             </DashboardCard>
         </>

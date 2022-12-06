@@ -14,14 +14,16 @@ const TabularInfo = (props) => {
     const [tableHeight, setTableHeight] = useState('50px');
 
     const tableRef = useRef();
+    const searchRef = useRef();
+    const filterRef = useRef();
 
     useEffect(() => {
         if (tableRef.current) {
-            setTableHeight(`${tableRef.current.clientHeight + 60}px`);
+            setTableHeight(`${tableRef.current.clientHeight + 50}px`);
         } else {
             setTableHeight('50px')
         }
-    }, [tableRef])
+    }, [tableRef.current])
 
     useEffect(() => {
         setNoData(false);
@@ -38,11 +40,18 @@ const TabularInfo = (props) => {
         }
     }, [props.data]);
 
+    const toggleExpansion = (e) => {
+        if (props.expandable && (searchRef.current || filterRef.current)) {
+            if ((searchRef.current && searchRef.current.contains(e.target)) || (filterRef.current && filterRef.current.contains(e.target))) {
+                return;
+            } else props.toggleExpansion();
+        }
+        else if (props.expandable) props.toggleExpansion();
+    }
+
     return (
         <div className={styles.tableContainer}>
-            <div className={styles.header} style={props.expandable && { cursor: 'pointer' }} onClick={() => {
-                if (props.expandable) props.toggleExpansion();
-            }}>
+            <div className={styles.header} style={props.expandable && { cursor: 'pointer' }} onClick={toggleExpansion}>
                 <div style={props.expandable && { paddingLeft: '40px', position: 'relative' }}>
                     {props.expandable && (props.expanded ? <ExpandLess className={styles.dropDownIcon} /> :
                         <ExpandMore className={styles.dropDownIcon} />)}
@@ -50,10 +59,13 @@ const TabularInfo = (props) => {
                     {props.description && <h4>{props.description}</h4>}
                 </div>
                 <div className={styles.searchFilterContainer}>
-                    {props.showSearch && <SearchBar className={styles.search} />}
                     {
-                        props.showFilter &&
-                        <div className={styles.filter}>
+                        props.showSearch && ((props.expandable && props.expanded) || !props.expandable) &&
+                        <SearchBar ref={searchRef} className={styles.search} />
+                    }
+                    {
+                        props.showFilter && ((props.expandable && props.expanded) || !props.expandable) &&
+                        <div ref={filterRef} className={styles.filter}>
                             <FilterAlt />
                             <p>Filter</p>
                         </div>

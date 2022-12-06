@@ -11,12 +11,12 @@
 
 .search {
     width: 50%;
-    border: 1px solid #6A719A;
+    border: 1px solid #BFBFBF;
     font-weight: 600!important;
     font-size: 14px!important;
     line-height: 20px!important;
     letter-spacing: 0.2px!important;
-    color: #6A719A!important;
+    color: #535255!important;
     background-color: #FFFFFF!important;
 }
 
@@ -25,7 +25,7 @@
     font-size: 14px!important;
     line-height: 20px!important;
     letter-spacing: 0.2px!important;
-    color: #6A719A!important;
+    color: #535255!important;
 }
 
 .filter {
@@ -33,12 +33,12 @@
     align-items: center;
     margin-left: 20px;
     height: fit-content;
-    border: 1px solid #6A719A;
+    border: 1px solid #BFBFBF;
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.2px;
-    color: #6A719A;
+    color: #535255;
     padding: 5.5px 20px;
     cursor: pointer
 }
