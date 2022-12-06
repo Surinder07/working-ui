@@ -4,6 +4,7 @@
     color: #999;
     background: rgba(217, 217, 217, 0.3);
     padding: 6px 0;
+    height: fit-content;
 }
 
 .container input {
@@ -15,6 +16,7 @@
     border: none;
     outline: none;
     background-color: #FFFFFF00;
+    height: fit-content;
 }
 
 .container input::placeholder {

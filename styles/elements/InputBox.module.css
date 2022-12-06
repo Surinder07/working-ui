@@ -3,19 +3,37 @@
     width: 100%;
     display: grid;
     grid-template-columns: 40px auto 40px;
-    margin: 1rem 0;
-    margin-bottom: 25px;
     background-color: #fff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     font-size: 14px;
     line-height: 21px;
     font-weight: 500;
+    margin: 1rem 0;
+    margin-bottom: 25px;
+}
+
+.inputBox2 {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 40px;
+    background-color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    padding-left: 20px;
 }
 
 .inputBoxDefault {
     border: 1px solid #2996C3;
     color: rgba(0, 0, 0, 0.6);
+}
+
+.inputBox2Default {
+    color: #000000;
+    border: 1px solid #BFBFBF;
 }
 
 .inputBoxError {
@@ -24,7 +42,9 @@
 }
 
 .inputBox input,
+.inputBox2 input,
 .inputBoxWithDropdown input,
+.inputBoxWithDropdown2 input,
 .inputBoxWithButton input {
     padding: 7px 0;
     outline: none;
@@ -37,7 +57,9 @@
 }
 
 .inputBox input::placeholder,
+.inputBox2 input::placeholder,
 .inputBoxWithDropdown input::placeholder,
+.inputBoxWithDropdown2 input::placeholder,
 .inputBoxWithButton input::placeholder {
     color: rgba(0, 0, 0, 0.6);
     font-weight: 500;
@@ -46,12 +68,18 @@
 }
 
 .inputBox .inputIconContainer,
-.inputBoxWithDropdown .inputIconContainer {
+.inputBox2 .inputIconContainer,
+.inputBoxWithDropdown .inputIconContainer,
+.inputBoxWithDropdown2 .inputIconContainer {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.inputBox2 .inputIconContainer {
+    color: #BFBFBF;
 }
 
 .errorMessage {
@@ -80,6 +108,18 @@
     font-weight: 500;
 }
 
+.inputBoxWithDropdown2 {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50px auto;
+    background-color: #fff;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    border: 1px solid #BFBFBF;
+}
+
 /* Dropdown classes */
 .dropdownRelative {
     position: relative;
@@ -101,20 +141,39 @@
     user-select: none;
 }
 
-.dropdownContainer .selected {
+.dropdownContainer2 {
+    font-family: Mulish;
+    padding: 7px 0;
+    outline: none;
+    background-color: #FFFFFF00;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    z-index: 2;
+    user-select: none;
+    border: 1px solid #BFBFBF !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.dropdownContainer .selected,
+.dropdownContainer2 .selected {
+    padding-left: 5px;
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-.dropdownContainer .selected2 {
+.dropdownContainer .selected2,
+.dropdownContainer2 .selected2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
 }
 
-.dropdownContainer .options {
+.dropdownContainer .options,
+.dropdownContainer2 .options {
     position: absolute;
     background-color: #FFF;
     max-height: 150px;
@@ -127,13 +186,15 @@
     width: fit-content;
 }
 
-.dropdownContainer .closedOptions {
+.dropdownContainer .closedOptions,
+.dropdownContainer2 .closedOptions {
     border: none;
     overflow: hidden;
     height: 0;
 }
 
-.dropdownContainer .options p {
+.dropdownContainer .options p,
+.dropdownContainer2 .options p {
     margin: 0;
     padding: 15px;
     text-align: left;
@@ -141,9 +202,17 @@
     align-items: center;
 }
 
-.dropdownContainer .options p:hover {
+.dropdownContainer .options p:hover,
+.dropdownContainer2 .options p:hover {
     filter: brightness(90%);
     background-color: rgb(241, 241, 241);
+}
+
+.dropDownIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .mapIcon {
