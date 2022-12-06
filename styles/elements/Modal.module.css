@@ -126,7 +126,7 @@
 /* small Modal  */
 .multipleButtonStyle{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 40px;
     margin-top: 15px;
 }

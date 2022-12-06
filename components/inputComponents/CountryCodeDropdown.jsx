@@ -7,7 +7,7 @@ const CountryCodeDropdown = (props) => {
 
     const ref = useRef();
 
-    const [displayValue, setDisplayValue] = useState(props.options[0].selectDisplay);
+    const [displayValue, setDisplayValue] = useState('');
     const [open, setOpen] = useState(false);
     const openedDownStyle = {
         top: '37px',
@@ -26,7 +26,15 @@ const CountryCodeDropdown = (props) => {
     }
 
     useEffect(() => {
-        props.setValue(props.options[0].value);
+        const selectedOption = props.value.country !== '' ? props.options.find(option => {
+            return option.country === props.value.country;
+        }) : props.options[0];
+        setDisplayValue(selectedOption.selectDisplay);
+        props.setValue({
+            ...props.value,
+            countryCode: selectedOption.value,
+            country: selectedOption.country
+        });
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);

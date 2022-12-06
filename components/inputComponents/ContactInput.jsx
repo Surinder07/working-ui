@@ -22,17 +22,18 @@ const ContactInput = (props) => {
     }
 
     return (
-        <div ref={ref} className={`${styles.inputBoxWithDropdown} ${props.className} ${props.showError ?
+        <div ref={ref} className={`${props.inputType === 2 ? styles.inputBoxWithDropdown2 : styles.inputBoxWithDropdown} ${props.className} ${props.showError ?
             styles.inputBoxError : styles.inputBoxDefault}`} style={props.style}>
-            <div className={styles.inputIconContainer}><Phone /></div>
+            {props.inputType !== 2 && <div className={styles.inputIconContainer}><Phone /></div>}
             <CountryCodeDropdown
                 onClick={onClick}
-                setValue={props.setCountryCode}
+                value={props.value}
+                setValue={props.setValue}
                 openDown={openDown}
                 options={CountryCodes}
                 inputHeight={inputHeight}
                 style={{
-                    borderRight: props.showError ? '1px solid var(--error-message-color)' : '1px solid #2996C3',
+                    borderRight: props.showError ? '1px solid var(--error-message-color)' : props.inputType === 2 ? '1px solid #BFBFBF' : '1px solid #2996C3',
                 }} />
             <input
                 type='tel'
@@ -40,9 +41,12 @@ const ContactInput = (props) => {
                 name='mobile'
                 maxLength='10'
                 placeholder='Enter Mobile No.'
-                value={props.mobile}
+                value={props.value.mobile}
                 onChange={(e) => {
-                    props.setMobile(e.target.value);
+                    props.setValue({
+                        ...props.value,
+                        mobile: e.target.value
+                    });
                     props.setShowError(false);
                 }}
                 style={{ paddingLeft: '15px' }}

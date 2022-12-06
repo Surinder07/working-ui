@@ -21,8 +21,11 @@ const CompleteProfile = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
-    const [countryCode, setCountryCode] = useState('+1');
-    const [mobile, setMobile] = useState('');
+    const [contact, setContact] = useState({
+        countryCode: '',
+        mobile: '',
+        country: ''
+    })
     const [organization, setOrganization] = useState('');
     const [weekStartOn, setWeekStartOn] = useState('Monday');
     const [timezone, setTimezone] = useState('');
@@ -163,10 +166,8 @@ const CompleteProfile = (props) => {
                 setShowError={setShowErrorUsername}
             />
             <ContactInput
-                mobile={mobile}
-                setMobile={setMobile}
-                countryCode={countryCode}
-                setCountryCode={setCountryCode}
+                value={contact}
+                setValue={setContact}
                 style={{ marginTop: 0 }}
                 errorMessage={'Enter a valid number'}
                 showError={showErrorMobile}

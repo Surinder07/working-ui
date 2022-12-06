@@ -47,10 +47,11 @@ const DropDown = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={`${styles.dropdownContainer} ${styles.dropdownRelative} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+        <div ref={ref} className={`${props.inputType === 2 ? styles.dropdownContainer2 : styles.dropdownContainer} ${styles.dropdownRelative} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
             style={props.style}>
             <div className={styles.selected2} onClick={onClick}>
-                {displayValue}{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                {displayValue}{open ? <KeyboardArrowUp className={styles.dropDownIcon} /> : 
+                <KeyboardArrowDown className={styles.dropDownIcon} />}
             </div>
             <div className={`${styles.options} ${!open && styles.closedOptions}`}
                 style={openDown ? openedDownStyle : openedUpStyle}>

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import styles from '../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../components/WaawHead";
-import Button from '../../components/Button';
-import DashboardCard from "../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../components/dashboardComponents/TabularInfo";
+import styles from '../../../styles/pages/Dashboard.module.css';
+import WaawHead from "../../../components/WaawHead";
+import Button from '../../../components/Button';
+import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
+import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 
 const Employees = (props) => {
 
@@ -59,6 +59,7 @@ const Employees = (props) => {
                 description='Tabular list Employee details.' 
                 data={employees}
                 pagination
+                showSearch
                 />
             </DashboardCard>
         </>
