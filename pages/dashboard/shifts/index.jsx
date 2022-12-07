@@ -18,34 +18,61 @@ const Shifts = (props) => {
 
     const shifts = [
         {
-           'Shift Id': '6476475',
-            'Shift Name': 'One time register',
-            'Start Date': '-',
-            'End Date': '-',
-            'Location Name': 'Canada',
-            'Creation Date': '01/29/2022',
+            shiftId: '6476475',
+            shiftName: 'One time register',
+            startDate: '-',
+            endDate: '-',
+            locationName: 'Canada',
+            creationDate: '01/29/2022',
             status: 'Paid',
-            Actions: 'not added'
+            subData: [
+                {
+                    test: 'test',
+                    test2: 'test'
+                },
+                {
+                    test: 'test2',
+                    test2: 'test2F'
+                }
+            ]
         },
         {
-            'Shift Id': '6476475',
-            'Shift Name': 'One time register',
-            'Start Date': '-',
-            'End Date': '-',
-            'Location Name': 'Canada',
-            'Creation Date': '01/29/2022',
+            shiftId: '6476475',
+            shiftName: 'One time register',
+            startDate: '-',
+            endDate: '-',
+            locationName: 'Canada',
+            creationDate: '01/29/2022',
             status: 'Paid',
-            Actions: 'not added'
+            subData: [
+                {
+                    test: 'test',
+                    test2: 'test'
+                },
+                {
+                    test: 'test2',
+                    test2: 'test2F'
+                }
+            ]
         },
         {
-            'Shift Id': '6476475',
-            'Shift Name': 'One time register',
-            'Start Date': '-',
-            'End Date': '-',
-            'Location Name': 'Canada',
-            'Creation Date': '01/29/2022',
+            shiftId: '6476475',
+            shiftName: 'Test',
+            startDate: '-',
+            endDate: '-',
+            locationName: 'Canada',
+            creationDate: '01/29/2022',
             status: 'Paid',
-            Actions: 'not added'
+            subData: [
+                {
+                    test: 'test',
+                    test2: 'test'
+                },
+                {
+                    test: 'test2',
+                    test2: 'test2F'
+                }
+            ]
         }
     ]
 
@@ -57,11 +84,11 @@ const Shifts = (props) => {
                 <Button type='plain'>+ Create new Shifts</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
-                title='Shifts' 
-                description='Tabular list of all Shifts.' 
-                data={shifts}
-                pagination
+                <TabularInfo
+                    title='Shifts'
+                    description='Tabular list of all Shifts.'
+                    data={shifts}
+                    pagination
                 />
             </DashboardCard>
         </>

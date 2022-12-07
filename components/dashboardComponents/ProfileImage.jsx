@@ -4,11 +4,11 @@ import Images from '../../public/Images';
 
 const ProfileImage = (props) => {
 
-    const height = props.size === 'small' ? 30 : 200;
+    const height = props.size === 'small' ? 30 : 150;
 
     return (
-        <div className={styles.container}>
-            <div className={styles.subContainer}>
+        <div className={styles.container} style={{height: `${height + (0.06 * height)}px`, width: `${height + (0.06 * height)}px`}}>
+            <div className={styles.subContainer} style={{height: `${height}px`, width: `${height}px`}}>
                 <LinkedImage
                     style={{ cursor: 'pointer' }}
                     height={height}
