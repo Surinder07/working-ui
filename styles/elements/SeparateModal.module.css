@@ -1,0 +1,68 @@
+
+.inviteUserTopModal{
+    /* border: 1px solid black; */
+   width:100%;
+   padding: 20px 50px;
+   background-color:#D9D9D980;
+}
+
+.inviteUserTopModal > div {
+    width:100%;
+    /* height:127px; */
+    /* margin-top: -15px; */
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inviteUserTopModal label{
+    cursor: pointer;
+    border-bottom:2px solid black;
+    font-family: Mulish;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.20000000298023224px;
+  margin-top: -10px;
+  }
+  #paraInInput{
+    font-family: Mulish;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left;
+    margin-top: 8px;
+    color:#999999;
+  }
+
+  .inviteUserModalForm{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .inviteUserModalForm div{
+    width:80%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 15px;
+  }
+  .inviteUserModalForm div > label{
+    margin-top:10px;
+    margin-bottom: -8px;
+  }
+  .inviteUserModalForm div > input{
+    height: 46px;
+    width: 300px;
+   border-radius: 0px;
+    border: 1px solid grey;
+    font-size: 16px;
+  }
+  .inviteUserModalForm >div > div{
+    height: 46px;
+    width:300px;
+   border-radius: 0px;
+    border: 1px solid grey;
+  }
+

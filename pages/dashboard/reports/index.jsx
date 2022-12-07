@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DropDown from '../../../components/inputComponents/DropDown';
 import Modal from '../../../components/modals/Modal'
 import styleshere from '../../../styles/elements/Modal.module.css'
-const index = () => {
+const Reports = () => {
 
     const locationname = ["Canada", "India", "United States"];
 
@@ -44,4 +44,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Reports

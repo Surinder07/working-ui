@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from '../../../styles/pages/Dashboard.module.css';
 import WaawHead from "../../../components/WaawHead";
 import Button from '../../../components/Button';
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import InviteUserModal from "../../../components/modals/separateModals/InviteUserModal";
 
 const Employees = (props) => {
 
@@ -15,6 +16,11 @@ const Employees = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
+    const [showModal,setShowModal] = useState(false)
+    const handleModalOpen = () => {
+         setShowModal(true)
+    }
+
 
     const employees = [
         {
@@ -51,7 +57,7 @@ const Employees = (props) => {
             <WaawHead title={"WaaW | Employees"} />
             <div className={styles.dashboardTitles}>
                 <h1>Employees</h1>
-                <Button type='plain'>+ Invite Users</Button>
+                <Button type='plain' onClick={handleModalOpen}>+ Invite Users</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
           <TabularInfo
@@ -62,6 +68,7 @@ const Employees = (props) => {
                 showSearch
                 />
             </DashboardCard>
+            <InviteUserModal setShowModal={setShowModal} showModal={showModal}/>
         </>
     )
 
