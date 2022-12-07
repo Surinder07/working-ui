@@ -71,3 +71,205 @@
     line-height: 21px;
     color: #999999;
 }
+
+.calenderHeader {
+    display: flex;
+}
+
+.gridContainer {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 0.5fr;
+}
+
+.gridRightContainer {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+}
+
+.holidayContainer {
+    border-radius: 12px;
+    margin-top: 20px;
+    background: #F7F2E5;
+    margin-left: 20px;
+    padding: 14px 38px;
+}
+
+.calenderHeader h2 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 45px;
+    color: #000000;
+}
+
+.calenderPrevBtn {
+    display: flex;
+    padding: 0.375rem;
+    margin-top: -0.375rem;
+    margin-bottom: -0.375rem;
+    color: #000000;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+}
+
+.calenderNextBtn {
+    display: flex;
+    padding: 0.375rem;
+    margin-top: -0.375rem;
+    margin-bottom: -0.375rem;
+    color: #000000;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+}
+
+.calenderPrevBtn:hover,
+.calenderNextBtn:hover {
+    color: #6B7280;
+}
+
+.arrowIcon {
+    width: 60px;
+    height: 60px;
+}
+
+.calenderContent {
+    display: grid;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.days {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #646464;
+}
+
+.datesContainer {
+    display: grid;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.dateInMonths {
+    border-top-width: 1px;
+    border-color: #E5E7EB;
+}
+
+.dateContainer {
+    background: #F6F6F6;
+    border: 0.5px solid #C2C2C2;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 0.25rem;
+    cursor: pointer;
+}
+
+.dateContainer:hover {
+    background-color: #E5E7EB;
+}
+
+.dateBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: none;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.textWhite {
+    color: #fff
+}
+
+.todayDate {
+    color: #2996C3;
+}
+
+.notTodayDate {
+    color: #000000
+}
+
+.todayDateCurrMonth {
+    background-color: #2996C3;
+}
+
+.notTodayDateCurrMonth {
+    background-color: #000000;
+}
+
+.notInActiveMonth {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.holidayList {
+    list-style: none;
+}
+
+.dateHoliday {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000;
+    opacity: 0.75;
+    margin-bottom: 14px;
+}
+
+.events {
+    padding: 5px 22px;
+}
+
+.event {
+    display: flex;
+    align-items: center;
+}
+
+.holidayEvent {
+    width: 20px;
+    height: 20px;
+    background: #FDE69D;
+    border-radius: 14px;
+    margin-right: 20px;
+}
+
+@media (min-width: 768px) {
+    .canlenderContaienr {
+        display: grid;
+        border-left-width: 1px;
+        border-color: #E5E7EB;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .innerCalenderContainer {
+        padding-right: 3.5rem;
+    }
+}

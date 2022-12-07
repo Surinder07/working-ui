@@ -67,7 +67,7 @@
 }
 
 .errorTextUp {
-    color: var(--error-message-color)!important;
+    color: var(--error-message-color) !important;
     position: absolute;
     bottom: 5px
 }
