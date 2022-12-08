@@ -4,6 +4,8 @@ import WaawHead from "../../../components/WaawHead";
 import Button from '../../../components/Button';
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import { useState } from "react";
+import CreateNewRole from "../../../components/modals/CreateNewRole";
 
 const Roles = (props) => {
 
@@ -15,6 +17,11 @@ const Roles = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
+    const [showModal,setShowModal] = useState(false)
+
+    const handleNewRole = () => {
+        setShowModal(true)
+    }
 
     const roles = [
         {
@@ -48,7 +55,7 @@ const Roles = (props) => {
             <WaawHead title={"WaaW | Roles"} />
             <div className={styles.dashboardTitles}>
                 <h1>Roles</h1>
-                <Button type='plain'>+ Add new Roles</Button>
+                <Button type='plain' onClick={handleNewRole}>+ Add new Roles</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
@@ -58,6 +65,7 @@ const Roles = (props) => {
                 pagination
                 />
             </DashboardCard>
+            <CreateNewRole setShowModal={setShowModal} showModal={showModal}/>
         </>
     )
 

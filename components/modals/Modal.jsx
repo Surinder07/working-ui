@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 /**
  *
- * @param {*} size pass small, medium or large
+ * @param {*} size pass small, medium , large or dashboardModal
  * @param {*} link if passed on button click it will redirect to said link
  * @param {*} buttonText text to be displayed on the button
  * @param {*} showModal whether to show the modal or not

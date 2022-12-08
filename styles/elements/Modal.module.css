@@ -42,6 +42,11 @@
     max-width: 700px;
     padding: 80px 20px;
 }
+.dashboardModal {
+    min-height: 200px;
+    max-width: 700px;
+    padding: 10px 20px;
+}
 
 .subContainer {
     height: 100%;
@@ -110,7 +115,7 @@
 .successTick {
     position: absolute;
     top: 20px;
-    left: 15px;
+    left: 0.938em;
     width: 50px;
     height: 25px;
     transform: rotate(-45deg);
@@ -127,32 +132,32 @@
 .multipleButtonStyle{
     display: flex;
     justify-content: flex-start;
-    gap: 40px;
-    margin-top: 15px;
+    gap: 2.5em;
+    margin-top: 0.938em;
 }
 
 .smallModalUpperdiv{
     display: flex;
     justify-content: space-around;
-    gap: 20px;
+    gap: 1.25em;
     
 }
 .smallModalUpperdiv input{
-  padding: 12px 18px;
-  margin-bottom: 15px;
+  padding: 0.75em 1.125em;
+  margin-bottom: 0.938em;
 }
 .smallModalTextarea{
-    width: 320px;
-    height:40px;
+    width: 20em;
+    height:2.5em;
     border: 1px solid grey;
-    margin-bottom:5px;
+    margin-bottom:0.313em;
     margin-top: -10px;
-    font-size: 16px;
+    font-size: 1em;
 }
 .smallModalMainContainer + label{
   margin-left: -60%;
-  font-size: 16px;
-  margin-bottom:10px;
+  font-size: 1em;
+  margin-bottom:0.625em;
 }
 .modalDropDown > div{
     border: 1px solid grey;
@@ -161,11 +166,11 @@
     
 }
 .smallModalLocationDropDown{
-    width: 320px;
-    height:40px;
-    margin-bottom:5px;
+    width: 20em;
+    height:2.5em;
+    margin-bottom:0.313em;
     margin-top: -10px;
-    font-size: 16px;
+    font-size: 1em;
 }
 .smallModalLocationDropDown > div{
     border: 1px solid grey;
@@ -173,3 +178,75 @@
     border-radius:0px;
     
 }
+
+
+/* dashboardSideBarModals */
+.inviteUserModalForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.25em;
+  }
+  
+  .inviteUserTopModal {
+    width: 100%;
+    padding: 1.25em 3.125em;
+    background-color: #d9d9d980;
+  }
+  
+  .inviteUserTopModal > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inviteUserTopModal label {
+    cursor: pointer;
+    border-bottom: 2px solid black;
+    font-family: Mulish;
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0.20000000298023224px;
+    margin-top: -10px;
+  }
+  #paraInInput {
+    font-family: Mulish;
+    font-size: 0.75em;
+    margin-top: 0.5em;
+    color: #999999;
+  }
+  
+  .inviteUserModalForm div > label {
+    margin-top: 0.625em;
+    margin-bottom: -8px;
+  }
+  
+  .inviteUserModalForm > div > div {
+    height: 2.875em;
+    width: 18.75em;
+    border-radius: 0px;
+    border: 1px solid grey;
+  }
+  
+
+  /* create new shift modal */
+  .shiftModalAppear{
+    display: flex;
+    justify-content: space-around;
+    gap: 1.563em;
+  }
+  .shiftModalAppear > div > input{
+    width: 14em;
+    height:2.5em;
+    text-align: center;
+  }
+ .shiftUserLocation >div{
+    /* margin-top: 1.25em; */
+ }
+  .shiftUserLocation > div >div{
+    width: 28.5em;
+    height:2.5em;
+    border: 1px solid grey;
+  }
+  

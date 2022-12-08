@@ -4,6 +4,8 @@ import WaawHead from "../../../components/WaawHead";
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 import Button from "../../../components/Button";
+import { useState } from "react";
+import CreateNewShift from "../../../components/modals/CreateNewShift";
 
 const Shifts = (props) => {
 
@@ -15,7 +17,11 @@ const Shifts = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
-
+  
+     const [showModal,setShowModal] = useState(false)
+     const handleShiftModal = () => {
+        setShowModal(true);
+     }
     const shifts = [
         {
            'Shift Id': '6476475',
@@ -54,7 +60,7 @@ const Shifts = (props) => {
             <WaawHead title={"WaaW | Shifts"} />
             <div className={styles.dashboardTitles}>
                 <h1>Shifts</h1>
-                <Button type='plain'>+ Create new Shifts</Button>
+                <Button type='plain' onClick={handleShiftModal}>+ Create new Shifts</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
@@ -64,6 +70,7 @@ const Shifts = (props) => {
                 pagination
                 />
             </DashboardCard>
+            <CreateNewShift setShowModal={setShowModal} showModal={showModal}/>
         </>
     )
 
