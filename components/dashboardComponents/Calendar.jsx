@@ -4,17 +4,48 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import styles from "../../styles/pages/Dashboard.module.css";
 
-const meetings = [
+const holidays = [
   {
     id: 1,
-    name: "Leslie Alexander",
-    imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    start: "1:00 PM",
-    startDatetime: "2022-01-21T13:00",
-    end: "2:30 PM",
-    endDatetime: "2022-01-21T14:30",
+    startDatetime: "2022-11-11T13:00",
+    endDatetime: "2022-11-11T14:30",
   },
-  // More meetings...`
+  {
+    id: 2,
+    startDatetime: "2022-12-20T09:00",
+    endDatetime: "2022-12-20T11:30",
+  },
+  {
+    id: 3,
+    startDatetime: "2022-12-20T17:00",
+    endDatetime: "2022-12-20T18:30",
+  },
+  {
+    id: 4,
+    startDatetime: "2022-12-10T13:00",
+    endDatetime: "2022-12-10T14:30",
+  },
+  {
+    id: 5,
+    startDatetime: "2022-12-13T14:00",
+    endDatetime: "2022-12-13T14:30",
+  },
+];
+
+const organizationHolidays = [
+  {
+    id: 1,
+    startDatetime: "2022-12-30T13:00",
+    endDatetime: "2022-12-30T14:30",
+  },
+];
+
+const workingDays = [
+  {
+    id: 1,
+    startDatetime: "2022-12-05T13:00",
+    endDatetime: "2022-12-05T14:30",
+  },
 ];
 
 function classNames(...classes) {
@@ -79,27 +110,35 @@ const CalenderComponent = () => {
             {days.map((day, dayIdx) => (
               <div
                 key={day.toString()}
-                onClick={() => setSelectedDay(day)}
                 ref={dayRef}
                 style={{ height: `${dayHeight}px` }}
                 className={classNames(
                   styles.dateContainer,
                   styles.dateInMonths,
                   isEqual(day, selectedDay) && isToday(day) && styles.todayDateCurrMonth,
-                  isEqual(day, selectedDay) && !isToday(day) && styles.notTodayDateCurrMonth
+                  isEqual(day, selectedDay) && !isToday(day) && styles.notTodayDateCurrMonth,
+                  holidays.some((holiday) => isSameDay(parseISO(holiday.startDatetime), day)) && styles.holiday,
+                  organizationHolidays.some((holiday) => isSameDay(parseISO(holiday.startDatetime), day)) && styles.organizationHoliday
                 )}
               >
                 <button
                   type="button"
                   className={classNames(
-                    isEqual(day, selectedDay) && styles.textWhite,
                     !isEqual(day, selectedDay) && isToday(day) && styles.todayDate,
                     !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && styles.notTodayDate,
                     !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && styles.notInActiveMonth,
                     styles.dateBtn
                   )}
                 >
-                  <time dateTime={format(day, "yyyy-MM-dd")}>{format(day, "d")}</time>
+                  <time dateTime={format(day, "yyyy-MM-dd")} className={styles.dateValue}>
+                    {format(day, "d")}
+                  </time>
+                  {workingDays.some((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day)) && (
+                    <div className={styles.dateBtnContents}>
+                      <p>In Time: 9:45</p>
+                      <p>Out Time: 17:45</p>
+                    </div>
+                  )}
                 </button>
               </div>
             ))}
@@ -108,7 +147,11 @@ const CalenderComponent = () => {
       </div>
       <div className={styles.events}>
         <div className={styles.event}>
-          <div className={styles.holidayEvent}></div>
+          <div className={`${styles.eventBullet} ${styles.holiday}`}></div>
+          <p>Holidays</p>
+        </div>
+        <div className={styles.event}>
+          <div className={`${styles.eventBullet} ${styles.organizationHoliday}`}></div>
           <p>Organization Holidays</p>
         </div>
       </div>

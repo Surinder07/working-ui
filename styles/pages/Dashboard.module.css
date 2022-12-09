@@ -185,16 +185,10 @@
     cursor: pointer;
 }
 
-.dateContainer:hover {
-    background-color: #E5E7EB;
-}
-
 .dateBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2rem;
-    height: 2rem;
+    padding: 0;
+    width: 100%;
+    text-align: left;
     border-radius: 9999px;
     background: none;
     border: none;
@@ -205,8 +199,28 @@
     line-height: 20px;
 }
 
-.textWhite {
-    color: #fff
+.dateBtnContents {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    padding: 0px 1px;
+    background-color: #2996C3;
+    color: white;
+    margin-top: 40px;
+    padding: 0 8px;
+
+}
+
+.dateBtnContents p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15px;
+}
+
+.dateValue {
+    margin-left: 10px;
 }
 
 .todayDate {
@@ -228,6 +242,7 @@
 .notInActiveMonth {
     color: rgba(0, 0, 0, 0.25);
 }
+
 
 .holidayList {
     list-style: none;
@@ -253,12 +268,24 @@
     align-items: center;
 }
 
-.holidayEvent {
+.eventBullet {
     width: 20px;
     height: 20px;
-    background: #FDE69D;
     border-radius: 14px;
     margin-right: 20px;
+}
+
+.holiday {
+    background-color: #FDE69D;
+}
+
+.organizationHoliday {
+    background-color: #90D9D3;
+}
+
+.organizationHolidayEvent {
+
+    background: #90D9D3;
 }
 
 @media (min-width: 768px) {
