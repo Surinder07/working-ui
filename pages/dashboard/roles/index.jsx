@@ -23,6 +23,22 @@ const Roles = (props) => {
         setShowModal(true)
     }
 
+    const actions = [
+        {
+          key: "View",
+          action: (id) => console.log(`/dashboard/roles/?id=${id}`),
+        },
+        {
+          key: "Deactivate",
+          action: () => console.log("Api call will be added here"),
+        },
+        {
+          key: "Delete",
+          action: () => console.log("Api call will be added here"),
+        },
+      ];
+
+
     const roles = [
         {
             'Role Id': '6476475',
@@ -30,7 +46,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         },
         {
             'Role Id': '6476475',
@@ -38,7 +53,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         },
         {
             'Role Id': '6476475',
@@ -46,7 +60,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         }
     ]
 
@@ -62,6 +75,7 @@ const Roles = (props) => {
                 title='Roles' 
                 description='Tabular list for current role.' 
                 data={roles}
+                actions={actions}
                 pagination
                 />
             </DashboardCard>

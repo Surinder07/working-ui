@@ -8,8 +8,9 @@ import { useState } from "react";
 const ModalTopButtons = {
   display: "flex",
   justifyContent: "spaceAround",
-  border: "1px solid black",
+  border: "1px solid #535255",
   textAlign: "center",
+  fontFamily: 'Poppins'
 };
 
 const style1 = {
@@ -17,16 +18,18 @@ const style1 = {
   padding: "0.625em 2.188em",
   cursor: "pointer",
   width: "12.5em",
+  color:"white"
 };
 const style2 = {
   backgroundColor: "white",
   padding: "0.625em 2.188em",
   cursor: "pointer",
   width: "12.5em",
+  color:"black"
 };
 
 const CreateNewShift = (props) => {
-  const [toggleShiftModal, setToggleShiftModal] = useState(false);
+  const [toggleShiftModal, setToggleShiftModal] = useState(true);
   const [toggleUsersLocation, setToggleUsersLocation] = useState(true);
   const handleShiftBatchesToggle = () => {
     setToggleShiftModal(!toggleShiftModal);

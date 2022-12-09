@@ -15,6 +15,21 @@ const Requests = (props) => {
         })
     }, []);
 
+    const actions = [
+        {
+          key: "View",
+          action: (id) => console.log(`/dashboard/requests/?id=${id}`),
+        },
+        {
+          key: "Deactivate",
+          action: () => console.log("Api call will be added here"),
+        },
+        {
+          key: "Delete",
+          action: () => console.log("Api call will be added here"),
+        },
+      ];
+
     const requests = [
         {
             'Request Id': '6476475',
@@ -23,8 +38,7 @@ const Requests = (props) => {
             Location: 'Canada',
             'Initiated By': 'Name',
             'Assigned To': 'Name',
-            status: 'xyz',
-            Actions: 'Not added'
+            status: 'xyz'
         },
         {
             'Request Id': '7476475',
@@ -33,8 +47,7 @@ const Requests = (props) => {
             Location: 'India',
             'Initiated By': 'Name',
             'Assigned To': 'Name',
-            status: 'xyz',
-            Actions: 'Not added'
+            status: 'xyz'
         },
         {
             'Request Id': '8076475',
@@ -43,8 +56,7 @@ const Requests = (props) => {
             Location: 'Mexico',
             'Initiated By': 'Name',
             'Assigned To': 'Name',
-            status: 'xyz',
-            Actions: 'Not added'
+            status: 'xyz'
         }
     ]
 
@@ -60,6 +72,7 @@ const Requests = (props) => {
                 title='Request Details' 
                 description='Tabular representation of all the requests' 
                 data={requests}
+                actions = {actions}
                 pagination
                 />
             </DashboardCard>

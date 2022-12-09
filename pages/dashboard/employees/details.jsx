@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 import styles from "../../../styles/pages/Dashboard.module.css";
 import WaawHead from "../../../components/WaawHead";
 import UserPreferenceCard from '../../../components/dashboardComponents/userPreferences/UserPreferenceCard';
@@ -10,8 +11,14 @@ import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import stylesModal from "../../../styles/elements/Modal.module.css"
 import Modal from "../../../components/modals/Modal";
+import ProfileImage from '../../../components/dashboardComponents/ProfileImage';
 
 const Employees = (props) => {
+
+    const router = useRouter();
+
+    const [userId, setUserId] = useState('');
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -20,6 +27,12 @@ const Employees = (props) => {
             activeSubMenu: "none",
         });
     }, []);
+
+    useEffect(() => {
+        if (!router.isReady) return;
+        if (router.query.key)
+            setUserId(router.query.id);
+    }, [router.isReady, router.query]);
 
     const [mobile, setMobile] = useState({
         countryCode: '',
@@ -32,8 +45,14 @@ const Employees = (props) => {
 
     const options = [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
+    const actions = 
+        {
+          key: "Edit",
+          action: () => console.log("Edit table data here in /dashboard/employees/details"),
+        }
+
     const handleExpansion = (clickedMenu) => {
-        if(clickedMenu === expandedMenu) {
+        if (clickedMenu === expandedMenu) {
             setExpandedMenu('none');
         } else {
             setExpandedMenu(clickedMenu);
@@ -45,14 +64,13 @@ const Employees = (props) => {
             <TabularInfo
                 data={[
                     {
-                        'Location Id' : '6476475',
+                        'Location Id': '6476475',
                         'Location Name': 'Canada',
                         'Creation Date': '01/01/2023',
                         'Timezone': 'EST',
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     },
                     {
                         'Location Id': '6476475',
@@ -62,7 +80,6 @@ const Employees = (props) => {
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     },
                     {
                         'Location Id': '6476475',
@@ -72,13 +89,13 @@ const Employees = (props) => {
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     }
                 ]}
                 title={title}
                 expanded={expandedMenu === title.toLowerCase()}
                 toggleExpansion={() => handleExpansion(title.toLowerCase())}
                 expandable
+                actions={actions}
                 pagination
                 showSearch
                 showFilter
@@ -100,9 +117,14 @@ const Employees = (props) => {
                 editOn={false}
             // setEditOn={setEditPersonalDetails}
             >
-                <InputBox label='FirstName' type='user' name='name' inputType={2} />
-                <DropDown options={['test', 'test']} inputType={2} />
-                <ContactInput setValue={setMobile} value={mobile} inputType={2} />
+                <div className={styles.personalContainer}>
+                    <ProfileImage size='big' />
+                    <div className={styles.personalContent}>
+                        <InputBox label='FirstName' type='user' name='name' inputType={2} />
+                        <DropDown options={['test', 'test']} inputType={2} />
+                        <ContactInput setValue={setMobile} value={mobile} inputType={2} />
+                    </div>
+                </div>
             </UserPreferenceCard>
             {getExpandableData('Preference')}
             {getExpandableData('Shifts')}
