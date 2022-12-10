@@ -4,6 +4,8 @@ import WaawHead from "../../../components/WaawHead";
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 import Button from "../../../components/Button";
+import { useState } from "react";
+import CreateNewShift from "../../../components/modals/CreateNewShift";
 
 const Shifts = (props) => {
 
@@ -15,6 +17,27 @@ const Shifts = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
+  
+     const [showModal,setShowModal] = useState(false)
+     const handleShiftModal = () => {
+        setShowModal(true);
+     }
+
+     const actions = [
+        {
+          key: "View",
+          action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
+        },
+        {
+          key: "Deactivate",
+          action: () => console.log("Api call will be added here"),
+        },
+        {
+          key: "Delete",
+          action: () => console.log("Api call will be added here"),
+        },
+      ];
+
 
     const shifts = [
         {
@@ -81,16 +104,18 @@ const Shifts = (props) => {
             <WaawHead title={"WaaW | Shifts"} />
             <div className={styles.dashboardTitles}>
                 <h1>Shifts</h1>
-                <Button type='plain'>+ Create new Shifts</Button>
+                <Button type='plain' onClick={handleShiftModal}>+ Create new Shifts</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
                     title='Shifts'
                     description='Tabular list of all Shifts.'
                     data={shifts}
+                    actions={actions}
                     pagination
                 />
             </DashboardCard>
+            <CreateNewShift setShowModal={setShowModal} showModal={showModal}/>
         </>
     )
 

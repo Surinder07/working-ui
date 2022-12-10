@@ -9,6 +9,8 @@ import ContactInput from "../../../components/inputComponents/ContactInput";
 import Link from 'next/link';
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
+import stylesModal from "../../../styles/elements/Modal.module.css"
+import Modal from "../../../components/modals/Modal";
 import ProfileImage from '../../../components/dashboardComponents/ProfileImage';
 
 const Employees = (props) => {
@@ -38,6 +40,16 @@ const Employees = (props) => {
         country: ''
     })
     const [expandedMenu, setExpandedMenu] = useState('none');
+    const [showModal,setShowModal] = useState(true)
+    const buttonText = ["Continue", "Cancel"];
+
+    const options = [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+
+    const actions = 
+        {
+          key: "Edit",
+          action: () => console.log("Edit table data here in /dashboard/employees/details"),
+        }
 
     const handleExpansion = (clickedMenu) => {
         if (clickedMenu === expandedMenu) {
@@ -59,7 +71,6 @@ const Employees = (props) => {
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     },
                     {
                         'Location Id': '6476475',
@@ -69,7 +80,6 @@ const Employees = (props) => {
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     },
                     {
                         'Location Id': '6476475',
@@ -79,13 +89,13 @@ const Employees = (props) => {
                         'Number of active employees': '200',
                         'Number of inactive employees': '25',
                         status: 'xyz',
-                        Actions: 'not added'
                     }
                 ]}
                 title={title}
                 expanded={expandedMenu === title.toLowerCase()}
                 toggleExpansion={() => handleExpansion(title.toLowerCase())}
                 expandable
+                actions={actions}
                 pagination
                 showSearch
                 showFilter
@@ -96,6 +106,7 @@ const Employees = (props) => {
     return (
         <>
             <WaawHead title={"WaaW | Employee Details"} />
+            
             <div className={styles.dashboardTitles}>
                 <h1><Link href='/dashboard/employees' style={{ color: '#535255' }}>Employees</Link>{` > Employee Details`}</h1>
             </div>
@@ -119,6 +130,52 @@ const Employees = (props) => {
             {getExpandableData('Shifts')}
             {getExpandableData('Requests')}
             {getExpandableData('Attendance')}
+
+
+            <Modal
+                size="small"
+                showModal={showModal}
+                setShowModal={setShowModal}
+                buttonText={buttonText}
+            >
+                <div className={stylesModal.smallModalMainContainer}>
+                    <div className={stylesModal.smallModalUpperdiv}>
+                        <div>
+                            <p>In Time</p>
+                            <span
+                                style={{ display: "flex" }}
+                                className={stylesModal.modalDropDown}
+                            >
+                                <DropDown defaultDisplay={options[0]} options={options} />
+                                <DropDown defaultDisplay={options[0]} options={options} />
+                            </span>
+                        </div>
+                        <div>
+                            <p>Out Time</p>
+                            <span
+                                style={{ display: "flex" }}
+                                className={stylesModal.modalDropDown}
+                            >
+                                <DropDown defaultDisplay={options[0]} options={options} />
+                                <DropDown defaultDisplay={options[4]} options={options} />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className={stylesModal.smallModalUpperdiv}>
+                        <div>
+                            <p>In Date</p>
+                            <input type="date" />
+                        </div>
+                        <div>
+                            <p>Out Date</p>
+                            <input type="date" />
+                        </div>
+                    </div>
+                </div>
+                <label>Comment</label>
+                <textarea className={stylesModal.smallModalTextarea} required></textarea>
+            </Modal>
         </>
     );
 };

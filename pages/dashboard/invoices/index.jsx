@@ -15,6 +15,22 @@ const Invoices = (props) => {
         })
     }, []);
 
+    const actions = [
+        {
+          key: "View",
+          action: (id) => console.log(`/dashboard/invoices/?id=${id}`),
+        },
+        {
+          key: "Deactivate",
+          action: () => console.log("Api call will be added here"),
+        },
+        {
+          key: "Delete",
+          action: () => console.log("Api call will be added here"),
+        },
+      ];
+
+
     const invoices = [
         {
             invoiceId: '6476475',
@@ -24,7 +40,6 @@ const Invoices = (props) => {
             billingDate: '01/29/2022',
             amount: '$960',
             status: 'Paid',
-            Actions: 'not added'
         },
         {
             invoiceId: '6476475',
@@ -34,7 +49,6 @@ const Invoices = (props) => {
             billingDate: '01/29/2022',
             amount: '$200',
             status: 'Paid',
-            Actions: 'not added'
         },
         {
             invoiceId: '6476475',
@@ -44,7 +58,6 @@ const Invoices = (props) => {
             billingDate: '02/29/2022',
             amount: '$250',
             status: 'Due',
-            Actions: 'not added'
         }
     ]
 
@@ -59,6 +72,7 @@ const Invoices = (props) => {
                 title='Invoices' 
                 description='Tabular list of all current invoices status.' 
                 data={invoices}
+                actions={actions}
                 pagination
                 />
             </DashboardCard>

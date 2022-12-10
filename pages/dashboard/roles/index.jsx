@@ -4,6 +4,8 @@ import WaawHead from "../../../components/WaawHead";
 import Button from '../../../components/Button';
 import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
 import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import { useState } from "react";
+import CreateNewRole from "../../../components/modals/CreateNewRole";
 
 const Roles = (props) => {
 
@@ -15,6 +17,27 @@ const Roles = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
+    const [showModal,setShowModal] = useState(false)
+
+    const handleNewRole = () => {
+        setShowModal(true)
+    }
+
+    const actions = [
+        {
+          key: "View",
+          action: (id) => console.log(`/dashboard/roles/?id=${id}`),
+        },
+        {
+          key: "Deactivate",
+          action: () => console.log("Api call will be added here"),
+        },
+        {
+          key: "Delete",
+          action: () => console.log("Api call will be added here"),
+        },
+      ];
+
 
     const roles = [
         {
@@ -23,7 +46,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         },
         {
             'Role Id': '6476475',
@@ -31,7 +53,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         },
         {
             'Role Id': '6476475',
@@ -39,7 +60,6 @@ const Roles = (props) => {
             'Creation date': '01/01/2023',
             Location: 'Canada',
             'Created By': 'Name',
-            Actions: 'not added'
         }
     ]
 
@@ -48,16 +68,18 @@ const Roles = (props) => {
             <WaawHead title={"WaaW | Roles"} />
             <div className={styles.dashboardTitles}>
                 <h1>Roles</h1>
-                <Button type='plain'>+ Add new Roles</Button>
+                <Button type='plain' onClick={handleNewRole}>+ Add new Roles</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo 
                 title='Roles' 
                 description='Tabular list for current role.' 
                 data={roles}
+                actions={actions}
                 pagination
                 />
             </DashboardCard>
+            <CreateNewRole setShowModal={setShowModal} showModal={showModal}/>
         </>
     )
 
