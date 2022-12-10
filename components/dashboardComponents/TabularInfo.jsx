@@ -3,12 +3,10 @@ import styles from '../../styles/elements/TabularInfo.module.css';
 import Pagination from './Pagination';
 import SearchBar from '../inputComponents/SearchBar';
 import { FilterAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
-import Options from './Options';
+import Table from './Table';
 
 const TabularInfo = (props) => {
 
-    const [displayHeaders, setDisplayHeaders] = useState([]);
-    const [dataKeyList, setDataKeyList] = useState([]);
     const [noData, setNoData] = useState(false);
     const [pageNo, setPageNo] = useState(1);
     const [tableHeight, setTableHeight] = useState('50px');
@@ -27,18 +25,8 @@ const TabularInfo = (props) => {
 
     useEffect(() => {
         setNoData(false);
-        if (props.data) {
-            if (!props.data[0]) {
-                setNoData(true);
-                return;
-            }
-            setDataKeyList(Object.keys(props.data[0]));
-            setDisplayHeaders(
-                Array.from(Object.keys(props.data[0]), (el) => {
-                    const result = el.replace(/([A-Z])/g, " $1");
-                    return result.charAt(0).toUpperCase() + result.slice(1);
-                })
-            );
+        if (props.data && !props.data[0]) {
+            setNoData(true);
         }
     }, [props.data]);
 
@@ -85,44 +73,7 @@ const TabularInfo = (props) => {
                         noData ?
                             <p className={styles.loadingText}>No data available</p> :
                             <>
-                                <table ref={tableRef} className={styles.table}>
-                                    <tbody>
-                                        <tr className={styles.tableHeadRow}>
-                                            {
-                                                displayHeaders.map((head, i) => (
-                                                    <th className={styles.tableHeadCell} key={`head${i}`}>
-                                                        {head}
-                                                    </th>
-                                                ))
-                                            }
-                                            {
-                                                props.actions &&
-                                                <th className={styles.tableHeadCell}>
-                                                    Actions
-                                                </th>
-                                            }
-                                        </tr>
-                                        {
-                                            props.data.map((row, i) => (
-                                                <tr className={styles.tableBodyRow} key={`row${i}`}>
-                                                    {
-                                                        dataKeyList.map((cell, j) => (
-                                                            <td className={styles.tableBodyCell} key={`cell${i}_${j}`}>
-                                                                {row[cell]}
-                                                            </td>
-                                                        ))
-                                                    }
-                                                    {
-                                                        props.actions &&
-                                                        <td className={styles.tableBodyCell}>
-                                                            <Options options={props.actions} />
-                                                        </td>
-                                                    }
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </table>
+                                <Table data={props.data} actions={props.actions} ref={tableRef} />
                                 {
                                     props.pagination &&
                                     <Pagination
@@ -131,7 +82,8 @@ const TabularInfo = (props) => {
                                         currentPageEntries={10}
                                         pageNo={pageNo}
                                         setPageNo={setPageNo}
-                                    />}
+                                    />
+                                }
                             </>
                         :
                         <p className={styles.loadingText}>Loading...</p>

@@ -58,10 +58,10 @@ const Locations = (props) => {
                     description='Tabular list of Locationwise employees.'
                     data={locations}
                     pagination
-                    actions={[{
+                    actions={{
                         key: 'Edit',
                         action: () => console.log('edit')
-                    }]}
+                    }}
                 />
             </DashboardCard>
         </>

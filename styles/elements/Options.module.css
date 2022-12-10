@@ -2,7 +2,10 @@
 .optionsH {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
 
 .optionsV {
@@ -10,13 +13,11 @@
     right: 15px;
     top: 15px;
     flex-direction: column;
-    height: 20px;
 }
 
 .optionsH {
     position: relative;
     margin: auto;
-    width: 20px;
 }
 
 .optionsV span,

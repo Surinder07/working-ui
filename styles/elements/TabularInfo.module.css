@@ -12,20 +12,20 @@
 .search {
     width: 50%;
     border: 1px solid #BFBFBF;
-    font-weight: 600!important;
-    font-size: 14px!important;
-    line-height: 20px!important;
-    letter-spacing: 0.2px!important;
-    color: #535255!important;
-    background-color: #FFFFFF!important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    letter-spacing: 0.2px !important;
+    color: #535255 !important;
+    background-color: #FFFFFF !important;
 }
 
 .search input::placeholder {
-    font-weight: 600!important;
-    font-size: 14px!important;
-    line-height: 20px!important;
-    letter-spacing: 0.2px!important;
-    color: #535255!important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    letter-spacing: 0.2px !important;
+    color: #535255 !important;
 }
 
 .filter {
@@ -64,30 +64,53 @@
     margin-top: 0;
 }
 
-.table {
+.table,
+.subTable {
     width: 100%;
-    border-collapse: collapse;
+    display: table;
+}
+
+.subTable {
+    background-color: #F5F5F5;
+}
+
+.subTableContainer {
+    display: table-row;
+}
+
+.tableBodyRow,
+.tableHeadRow {
+    width: 100%;
 }
 
 .tableHeadRow {
     background: #F5F5F5;
     text-align: center;
+    display: table-header-group;
+}
+
+.tableBody {
+    display: table-row-group;
 }
 
 .tableBodyRow {
     border-top: 2px solid #F5F5F5;
+    display: table-row;
 }
 
 .tableHeadCell {
+    display: table-cell;
     font-weight: 700;
     font-size: 14px;
     line-height: 18px;
     letter-spacing: 0.2px;
     color: #535255;
     padding: 6px 0;
+    vertical-align: middle;
 }
 
 .tableBodyCell {
+    display: table-cell;
     text-align: center;
     font-weight: 500;
     font-size: 14px;
@@ -105,4 +128,10 @@
 .dropDownIcon {
     position: absolute;
     left: 10px
+}
+
+.actionIcon {
+    font-size: 14px;
+    cursor: pointer;
+    color: #2996C3;
 }
