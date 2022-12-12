@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Checkbox from '../../components/inputComponents/Checkbox';
-import InputBox from '../../components/inputComponents/InputBox';
-import styles from '../../styles/pages/LoginRegister.module.css';
-import layoutStyles from '../../styles/layouts/LoginRegistration.module.css';
-import { userService } from '../../services/user.service';
+import { Checkbox, InputBox, Button } from '../../components';
+import { LoginRegisterStyles } from '../../styles/pages';
+import { LoginRegisterLayout } from '../../styles/layouts';
+import { userService } from '../../services';
 import { ArrowRightAlt } from '@mui/icons-material';
 import { validateUsernameEmail, validatePassword } from '../../helpers';
 import SocialIcons from '../../public/icons/socials/SocialIcons';
-import Button from '../../components/Button';
-import LoginRegistrationLayout from '../../layouts/LoginRegistrationLayout';
+import { LoginRegistrationLayout } from '../../layouts';
 
 const Login = (props) => {
     const router = useRouter();
@@ -132,7 +130,7 @@ const Login = (props) => {
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
                 <Checkbox isChecked={rememberMe} setIsChecked={setRememberMe} label={'Remember Me'} />
                 <Link href='account/reset-password-init'>Forgot Password</Link>
-                {submitError && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
+                {submitError && <p className={LoginRegisterLayout.errorText}>{submitErrorMessage}</p>}
             </div>
             <Button
                 type='fullWidth'
@@ -145,13 +143,13 @@ const Login = (props) => {
             >
                 Login
             </Button>
-            <div className={styles.partition}>
-                <span className={styles.line}></span>
-                <p className={styles.partitionText}> OR </p>
-                <span className={styles.line}></span>
+            <div className={LoginRegisterStyles.partition}>
+                <span className={LoginRegisterStyles.line}></span>
+                <p className={LoginRegisterStyles.partitionText}> OR </p>
+                <span className={LoginRegisterStyles.line}></span>
             </div>
             <div style={{ position: 'relative', paddingBottom: '10px' }}>
-                <div className={layoutStyles.inactiveCover}></div>
+                <div className={LoginRegisterLayout.inactiveCover}></div>
                 <Button
                     type='social'
                     disabled={loading}

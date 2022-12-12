@@ -1,6 +1,6 @@
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { useRef, useState, useEffect } from "react";
-import styles from '../../styles/elements/InputBox.module.css';
+import { DropdownStyles } from '../../styles/elements/inputs';
 
 const DropDown = (props) => {
 
@@ -19,6 +19,7 @@ const DropDown = (props) => {
         top: '37px',
         left: 0
     }
+
     const openedUpStyle = {
         bottom: 0,
         left: 0,
@@ -47,13 +48,13 @@ const DropDown = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={`${props.inputType === 2 ? styles.dropdownContainer2 : styles.dropdownContainer} ${styles.dropdownRelative} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+        <div ref={ref} className={`${props.inputType === 2 ? DropdownStyles.mulishBasicCountainer : DropdownStyles.poppinsBasicContainer} ${DropdownStyles.dropdownRelative} ${props.showError ? DropdownStyles.inputBoxError : DropdownStyles.inputBoxDefault}`}
             style={props.style}>
-            <div className={styles.selected2} onClick={onClick}>
-                {displayValue}{open ? <KeyboardArrowUp className={styles.dropDownIcon} /> : 
-                <KeyboardArrowDown className={styles.dropDownIcon} />}
+            <div className={DropdownStyles.selected2} onClick={onClick}>
+                {displayValue}{open ? <KeyboardArrowUp className={DropdownStyles.dropDownIcon} /> :
+                    <KeyboardArrowDown className={DropdownStyles.dropDownIcon} />}
             </div>
-            <div className={`${styles.options} ${!open && styles.closedOptions}`}
+            <div className={`${DropdownStyles.options} ${!open && DropdownStyles.closedOptions}`}
                 style={openDown ? openedDownStyle : openedUpStyle}>
                 {
                     props.options.map((option, i) => (
@@ -67,7 +68,7 @@ const DropDown = (props) => {
                     ))
                 }
             </div>
-            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
+            {props.showError && <p className={DropdownStyles.errorMessage}>{props.errorMessage}</p>}
         </div>
     )
 

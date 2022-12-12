@@ -14,8 +14,8 @@ const nextConfig = {
         version: '1.0',
         termsAndPrivacyData: {
             deployedAddress: 'www.waaw.ca',
-            businessAddress: 'www.waaw.ca',
-            minAge: 16,
+            businessAddress: '25 Plentywood drive, Bramptom, Canada, L6Y 0V2',
+            minAge: 18,
             customerSupport: 'waaw.management@waaw.ca'
         },
         firebase: {
@@ -28,7 +28,7 @@ const nextConfig = {
             measurementId: "G-YXEDFG0Y60"
         },
         header: {
-            title: 'WaaW | Automated Workforce Scheduling',
+            title: 'Automated Workforce Scheduling',
             description: 'Automated Workforce Scheduling app created by WAAW to help people and business to grow and thrive together',
             aboutUsDescription: 'WAAW Global inc is a software company that is started with a mission to help both business and talent community alike. It supports business of all sizes.',
             meta: {
@@ -39,7 +39,7 @@ const nextConfig = {
                     type: 'website'
                 },
                 keywords: 'shift scheduling, shifts, business management, find work, manage business, business app, freelance, hire help, hire workers',
-                robots: 'index,follow',
+                robots: 'index, follow',
                 copyright: 'WAAW Global inc'
             }
         },

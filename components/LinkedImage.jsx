@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
 
 const LinkedImage = (props) => {
 
@@ -10,23 +9,23 @@ const LinkedImage = (props) => {
         height: 1
     });
 
-    let imageStyle={};
+    let imageStyle = {};
 
     useEffect(() => {
         let newWidth;
         let newHeight;
-        const {height, width} = props.src;
+        const { height, width } = props.src;
         if (typeof props.height == 'undefined' && typeof props.width == 'undefined') {
             newWidth = width;
             newHeight = height;
         } else if (typeof props.height == 'undefined') {
             newWidth = props.width;
             newHeight = (props.width * height) / width;
-            imageStyle = {height: 'auto'};
+            imageStyle = { height: 'auto' };
         } else if (typeof props.width == 'undefined') {
             newWidth = (props.height * width) / height;
             newHeight = props.height;
-            imageStyle = {width: 'auto'};
+            imageStyle = { width: 'auto' };
         } else {
             newWidth = props.width;
             newHeight = props.height;
@@ -35,7 +34,7 @@ const LinkedImage = (props) => {
             width: newWidth,
             height: newHeight
         })
-    }, [props.width, props.height]) 
+    }, [props.width, props.height])
 
     const style = {
         width: `${imageSize.width}px`,

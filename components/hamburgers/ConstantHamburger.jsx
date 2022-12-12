@@ -1,11 +1,11 @@
-import styles from '../../styles/elements/Hamburger.module.css'
+import { HamburgerStyles } from '../../styles/elements';
 
 const ConstantHamburger = (props) => {
     return (
-        <div className={styles.constantHamburger} onClick={() => props.setOpen(!props.open)}>
-            <span className={`${styles.line} ${styles.line1}`}></span>
-            <span className={`${styles.line} ${styles.line2}`}></span>
-            <span className={`${styles.line} ${styles.line3}`}></span>
+        <div className={HamburgerStyles.constantHamburger} onClick={() => props.setOpen(!props.open)}>
+            <span className={`${HamburgerStyles.line} ${HamburgerStyles.line1}`}></span>
+            <span className={`${HamburgerStyles.line} ${HamburgerStyles.line2}`}></span>
+            <span className={`${HamburgerStyles.line} ${HamburgerStyles.line3}`}></span>
         </div>
     )
 }

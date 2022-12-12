@@ -17,7 +17,7 @@ export const CountryCodes = [
     }
 ];
 
-export const DayOfWeeks = [
+export const DaysOfWeek = [
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -25,4 +25,18 @@ export const DayOfWeeks = [
     'Friday',
     'Saturday',
     'Sunday'
-]
+];
+
+export const DaysOfWeekShort = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
+];
+
+export const hours = Array.from(Array(24).keys());
+
+export const minutes = Array.from(Array(60).keys());

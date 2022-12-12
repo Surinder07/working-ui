@@ -1,4 +1,4 @@
-import {Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, Badge, RequestPage, Receipt, Description} from '@mui/icons-material';
+import { Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, Badge, RequestPage, Receipt, Description, Notifications } from '@mui/icons-material';
 
 export const SideNavInfo = {
     admin: [
@@ -49,6 +49,12 @@ export const SideNavInfo = {
             text: 'Invoices',
             link: '/dashboard/invoices',
             activeKey: 'INVOICES'
+        },
+        {
+            icon: <Notifications style={{ fontSize: '16px' }} />,
+            text: 'Notifications',
+            link: '/dashboard/notifications',
+            activeKey: 'NOTIFICATIONS'
         },
         {
             icon: <Description style={{ fontSize: '16px' }} />,

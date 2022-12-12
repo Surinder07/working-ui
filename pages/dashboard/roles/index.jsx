@@ -1,11 +1,6 @@
-import { useEffect } from "react";
-import styles from '../../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../../components/WaawHead";
-import Button from '../../../components/Button';
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
-import { useState } from "react";
-import CreateNewRole from "../../../components/modals/CreateNewRole";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from '../../../styles/pages';
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, CreateNewRole } from "../../../components";
 
 const Roles = (props) => {
 
@@ -17,7 +12,7 @@ const Roles = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
-    const [showModal,setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const handleNewRole = () => {
         setShowModal(true)
@@ -25,18 +20,18 @@ const Roles = (props) => {
 
     const actions = [
         {
-          key: "View",
-          action: (id) => console.log(`/dashboard/roles/?id=${id}`),
+            key: "View",
+            action: (id) => console.log(`/dashboard/roles/?id=${id}`),
         },
         {
-          key: "Deactivate",
-          action: () => console.log("Api call will be added here"),
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
         },
         {
-          key: "Delete",
-          action: () => console.log("Api call will be added here"),
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
         },
-      ];
+    ];
 
 
     const roles = [
@@ -65,21 +60,21 @@ const Roles = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Roles"} />
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title='Roles' />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Roles</h1>
                 <Button type='plain' onClick={handleNewRole}>+ Add new Roles</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
-                title='Roles' 
-                description='Tabular list for current role.' 
-                data={roles}
-                actions={actions}
-                pagination
+                <TabularInfo
+                    title='Roles'
+                    description='Tabular list for current role.'
+                    data={roles}
+                    actions={actions}
+                    pagination
                 />
             </DashboardCard>
-            <CreateNewRole setShowModal={setShowModal} showModal={showModal}/>
+            <CreateNewRole setShowModal={setShowModal} showModal={showModal} />
         </>
     )
 

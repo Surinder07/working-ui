@@ -1,13 +1,10 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/globals.css';
 import router from 'next/router';
-import TopLoader from '../components/loaders/TopLoader';
-import WaawHead from '../components/WaawHead';
+import { WaawHead, TopLoader } from '../components';
 import { secureLocalStorage } from '../helpers';
 import { userService } from '../services/user.service';
-import NavFooterPageLayout from '../layouts/NavFooterPageLayout';
-import DashboardLayout from '../layouts/DashboardLayout';
+import { NavFooterPageLayout, DashboardLayout } from '../layouts';
 
 function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3

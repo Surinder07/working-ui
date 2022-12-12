@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import FullPageWithImageLayout from "../../layouts/FullPageWithImageLayout";
-import Button from "../../components/Button";
+import { FullPageWithImageLayout } from "../../layouts";
+import { Button } from "../../components";
 
 const EmailVerified = (props) => {
 
@@ -22,7 +22,7 @@ const EmailVerified = (props) => {
             <Button
                 type='default'
                 href='/login'
-                style={{marginTop: '20px'}}
+                style={{ marginTop: '20px' }}
             >
                 Go to Login
             </Button>

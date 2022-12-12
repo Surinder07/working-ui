@@ -1,4 +1,4 @@
-import styles from '../../styles/pages/Dashboard.module.css';
+import { DashboardStyles } from '../../styles/pages';
 import Link from 'next/link';
 import { DashboardInfoTiles } from '../../constants';
 import { useState } from 'react';
@@ -14,11 +14,11 @@ const InfoTileBanner = () => {
     })
 
     return (
-        <div className={styles.infoTileContainer}>
+        <div className={DashboardStyles.infoTileContainer}>
             {
                 DashboardInfoTiles.map((info, i) => (
                     <Link key={`infoTile${i}`} href={info.href}>
-                        <DashboardCard className={styles.infoTile} style={{ backgroundImage: `url(${info.icon.src})`, cursor: 'pointer' }}>
+                        <DashboardCard className={DashboardStyles.infoTile} style={{ backgroundImage: `url(${info.icon.src})`, cursor: 'pointer' }}>
                             <div>
                                 <h2>{info.title}</h2>
                                 {info.timeframe && <h3>{info.timeframe}</h3>}

@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import styles from '../../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../../components/WaawHead";
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import { DashboardStyles } from '../../../styles/pages';
+import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
 
 const Requests = (props) => {
 
@@ -17,18 +15,18 @@ const Requests = (props) => {
 
     const actions = [
         {
-          key: "View",
-          action: (id) => console.log(`/dashboard/requests/?id=${id}`),
+            key: "View",
+            action: (id) => console.log(`/dashboard/requests/?id=${id}`),
         },
         {
-          key: "Deactivate",
-          action: () => console.log("Api call will be added here"),
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
         },
         {
-          key: "Delete",
-          action: () => console.log("Api call will be added here"),
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
         },
-      ];
+    ];
 
     const requests = [
         {
@@ -63,17 +61,17 @@ const Requests = (props) => {
     return (
         <>
             <WaawHead title={"WaaW | Requests"} />
-            <div className={styles.dashboardTitles}>
+            <div className={Dashboardstyles.dashboardTitles}>
                 <h1>Requests</h1>
                 {/* <Button type='plain'>+ Invite Users</Button> */}
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
-                title='Request Details' 
-                description='Tabular representation of all the requests' 
-                data={requests}
-                actions = {actions}
-                pagination
+                <TabularInfo
+                    title='Request Details'
+                    description='Tabular representation of all the requests'
+                    data={requests}
+                    actions={actions}
+                    pagination
                 />
             </DashboardCard>
         </>

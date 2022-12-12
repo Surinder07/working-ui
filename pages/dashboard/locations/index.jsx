@@ -1,9 +1,6 @@
 import { useEffect } from "react";
-import styles from "../../../styles/pages/Dashboard.module.css";
-import WaawHead from "../../../components/WaawHead";
-import Button from "../../../components/Button";
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo } from "../../../components";
 
 const Locations = (props) => {
     useEffect(() => {
@@ -47,8 +44,8 @@ const Locations = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Locations"} />
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title='Locations' />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <Button type='plain'>+ Add new Location</Button>
             </div>

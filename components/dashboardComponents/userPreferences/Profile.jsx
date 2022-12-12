@@ -1,9 +1,9 @@
-import styles from '../../../styles/pages/UserPreference.module.css';
+import { UserPreferenceStyles } from '../../../styles/pages';
 import Images from '../../../public/Images';
 import { CameraAlt } from '@mui/icons-material';
 import { useState } from 'react';
 import UserPreferenceCard from './UserPreferenceCard';
-import EditableInput from './EditableInput';
+import { EditableInput } from '../../inputComponents';
 
 const Profile = (props) => {
 
@@ -34,18 +34,18 @@ const Profile = (props) => {
     };
 
     return (
-        <div className={styles.profileContainer}>
-            <div className={styles.picContainer}>
+        <div className={UserPreferenceStyles.profileContainer}>
+            <div className={UserPreferenceStyles.picContainer}>
                 <div
-                    className={styles.pic}
+                    className={UserPreferenceStyles.pic}
                     style={{ backgroundImage: `url(${props.img ? props.img : Images.ProfilePlaceholderLarge.src})` }}
                     onMouseEnter={() => setUploadVisible(true)}
                     onMouseLeave={() => setUploadVisible(false)}
                 >
                     {
                         uploadVisible &&
-                        <label className={styles.uploadContainer} htmlFor='upload-button'>
-                            <div className={styles.uploadBox}>
+                        <label className={UserPreferenceStyles.uploadContainer} htmlFor='upload-button'>
+                            <div className={UserPreferenceStyles.uploadBox}>
                                 <CameraAlt />
                                 <p>Choose File</p>
                             </div>
@@ -61,17 +61,17 @@ const Profile = (props) => {
             </div>
             <div>
                 <h1>Profile Preferences</h1>
-                <div className={styles.twoHalves}>
-                    <UserPreferenceCard
-                        title='Personal Details'
-                        isEditable
-                        editOn={editPersonalDetails}
-                        setEditOn={setEditPersonalDetails}
-                    >
-                        <EditableInput />
-                    </UserPreferenceCard>
-                    <UserPreferenceCard>Test</UserPreferenceCard>
-                </div>
+                <UserPreferenceCard
+                    title='Personal Details'
+                    isEditable
+                    editOn={editPersonalDetails}
+                    setEditOn={setEditPersonalDetails}
+                >
+                    <EditableInput type='text' label='First Name' value='Test' editOn={editPersonalDetails} />
+                    <EditableInput type='text' label='Last Name' editOn={editPersonalDetails} />
+                    <EditableInput type='mobile' label='Mobile No.' editOn={editPersonalDetails} />
+                    <EditableInput type='text' label='WAAW ID' editOn={editPersonalDetails} nonEditable />
+                </UserPreferenceCard>
             </div>
         </div>
     )

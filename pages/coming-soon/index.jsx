@@ -1,20 +1,24 @@
-import WaawHead from '../../components/WaawHead';
-import LinkedImage from "../../components/LinkedImage";
-import styles from '../../styles/pages/ComingSoon.module.css';
+import { WaawHead, LinkedImage } from "../../components";
+import { ComingSoonStyles } from '../../styles/pages';
 import Images from "../../public/Images";
 import { useEffect } from 'react';
 
 const ComingSoon = (props) => {
 
     useEffect(() => {
-        props.setActiveMenu('coming-soon');
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: "fullPage",
+            activeMenu: "none",
+            activeSubMenu: "none",
+        });
     }, [])
 
     return (
         <>
-        <WaawHead title={'WaaW | Coming Soon'} />
-            <div className={styles.background}>
-                <div className={styles.logoContainer}>
+            <WaawHead title='Coming Soon' />
+            <div className={ComingSoonStyles.background}>
+                <div className={ComingSoonStyles.logoContainer}>
                     <LinkedImage
                         link='/'
                         src={Images.LogoInverted}
@@ -28,10 +32,10 @@ const ComingSoon = (props) => {
                 </div>
                 <h3>WE ARE PREPARING SOMETHING AWESOME</h3>
                 <h1>COMING SOON</h1>
-                <div className={styles.loader}>
-                    <div className={styles.loader_progress}></div>
+                <div className={ComingSoonStyles.loader}>
+                    <div className={ComingSoonStyles.loader_progress}></div>
                 </div>
-                <p className={styles.loader_percent}>50%</p>
+                <p className={ComingSoonStyles.loader_percent}>50%</p>
             </div>
         </>
     )

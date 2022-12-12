@@ -13,7 +13,7 @@ const Card = (props) => {
             href={props.href ? props.href : '#'}
             scroll={props.href ? true : false}
             style={{
-                cursor: props.href ? 'pointer': 'default'
+                cursor: props.href ? 'pointer' : 'default'
             }}
         >
             <div style={style} className={props.className}>{props.children}</div>

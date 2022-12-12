@@ -1,18 +1,18 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import styles from '../styles/elements/Button.module.css';
+import { ButtonStyles } from '../../styles/elements/inputs';
 
 const Button = (props) => {
 
     const router = useRouter();
-    const [buttonClass, setButtonClass] = useState(styles.defaultButton);
+    const [buttonClass, setButtonClass] = useState(ButtonStyles.defaultButton);
 
     useEffect(() => {
-        if (props.type === 'default') setButtonClass(styles.defaultButton);
-        else if (props.type === 'fullWidth') setButtonClass(styles.fullWidthButton);
-        else if (props.type === 'social') setButtonClass(styles.socialButton);
-        else if (props.type === 'plain') setButtonClass(styles.plainButton);
+        if (props.type === 'default') setButtonClass(ButtonStyles.defaultButton);
+        else if (props.type === 'fullWidth') setButtonClass(ButtonStyles.fullWidthButton);
+        else if (props.type === 'social') setButtonClass(ButtonStyles.socialButton);
+        else if (props.type === 'plain') setButtonClass(ButtonStyles.plainButton);
     }, []);
 
     const onClick = (e) => {
@@ -25,7 +25,7 @@ const Button = (props) => {
 
     return (
         <button
-            className={`${styles.button} ${buttonClass} ${props.disabled && styles.disabledButton} ${props.className}`}
+            className={`${ButtonStyles.button} ${buttonClass} ${props.disabled && ButtonStyles.disabledButton} ${props.className}`}
             style={props.style}
             onClick={onClick}
         >
@@ -33,13 +33,13 @@ const Button = (props) => {
                 props.icon && (
                     props.icon.src ?
                         <Image
-                            className={`${styles.icon} ${props.type === 'social' ? styles.socialIcon : styles.defaultIcon}`}
+                            className={`${ButtonStyles.icon} ${props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon}`}
                             src={props.icon.src}
                             alt={props.icon.alt}
                             height={props.icon.height}
                             style={{ width: 'auto' }}
                         />
-                        : <div style={{ display: 'flex', alignItems: 'center' }} className={`${styles.icon} ${props.type === 'social' ? styles.socialIcon : styles.defaultIcon}`}>
+                        : <div style={{ display: 'flex', alignItems: 'center' }} className={`${ButtonStyles.icon} ${props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon}`}>
                             {props.icon.element}
                         </div>
                 )

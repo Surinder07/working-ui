@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import styles from '../../styles/pages/Pricing.module.css';
-import pageStyles from '../../styles/Pages.module.css';
-import { PricingInfo } from '../../constants/PricingInfo';
+import { useEffect } from "react";
+import { PricingStyles, PageStyles } from '../../styles/pages';
+import { PricingInfo } from '../../constants';
 import { Check } from '@mui/icons-material';
 
 const Pricing = (props) => {
@@ -24,15 +23,15 @@ const Pricing = (props) => {
     }, [router.query])
 
     return (
-        <div className={`${pageStyles.page} ${pageStyles.flexPageColumn}`}>
-            <div className={`${pageStyles.pageMargin} ${pageStyles.smallContentContainer}`}>
+        <div className={`${PageStyles.page} ${PageStyles.flexPageColumn}`}>
+            <div className={`${PageStyles.pageMargin} ${PageStyles.smallContentContainer}`}>
                 <h1>{data.title}</h1>
                 <p>{data.description}</p>
-                <div className={styles.background} style={style}></div>
+                <div className={PricingStyles.background} style={style}></div>
             </div>
-            <div className={`${pageStyles.pagePadding} ${styles.pricingBackground}`}>
-                <div className={styles.pricingContainer}>
-                    <div className={styles.leftContainer}>
+            <div className={`${PageStyles.pagePadding} ${PricingStyles.pricingBackground}`}>
+                <div className={PricingStyles.pricingContainer}>
+                    <div className={PricingStyles.leftContainer}>
                         <h3>Features</h3>
                         <ul>
                             {
@@ -45,7 +44,7 @@ const Pricing = (props) => {
                             }
                         </ul>
                     </div>
-                    <div className={styles.rightContainer}>
+                    <div className={PricingStyles.rightContainer}>
                         {
                             data.tables.map((table, i) => (
                                 <div key={`tab${i}`}>

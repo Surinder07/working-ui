@@ -1,11 +1,11 @@
-import styles from '../styles/elements/ComingSoonEl.module.css';
+import { ComingSoonElStyles } from '../styles/elements';
 
 const ComingSoonEl = () => {
     return (
-        <div className={styles.container}>
-            <h1 className={styles.containerComingSoon}><span className={styles.blueTextColor}>Coming</span> Soon</h1>
-            <p className={styles.containerStayTuned}>Stay Tuned!</p>
-            <div className={styles.line}></div>
+        <div className={ComingSoonElStyles.container}>
+            <h1 className={ComingSoonElStyles.containerComingSoon}><span className={ComingSoonElStyles.blueTextColor}>Coming</span> Soon</h1>
+            <p className={ComingSoonElStyles.containerStayTuned}>Stay Tuned!</p>
+            <div className={ComingSoonElStyles.line}></div>
         </div>
     )
 }

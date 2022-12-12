@@ -1,4 +1,4 @@
-import styles from '../../styles/elements/InputBox.module.css';
+import { InputBoxStyles } from '../../styles/elements/inputs';
 import { Person, Email, Key, Visibility, VisibilityOff, CorporateFare } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
@@ -39,10 +39,10 @@ const InputBox = (props) => {
     }
 
     return (
-        <div className={`${props.inputType === 2 ? styles.inputBox2 : styles.inputBox} ${props.className} 
-        ${props.showError ? styles.inputBoxError : props.inputType === 2 ? styles.inputBox2Default : styles.inputBoxDefault}`}
+        <div className={`${props.inputType === 2 ? InputBoxStyles.inputBox2 : InputBoxStyles.inputBox} ${props.className} 
+        ${props.showError ? InputBoxStyles.inputBoxError : props.inputType === 2 ? InputBoxStyles.inputBox2Default : InputBoxStyles.inputBoxDefault}`}
             style={props.style}>
-            {props.inputType !== 2 && <div className={styles.inputIconContainer}>{getIcon()}</div>}
+            {props.inputType !== 2 && <div className={InputBoxStyles.inputIconContainer}>{getIcon()}</div>}
             <input
                 type={type}
                 id={props.name}
@@ -56,11 +56,11 @@ const InputBox = (props) => {
                 autoComplete='off' />
             {
                 props.type.toLowerCase() === 'password' &&
-                <div className={styles.inputIconContainer} style={{ cursor: 'pointer' }} onClick={switchPasswordVisibility}>
+                <div className={InputBoxStyles.inputIconContainer} style={{ cursor: 'pointer' }} onClick={switchPasswordVisibility}>
                     {props.type.toLowerCase() === 'password' && visibilityIcon}
                 </div>
             }
-            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
+            {props.showError && <p className={InputBoxStyles.errorMessage}>{props.errorMessage}</p>}
         </div>
     );
 }

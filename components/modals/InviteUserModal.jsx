@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import styles from "../../styles/elements/Modal.module.css";
+import {ModalStyles} from "../../styles/elements";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DropDown from "../inputComponents/DropDown";
 import Switch from "@mui/material/Switch";

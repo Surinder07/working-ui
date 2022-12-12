@@ -1,12 +1,12 @@
-import styles from '../../styles/elements/Loader.module.css';
+import { LoaderStyles } from '../../styles/elements';
 
 const RotatingLoader = (props) => {
 
     const style = { display: props.visible ? 'flex' : 'none' };
 
     return (
-        <div style={style} className={styles.background}>
-            <div className={styles.loader}></div>
+        <div style={style} className={LoaderStyles.background}>
+            <div className={LoaderStyles.loader}></div>
         </div>
     )
 }

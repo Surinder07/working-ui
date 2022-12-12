@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import styles from '../../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../../components/WaawHead";
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import { DashboardStyles } from '../../../styles/pages/Dashboard.module.css';
+import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
 
 const Invoices = (props) => {
 
@@ -17,18 +15,18 @@ const Invoices = (props) => {
 
     const actions = [
         {
-          key: "View",
-          action: (id) => console.log(`/dashboard/invoices/?id=${id}`),
+            key: "View",
+            action: (id) => console.log(`/dashboard/invoices/?id=${id}`),
         },
         {
-          key: "Deactivate",
-          action: () => console.log("Api call will be added here"),
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
         },
         {
-          key: "Delete",
-          action: () => console.log("Api call will be added here"),
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
         },
-      ];
+    ];
 
 
     const invoices = [
@@ -63,17 +61,17 @@ const Invoices = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Invoices"} />
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title='Invoices' />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Invoices</h1>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
-                title='Invoices' 
-                description='Tabular list of all current invoices status.' 
-                data={invoices}
-                actions={actions}
-                pagination
+                <TabularInfo
+                    title='Invoices'
+                    description='Tabular list of all current invoices status.'
+                    data={invoices}
+                    actions={actions}
+                    pagination
                 />
             </DashboardCard>
         </>

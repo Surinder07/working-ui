@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import styles from '../../styles/pages/WhyWaaw.module.css';
-import pageStyles from '../../styles/Pages.module.css';
-import { WhyWaawContent } from '../../constants/WhyWaawContent';
-import WaawHead from '../../components/WaawHead';
+import { WhyWaawStyles, PageStyles } from '../../styles/pages';
+import { WhyWaawContent } from '../../constants';
+import { WaawHead } from '../../components';
 
 const WhyWaaw = (props) => {
 
@@ -18,8 +17,8 @@ const WhyWaaw = (props) => {
     return (
         <>
             <WaawHead title={'WaaW | About us'} description={process.env.header.aboutUsDescription} meta={{ openGraph: { url: 'https://waaw.ca/why-waaw' } }} />
-            <div className={`${pageStyles.page} ${pageStyles.flexPageColumn}`}>
-                <div className={`${pageStyles.pageMargin} ${pageStyles.smallContentContainer}`}>
+            <div className={`${PageStyles.page} ${PageStyles.flexPageColumn}`}>
+                <div className={`${PageStyles.pageMargin} ${PageStyles.smallContentContainer}`}>
                     <h1>Why WAAW?</h1>
                     {
                         WhyWaawContent.whyWaaw.map((paragraph, i) => (
@@ -27,9 +26,9 @@ const WhyWaaw = (props) => {
                         ))
                     }
                 </div>
-                <img src='/bg/why-waaw-bg.svg' className={styles.middleBackground} />
-                <div className={styles.greyContainer}>
-                    <div className={`${pageStyles.pageMargin} ${pageStyles.smallContentContainer}`}>
+                <img src='/bg/why-waaw-bg.svg' className={WhyWaawStyles.middleBackground} />
+                <div className={WhyWaawStyles.greyContainer}>
+                    <div className={`${PageStyles.pageMargin} ${PageStyles.smallContentContainer}`}>
                         <h1>About Us</h1>
                         {
                             WhyWaawContent.aboutUs.map((paragraph, i) => (

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../components/homeComponents/Navbar';
-import Footer from '../components/homeComponents/Footer';
+import { Navbar, Footer } from '../components';
 
 const NavFooterPageLayout = (props) => {
 

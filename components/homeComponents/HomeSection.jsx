@@ -1,6 +1,5 @@
 import HomeSectionCard from './HomeSectionCard';
-import styles from '../../styles/pages/Home.module.css';
-import pageStyles from '../../styles/Pages.module.css';
+import { HomeStyles, PageStyles } from '../../styles/pages';
 
 const HomeSection = (props) => {
 
@@ -8,16 +7,16 @@ const HomeSection = (props) => {
     const iconHeight = {
         1: 90,
         2: 80,
-        3: 70 
+        3: 70
     }
 
     return (
-        <div className={styles.sectionContainer} style={props.info.styles.text}>
-            <div className={styles.overlay} style={props.info.styles.overlay}></div>
-            <div className={`${styles.container} ${pageStyles.pagePadding}`} style={props.info.styles.color}>
-                <h4 className={styles.sectionInfo}>{props.info.title}</h4>
-                <h1 className={styles.sectionDescription}>{props.info.description}</h1>
-                <div className={styles.tileContainer}>
+        <div className={HomeStyles.sectionContainer} style={props.info.styles.text}>
+            <div className={HomeStyles.overlay} style={props.info.styles.overlay}></div>
+            <div className={`${HomeStyles.container} ${PageStyles.pagePadding}`} style={props.info.styles.color}>
+                <h4 className={HomeStyles.sectionInfo}>{props.info.title}</h4>
+                <h1 className={HomeStyles.sectionDescription}>{props.info.description}</h1>
+                <div className={HomeStyles.tileContainer}>
                     {
                         props.info.tiles.map((tile, i) => (
                             <HomeSectionCard
@@ -29,7 +28,7 @@ const HomeSection = (props) => {
                     }
                 </div>
             </div>
-            <div className={styles.background} style={props.info.styles.image}></div>
+            <div className={HomeStyles.background} style={props.info.styles.image}></div>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import Button from "../../components/Button";
-import FullPageWithImageLayout from "../../layouts/FullPageWithImageLayout";
+import { Button } from "../../components";
+import { FullPageWithImageLayout } from "../../layouts";
 
 const LinkExpired = (props) => {
 
@@ -23,7 +23,7 @@ const LinkExpired = (props) => {
             <Button
                 type='default'
                 href='/register'
-                style={{marginTop: '20px'}}
+                style={{ marginTop: '20px' }}
             >
                 Go to Registration
             </Button>

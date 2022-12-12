@@ -1,23 +1,35 @@
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import styles from "../../../styles/pages/Dashboard.module.css";
-import WaawHead from "../../../components/WaawHead";
-import UserPreferenceCard from '../../../components/dashboardComponents/userPreferences/UserPreferenceCard';
-import InputBox from "../../../components/inputComponents/InputBox";
-import DropDown from "../../../components/inputComponents/DropDown";
-import ContactInput from "../../../components/inputComponents/ContactInput";
+import { DashboardStyles } from "../../../styles/pages";
 import Link from 'next/link';
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import stylesModal from "../../../styles/elements/Modal.module.css"
-import Modal from "../../../components/modals/Modal";
-import ProfileImage from '../../../components/dashboardComponents/ProfileImage';
+import stylesModal from "../../../styles/elements/Modal.module.css";
+import {
+    WaawNoIndexHead,
+    UserPreferenceCard,
+    InputBox,
+    DropDown,
+    ContactInput,
+    TabularInfo,
+    DashboardCard,
+    Modal,
+    ProfileImage,
+    EditableInput
+} from "../../../components";
 
 const Employees = (props) => {
 
     const router = useRouter();
 
     const [userId, setUserId] = useState('');
+    const [mobile, setMobile] = useState({
+        countryCode: '',
+        mobile: '',
+        country: ''
+    })
+    const [expandedMenu, setExpandedMenu] = useState('none');
+    const [editOn, setEditOn] = useState(false);
+    const [showModal, setShowModal] = useState(true)
+    const buttonText = ["Continue", "Cancel"];
 
     useEffect(() => {
         props.setPageInfo({
@@ -34,22 +46,12 @@ const Employees = (props) => {
             setUserId(router.query.id);
     }, [router.isReady, router.query]);
 
-    const [mobile, setMobile] = useState({
-        countryCode: '',
-        mobile: '',
-        country: ''
-    })
-    const [expandedMenu, setExpandedMenu] = useState('none');
-    const [showModal,setShowModal] = useState(true)
-    const buttonText = ["Continue", "Cancel"];
-
     const options = [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
-    const actions = 
-        {
-          key: "Edit",
-          action: () => console.log("Edit table data here in /dashboard/employees/details"),
-        }
+    const actions = {
+        key: "Edit",
+        action: () => console.log("Edit table data here in /dashboard/employees/details"),
+    }
 
     const handleExpansion = (clickedMenu) => {
         if (clickedMenu === expandedMenu) {
@@ -105,24 +107,28 @@ const Employees = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Employee Details"} />
-            
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title="Employee Details" />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1><Link href='/dashboard/employees' style={{ color: '#535255' }}>Employees</Link>{` > Employee Details`}</h1>
             </div>
             {/* Employee Personal Details */}
             <UserPreferenceCard
                 title='Personal Details'
                 isEditable
-                editOn={false}
-            // setEditOn={setEditPersonalDetails}
+                editOn={editOn}
+                setEditOn={setEditOn}
             >
-                <div className={styles.personalContainer}>
+                <div className={DashboardStyles.personalContainer}>
                     <ProfileImage size='big' />
-                    <div className={styles.personalContent}>
-                        <InputBox label='FirstName' type='user' name='name' inputType={2} />
-                        <DropDown options={['test', 'test']} inputType={2} />
-                        <ContactInput setValue={setMobile} value={mobile} inputType={2} />
+                    <div className={DashboardStyles.personalContent}>
+                        <EditableInput label='First Name' type='text' editOn />
+                        <EditableInput label='Last Name' type='text' editOn />
+                        <EditableInput label='Mobile' type='mobile' value={mobile} setValue={setMobile} editOn />
+                        <EditableInput label='Email' type='text' editOn />
+                        <EditableInput label='Employee Id' type='text' editOn />
+                        <EditableInput label='Location' type='text' editOn />
+                        <EditableInput label='Role' type='text' editOn />
+                        <EditableInput label='Employee type' type='text' editOn />
                     </div>
                 </div>
             </UserPreferenceCard>
@@ -130,7 +136,6 @@ const Employees = (props) => {
             {getExpandableData('Shifts')}
             {getExpandableData('Requests')}
             {getExpandableData('Attendance')}
-
 
             <Modal
                 size="small"
@@ -146,8 +151,8 @@ const Employees = (props) => {
                                 style={{ display: "flex" }}
                                 className={stylesModal.modalDropDown}
                             >
-                                <DropDown defaultDisplay={options[0]} options={options} />
-                                <DropDown defaultDisplay={options[0]} options={options} />
+                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
+                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
                             </span>
                         </div>
                         <div>
@@ -156,8 +161,8 @@ const Employees = (props) => {
                                 style={{ display: "flex" }}
                                 className={stylesModal.modalDropDown}
                             >
-                                <DropDown defaultDisplay={options[0]} options={options} />
-                                <DropDown defaultDisplay={options[4]} options={options} />
+                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
+                                <DropDown inputType={2} defaultDisplay={options[4]} options={options} />
                             </span>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import styles from '../../styles/elements/TabularInfo.module.css';
+import { TabularInfoStyles } from '../../styles/elements';
 import Pagination from './Pagination';
-import SearchBar from '../inputComponents/SearchBar';
+import { SearchBar } from '../inputComponents';
 import { FilterAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
 import Table from './Table';
 
@@ -40,22 +40,22 @@ const TabularInfo = (props) => {
     }
 
     return (
-        <div className={styles.tableContainer}>
-            <div className={styles.header} style={props.expandable && { cursor: 'pointer' }} onClick={toggleExpansion}>
+        <div className={TabularInfoStyles.tableContainer}>
+            <div className={TabularInfoStyles.header} style={props.expandable && { cursor: 'pointer' }} onClick={toggleExpansion}>
                 <div style={props.expandable && { paddingLeft: '40px', position: 'relative' }}>
-                    {props.expandable && (props.expanded ? <ExpandLess className={styles.dropDownIcon} /> :
-                        <ExpandMore className={styles.dropDownIcon} />)}
+                    {props.expandable && (props.expanded ? <ExpandLess className={TabularInfoStyles.dropDownIcon} /> :
+                        <ExpandMore className={TabularInfoStyles.dropDownIcon} />)}
                     {props.title && <h2>{props.title}</h2>}
                     {props.description && <h4>{props.description}</h4>}
                 </div>
-                <div className={styles.searchFilterContainer}>
+                <div className={TabularInfoStyles.searchFilterContainer}>
                     {
                         props.showSearch && ((props.expandable && props.expanded) || !props.expandable) &&
-                        <SearchBar ref={searchRef} className={styles.search} />
+                        <SearchBar ref={searchRef} className={TabularInfoStyles.search} />
                     }
                     {
                         props.showFilter && ((props.expandable && props.expanded) || !props.expandable) &&
-                        <div ref={filterRef} className={styles.filter}>
+                        <div ref={filterRef} className={TabularInfoStyles.filter}>
                             <FilterAlt />
                             <p>Filter</p>
                         </div>
@@ -71,7 +71,7 @@ const TabularInfo = (props) => {
                 {
                     props.data ?
                         noData ?
-                            <p className={styles.loadingText}>No data available</p> :
+                            <p className={TabularInfoStyles.loadingText}>No data available</p> :
                             <>
                                 <Table data={props.data} actions={props.actions} ref={tableRef} />
                                 {
@@ -86,7 +86,7 @@ const TabularInfo = (props) => {
                                 }
                             </>
                         :
-                        <p className={styles.loadingText}>Loading...</p>
+                        <p className={TabularInfoStyles.loadingText}>Loading...</p>
                 }
             </div>
         </div>

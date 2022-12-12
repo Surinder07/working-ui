@@ -1,10 +1,10 @@
-import styles from '../../styles/elements/InputBox.module.css';
+import { InputBoxStyles } from '../../styles/elements/inputs';
 
 const InputWithButton = (props) => {
     return (
-        <div className={styles.inputBoxWithButtonWrapper} style={props.style}>
-            <div className={`${styles.inputBoxWithButton} ${props.className} ${props.showError ?
-                styles.inputBoxError : styles.inputBoxDefault}`}>
+        <div className={InputBoxStyles.inputBoxWithButtonWrapper} style={props.style}>
+            <div className={`${InputBoxStyles.inputBoxWithButton} ${props.className} ${props.showError ?
+                InputBoxStyles.inputBoxError : InputBoxStyles.inputBoxDefault}`}>
                 <input
                     type='text'
                     id={props.placeholder}
@@ -16,10 +16,10 @@ const InputWithButton = (props) => {
                         props.setShowError && props.setShowError(false);
                     }}
                     autoComplete='off' />
-                <button className={props.error ? styles.buttonError : styles.buttonDefault}>{props.buttonText}</button>
+                <button className={props.error ? InputBoxStyles.buttonError : InputBoxStyles.buttonDefault}>{props.buttonText}</button>
                 {
                     props.showMessage &&
-                    <p className={`${styles.message} ${props.error ? styles.errorMessage : styles.successMessage}`}>
+                    <p className={`${InputBoxStyles.message} ${props.error ? InputBoxStyles.errorMessage : InputBoxStyles.successMessage}`}>
                         {props.message}
                     </p>
                 }

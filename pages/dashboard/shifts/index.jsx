@@ -1,11 +1,6 @@
-import { useEffect } from "react";
-import styles from '../../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../../components/WaawHead";
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
-import Button from "../../../components/Button";
-import { useState } from "react";
-import CreateNewShift from "../../../components/modals/CreateNewShift";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from '../../../styles/pages';
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, CreateNewShiftModal } from "../../../components";
 
 const Shifts = (props) => {
 
@@ -17,26 +12,26 @@ const Shifts = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
-  
-     const [showModal,setShowModal] = useState(false)
-     const handleShiftModal = () => {
-        setShowModal(true);
-     }
 
-     const actions = [
+    const [showModal, setShowModal] = useState(false)
+    const handleShiftModal = () => {
+        setShowModal(true);
+    }
+
+    const actions = [
         {
-          key: "View",
-          action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
+            key: "View",
+            action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
         },
         {
-          key: "Deactivate",
-          action: () => console.log("Api call will be added here"),
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
         },
         {
-          key: "Delete",
-          action: () => console.log("Api call will be added here"),
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
         },
-      ];
+    ];
 
 
     const shifts = [
@@ -101,8 +96,8 @@ const Shifts = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Shifts"} />
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title='Shifts' />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
                 <Button type='plain' onClick={handleShiftModal}>+ Create new Shifts</Button>
             </div>
@@ -115,7 +110,7 @@ const Shifts = (props) => {
                     pagination
                 />
             </DashboardCard>
-            <CreateNewShift setShowModal={setShowModal} showModal={showModal}/>
+            <CreateNewShiftModal setShowModal={setShowModal} showModal={showModal} />
         </>
     )
 

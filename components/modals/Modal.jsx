@@ -1,8 +1,8 @@
-import styles from "../../styles/elements/Modal.module.css";
+import { ModalStyles } from "../../styles/elements";
 import { useRouter } from "next/router";
 import { Close } from "@mui/icons-material";
-import Button from "../Button";
-import { useEffect } from "react";
+import { Button } from "../inputComponents";
+import { useEffect, useRef, useState } from "react";
 
 /**
  *
@@ -14,52 +14,62 @@ import { useEffect } from "react";
  * @returns A full page modal with required content and a button at end
  */
 const Modal = (props) => {
-  const router = useRouter();
-  useEffect(() => {
-    if (props.showModal) {
-      document.body.style.overflow = "hidden";
-    }
-  },[ props.showModal]);
 
-  const handleClick = () => {
-    props.setShowModal(false);
-    document.body.style.overflow = "unset";
-    if (props.link && props.link !== "") router.push(props.link);
-  };
+    const router = useRouter();
 
-  return props.showModal ? (
-    <div className={styles.modalBackdrop}>
-      <div className={`${styles.modal} ${styles[props.size]}`}>
-        {props.showCloseButton && (
-          <Close
-            className={styles.closeIcon}
-            onClick={() => {
-              props.setShowModal(false);
-              document.body.style.overflow = "unset";
-            }}
-          />
-        )}
-        <div className={styles.subContainer}>
-          {props.children}
-          {typeof(props.buttonText)=== "object" ? (
-           <div className={styles.multipleButtonStyle}>
-            { props.buttonText.map((button,index) => (
-              <Button type="default" key={index} onClick={handleClick}>
-                {button}
-              </Button>
-            ))}
-           </div>
-          ) : (
-            <Button type="default" onClick={handleClick}>
-              {props.buttonText}
-            </Button>
-          )}
+    const modalRef = useRef();
+    const [scrollable, setScrollable] = useState(false);
+
+    useEffect(() => {
+        if (props.showModal) {
+            document.body.style.overflow = "hidden";
+            if (modalRef.current && window.innerHeight < modalRef.current.clientHeight) {
+                setScrollable(true);
+            } else {
+                setScrollable(false);
+            }
+        }
+    }, [props.showModal]);
+
+    const handleClick = () => {
+        props.setShowModal(false);
+        document.body.style.overflow = "unset";
+        if (props.link && props.link !== "") router.push(props.link);
+    };
+
+    return props.showModal ? (
+        <div className={ModalStyles.modalBackdrop} style={scrollable && { overflowY: 'scroll' }}>
+            <div className={`${ModalStyles.modal} ${ModalStyles[props.size]}`} ref={modalRef}>
+                {props.showCloseButton && (
+                    <Close
+                        className={ModalStyles.closeIcon}
+                        onClick={() => {
+                            props.setShowModal(false);
+                            document.body.style.overflow = "unset";
+                        }}
+                    />
+                )}
+                <div className={ModalStyles.subContainer}>
+                    {props.children}
+                    {typeof (props.buttonText) === "object" ? (
+                        <div className={ModalStyles.multipleButtonStyle}>
+                            {props.buttonText.map((button, index) => (
+                                <Button type="default" key={index} onClick={handleClick}>
+                                    {button}
+                                </Button>
+                            ))}
+                        </div>
+                    ) : (
+                        <Button type="default" onClick={handleClick}>
+                            {props.buttonText}
+                        </Button>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  ) : (
-    <></>
-  );
+    ) : (
+        <></>
+    );
 };
 
 export default Modal;

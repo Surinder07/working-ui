@@ -1,11 +1,6 @@
-import ComingSoonEl from '../components/ComingSoonEl';
-import HomeSection from '../components/homeComponents/HomeSection';
-import Card from '../components/Card';
+import { WaawHead, ComingSoonEl, HomeSection, Card, SubscribeBar } from '../components';
 import { business, talent } from '../constants/HomeSectionInfo';
-import SubscribeBar from '../components/homeComponents/SubscribeBar';
-import styles from '../styles/pages/Home.module.css';
-import pageStyles from '../styles/Pages.module.css';
-import WaawHead from '../components/WaawHead';
+import { HomeStyles, PageStyles } from '../styles/pages';
 import { useEffect } from 'react';
 
 const Home = (props) => {
@@ -22,20 +17,20 @@ const Home = (props) => {
     return (
         <>
             <WaawHead />
-            <div className={pageStyles.page}>
-                <div className={`${styles.introSection} ${pageStyles.pagePadding}`}>
-                    <div className={styles.introContent}>
-                        <h1 className={styles.introText}>The <span className={styles.colorBlue}>world's first</span> platform to inspire people and business
-                            to <span className={styles.colorBlue}>grow</span> and <span className={styles.colorBlue}>thrive together</span></h1>
-                        <div className={styles.introBottom}>
+            <div className={PageStyles.page}>
+                <div className={`${HomeStyles.introSection} ${PageStyles.pagePadding}`}>
+                    <div className={HomeStyles.introContent}>
+                        <h1 className={HomeStyles.introText}>The <span className={HomeStyles.colorBlue}>world's first</span> platform to inspire people and business
+                            to <span className={HomeStyles.colorBlue}>grow</span> and <span className={HomeStyles.colorBlue}>thrive together</span></h1>
+                        <div className={HomeStyles.introBottom}>
                             <ComingSoonEl />
-                            <Card className={styles.subscribeBox}>
+                            <Card className={HomeStyles.subscribeBox}>
                                 <h3>Submit your email to join the wait list.</h3>
                                 <SubscribeBar buttonColor={'#333'} buttonText={'#fff'} background={'#fff'} />
                             </Card>
                         </div>
                     </div>
-                    <div className={styles.introFiller}></div>
+                    <div className={HomeStyles.introFiller}></div>
                 </div>
                 <HomeSection info={business} screenType={props.screenType} />
                 <HomeSection info={talent} screenType={props.screenType} />

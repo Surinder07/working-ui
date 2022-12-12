@@ -1,4 +1,4 @@
-import styles from '../../styles/elements/Modal.module.css';
+import { ModalStyles } from '../../styles/elements';
 import Modal from './Modal';
 
 const SuccessModal = (props) => {
@@ -10,8 +10,8 @@ const SuccessModal = (props) => {
             showModal={props.showModal}
             setShowModal={props.setShowModal}
         >
-            <div className={styles.successCircle}>
-                <div className={styles.successTick}></div>
+            <div className={ModalStyles.successCircle}>
+                <div className={ModalStyles.successTick}></div>
             </div>
             <h1>{props.title}</h1>
             <h3>{props.message}</h3>

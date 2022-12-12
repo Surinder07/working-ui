@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import styles from '../../styles/elements/Options.module.css';
+import { OptionsStyles } from '../../styles/elements';
 
 const Options = (props) => {
 
@@ -20,11 +20,11 @@ const Options = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={props.vertical ? styles.optionsV : styles.optionsH} onClick={() => setShowOptions(!showOptions)}>
+        <div ref={ref} className={props.vertical ? OptionsStyles.optionsV : OptionsStyles.optionsH} onClick={() => setShowOptions(!showOptions)}>
             <span></span>
             <span></span>
             <span></span>
-            <div className={styles.openOptions}
+            <div className={OptionsStyles.openOptions}
                 style={{
                     height: showOptions ? `${props.options.length * 50}px` : 0,
                     boxShadow: showOptions ? '0 0 2px 1px #53525520' : 'none'

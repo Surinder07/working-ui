@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../styles/elements/SearchBar.module.css";
+import { SearchBarStyles } from "../../styles/elements/inputs";
 import { Search } from "@mui/icons-material";
 
 const SearchBar = (props, ref) => {
@@ -10,7 +10,7 @@ const SearchBar = (props, ref) => {
     };
 
     return (
-        <div className={`${styles.container} ${props.className}`} style={props.style} ref={ref}>
+        <div className={`${SearchBarStyles.container} ${props.className}`} style={props.style} ref={ref}>
             <Search style={{ marginLeft: "5px" }} />
             <input placeholder={props.placeholder} value={props.value} onChange={(e) => props.setValue(e.target.value)} onKeyUp={onEnter} />
         </div>

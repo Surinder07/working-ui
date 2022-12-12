@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
-import styles from '../../styles/elements/TopLoader.module.css'
+import { TopLoaderStyles } from '../../styles/elements'
 
 const TopLoader = (props) => {
 
-    const [loaderClass, setLoaderClass] = useState(styles.loadEnd);
+    const [loaderClass, setLoaderClass] = useState(TopLoaderStyles.loadEnd);
 
     useEffect(() => {
-        if (props.pageLoading) setLoaderClass(styles.loadStart);
-        else setLoaderClass(styles.loadEnd);
+        if (props.pageLoading) setLoaderClass(TopLoaderStyles.loadStart);
+        else setLoaderClass(TopLoaderStyles.loadEnd);
     }, [props.pageLoading])
 
     return (
-        <div className={`${styles.bar} ${loaderClass}`}>
-
+        <div className={`${TopLoaderStyles.bar} ${loaderClass}`}>
         </div>
     )
 }

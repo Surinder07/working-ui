@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import Button from "../../components/Button";
-import InputBox from "../../components/inputComponents/InputBox";
-import FullPageWithImageLayout from "../../layouts/FullPageWithImageLayout";
-import styles from '../../styles/layouts/FullPageWithImage.module.css';
-import { userService } from "../../services/user.service";
+import { Button, InputBox } from "../../components";
+import { FullPageWithImageLayout } from "../../layouts";
+import { FullPageLayout } from '../../styles/layouts';
+import { userService } from "../../services";
 import { validateEmail } from "../../helpers";
 
 const ResetPasswordInit = (props) => {
@@ -84,7 +83,7 @@ const ResetPasswordInit = (props) => {
                 setShowError={setEmailError}
             />
             <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '600px' }}>
-                {submitError && <p className={styles.errorText}>{submitErrorMessage}</p>}
+                {submitError && <p className={FullPageLayout.errorText}>{submitErrorMessage}</p>}
                 <p>Return to <Link href="/login">Log in</Link></p>
                 <Button
                     type='default'

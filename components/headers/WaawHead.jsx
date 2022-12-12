@@ -10,10 +10,10 @@ const WaawHead = ({ title, description, meta }) => {
     const headerInfo = process.env.header;
     return (
         <Head>
-            <title>{title ? title : headerInfo.title}</title>
+            <title>{`WaaW | ${title ? title : headerInfo.title}`}</title>
             <meta name="description" content={description ? description : headerInfo.description} />
             <meta name="og:description" content={description ? description : headerInfo.description} />
-            <meta name="og:title" content={title ? title : headerInfo.title} />
+            <meta name="og:title" content={`WaaW | ${title ? title : headerInfo.title}`} />
             {
                 Object.entries(headerInfo.meta).map((metaInfo, key) => {
                     let name = metaInfo[0];
