@@ -12,33 +12,48 @@ const Locations = (props) => {
         });
     }, []);
 
+    const actions = [
+        {
+            key: "View",
+            action: (id) => console.log(`/dashboard/locations/`),
+        },
+        {
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
+        },
+        {
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
+        },
+    ];
+
     const locations = [
         {
-            'Location Id': '6476475',
-            'Location Name': 'Canada',
-            'Creation Date': '01/01/2023',
-            'Timezone': 'EST',
-            'Number of active employees': '200',
-            'Number of inactive employees': '25',
-            status: 'xyz',
+            locationId: "6476475",
+            locatioName: "Canada",
+            creationDate: "01/01/2023",
+            timezone: "EST",
+            numberOfActiveEmployees: "200",
+            NumberOfInactiveEmployees: "25",
+            status: "xyz",
         },
         {
-            'Location Id': '6476475',
-            'Location Name': 'India',
-            'Creation Date': '02/01/2023',
-            'Timezone': 'IST',
-            'Number of active employees': '200',
-            'Number of inactive employees': '25',
-            status: 'xyz',
+            locationId: "6476475",
+            locatioName: "India",
+            creationDate: "02/01/2023",
+            timezone: "IST",
+            numberOfActiveEmployees: "200",
+            NumberOfInactiveEmployees: "25",
+            status: "xyz",
         },
         {
-            'Location Id': '6476475',
-            'Location Name': 'Australia',
-            'Creation Date': '03/01/2023',
-            'Timezone': 'EST',
-            'Number of active employees': '200',
-            'Number of inactive employees': '25',
-            status: 'xyz',
+            locationId: "6476475",
+            locatioName: "Australia",
+            creationDate: "03/01/2023",
+            timezone: "EST",
+            numberOfActiveEmployees: "200",
+            NumberOfInactiveEmployees: "25",
+            status: "xyz",
         }
     ]
 
@@ -55,10 +70,7 @@ const Locations = (props) => {
                     description='Tabular list of Locationwise employees.'
                     data={locations}
                     pagination
-                    actions={{
-                        key: 'Edit',
-                        action: () => console.log('edit')
-                    }}
+                    actions={actions}
                 />
             </DashboardCard>
         </>

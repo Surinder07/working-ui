@@ -36,25 +36,32 @@ const Roles = (props) => {
 
     const roles = [
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
+            roleId: '6476475',
+            name: 'Frontend',
+            creationDate: '01/01/2023',
+            location: 'Canada',
+            createdBy: 'Name'
         },
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
+            roleId: '6476476',
+            name: 'Backend',
+            creationDate: '01/01/2023',
+            location: 'India',
+            createdBy: 'Name'
         },
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
+            roleId: '6476477',
+            name: 'Mern',
+            creationDate: '01/01/2023',
+            location: 'India',
+            createdBy: 'Name'
+        },
+        {
+            roleId: '6476478',
+            name: 'operation',
+            creationDate: '01/01/2023',
+            location: 'USA',
+            createdBy: 'Name'
         }
     ]
 

@@ -30,30 +30,38 @@ const Requests = (props) => {
 
     const requests = [
         {
-            'Request Id': '6476475',
-            'Request Type': 'Canada',
-            'Initiation Date': '01/01/2023',
-            Location: 'Canada',
-            'Initiated By': 'Name',
-            'Assigned To': 'Name',
+            requestId: '6476475',
+            requestType: 'request',
+            initiationDate: '01/01/2023',
+            location: 'Canada',
+            initiatedBy: 'Rahul',
+            assignedTo: 'Rajiv',
             status: 'xyz'
         },
         {
-            'Request Id': '7476475',
-            'Request Type': 'India',
-            'Initiation Date': '02/01/2023',
-            Location: 'India',
-            'Initiated By': 'Name',
-            'Assigned To': 'Name',
+            requestId: '6476476',
+            requestType: 'request',
+            initiationDate: '01/02/2023',
+            location: 'India',
+            initiatedBy: 'Arpit',
+            assignedTo: 'Sandeep',
             status: 'xyz'
         },
         {
-            'Request Id': '8076475',
-            'Request Type': 'Mexico',
-            'Initiation Date': '03/01/2023',
-            Location: 'Mexico',
-            'Initiated By': 'Name',
-            'Assigned To': 'Name',
+            requestId: '6476477',
+            requestType: 'request',
+            initiationDate: '03/01/2023',
+            location: 'USA',
+            initiatedBy: 'Albert',
+            assignedTo: 'Edward',
+            status: 'xyz'
+        },{
+            requestId: '6476478',
+            requestType: 'request',
+            initiationDate: '02/02/2023',
+            location: 'Mexico',
+            initiatedBy: 'Ethan',
+            assignedTo: 'Ishac',
             status: 'xyz'
         }
     ]
