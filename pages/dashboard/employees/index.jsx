@@ -20,28 +20,37 @@ const Employees = (props) => {
     const employees = [
         {
             id: "6476475",
-            employeeName: "Name",
-            locationName: "Name",
+            employeeName: "Sanjay",
+            locationName: "India",
             locationId: "Location Id",
-            employeeType: "01/29/2022",
+            typeOfEmployee: "FullTime",
             status: "xyz",
         },
         {
-            id: "6476475",
-            employeeName: "Name",
-            locationName: "Name",
+            id: "6476476",
+            employeeName: "Rajvir",
+            locationName: "India",
             locationId: "Location Id",
-            employeeType: "01/29/2022",
+            typeOfEmployee: "PartTime",
             status: "xyz",
         },
         {
-            id: "6476475",
-            employeeName: "Name",
-            locationName: "Name",
+            id: "6476478",
+            employeeName: "Mandeep",
+            locationName: "Canada",
             locationId: "Location Id",
-            employeeType: "01/29/2022",
+            typeOfEmployee: "Intern",
             status: "xyz",
         },
+        ,
+        {
+            id: "6476479",
+            employeeName: "Happy Singh",
+            locationName: "Canada",
+            locationId: "Location Id",
+            typeOfEmployee: "FullTime",
+            status: "xyz",
+        }
     ];
 
     const actions = [

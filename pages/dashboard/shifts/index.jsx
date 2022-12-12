@@ -38,58 +38,94 @@ const Shifts = (props) => {
         {
             shiftId: '6476475',
             shiftName: 'One time register',
-            startDate: '-',
-            endDate: '-',
-            locationName: 'Canada',
+            startDate: '01/12/2022',
+            endDate: '30/12/2022',
+            locationName: 'India',
             creationDate: '01/29/2022',
-            status: 'Paid',
+            status: 'Status',
             subData: [
                 {
-                    test: 'test',
-                    test2: 'test'
-                },
-                {
-                    test: 'test2',
-                    test2: 'test2F'
-                }
+                    employeeId: '229965',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'India',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'        
+                 },
+                 {
+                     employeeId: '229966',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'India',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'
+                 }
             ]
         },
         {
-            shiftId: '6476475',
+            shiftId: '6476476',
             shiftName: 'One time register',
             startDate: '-',
             endDate: '-',
             locationName: 'Canada',
             creationDate: '01/29/2022',
-            status: 'Paid',
+            status: 'Status',
             subData: [
                 {
-                    test: 'test',
-                    test2: 'test'
-                },
-                {
-                    test: 'test2',
-                    test2: 'test2F'
-                }
+                    employeeId: '229967',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'Canada',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'        
+                 },
+                 {
+                     employeeId: '229968',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'Canada',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'
+                 }
             ]
         },
         {
-            shiftId: '6476475',
+            shiftId: '6476477',
             shiftName: 'Test',
-            startDate: '-',
-            endDate: '-',
-            locationName: 'Canada',
+            startDate: '01/01/2023',
+            endDate: '30/01/2023',
+            locationName: 'India',
             creationDate: '01/29/2022',
-            status: 'Paid',
+            status: 'Status',
             subData: [
                 {
-                    test: 'test',
-                    test2: 'test'
-                },
-                {
-                    test: 'test2',
-                    test2: 'test2F'
-                }
+                    employeeId: '229969',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'India',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'        
+                 },
+                 {
+                     employeeId: '229970',
+                    employeeName: 'Name',
+                    emailAddress: 'email@gmail.com',
+                    locationName: 'India',
+                    shiftInTime: '10:00 AM',
+                    shiftOutTime: '05:00 PM',
+                    status: 'N/A',
+                    comments: 'N/A'
+                 }
             ]
         }
     ]
