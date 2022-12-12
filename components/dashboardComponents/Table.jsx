@@ -77,7 +77,7 @@ const Table = (props, ref) => {
                         }
                         {
                             props.actions &&
-                            <div className={TableStyles.bodyCell}>
+                            <div className={TableStyles.bodyCell} key={`action_${i}`}>
                                 {getAction(row['internalId'])}
                             </div>
                         }

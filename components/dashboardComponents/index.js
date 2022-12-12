@@ -1,4 +1,4 @@
-import Calendar from './Calendar';
+import CalendarComponent from './CalendarComponent';
 import DashboardCard from './DashboardCard';
 import InfoTileBanner from './InfoTileBanner';
 import NotificationBell from './NotificationBell';
@@ -9,7 +9,7 @@ import Table from './Table';
 import TabularInfo from './TabularInfo';
 
 export {
-    Calendar,
+    CalendarComponent,
     DashboardCard,
     InfoTileBanner,
     NotificationBell,

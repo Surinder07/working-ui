@@ -16,7 +16,7 @@ const DropDown = (props) => {
     }, [ref]);
 
     const openedDownStyle = {
-        top: '37px',
+        top: props.inputType === 2 ? '32px' : '37px',
         left: 0
     }
 

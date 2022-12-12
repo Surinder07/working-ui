@@ -10,7 +10,7 @@ const CountryCodeDropdown = (props) => {
     const [displayValue, setDisplayValue] = useState('');
     const [open, setOpen] = useState(false);
     const openedDownStyle = {
-        top: '37px',
+        top: props.inputType === 2 ? '32px' : '37px',
         left: 0
     }
     const openedUpStyle = {
@@ -49,7 +49,9 @@ const CountryCodeDropdown = (props) => {
     return (
         <div ref={ref} className={`${props.inputType === 2 ? DropdownStyles.mulishCountryCodeContainer : DropdownStyles.poppinsBasicContainer}`} onClick={onClick} style={props.style}>
             <div className={DropdownStyles.selected}>
-                {displayValue}{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+                {displayValue}
+                {open ? <KeyboardArrowUp className={DropdownStyles.dropDownIcon} /> :
+                    <KeyboardArrowDown className={DropdownStyles.dropDownIcon} />}
             </div>
             <div className={`${DropdownStyles.options} ${!open && DropdownStyles.closedOptions}`}
                 style={props.openDown ? openedDownStyle : openedUpStyle}>

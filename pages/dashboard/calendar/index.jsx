@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, Button, CalenderComponent } from "../../../components";
+import { WaawNoIndexHead, Button, CalendarComponent } from "../../../components";
 
 const Calender = (props) => {
     useEffect(() => {
@@ -18,24 +18,7 @@ const Calender = (props) => {
                 <h1>Calender</h1>
                 <Button type="plain">+ Upload Organization Holiday</Button>
             </div>
-            <div className={DashboardStyles.gridContainer}>
-                <DashboardCard style={{ marginTop: "20px" }}>
-                    <CalenderComponent />
-                </DashboardCard>
-                <div className={`${DashboardStyles.gridRightContainer} ${DashboardStyles.holidayContainer}`}>
-                    <h4>Holidays</h4>
-                    <ul className={DashboardStyles.holidayList}>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                        <li className={DashboardStyles.dateHoliday}>Date-Holiday</li>
-                    </ul>
-                </div>
-            </div>
+                <CalendarComponent />
         </>
     );
 };

@@ -1,4 +1,4 @@
-import { InputBoxStyles } from '../../styles/elements/inputs';
+import { InputBoxStyles } from '../../styles/elements';
 import { Person, Email, Key, Visibility, VisibilityOff, CorporateFare } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 
