@@ -9,6 +9,8 @@ import InputBox from './InputBox';
 import SearchBar from './SearchBar';
 import TimeInput from './TimeInput';
 import EditableInput from './EditableInput';
+import Toggle from './Toggle';
+import ToggleWithValue from './ToggleWithValue';
 
 export {
     Button,
@@ -21,5 +23,7 @@ export {
     InputBox,
     SearchBar,
     TimeInput,
-    EditableInput
+    EditableInput,
+    Toggle,
+    ToggleWithValue
 }

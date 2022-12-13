@@ -42,3 +42,7 @@
 .selectSecond {
     left: 14px;
 }
+
+.toggleFalse {
+    background-color: #999!important;
+}

@@ -1,15 +1,18 @@
 import { EditableInputStyles } from '../../styles/elements';
+import { CheckCircle, Cancel } from '@mui/icons-material';
 import InputBox from './InputBox';
 import ContactInput from './ContactInput';
 import TimeInput from './TimeInput';
 import DropDown from './DropDown';
 import DatePicker from './DatePicker';
+import Toggle from './Toggle';
+import ToggleWithValue from './ToggleWithValue';
 
 const EditableInput = (props) => {
 
     return (
         <div className={`${EditableInputStyles.container} ${props.className}`}>
-            <label htmlFor={props.label}>{props.label}</label>
+            {props.label && <label htmlFor={props.label}>{props.label}</label>}
             {
                 props.type === 'text' &&
                 (
@@ -43,10 +46,18 @@ const EditableInput = (props) => {
                 )
             }
             {
-                props.tyle === 'toggle' &&
+                props.type === 'toggle' &&
                 (
                     props.editOn ?
-                        <Toggle options={props.options} selected={props.value} setSelected={props.setValue} /> :
+                        <ToggleWithValue value={props.value} setValue={props.setValue} /> :
+                        <p>{props.value ? <CheckCircle style={{color: '#2996C3'}} /> : <Cancel style={{color: '#999'}}/>}</p>
+                )
+            }
+            {
+                props.type === 'toggle2' &&
+                (
+                    props.editOn ?
+                        <ToggleWithValue options={props.options} selected={props.value} setSelected={props.setValue} /> :
                         <p>{props.value}</p>
                 )
             }
@@ -54,8 +65,8 @@ const EditableInput = (props) => {
                 props.type === 'date' &&
                 (
                     props.editOn ?
-                    <DatePicker value={props.value} setValue={props.setValue} /> :
-                    <p>{props.value}</p>
+                        <DatePicker value={props.value} setValue={props.setValue} /> :
+                        <p>{props.value}</p>
                 )
             }
         </div>

@@ -3,7 +3,6 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import Tabs from "../dashboardComponents/Tabs";
-import Toggle from "../inputComponents/Toggle";
 
 const NewShiftModal = (props) => {
 
