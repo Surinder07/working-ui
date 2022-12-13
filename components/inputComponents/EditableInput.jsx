@@ -2,6 +2,7 @@ import { EditableInputStyles } from '../../styles/elements';
 import InputBox from './InputBox';
 import ContactInput from './ContactInput';
 import TimeInput from './TimeInput';
+import DropDown from './DropDown';
 
 const EditableInput = (props) => {
 
@@ -28,8 +29,24 @@ const EditableInput = (props) => {
                 props.type === 'time' &&
                 (
                     props.editOn ?
-                    <TimeInput value={props.value} setValue={props.setValue} />:
-                    <p>{props.value.hours}:{props.value.minutes}</p>
+                        <TimeInput value={props.value} setValue={props.setValue} /> :
+                        <p>{props.value.hours}:{props.value.minutes}</p>
+                )
+            }
+            {
+                props.type === 'dropdown' &&
+                (
+                    props.editOn ?
+                        <DropDown options={props.options} defaultDisplay={value ? value : `${props.placeholder}`} setValue={props.setvalue} inputType={2} /> :
+                        <p>{props.value}</p>
+                )
+            }
+            {
+                props.tyle === 'toggle' &&
+                (
+                    props.editOn ?
+                        <Toggle options={props.options} selected={props.value} setSelected={props.setValue} /> :
+                        <p>{props.value}</p>
                 )
             }
         </div>

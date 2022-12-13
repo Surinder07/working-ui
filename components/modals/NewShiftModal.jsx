@@ -3,6 +3,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import Tabs from "../dashboardComponents/Tabs";
+import Toggle from "../inputComponents/Toggle";
 
 const NewShiftModal = (props) => {
 
@@ -11,6 +12,7 @@ const NewShiftModal = (props) => {
     const [releaseImmediately, setReleaseImmediately] = useState(false);
     const [startTime, setStartTime] = useState({});
     const [endTime, setEndTime] = useState({});
+    const [toggle, setToggle] = useState('a');
 
     return (
         <DashboardModal
