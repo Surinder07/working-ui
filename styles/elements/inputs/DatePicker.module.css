@@ -1,115 +1,149 @@
-.container input {
-    font-family: 'Roboto', sans-serif;
-    display: block;
-    border: none;
-    border-radius: 0.25rem;
-    border: 1px solid transparent;
-    line-height: 1.5rem;
-    padding: 0;
-    font-size: 1rem;
-    color: #607D8B;
-    width: 100%;
-    margin-top: 0.5rem;
-}
-
-.container input:focus {
-    outline: none;
-}
-
-#ui-datepicker-div {
-    display: none;
+.container {
+    position: relative;
     background-color: #fff;
-    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
-    margin-top: 0.25rem;
-    border-radius: 0.5rem;
+    height: fit-content;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    display: grid;
+    grid-template-columns: auto 40px;
+}
+
+.container input {
+    font-family: Mulish;
+    padding: 7px 30px 7px 15px;
+    outline: none;
+    border: none;
+    background-color: #FFFFFF00;
+}
+
+.container input::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: Mulish;
+}
+
+.default {
+    color: #000000;
+    border: 1px solid #BFBFBF;
+}
+
+.error {
+    border: 1px solid var(--error-message-color);
+    color: var(--error-message-color);
+}
+
+.icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.arrowIcon {
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.icon:hover,
+.arrowIcon:hover {
+    color: #000;
+}
+
+.calendar {
+    position: absolute;
+    width: 300px;
+    background: #FFF;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    border: 1px solid #BFBFBF;
+    user-select: none;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.dateNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 42.8px;
+}
+
+.dateNav .childNav {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    height: 42.8px;
+}
+
+.dateNav p {
+    margin: 0 10px;
+}
+
+.daysContainer,
+.datesContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.days,
+.dates {
+    width: 100%;
+    height: 42.8px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.days {
+    font-weight: 600;
+}
+
+.dates {
+    cursor: pointer;
     padding: 0.5rem;
 }
 
-.container table {
-    border-collapse: collapse;
-    border-spacing: 0;
+.dates:hover {
+    background-color: #e6e4e4;
 }
 
-.ui-datepicker-calendar thead th {
-    padding: 0.25rem 0;
-    text-align: center;
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: #78909C;
+.todayDate {
+    position: relative;
 }
 
-.ui-datepicker-calendar tbody td {
-    width: 2.5rem;
-    text-align: center;
-    padding: 0;
-}
-
-.ui-datepicker-calendar tbody td a {
-    display: block;
-    border-radius: 0.25rem;
-    line-height: 2rem;
-    transition: 0.3s all;
-    color: #546E7A;
-    font-size: 0.875rem;
-    text-decoration: none;
-}
-
-.ui-datepicker-calendar tbody td a:hover {
-    background-color: #E0F2F1;
-}
-
-.ui-datepicker-calendar tbody td a.ui-state-active {
-    background-color: #009688;
-    color: white;
-}
-
-.ui-datepicker-header a.ui-corner-all {
-    cursor: pointer;
+.todayMarker {
     position: absolute;
-    top: 0;
-    width: 2rem;
-    height: 2rem;
-    margin: 0.5rem;
-    border-radius: 0.25rem;
-    transition: 0.3s all;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: #2996C3;
+    top: 5px;
+    right: 5px;
 }
 
-.ui-datepicker-header a.ui-corner-all:hover {
-    background-color: #ECEFF1;
+.selectedDate {
+    border-radius: 50%;
+    background-color: #2996C3;
+    color: #FFF!important;
+    font-weight: 600;
 }
 
-.ui-datepicker-header a.ui-datepicker-prev {
-    left: 0;
-    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
-    background-repeat: no-repeat;
-    background-size: 0.5rem;
-    background-position: 50%;
-    transform: rotate(180deg);
+.selectedDate:hover {
+    border-radius: 50%!important;
+    background-color: #2996C3!important;
+    color: #FFF!important;
 }
 
-.ui-datepicker-header a.ui-datepicker-next {
-    right: 0;
-    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==');
-    background-repeat: no-repeat;
-    background-size: 10px;
-    background-position: 50%;
+.notActiveMonth {
+    background-color: #fafafa;
+    cursor: default!important;
 }
 
-.ui-datepicker-header a>span {
-    display: none;
-}
-
-.ui-datepicker-title {
-    text-align: center;
-    line-height: 2rem;
-    margin-bottom: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding-bottom: 0.25rem;
-}
-
-.ui-datepicker-week-col {
-    color: #78909C;
-    font-weight: 400;
-    font-size: 0.75rem;
+.notActiveMonth:hover {
+    background-color: #fafafa!important;
 }

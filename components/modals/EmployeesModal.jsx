@@ -6,6 +6,7 @@ import {DashboardModalStyles} from "../../styles/elements";
 
 const EmployeeDetailsModal = () => {
     const [showModal, setShowModal] = useState(true);
+    const [value,setValue] = useState("")
     return (
         <div>
             <DashboardModal
@@ -15,8 +16,8 @@ const EmployeeDetailsModal = () => {
                 title="Edit Employee Detail"
                 type="twoColNarrow"
             >
-                <EditableInput type="text" label="In Date" editOn />
-                <EditableInput type="text" label="Out Date" editOn />
+                <EditableInput type="date" label="In Date"  value={value} setValue={setValue} editOn />
+                <EditableInput type="date" label="Out Date"  value={value} setValue={setValue} editOn />
                 <EditableInput type="time" label="In Time" editOn />
                 <EditableInput type="time" label="Out Time" editOn />
                 <EditableInput

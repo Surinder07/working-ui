@@ -6,6 +6,7 @@ import {DashboardModalStyles} from "../../styles/elements";
 
 const ShiftDetailsModal = () => {
     const [showModal, setShowModal] = useState(true);
+    const [value,setValue] = useState("")
     return (
         <DashboardModal
             showModal={showModal}
@@ -15,8 +16,9 @@ const ShiftDetailsModal = () => {
             type="twoColNarrow"
         >
             <EditableInput
-                type="text"
+                type="date"
                 label="Date"
+                value={value} setValue={setValue}
                 className={DashboardModalStyles.singleColumn}
                 editOn
             />

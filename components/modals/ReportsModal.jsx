@@ -8,6 +8,7 @@ import {DashboardModalStyles} from "../../styles/elements";
 
 const ReportsModal = () => {
     const [showModal, setShowModal] = useState(true);
+    const [value,setValue] = useState("");
     return (
         <DashboardModal
             showModal={showModal}
@@ -16,8 +17,8 @@ const ReportsModal = () => {
             title="Add Reports"
             type="twoColNarrow"
         >
-            <EditableInput type="text" label="From" editOn />
-            <EditableInput type="text" label="Till" editOn />
+            <EditableInput type="date"  value={value} setValue={setValue} label="From" editOn />
+            <EditableInput type="date"  value={value} setValue={setValue} label="Till" editOn />
             <EditableInput
                 type="dropdown"
                 options={["India", "Canada", "Germany"]}

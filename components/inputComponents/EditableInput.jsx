@@ -4,6 +4,7 @@ import ContactInput from './ContactInput';
 import TimeInput from './TimeInput';
 import DropDown from './DropDown';
 import Toggle from './Toggle';
+import DatePicker from './DatePicker';
 
 const EditableInput = (props) => {
     return (
@@ -47,6 +48,14 @@ const EditableInput = (props) => {
                     props.editOn ?
                         <Toggle options={props.options} selected={props.value} setSelected={props.setValue} /> :
                         <p>{props.value}</p>
+                )
+            }
+            {
+                props.type === 'date' &&
+                (
+                    props.editOn ?
+                    <DatePicker value={props.value} setValue={props.setValue} /> :
+                    <p>{props.value}</p>
                 )
             }
         </div>
