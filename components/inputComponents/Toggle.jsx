@@ -1,5 +1,12 @@
 import { ToggleStyles } from "../../styles/elements";
 
+/**
+ * 
+ * @param {*} options array with two options to be shown on either side of toggle
+ * @param {*} selected selected option by default
+ * @param {*} setSelected methos to change the selected value in state
+ * @returns A tooggle component to choose between two values
+ */
 const Toggle = (props) => {
 
     const handleToggle = () => {
