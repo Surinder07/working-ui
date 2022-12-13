@@ -10,6 +10,7 @@
     background-color: #F5F5F5;
     max-height: 230px;
     transition: all 0.2s ease ;
+    padding-left: 60px;
 }
 
 .headerCell,
@@ -52,6 +53,10 @@
       transparent 0, transparent 49px,
       #DFE0EB 49px,#DFE0EB 50px
     );
+}
+
+.subBodyCellLeft {
+    height: auto!important;
 }
 
 .subBodyCell {

@@ -115,8 +115,8 @@ const DatePicker = (props) => {
                 }
             })
             setDates(newDatesObj);
-            const height = newDatesObj.length > 35 ? 256.8 : 214;
-            setCalendarHeight(height + 85.6);
+            const height = newDatesObj.length > 35 ? 180 : 150;
+            setCalendarHeight(height + 60);
         }
     }, [referenceDates, props.value, firstDayCurrentMonth]);
 
@@ -124,7 +124,7 @@ const DatePicker = (props) => {
 
     return (
         <div ref={ref} className={`${DatePickerStyles.container} ${props.error ? DatePickerStyles.error : DatePickerStyles.default}`}>
-            <input type='text' placeholder='yyyy-MM-dd' onFocus={() => setOpen(true)}/>
+            <input type='text' placeholder='yyyy-MM-dd' value={props.value} disabled onFocus={() => setOpen(true)}/>
             <CalendarMonth className={DatePickerStyles.icon} onClick={onClick} />
             <div className={`${DatePickerStyles.calendar}`}
                 style={{ ...openDown ? openedDownStyle : openedUpStyle, ...open ? openStyle : closeStyle }}>

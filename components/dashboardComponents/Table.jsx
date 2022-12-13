@@ -40,7 +40,7 @@ const Table = (props, ref) => {
     const getAction = (id) => {
         if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} />
         else if (props.actions.key === 'Edit') return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
-        else if (props.actions.key === 'Delete') return <Delete className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
+        else if (props.actions.key === 'Delete') return <Delete style={{color: '#999'}} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
     }
 
     return (
@@ -54,7 +54,7 @@ const Table = (props, ref) => {
                     </div>
                 ))
             }
-            {props.actions && <div className={TableStyles.headerCell}></div>}
+            {props.actions && <div className={TableStyles.headerCell}>Actions</div>}
 
             {/* body */}
             {
@@ -70,9 +70,13 @@ const Table = (props, ref) => {
                         }
                         {
                             dataKeyList.map((key, j) => (
-                                <div className={TableStyles.bodyCell} key={`cell_${i}_${j}`}>
-                                    {row[key]}
-                                </div>
+                                row[key].text ?
+                                    <div style={{ color: row[key].color }} className={TableStyles.bodyCell} key={`cell_${i}_${j}`}>
+                                        {row[key].text}
+                                    </div> :
+                                    <div className={TableStyles.bodyCell} key={`cell_${i}_${j}`}>
+                                        {row[key]}
+                                    </div>
                             ))
                         }
                         {
@@ -86,13 +90,13 @@ const Table = (props, ref) => {
                             <div className={TableStyles.subTable} style={{
                                 gridColumn: `span ${colNum}`,
                                 gridTemplateColumns: `repeat(${subTableCololNum}, auto)`,
-                                height: expanded === i + 1 ? `${row.subData.length * 50 + 30}px` : 0,
+                                height: expanded === i + 1 ? (displaySubHeaders.length === 1 ? '100px' : `${row.subData.length * 50 + 30}px`) : 0,
                                 overflowY: expanded === i + 1 ? 'scroll' : 'hidden'
                             }}>
                                 {
                                     displaySubHeaders.map((subHead, j) => (
                                         <div key={`head_${i}_${j}`} className={`${displaySubHeaders.length === 1 && TableStyles.subHeaderCellLeft}
-                                            ${TableStyles.subHeaderCell}`}>
+                                            ${TableStyles.subHeaderCell}`} >
                                             {subHead}
                                         </div>
                                     ))
@@ -100,7 +104,8 @@ const Table = (props, ref) => {
                                 {
                                     row.subData.map((subData, j) => (
                                         dataSubKeyList.map((subKey, k) => (
-                                            <div key={`cell${i}_${j}_${k}`} className={TableStyles.subBodyCell}>
+                                            <div key={`cell${i}_${j}_${k}`} className={`${displaySubHeaders.length === 1 && TableStyles.subBodyCellLeft}
+                                            ${TableStyles.subBodyCell}`}>
                                                 {subData[subKey]}
                                             </div>
                                         ))
