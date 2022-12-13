@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { DashboardStyles } from "../../../styles/pages";
 import Link from 'next/link';
-import {EditableInput} from "../../../components/inputComponents"
 import {
     WaawNoIndexHead,
     UserPreferenceCard,

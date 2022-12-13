@@ -15,13 +15,13 @@ const InviteUserModal = (props) => {
             type="twoColWide"
         >
             <div className={DashboardModalStyles.singleColumn}>
-                <div>
+                
                     <CloudUploadIcon fontSize="large" color="action" />
                     <br />
                     <label htmlFor="upload">Select file to Import</label>
                     <input type="file" id="upload" style={{display: "none"}} />
                     <span>
-                        <h4 id={ModalStyles.paraInInput}>
+                        <h4>
                             Must be .xlsx or .csv file using our email template
                         </h4>
                         <p>
@@ -31,8 +31,8 @@ const InviteUserModal = (props) => {
                             </a>
                         </p>
                     </span>
-                </div>
-                <p>-OR-</p>
+              
+               
             </div>
 
             <EditableInput type="text" label="First Name" editOn />
