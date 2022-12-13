@@ -132,7 +132,6 @@ const Employees = (props) => {
             {getExpandableData('Shifts')}
             {getExpandableData('Requests')}
             {getExpandableData('Attendance')}
-
         </>
     );
 };

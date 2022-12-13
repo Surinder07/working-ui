@@ -12,11 +12,7 @@ const Roles = (props) => {
             activeSubMenu: 'none'
         })
     }, []);
-    const [showModal, setShowModal] = useState(false)
-
-    const handleNewRole = () => {
-        setShowModal(true)
-    }
+    const [showModal, setShowModal] = useState(false);
 
     const actions = [
         {
@@ -70,7 +66,7 @@ const Roles = (props) => {
             <WaawNoIndexHead title='Roles' />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Roles</h1>
-                <Button type='plain' onClick={handleNewRole}>+ Add new Roles</Button>
+                <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Roles</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo

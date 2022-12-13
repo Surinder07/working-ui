@@ -6,7 +6,6 @@ import TimeInput from './TimeInput';
 import DropDown from './DropDown';
 import Toggle from './Toggle';
 import DatePicker from './DatePicker';
-import Toggle from './Toggle';
 import ToggleWithValue from './ToggleWithValue';
 
 const EditableInput = (props) => {
@@ -49,7 +48,7 @@ const EditableInput = (props) => {
                 props.type === 'toggle' &&
                 (
                     props.editOn ?
-                        <ToggleWithValue value={props.value} setValue={props.setValue} /> :
+                        <Toggle value={props.value} setValue={props.setValue} /> :
                         <p>{props.value ? <CheckCircle style={{color: '#2996C3'}} /> : <Cancel style={{color: '#999'}}/>}</p>
                 )
             }

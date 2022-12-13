@@ -2,14 +2,13 @@ import React from "react";
 import {useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
-// import {DashboardModalStyles} from "../../styles/elements";
 
-const RequestsModal = () => {
-    const [showModal, setShowModal] = useState(true);
+const RequestsModal = (props) => {
+
     return (
         <DashboardModal
-            showModal={showModal}
-            setShowModal={setShowModal}
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
             buttonText="Submit"
             title="Edit Request"
             type="singleCol"

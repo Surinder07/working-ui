@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardStyles } from '../../../styles/pages';
 import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
+import RequestsModal from "../../../components/modals/RequestModal";
 
 const Requests = (props) => {
+
+    const [editId, setEditId] = useState('');
+    const [showEditModal, setShowEditModal] = useState(false);
 
     useEffect(() => {
         props.setPageInfo({
@@ -19,8 +23,11 @@ const Requests = (props) => {
             action: (id) => console.log(`/dashboard/requests/?id=${id}`),
         },
         {
-            key: "Deactivate",
-            action: () => console.log("Api call will be added here"),
+            key: "Edit",
+            action: (id) => {
+                setEditId(id);
+                setShowEditModal(true);
+            },
         },
         {
             key: "Delete",
@@ -68,8 +75,9 @@ const Requests = (props) => {
 
     return (
         <>
-            <WaawHead title={"WaaW | Requests"} />
-            <div className={Dashboardstyles.dashboardTitles}>
+            <WaawNoIndexHead title={"Requests"} />
+            <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}/>
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
                 {/* <Button type='plain'>+ Invite Users</Button> */}
             </div>

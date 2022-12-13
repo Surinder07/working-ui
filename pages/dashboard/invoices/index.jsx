@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { DashboardStyles } from '../../../styles/pages/Dashboard.module.css';
+import { DashboardStyles } from '../../../styles/pages';
 import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
 
 const Invoices = (props) => {

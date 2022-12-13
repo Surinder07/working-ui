@@ -2,10 +2,12 @@ import React from "react";
 import {useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
-// import {DashboardModalStyles} from "../../styles/elements";
 
 const LocationModal = () => {
+
     const [showModal, setShowModal] = useState(true);
+    const [location, setLocation] = useState('');
+
     return (
         <DashboardModal
             showModal={showModal}
@@ -15,8 +17,9 @@ const LocationModal = () => {
             type="singleCol"
         >
             <EditableInput
-                type="dropdown"
-                options={["India", "Canada", "Germany"]}
+                type="text"
+                value={location}
+                setValue={setLocation}
                 label="Location"
                 editOn
             />
