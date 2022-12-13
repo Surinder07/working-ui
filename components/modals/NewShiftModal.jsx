@@ -29,8 +29,8 @@ const NewShiftModal = (props) => {
                 setSelected={setFormType}
                 size='big'
             />
-            <EditableInput type='text' label='Start Date' editOn />
-            <EditableInput type='text' label='End Date' editOn />
+            <EditableInput type='text' label='Start Date' required editOn />
+            <EditableInput type='text' label='End Date' required editOn />
             <EditableInput type='time' label='Start Time' editOn />
             <EditableInput type='time' label='End Time' editOn />
             <Tabs
@@ -41,7 +41,7 @@ const NewShiftModal = (props) => {
                 size='small'
                 title='Assign Shift to'
             />
-            <EditableInput type='text' label='User' className={DashboardModalStyles.singleColumn} editOn />
+            <EditableInput type='text' label='User' className={DashboardModalStyles.singleColumn} required editOn />
             <EditableInput type='text' label='Shift name' className={DashboardModalStyles.singleColumn} editOn />
             <p className={DashboardModalStyles.instruction}>Shift Name cannot be more than 30 Characters</p>
             <Checkbox label='Release Shift Immediately'

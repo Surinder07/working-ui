@@ -35,20 +35,22 @@ const InviteUserModal = (props) => {
                
             </div>
 
-            <EditableInput type="text" label="First Name" editOn />
-            <EditableInput type="text" label="Last Name" editOn />
+            <EditableInput type="text" label="First Name" required editOn />
+            <EditableInput type="text" label="Last Name" required editOn />
             <EditableInput type="text" label="External Employee ID" editOn />
             <EditableInput type="text" label="Email Address" editOn />
             <EditableInput
                 type="dropdown"
                 options={["admin", "user"]}
                 label="Type of Employee"
+                required
                 editOn
             />
             <EditableInput
                 type="dropdown"
                 options={["India", "Canada", "France", "Germany"]}
                 label="Location"
+                required
                 editOn
             />
             <EditableInput

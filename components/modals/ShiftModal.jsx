@@ -11,7 +11,7 @@ const ShiftDetailsModal = () => {
             showModal={showModal}
             setShowModal={setShowModal}
             buttonText="Submit"
-            title=""
+            title="Edit Shift"
             type="twoColNarrow"
         >
             <EditableInput
@@ -26,6 +26,7 @@ const ShiftDetailsModal = () => {
                 type="text"
                 label="Comment"
                 className={DashboardModalStyles.singleColumn}
+                required
                 editOn
             />
         </DashboardModal>

@@ -33,7 +33,6 @@ const CalenderHolidayModal = () => {
                         </p>
                     </span>
                 </div>
-                <p>-OR-</p>
             </div>
         </DashboardModal>
     );

@@ -23,6 +23,7 @@ const EmployeeDetailsModal = () => {
                     type="text"
                     label="Comment"
                     className={DashboardModalStyles.singleColumn}
+                    required
                     editOn
                 />
             </DashboardModal>
