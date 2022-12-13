@@ -12,8 +12,8 @@
 }
 
 .plainButton {
-    border-radius: 0!important;
-    box-shadow: none!important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
     background-color: #2996C3;
     color: white;
 }
@@ -27,6 +27,28 @@
     width: 100%;
     background-color: #2996C3;
     color: white;
+}
+
+.closeButton,
+.dashboardButton {
+    font-weight: 700!important;
+    font-size: 16px!important;
+    line-height: 20px!important;
+    letter-spacing: 0.2px!important;
+    border-radius: 0!important;
+    box-shadow: none!important;
+}
+
+.closeButton {
+    width: 100%;
+    background-color: #FFFFFF00;
+    color: var(--error-message-color);
+    border: solid 1.5px var(--error-message-color);
+}
+
+.dashboardButton {
+    background: #2996C3;
+    color: #FFFFFF;
 }
 
 .socialButton {

@@ -5,6 +5,7 @@ import ProfileImageStyles from './ProfileImage.module.css';
 import TableStyles from './Table.module.css';
 import TabularInfoStyles from './TabularInfo.module.css';
 import CalendarStyles from './Calendar.module.css'
+import TabsStyles from './Tabs.module.css';
 
 export {
     NotificationsStyles,
@@ -13,5 +14,6 @@ export {
     ProfileImageStyles,
     TableStyles,
     TabularInfoStyles,
-    CalendarStyles
+    CalendarStyles,
+    TabsStyles
 }

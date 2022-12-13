@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  *
- * @param {*} size pass small, medium , large or dashboardModal
+ * @param {*} size pass small, medium , large
  * @param {*} link if passed on button click it will redirect to said link
  * @param {*} buttonText text to be displayed on the button
  * @param {*} showModal whether to show the modal or not
@@ -18,16 +18,10 @@ const Modal = (props) => {
     const router = useRouter();
 
     const modalRef = useRef();
-    const [scrollable, setScrollable] = useState(false);
 
     useEffect(() => {
         if (props.showModal) {
             document.body.style.overflow = "hidden";
-            if (modalRef.current && window.innerHeight < modalRef.current.clientHeight) {
-                setScrollable(true);
-            } else {
-                setScrollable(false);
-            }
         }
     }, [props.showModal]);
 
@@ -38,7 +32,7 @@ const Modal = (props) => {
     };
 
     return props.showModal ? (
-        <div className={ModalStyles.modalBackdrop} style={scrollable && { overflowY: 'scroll' }}>
+        <div className={ModalStyles.modalBackdrop}>
             <div className={`${ModalStyles.modal} ${ModalStyles[props.size]}`} ref={modalRef}>
                 {props.showCloseButton && (
                     <Close

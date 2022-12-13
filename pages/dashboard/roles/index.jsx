@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from '../../../styles/pages';
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, CreateNewRole } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal } from "../../../components";
 
 const Roles = (props) => {
 
@@ -81,7 +81,7 @@ const Roles = (props) => {
                     pagination
                 />
             </DashboardCard>
-            <CreateNewRole setShowModal={setShowModal} showModal={showModal} />
+            <NewRoleModal setShowModal={setShowModal} showModal={showModal} />
         </>
     )
 

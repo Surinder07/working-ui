@@ -18,7 +18,7 @@ const Calender = (props) => {
                 <h1>Calender</h1>
                 <Button type="plain">+ Upload Organization Holiday</Button>
             </div>
-                <CalendarComponent />
+            <CalendarComponent />
         </>
     );
 };

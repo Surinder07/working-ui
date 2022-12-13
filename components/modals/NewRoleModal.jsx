@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import { ModalStyles } from "../../styles/elements";
 import { DropDown, InputBox } from "../inputComponents";
 
-const CreateNewRoleModal = (props) => {
+const NewRoleModal = (props) => {
 
     return (
         <div>
@@ -24,7 +24,7 @@ const CreateNewRoleModal = (props) => {
                     >
                         Create New Role
                     </h1>
-                    <div className={styles.inviteUserModalForm}>
+                    <div className={ModalStyles.inviteUserModalForm}>
                         <div>
                             <label htmlFor="firstname">
                                 Role Name
@@ -77,4 +77,4 @@ const CreateNewRoleModal = (props) => {
     );
 };
 
-export default CreateNewRoleModal;
+export default NewRoleModal;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from '../../../styles/pages';
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, CreateNewShiftModal } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal } from "../../../components";
 
 const Shifts = (props) => {
 
@@ -13,10 +13,7 @@ const Shifts = (props) => {
         })
     }, []);
 
-    const [showModal, setShowModal] = useState(false)
-    const handleShiftModal = () => {
-        setShowModal(true);
-    }
+    const [showAddModal, setShowAddModal] = useState(false);
 
     const actions = [
         {
@@ -135,7 +132,7 @@ const Shifts = (props) => {
             <WaawNoIndexHead title='Shifts' />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
-                <Button type='plain' onClick={handleShiftModal}>+ Create new Shifts</Button>
+                <Button type='plain' onClick={() => setShowAddModal(true)}>+ Create new Shifts</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
@@ -146,7 +143,7 @@ const Shifts = (props) => {
                     pagination
                 />
             </DashboardCard>
-            <CreateNewShiftModal setShowModal={setShowModal} showModal={showModal} />
+            <NewShiftModal setShowModal={setShowAddModal} showModal={showAddModal} buttonText='CreateShift' />
         </>
     )
 

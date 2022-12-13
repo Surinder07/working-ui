@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from "date-fns";
+import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from "date-fns";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from '../../constants';
@@ -68,13 +68,13 @@ const CalendarComponent = () => {
 
     const today = startOfToday();
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-    const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+    const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [disableNext, setDisableNext] = useState(false);
     const [dayHeight, setDayHeight] = useState(0);
-    let referenceDays = eachDayOfInterval({
+    const [referenceDays, setReferenceDays] = useState(eachDayOfInterval({
         start: startOfWeek(firstDayCurrentMonth),
         end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
-    }).map(date => { return { date: date } });
+    }).map(date => { return { date: date } }));
     const [days, setDays] = useState(referenceDays);
 
     const dayRef = useRef();
@@ -82,13 +82,24 @@ const CalendarComponent = () => {
     const previousMonth = () => {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+        updateDays(format(firstDayNextMonth, "MMM-yyyy"));
     }
 
     const nextMonth = () => {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
         if (!disableNext) {
             setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+            updateDays(format(firstDayNextMonth, "MMM-yyyy"));
         }
+    }
+
+    const updateDays = (current) => {
+        const firstDay = parse(current, "MMM-yyyy", new Date());
+        setFirstDayCurrentMonth(firstDay);
+        setReferenceDays(eachDayOfInterval({
+            start: startOfWeek(firstDay),
+            end: endOfWeek(endOfMonth(firstDay)),
+        }).map(date => { return { date: date } }))
     }
 
     const classNames = (...classes) => {
@@ -105,7 +116,7 @@ const CalendarComponent = () => {
     }, [currentMonth]);
 
     useEffect(() => {
-        const newDaysObj = referenceDays.map((day) => {
+        let newDaysObj = referenceDays.map((day) => {
             let workedDaysList = [];
             workingDays.filter((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day.date))
                 .map(workingDay => workedDaysList.push({
@@ -123,7 +134,7 @@ const CalendarComponent = () => {
             return day;
         })
         setDays(newDaysObj);
-    }, [workingDays, referenceDays]);
+    }, [referenceDays]);
 
     useEffect(() => {
         if (dayRef.current) {
@@ -133,7 +144,7 @@ const CalendarComponent = () => {
 
     return (
         <div className={CalendarStyles.gridContainer}>
-            <DashboardCard style={{ marginTop: "20px" }}>
+            <DashboardCard>
                 <div className={CalendarStyles.calenderContainer}>
                     <div className={CalendarStyles.innerCalenderContainer}>
                         <div className={CalendarStyles.dateNav}>
@@ -201,7 +212,7 @@ const CalendarComponent = () => {
                 <h4>Holidays</h4>
                 <ul className={CalendarStyles.holidayList}>
                     {
-                        holidays.map((holiday,i) => (
+                        holidays.map((holiday, i) => (
                             <li className={CalendarStyles.dateHoliday}>{holiday.name}: {holiday.startDatetime}</li>
                         ))
                     }

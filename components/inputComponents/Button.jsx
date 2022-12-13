@@ -13,6 +13,8 @@ const Button = (props) => {
         else if (props.type === 'fullWidth') setButtonClass(ButtonStyles.fullWidthButton);
         else if (props.type === 'social') setButtonClass(ButtonStyles.socialButton);
         else if (props.type === 'plain') setButtonClass(ButtonStyles.plainButton);
+        else if (props.type === 'close') setButtonClass(ButtonStyles.closeButton);
+        else if (props.type === 'dashboard') setButtonClass(ButtonStyles.dashboardButton);
     }, []);
 
     const onClick = (e) => {

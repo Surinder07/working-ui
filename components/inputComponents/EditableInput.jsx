@@ -1,17 +1,18 @@
 import { EditableInputStyles } from '../../styles/elements';
 import InputBox from './InputBox';
 import ContactInput from './ContactInput';
+import TimeInput from './TimeInput';
 
 const EditableInput = (props) => {
 
     return (
-        <div className={EditableInputStyles.container}>
+        <div className={`${EditableInputStyles.container} ${props.className}`}>
             <label htmlFor={props.label}>{props.label}</label>
             {
                 props.type === 'text' &&
                 (
                     props.editOn ?
-                        <InputBox inputType={2} type='text' value={props.value} /> :
+                        <InputBox name={props.label} inputType={2} type='text' value={props.value} /> :
                         <p>{props.value}</p>
                 )
             }
@@ -19,8 +20,16 @@ const EditableInput = (props) => {
                 props.type === 'mobile' &&
                 (
                     props.editOn ?
-                        <ContactInput inputType={2} value={props.value} setValue={props.setValue} /> :
+                        <ContactInput name={props.label} inputType={2} value={props.value} setValue={props.setValue} /> :
                         <p>{props.value.countryCode} - {props.value.mobile}</p>
+                )
+            }
+            {
+                props.type === 'time' &&
+                (
+                    props.editOn ?
+                    <TimeInput value={props.value} setValue={props.setValue} />:
+                    <p>{props.value.hours}:{props.value.minutes}</p>
                 )
             }
         </div>

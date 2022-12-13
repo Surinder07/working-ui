@@ -3,7 +3,7 @@ import { CheckBoxStyles } from '../../styles/elements/inputs';
 const Checkbox = (props) => {
 
     return (
-        <div className={CheckBoxStyles.container} onClick={() => props.setIsChecked(!props.isChecked)}>
+        <div className={`${CheckBoxStyles.container} ${props.className}`} onClick={() => props.setIsChecked(!props.isChecked)}>
             <div className={CheckBoxStyles.checkbox}>
                 {props.isChecked &&
                     <div className={CheckBoxStyles.checked}>
