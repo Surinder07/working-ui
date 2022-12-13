@@ -129,7 +129,7 @@
 .selectedDate {
     border-radius: 50%;
     background-color: #2996C3;
-    color: #FFF;
+    color: #FFF!important;
     font-weight: 600;
 }
 

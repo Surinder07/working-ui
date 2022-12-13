@@ -15,7 +15,7 @@ const DatePicker = (props) => {
         end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
     }).map(date => { return { date: date } }));
     const [dates, setDates] = useState(referenceDates);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [openDown, setOpenDown] = useState(true);
     const [inputHeight, setInputHeight] = useState(0);
     const [calendarHeight, setCalendarHeight] = useState(0);

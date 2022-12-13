@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { DashboardStyles } from "../../../styles/pages";
 import Link from 'next/link';
-import stylesModal from "../../../styles/elements/Modal.module.css";
 import {
     WaawNoIndexHead,
     UserPreferenceCard,
@@ -28,8 +27,6 @@ const Employees = (props) => {
     })
     const [expandedMenu, setExpandedMenu] = useState('none');
     const [editOn, setEditOn] = useState(false);
-    const [showModal, setShowModal] = useState(true)
-    const buttonText = ["Continue", "Cancel"];
 
     useEffect(() => {
         props.setPageInfo({
@@ -46,7 +43,6 @@ const Employees = (props) => {
             setUserId(router.query.id);
     }, [router.isReady, router.query]);
 
-    const options = [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
     const actions = {
         key: "Edit",
@@ -137,50 +133,6 @@ const Employees = (props) => {
             {getExpandableData('Requests')}
             {getExpandableData('Attendance')}
 
-            <Modal
-                size="small"
-                showModal={showModal}
-                setShowModal={setShowModal}
-                buttonText={buttonText}
-            >
-                <div className={stylesModal.smallModalMainContainer}>
-                    <div className={stylesModal.smallModalUpperdiv}>
-                        <div>
-                            <p>In Time</p>
-                            <span
-                                style={{ display: "flex" }}
-                                className={stylesModal.modalDropDown}
-                            >
-                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
-                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
-                            </span>
-                        </div>
-                        <div>
-                            <p>Out Time</p>
-                            <span
-                                style={{ display: "flex" }}
-                                className={stylesModal.modalDropDown}
-                            >
-                                <DropDown inputType={2} defaultDisplay={options[0]} options={options} />
-                                <DropDown inputType={2} defaultDisplay={options[4]} options={options} />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className={stylesModal.smallModalUpperdiv}>
-                        <div>
-                            <p>In Date</p>
-                            <input type="date" />
-                        </div>
-                        <div>
-                            <p>Out Date</p>
-                            <input type="date" />
-                        </div>
-                    </div>
-                </div>
-                <label>Comment</label>
-                <textarea className={stylesModal.smallModalTextarea} required></textarea>
-            </Modal>
         </>
     );
 };
