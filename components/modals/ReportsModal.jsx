@@ -13,7 +13,7 @@ const ReportsModal = () => {
             showModal={showModal}
             setShowModal={setShowModal}
             buttonText="Submit"
-            title=""
+            title="Add Reports"
             type="twoColNarrow"
         >
             <EditableInput type="text" label="From" editOn />

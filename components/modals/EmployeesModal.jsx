@@ -12,7 +12,7 @@ const EmployeeDetailsModal = () => {
                 showModal={showModal}
                 setShowModal={setShowModal}
                 buttonText="Submit"
-                title=""
+                title="Edit Employee Detail"
                 type="twoColNarrow"
             >
                 <EditableInput type="text" label="In Date" editOn />
