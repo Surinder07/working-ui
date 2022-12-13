@@ -1,5 +1,7 @@
 {
     "files.exclude": {
         "node_modules": true
-    }
+    },
+    "prettier.bracketSpacing": false,
+    "prettier.tabWidth": 4
 }

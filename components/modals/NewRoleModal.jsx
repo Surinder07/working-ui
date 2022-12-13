@@ -1,78 +1,29 @@
 import React from "react";
-import Modal from "./Modal";
-import { ModalStyles } from "../../styles/elements";
-import { DropDown, InputBox } from "../inputComponents";
+import { DashboardModal } from "./base";
+// import { DashboardModalStyles } from "../../styles/elements";
+import {  EditableInput } from "../inputComponents";
+
 
 const NewRoleModal = (props) => {
-
+    const options = ["India","Canada","USA","Germany"]
     return (
         <div>
-            <Modal
-                size="dashboardModal"
-                showModal={props.showModal}
-                setShowModal={props.setShowModal}
-                buttonText={buttonText}
+            <DashboardModal
+               showModal={props.showModal}
+               setShowModal={props.setShowModal}
+               buttonText='Submit'
+               title='Create New Role'
+               type='twoColWide'
             >
-                <div>
-                    <h1
-                        style={{
-                            color: "#2996C3",
-                            fontFamily: "Poppins",
-                            fontWeight: "500",
-                            textAlign: "center"
-                        }}
-                    >
-                        Create New Role
-                    </h1>
-                    <div className={ModalStyles.inviteUserModalForm}>
-                        <div>
-                            <label htmlFor="firstname">
-                                Role Name
-                            </label>
-                            <InputBox type="text" />
-                        </div>
-                        <div>
-                            <label htmlFor="lastname">
-                                Location
-                            </label>
-                            <br />
-                            <br />
-                            <DropDown
-                                defaultDisplay={locationname[0]}
-                                options={locationname}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="firstname">
-                                Total hours per day (maximum){" "}
-
-                            </label>
-                            <InputBox type="text" />
-                        </div>
-                        <div>
-                            <label htmlFor="firstname">
-                                Total hours per day (minimum){" "}
-
-                            </label>
-                            <InputBox type="text" />
-                        </div>
-                        <div>
-                            <label htmlFor="firstname">
-                                Minimum gaps between shifts{" "}
-
-                            </label>
-                            <InputBox type="text" />
-                        </div>
-                        <div>
-                            <label htmlFor="firstname">
-                                Maximum consequitive work days{" "}
-
-                            </label>
-                            <InputBox type="text" />
-                        </div>
-                    </div>
-                </div>
-            </Modal>
+                 <EditableInput type='text' label='Role Name' editOn />
+                 <EditableInput type='dropdown' options={options} placeholder="Location" label='Location'editOn />
+                 <EditableInput type='text' label='Total hours per day (Maximum)' editOn />
+                 <EditableInput type='text' label='Total hours per day (Minimum)' editOn />
+                 <EditableInput type='text' label='Maximum consequtive work days' editOn />
+                 <EditableInput type='text' label='Minimum gaps between shifts' editOn />
+                 
+                 </DashboardModal>
+               
         </div>
     );
 };
