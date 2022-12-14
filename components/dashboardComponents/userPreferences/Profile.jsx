@@ -9,6 +9,11 @@ const Profile = (props) => {
 
     const [uploadVisible, setUploadVisible] = useState(false);
     const [editPersonalDetails, setEditPersonalDetails] = useState(false);
+    const [mobile, setMobile] = useState({
+        mobile: '',
+        countryCode: '',
+        country: ''
+    })
 
     const handleChange = (e) => {
         if (e.target.files.length) {
@@ -69,7 +74,13 @@ const Profile = (props) => {
                 >
                     <EditableInput type='text' label='First Name' value='Test' editOn={editPersonalDetails} />
                     <EditableInput type='text' label='Last Name' editOn={editPersonalDetails} />
-                    <EditableInput type='mobile' label='Mobile No.' editOn={editPersonalDetails} />
+                    <EditableInput
+                        type='mobile'
+                        label='Mobile No.'
+                        value={mobile}
+                        setValue={setMobile}
+                        editOn={editPersonalDetails}
+                    />
                     <EditableInput type='text' label='WAAW ID' editOn={editPersonalDetails} nonEditable />
                 </UserPreferenceCard>
             </div>

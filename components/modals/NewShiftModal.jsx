@@ -44,7 +44,7 @@ const NewShiftModal = (props) => {
         errorMessage: "",
         showError: false,
     });
-
+    
     return (
         <DashboardModal
             showModal={props.showModal}

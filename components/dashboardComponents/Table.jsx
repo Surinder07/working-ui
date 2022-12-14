@@ -40,7 +40,7 @@ const Table = (props, ref) => {
     const getAction = (id) => {
         if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} />
         else if (props.actions.key === 'Edit') return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
-        else if (props.actions.key === 'Delete') return <Delete style={{color: '#999'}} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
+        else if (props.actions.key === 'Delete') return <Delete style={{ color: '#999' }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />
     }
 
     return (

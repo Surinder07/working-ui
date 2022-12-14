@@ -1,5 +1,5 @@
 import { terms, privacy, cookies, disclaimer, nda } from "../../constants";
-import Modal from "./Modal";
+import { Modal } from './base';
 import { TermsAndPrivacyStyles } from '../../styles/elements';
 import { useState, useEffect } from "react";
 

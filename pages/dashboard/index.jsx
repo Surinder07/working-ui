@@ -1,8 +1,21 @@
 import { useEffect } from 'react';
 import { DashboardStyles } from '../../styles/pages';
 import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead } from '../../components';
+import { pieConfig, areaConfig } from '../../constants';
 import { Pie, Line } from 'react-chartjs-2';
-import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip } from 'chart.js';
+import {
+    Chart,
+    ArcElement,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Filler,
+    Tooltip,
+    Title,
+    SubTitle,
+} from 'chart.js';
 
 const Dashboard = (props) => {
     useEffect(() => {
@@ -14,7 +27,17 @@ const Dashboard = (props) => {
         });
     }, []);
 
-    Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip);
+    Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
+
+    const getBlueBgList = (length) => {
+        var result = [], left = 0.1, right = 1, delta = (right - left) / (length - 1);
+        while (left < right) {
+            result.push(left);
+            left += delta;
+        }
+        result.push(right);
+        return result.map(alpha => `rgba(41, 150, 195, ${alpha})`);
+    }
 
     const invoices = [
         {
@@ -46,62 +69,60 @@ const Dashboard = (props) => {
         },
     ];
 
+    const months = ['Jan', 'Feb', "Mar", 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
     const invoice = {
-        labels: [
-            'test',
-            'test',
-            'test',
-            'test',
-            'test',
-            'test',
-        ],
+        labels: months,
         datasets: [
             {
                 fill: true,
-                label: 'Dataset 2',
+                label: 'Invoices (Current Year)',
                 data: [300, 600, 100, 900, 250, 500],
                 borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',    
-                lineTension: 0.4,        
-                radius: 6      
+                backgroundColor: 'rgba(53, 162, 235, 0.1)',
+                lineTension: 0.4,
+                radius: 6
+            },
+            {
+                fill: true,
+                label: 'Invoices (Previous Year)',
+                data: [310, 620, 80, 700, 350, 200, 400, 343, 200, 100, 400],
+                borderColor: 'rgb(223, 224, 235)',
+                backgroundColor: 'rgba(223, 224, 235, 0.3)',
+                lineTension: 0.4,
+                radius: 6
             }
         ]
     }
 
+    const employeeData = [
+        {
+            location: 'Starbucks',
+            employees: 31
+        },
+        {
+            location: 'Baristas',
+            employees: 20
+        },
+        {
+            location: 'Mr Crabs',
+            employees: 52
+        },
+        {
+            location: 'Chai Point',
+            employees: 8
+        }
+    ]
+
     const employees = {
-        labels: [
-            'Location1',
-            'Location2',
-            'Location3'
-        ],
+        labels: employeeData.map(emp => emp.location),
         datasets: [{
-            label: 'Employee Trends',
-            data: [300, 50, 100],
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
+            label: 'Total Employees',
+            data: employeeData.map(emp => emp.employees),
+            backgroundColor: getBlueBgList(employeeData.length),
             hoverOffset: 4
         }]
     };
-
-    const options = {
-        elements: {
-            arc: {
-                weight: 0.5,
-                borderWidth: 3
-            }
-        },
-        aspectRatio: 1,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Employee Trends',
-                position: 'top'
-            }
-        }
-    }
 
     return (
         <>
@@ -114,12 +135,17 @@ const Dashboard = (props) => {
                 {/* //   showOptions> */}
                 <TabularInfo title="Invoices" description="Tabular list of all WAAW invoices with status." data={invoices} />
             </DashboardCard>
-            <DashboardCard style={{ marginTop: "20px", display: 'flex' }} >
-                <div style={{ width: '60%' }}>
-                    <Line data={invoice} />
+            <DashboardCard style={{
+                marginTop: "20px",
+                display: 'grid',
+                gridTemplateColumns: '3fr 2fr',
+                // columnGap: '20px'
+            }} >
+                <div style={{height: '100%'}}>
+                    <Line data={invoice} options={areaConfig('Invoice Trends', 'Current Year ( 2022-2023 )')} />
                 </div>
-                <div style={{ width: '40%' }}>
-                    <Pie data={employees} options={options} />
+                <div style={{}}>
+                    <Pie data={employees} options={pieConfig('Employee Trends', 'Current Year ( 2022-2023 )', 'Month', 'Invoice Amount')} />
                 </div>
             </DashboardCard>
         </>
