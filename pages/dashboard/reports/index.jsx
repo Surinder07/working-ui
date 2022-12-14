@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GenerateReportModal } from "../../../components"
 const Reports = () => {
-
+    const [showModal, setShowModal] = useState(true);
     const requests = [
         {
             requestId: '6476475',
@@ -42,7 +42,7 @@ const Reports = () => {
 
     return (
         <div>
-            <GenerateReportModal />
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}/>
         </div>
     )
 }
