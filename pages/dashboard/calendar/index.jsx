@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, CalendarComponent } from "../../../components";
+import { WaawNoIndexHead, Button, CalendarComponent, HolidayModal } from "../../../components";
 
 const Calender = (props) => {
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -14,9 +15,10 @@ const Calender = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Calender" />
+            <HolidayModal showModal={showModal} setShowModal={setShowModal}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Calender</h1>
-                <Button type="plain">+ Upload Organization Holiday</Button>
+                <Button type="plain" onClick={()=> setShowModal(true)}>+ Upload Organization Holiday</Button>
             </div>
             <CalendarComponent />
         </>

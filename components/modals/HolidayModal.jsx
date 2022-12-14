@@ -5,12 +5,12 @@ import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const HolidayModal = () => {
-    const [showModal, setShowModal] = useState(true);
+const HolidayModal = (props) => {
+   
     return (
         <DashboardModal
-            showModal={showModal}
-            setShowModal={setShowModal}
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
             buttonText="Submit"
             title="Upload Holiday"
             type="singleCol"

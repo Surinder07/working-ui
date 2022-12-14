@@ -4,7 +4,16 @@ import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 
 const EditRequestsModal = (props) => {
-
+    const [value, setValue] = useState("");
+    const [comment, setComment] = useState("");
+    const [commentError, setCommentError] = useState({
+        errorMessage: "",
+        showError: false,
+    });
+    const [radioError, setRadioError] = useState({
+        errorMessage: "",
+        showError: false,
+    });
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -13,10 +22,19 @@ const EditRequestsModal = (props) => {
             title="Edit Request"
             type="singleCol"
         >
-            <EditableInput type="radio" label="Approve" editOn />
-            <EditableInput type="radio" label="Reject" editOn />
-            <EditableInput type="radio" label="Refer back to employee" editOn />
-            <EditableInput type="text" label="Comment" required editOn />
+            <EditableInput type="radio" label="Approve" value={value} setValue={setValue} editOn />
+            <EditableInput type="radio" label="Reject" value={value} setValue={setValue} editOn />
+            <EditableInput type="radio" label="Refer back to employee" value={value} setValue={setValue} editOn />
+            <EditableInput
+                type="text"
+                label="Comment"
+                value={comment}
+                setValue={setComment}
+                error={commentError}
+                setError={setCommentError}
+                required
+                editOn
+            />
         </DashboardModal>
     );
 };

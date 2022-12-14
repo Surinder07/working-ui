@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { GenerateReportModal } from "../../../components"
+import { GenerateReportModal } from "../../../components";
 
 const Reports = (props) => {
+
+    const [showModal, setShowModal] = useState(true);
 
     useEffect(() => {
         props.setPageInfo({
@@ -52,7 +54,7 @@ const Reports = (props) => {
 
     return (
         <div>
-            <GenerateReportModal />
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}/>
         </div>
     )
 }

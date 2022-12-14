@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal } from "../../../components";
 
 const Locations = (props) => {
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -60,9 +61,10 @@ const Locations = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Locations' />
+            <LocationModal showModal={showModal} setShowModal={setShowModal}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
-                <Button type='plain'>+ Add new Location</Button>
+                <Button type='plain' onClick={()=> setShowModal(true)}>+ Add new Location</Button>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
