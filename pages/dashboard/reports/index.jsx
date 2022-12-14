@@ -1,60 +1,173 @@
-import { useEffect, useState } from 'react'
-import { GenerateReportModal } from "../../../components"
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {DashboardStyles} from "../../../styles/pages";
+import Link from "next/link";
+import {WaawNoIndexHead, Button, TabularInfo, DashboardCard} from "../../../components";
+import {BrandingWatermark} from "@mui/icons-material";
 
 const Reports = (props) => {
+    const router = useRouter();
+
+    const [expandedMenu, setExpandedMenu] = useState("none");
 
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
-            pageView: 'dashboard',
-            activeMenu: 'REPORTS',
-            activeSubMenu: 'none'
-        })
+            pageView: "dashboard",
+            activeMenu: "REPORTS",
+            activeSubMenu: "none",
+        });
     }, []);
 
-    const reports = [
-        {
-            requestId: '6476475',
-            requestType: 'request',
-            initiationDate: '01/01/2023',
-            location: 'Canada',
-            initiatedBy: 'Rahul',
-            assignedTo: 'Rajiv',
-            status: 'xyz'
-        },
-        {
-            requestId: '6476476',
-            requestType: 'request',
-            initiationDate: '01/02/2023',
-            location: 'India',
-            initiatedBy: 'Arpit',
-            assignedTo: 'Sandeep',
-            status: 'xyz'
-        },
-        {
-            requestId: '6476477',
-            requestType: 'request',
-            initiationDate: '03/01/2023',
-            location: 'USA',
-            initiatedBy: 'Albert',
-            assignedTo: 'Edward',
-            status: 'xyz'
-        }, {
-            requestId: '6476478',
-            requestType: 'request',
-            initiationDate: '02/02/2023',
-            location: 'Mexico',
-            initiatedBy: 'Ethan',
-            assignedTo: 'Ishac',
-            status: 'xyz'
+    useEffect(() => {
+        if (!router.isReady) return;
+        if (router.query.key) setUserId(router.query.id);
+    }, [router.isReady, router.query]);
+
+    const getActions = (tableType) => {
+        return {
+            key: "Download",
+            action: (id) => {
+                setEditId(id);
+                switch (tableType) {
+                    case "request":
+                        setShowModalRequest(true);
+                        break;
+                    case "attendance":
+                        setShowModalTimeSheet(true);
+                        break;
+                    case "shift":
+                        setShowModalShift(true);
+                        BrandingWatermark;
+                }
+            },
+        };
+    };
+
+    const handleExpansion = (clickedMenu) => {
+        if (clickedMenu === expandedMenu) {
+            setExpandedMenu("none");
+        } else {
+            setExpandedMenu(clickedMenu);
         }
-    ]
+    };
+
+    const requestsData = [
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+    ];
+
+    const attendanceData = [
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+    ];
+
+    const payrollData = [
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+        {
+            Id: "Name",
+            From: "Date",
+            till: "Date",
+            locationName: "Type",
+        },
+    ];
+
+    const getExpandableData = (title, data, actions) => {
+        return (
+            <DashboardCard style={{marginTop: "20px"}}>
+                <TabularInfo
+                    data={data}
+                    title={title}
+                    expanded={expandedMenu === title.toLowerCase()}
+                    toggleExpansion={() => handleExpansion(title.toLowerCase())}
+                    expandable
+                    actions={actions}
+                    pagination
+                    showSearch
+                    showFilter
+                />
+            </DashboardCard>
+        );
+    };
 
     return (
-        <div>
-            <GenerateReportModal />
-        </div>
-    )
-}
+        <>
+            <WaawNoIndexHead title="Reports" />
+            <div className={DashboardStyles.dashboardTitles}>
+                <h1>Reports</h1>
+                <div>
+                    <Button type="plain" style={{marginRight: "15px"}}>
+                        + Generate Payroll
+                    </Button>
+                    <Button type="plain">+ Generate Attendance</Button>
+                </div>
+            </div>
+            {getExpandableData("Payroll", payrollData, getActions("shift"))}
+            {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
+            {getExpandableData("Location Holidays", requestsData, getActions("request"))}
+        </>
+    );
+};
 
-export default Reports
+export default Reports;
