@@ -1,9 +1,8 @@
-import React, {useState} from "react";
-import {DashboardModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
-import {EditableInput} from "../inputComponents";
-import {ModalStyles} from "../../styles/elements";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useState } from "react";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
+import { EditableInput } from "../inputComponents";
+import { CloudUpload } from "@mui/icons-material";
 
 const InviteUserModal = (props) => {
     const [firstName, setFirstName] = useState("");
@@ -12,7 +11,7 @@ const InviteUserModal = (props) => {
     const [email, setEmail] = useState("");
     const [typeOfEmployee, setTypeOfEmployee] = useState("");
     const [location, setLocation] = useState("");
-    const [toggleValue, setToggleValue] = useState("");
+    const [toggleValue, setToggleValue] = useState("Permanent");
 
     const [errorFirstName, setErrorFirstName] = useState({
         errorMessage: "",
@@ -51,21 +50,15 @@ const InviteUserModal = (props) => {
             type="twoColWide"
         >
             <div className={DashboardModalStyles.singleColumn}>
-                <CloudUploadIcon fontSize="large" color="action" />
-                <br />
-                <label htmlFor="upload">Select file to Import</label>
-                <input type="file" id="upload" style={{display: "none"}} />
-                <span>
-                    <h4>Must be .xlsx or .csv file using our email template</h4>
-                    <p>
-                        Download template:
-                        <a href="https://xyzabc@gmail.com" target="_blank">
-                            https://xyzabc@gmail.com
-                        </a>
-                    </p>
-                </span>
+                <div className={`${DashboardModalStyles.uploadContainer}`}>
+                    <CloudUpload className={DashboardModalStyles.icon} />
+                    <label htmlFor="upload">Select file to Import</label>
+                    <input type="file" id="upload" style={{ display: "none" }} />
+                    <p>Must be .xlsx or .csv file using our email template</p>
+                    <p>Click <span className={DashboardModalStyles.download}>here</span> to download template</p>
+                </div>
+                <p className={DashboardModalStyles.seperator}>— OR —</p>
             </div>
-
             <EditableInput
                 type="text"
                 label="First Name"
@@ -127,7 +120,7 @@ const InviteUserModal = (props) => {
                 editOn
             />
             <EditableInput
-                type="toggle"
+                type="toggle2"
                 options={["Permanent", "Part Time"]}
                 value={toggleValue}
                 setValue={setToggleValue}

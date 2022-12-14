@@ -1,38 +1,23 @@
-import React from "react";
-import {useState} from "react";
-// import {EditableInput} from "../inputComponents";
-import {DashboardModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
+import { CloudUpload } from "@mui/icons-material";
 
 const HolidayModal = (props) => {
-   
+
     return (
         <DashboardModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
             buttonText="Submit"
             title="Upload Holiday"
-            type="singleCol"
+            type="twoColWide"
         >
-            <div className={DashboardModalStyles.singleColumn}>
-                <div>
-                    <CloudUploadIcon fontSize="large" color="action" />
-                    <br />
-                    <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{display: "none"}} />
-                    <span>
-                        <h4>
-                            Must be .xlsx or .csv file using our email template
-                        </h4>
-                        <p>
-                            Download template:
-                            <a href="https://xyzabc@gmail.com" target="_blank">
-                                https://xyzabc@gmail.com
-                            </a>
-                        </p>
-                    </span>
-                </div>
+            <div className={`${DashboardModalStyles.singleColumn} ${DashboardModalStyles.uploadContainer}`}>
+                <CloudUpload className={DashboardModalStyles.icon} />
+                <label htmlFor="upload">Select file to Import</label>
+                <input type="file" id="upload" style={{ display: "none" }} />
+                <p>Must be .xlsx or .csv file using our email template</p>
+                <p>Click <span className={DashboardModalStyles.download}>here</span> to download template</p>
             </div>
         </DashboardModal>
     );

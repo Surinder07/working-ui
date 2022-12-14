@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
  * @param {*} setShowModal function to set showModal value
  * @returns A full page modal with required content and two buttons at end
  */
-const Modal = (props) => {
+const DashboardModal = (props) => {
 
     const modalRef = useRef();
     const [scrollable, setScrollable] = useState(false);
@@ -19,7 +19,9 @@ const Modal = (props) => {
     useEffect(() => {
         if (props.showModal) {
             document.body.style.overflow = "hidden";
-            if (modalRef.current && window.innerHeight < modalRef.current.clientHeight) {
+            console.log(scrollable);
+            console.log(modalRef.current);
+            if (modalRef.current && (window.innerHeight < modalRef.current.clientHeight)) {
                 setScrollable(true);
             } else {
                 setScrollable(false);
@@ -40,7 +42,7 @@ const Modal = (props) => {
 
     return props.showModal ? (
         <div className={`${DashboardModalStyles.modalBackdrop} ${scrollable && DashboardModalStyles.scrollBackdrop}`}>
-            <div className={`${DashboardModalStyles.modal}`} ref={modalRef} style={scrollable && {height: 'fit-content'}}>
+            <div className={`${DashboardModalStyles.modal}`} ref={modalRef} style={{height: scrollable ? 'fit-content' : 'unset'}}>
                 <div className={DashboardModalStyles.subContainer}>
                     <h1>{props.title}</h1>
                     <div className={gridClass}>
@@ -62,4 +64,4 @@ const Modal = (props) => {
     );
 };
 
-export default Modal;
+export default DashboardModal;

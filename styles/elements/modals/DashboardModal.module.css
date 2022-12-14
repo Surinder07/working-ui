@@ -52,7 +52,7 @@
 .gridDouble,
 .gridDoubleNarrow {
     display: grid;
-    row-gap: 30px;
+    row-gap: 20px;
 }
 
 .gridSingle {
@@ -90,4 +90,54 @@
     color: #535255;
     opacity: 0.75;
     grid-column: span 2;
+}
+
+.uploadContainer {
+    background-color: #DDDCDD;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.uploadContainer label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #535255;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.uploadContainer .icon {
+    color: #999;
+    font-size: 54px;
+    margin: 8px;
+}
+
+.uploadContainer p {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 0.2px;
+    color: #999999;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.uploadContainer .download {
+    cursor: pointer;
+    color: #2996C3;
+    text-decoration: underline;
+}
+
+.seperator {
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.5;
 }

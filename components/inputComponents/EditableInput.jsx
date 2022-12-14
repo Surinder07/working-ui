@@ -13,7 +13,7 @@ const EditableInput = (props) => {
         <div className={`${EditableInputStyles.container} ${props.className}`}>
             {props.label && <label htmlFor={props.label}>{props.label}</label>}
             {
-                props.type === 'text' || props.type === 'password' &&
+                (props.type === 'text' || props.type === 'password') &&
                 (
                     props.editOn ?
                         <InputBox name={props.label} inputType={2} type={props.type} value={props.value} /> :

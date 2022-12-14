@@ -14,7 +14,7 @@ import {
     Filler,
     Tooltip,
     Title,
-    SubTitle,
+    SubTitle
 } from 'chart.js';
 
 const Dashboard = (props) => {
@@ -81,7 +81,9 @@ const Dashboard = (props) => {
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.1)',
                 lineTension: 0.4,
-                radius: 6
+                radius: 6,
+                pointRadius: 3,
+                pointHoverRadius: 6
             },
             {
                 fill: true,
@@ -90,7 +92,9 @@ const Dashboard = (props) => {
                 borderColor: 'rgb(223, 224, 235)',
                 backgroundColor: 'rgba(223, 224, 235, 0.3)',
                 lineTension: 0.4,
-                radius: 6
+                radius: 6,
+                pointRadius: 3,
+                pointHoverRadius: 6
             }
         ]
     }

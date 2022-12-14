@@ -4,6 +4,7 @@ import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal } from "../../../components";
 
 const Employees = (props) => {
+
     const [showModal, setShowModal] = useState(false);
 
     const router = useRouter();

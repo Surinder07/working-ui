@@ -48,20 +48,52 @@ export const areaConfig = (title, subTitle, xTitle, yTitle) => {
         },
         scales: {
             x: {
-              display: true,
-              title: {
-                display: true,
-                text: xTitle
-              }
+                title: {
+                    text: 'Month',
+                    display: true,
+                    font: {
+                        family: 'Mulish'
+                    },
+                    color: '#252733',
+                },
+                grid: {
+                    display: false,
+                    drawTicks: false
+                },
+                border: {
+                    display: false
+                },
+                beginAtZero: true
             },
             y: {
-              display: true,
-              title: {
-                display: true,
-                text: yTitle
-              }
+                title: {
+                    text: 'Invoices Amount',
+                    display: true,
+                    font: {
+                        family: 'Mulish'
+                    },
+                    color: '#252733'
+                },
+                grid: {
+                    drawTicks: false
+                },
+                border: {
+                    display: false
+                },
+                beginAtZero: true,
+                ticks: {
+                    maxTicksLimit: 6
+                }
             }
-          }
+        },
+        elements: {
+            line: {
+                borderWidth: 2,
+            },
+            point: {
+                radius: 0.1
+            }
+        }
     }
 }
 
