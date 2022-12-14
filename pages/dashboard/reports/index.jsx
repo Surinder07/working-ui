@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {DashboardStyles} from "../../../styles/pages";
-import Link from "next/link";
-import {WaawNoIndexHead, Button, TabularInfo, DashboardCard} from "../../../components";
-import {BrandingWatermark} from "@mui/icons-material";
+import {WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal} from "../../../components";
 
 const Reports = (props) => {
+    
     const router = useRouter();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
+
+    const [showModal, setShowModal] = useState(true);
 
     useEffect(() => {
         props.setPageInfo({
@@ -166,6 +167,7 @@ const Reports = (props) => {
             {getExpandableData("Payroll", payrollData, getActions("shift"))}
             {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
             {getExpandableData("Location Holidays", requestsData, getActions("request"))}
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}/>
         </>
     );
 };
