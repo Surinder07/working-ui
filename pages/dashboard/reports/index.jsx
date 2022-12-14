@@ -1,8 +1,18 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GenerateReportModal } from "../../../components"
-const Reports = () => {
 
-    const requests = [
+const Reports = (props) => {
+
+    useEffect(() => {
+        props.setPageInfo({
+            authenticationRequired: false,
+            pageView: 'dashboard',
+            activeMenu: 'REPORTS',
+            activeSubMenu: 'none'
+        })
+    }, []);
+
+    const reports = [
         {
             requestId: '6476475',
             requestType: 'request',

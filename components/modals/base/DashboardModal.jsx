@@ -40,7 +40,7 @@ const Modal = (props) => {
 
     return props.showModal ? (
         <div className={`${DashboardModalStyles.modalBackdrop} ${scrollable && DashboardModalStyles.scrollBackdrop}`}>
-            <div className={`${DashboardModalStyles.modal}`} ref={modalRef}>
+            <div className={`${DashboardModalStyles.modal}`} ref={modalRef} style={scrollable && {height: 'fit-content'}}>
                 <div className={DashboardModalStyles.subContainer}>
                     <h1>{props.title}</h1>
                     <div className={gridClass}>

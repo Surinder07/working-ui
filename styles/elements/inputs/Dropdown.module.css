@@ -83,7 +83,7 @@
 
 .options p {
     margin: 0;
-    padding: 15px;
+    padding: 15px!important;
     text-align: left;
     display: flex;
     align-items: center;

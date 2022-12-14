@@ -1,5 +1,5 @@
 import { ModalStyles } from '../../styles/elements';
-import Modal from './Modal';
+import { Modal } from './base';
 
 const SuccessModal = (props) => {
     return (

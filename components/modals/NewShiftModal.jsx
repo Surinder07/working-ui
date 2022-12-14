@@ -12,7 +12,8 @@ const NewShiftModal = (props) => {
     const [startTime, setStartTime] = useState({});
     const [endTime, setEndTime] = useState({});
     const [toggle, setToggle] = useState('a');
-    const [value,setValue] = useState("")
+    const [value,setValue] = useState("");
+    
     return (
         <DashboardModal
             showModal={props.showModal}

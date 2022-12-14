@@ -1,24 +1,22 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {DashboardStyles} from "../../../styles/pages";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { DashboardStyles } from "../../../styles/pages";
 import Link from "next/link";
 import {
     WaawNoIndexHead,
     UserPreferenceCard,
-    InputBox,
-    DropDown,
-    ContactInput,
     TabularInfo,
     DashboardCard,
-    Modal,
     ProfileImage,
     EditableInput,
     EditTimesheetModal,
     EditShiftModal,
     EditRequestsModal,
 } from "../../../components";
+import { BrandingWatermark } from "@mui/icons-material";
 
 const Employees = (props) => {
+
     const router = useRouter();
 
     const [userId, setUserId] = useState("");
@@ -29,23 +27,11 @@ const Employees = (props) => {
     });
     const [showModalTimeSheet, setShowModalTimeSheet] = useState(false);
     const [showModalShift, setShowModalShift] = useState(false);
-    const [showModalRequest,setShowModalRequest] = useState(false);
-    const [date,setDate] = useState("");
-    const [inDate,setInDate] = useState("")
-    const [outDate,setOutDate] = useState("")
-    const [inTime,setInTime] = useState("")
-    const [outTime,setOutTime] = useState("")
-    const [comment,setComment] = useState("")
-    const [approve,setApprove] = useState("")
-    const [reject,setReject] = useState("")
-    const [referBack,setReferBack] = useState("")
-    const [error, setError] = useState({
-        message: "",
-        showError: false,
-    });
+    const [showModalRequest, setShowModalRequest] = useState(false);
     const [expandedMenu, setExpandedMenu] = useState("none");
     const [editOn, setEditOn] = useState(false);
     const [editId, setEditId] = useState("");
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -60,27 +46,26 @@ const Employees = (props) => {
         if (router.query.key) setUserId(router.query.id);
     }, [router.isReady, router.query]);
 
-    const shiftsActions = {
-        key: "Edit",
-        action: (id) => {
-            setEditId(id);
-            setShowModalShift(true);
-        },
-    };
-    const requestActions = {
-        key: "Edit",
-        action: (id) => {
-            setEditId(id);
-            setShowModalRequest(true);
-        },
-    };
-    const attendanceActions = {
-        key: "Edit",
-        action: (id) => {
-            setEditId(id);
-            setShowModalTimeSheet(true);
-        },
-    };
+    const getActions = (tableType) => {
+        return {
+            key: 'Edit',
+            action: (id) => {
+                setEditId(id);
+                switch (tableType) {
+                    case 'request':
+                        setShowModalRequest(true);
+                        break;
+                    case 'attendance':
+                        setShowModalTimeSheet(true);
+                        break;
+                    case 'shift':
+                        setShowModalShift(true);
+                        BrandingWatermark;
+                }
+            }
+        }
+    }
+
     const handleExpansion = (clickedMenu) => {
         if (clickedMenu === expandedMenu) {
             setExpandedMenu("none");
@@ -127,6 +112,7 @@ const Employees = (props) => {
             status: "xyz",
         },
     ];
+
     const attendanceData = [
         {
             date: "01/01/2023",
@@ -169,6 +155,7 @@ const Employees = (props) => {
             comments: "N/A",
         },
     ];
+
     const shiftData = [
         {
             shiftdate: "01/01/2023",
@@ -210,7 +197,7 @@ const Employees = (props) => {
 
     const getExpandableData = (title, data, actions) => {
         return (
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     data={data}
                     title={title}
@@ -232,55 +219,23 @@ const Employees = (props) => {
             <EditTimesheetModal
                 showModal={showModalTimeSheet}
                 setShowModal={setShowModalTimeSheet}
-                inDate={inDate}
-                setInDate={setInDate}
-                outDate={outDate}
-                setOutDate={setOutDate}
-                inTime={inTime}
-                setInTime={setInTime}
-                outTime={outTime}
-                setOutTime={setOutTime}
-                comment={comment}
-                setComment={setComment}
-                editId={editId}
-                error={error}
-                setError={setError}
+                id={editId}
             />
             <EditShiftModal
                 showModal={showModalShift}
                 setShowModal={setShowModalShift}
-                date={date}
-                setDate={setDate}
-                inTime={inTime}
-                setInTime={setInTime}
-                outTime={outTime}
-                setOutTime={setOutTime}
-                comment={comment}
-                setComment={setComment}
-                editId={editId}
-                error={error}
-                setError={setError}
+                id={editId}
             />
             <EditRequestsModal
-            showModal={showModalRequest}
-            setShowModal={setShowModalRequest}
-            approve={approve}
-            setApprove={setApprove}
-            reject={reject}
-            setReject={setReject}
-            referBack={referBack}
-            setReferBack={setReferBack}
-            comment={comment}
-            setComment={setComment}
-            editId={editId}
-            error={error}
-                setError={setError}
+                showModal={showModalRequest}
+                setShowModal={setShowModalRequest}
+                id={editId}
             />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>
                     <Link
                         href="/dashboard/employees"
-                        style={{color: "#535255"}}
+                        style={{ color: "#535255" }}
                     >
                         Employees
                     </Link>
@@ -319,9 +274,9 @@ const Employees = (props) => {
                 </div>
             </UserPreferenceCard>
             {getExpandableData("Preference")}
-            {getExpandableData("Shifts", shiftData, shiftsActions)}
-            {getExpandableData("Requests", requestsData, requestActions)}
-            {getExpandableData("Attendance", attendanceData, attendanceActions)}
+            {getExpandableData("Shifts", shiftData, getActions('shift'))}
+            {getExpandableData("Requests", requestsData, getActions('request'))}
+            {getExpandableData("Attendance", attendanceData, getActions('attendance'))}
         </>
     );
 };

@@ -16,7 +16,7 @@ const WhyWaaw = (props) => {
 
     return (
         <>
-            <WaawHead title={'WaaW | About us'} description={process.env.header.aboutUsDescription} meta={{ openGraph: { url: 'https://waaw.ca/why-waaw' } }} />
+            <WaawHead title={'About us'} description={process.env.header.aboutUsDescription} meta={{ openGraph: { url: 'https://waaw.ca/why-waaw' } }} />
             <div className={`${PageStyles.page} ${PageStyles.flexPageColumn}`}>
                 <div className={`${PageStyles.pageMargin} ${PageStyles.smallContentContainer}`}>
                     <h1>Why WAAW?</h1>

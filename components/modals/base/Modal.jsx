@@ -1,8 +1,8 @@
-import { ModalStyles } from "../../styles/elements";
+import { ModalStyles } from "../../../styles/elements";
 import { useRouter } from "next/router";
 import { Close } from "@mui/icons-material";
-import { Button } from "../inputComponents";
-import { useEffect, useRef, useState } from "react";
+import { Button } from "../../inputComponents";
+import { useEffect, useRef } from "react";
 
 /**
  *

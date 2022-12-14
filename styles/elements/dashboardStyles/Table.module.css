@@ -53,6 +53,7 @@
       transparent 0, transparent 49px,
       #DFE0EB 49px,#DFE0EB 50px
     );
+    word-break: break-all;
 }
 
 .subBodyCellLeft {

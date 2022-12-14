@@ -1,4 +1,3 @@
-import Modal from "./Modal";
 import NewRoleModal from "./NewRoleModal";
 import NewShiftModal from "./NewShiftModal";
 import EditTimesheetModal from "./EditTimesheetModal";
@@ -12,7 +11,6 @@ import GenerateReportModal from "./GenerateReportModal";
 import EditRequestsModal from "./EditRequestModal";
 
 export {
-    Modal,
     NewRoleModal,
     NewShiftModal,
     EditTimesheetModal,
@@ -25,3 +23,5 @@ export {
     GenerateReportModal,
     EditRequestsModal,
 };
+
+export * from './base';
