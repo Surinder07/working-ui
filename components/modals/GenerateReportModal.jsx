@@ -6,7 +6,7 @@ import {DashboardModalStyles} from "../../styles/elements";
 
 
 
-const ReportsModal = () => {
+const GenerateReportsModal = () => {
     const [showModal, setShowModal] = useState(true);
     const [value,setValue] = useState("");
     return (
@@ -14,7 +14,7 @@ const ReportsModal = () => {
             showModal={showModal}
             setShowModal={setShowModal}
             buttonText="Submit"
-            title="Add Reports"
+            title="Generate Reports"
             type="twoColNarrow"
         >
             <EditableInput type="date"  value={value} setValue={setValue} label="From" editOn />
@@ -30,4 +30,4 @@ const ReportsModal = () => {
     );
 };
 
-export default ReportsModal;
+export default GenerateReportsModal;

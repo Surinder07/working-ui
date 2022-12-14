@@ -5,7 +5,7 @@ import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const CalenderHolidayModal = () => {
+const HolidayModal = () => {
     const [showModal, setShowModal] = useState(true);
     return (
         <DashboardModal
@@ -38,4 +38,4 @@ const CalenderHolidayModal = () => {
     );
 };
 
-export default CalenderHolidayModal;
+export default HolidayModal;
