@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ReportsModal } from "../../../components"
+import { GenerateReportModal } from "../../../components"
 const Reports = () => {
 
     const requests = [
@@ -42,7 +42,7 @@ const Reports = () => {
 
     return (
         <div>
-            <ReportsModal />
+            <GenerateReportModal />
         </div>
     )
 }

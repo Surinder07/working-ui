@@ -3,7 +3,7 @@ import {useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 
-const RequestsModal = (props) => {
+const EditRequestsModal = (props) => {
 
     return (
         <DashboardModal
@@ -21,4 +21,4 @@ const RequestsModal = (props) => {
     );
 };
 
-export default RequestsModal;
+export default EditRequestsModal;

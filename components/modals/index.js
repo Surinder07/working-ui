@@ -2,14 +2,14 @@ import Modal from "./Modal";
 import NewRoleModal from "./NewRoleModal";
 import NewShiftModal from "./NewShiftModal";
 import EditTimesheetModal from "./EditTimesheetModal";
-import InviteUserModal from './InviteUserModal';
-import SuccessModal from './SuccessModal';
-import TermsAndPolicyModal from './TermsAndPolicyModal';
-import EmployeesModal from './EmployeesModal';
-import HolidayModal from './HolidayModal';
-import LocationModal from './LocationModal';
-import ReportsModal from './ReportsModal';
-import RequestModal from './RequestModal';
+import InviteUserModal from "./InviteUserModal";
+import SuccessModal from "./SuccessModal";
+import TermsAndPolicyModal from "./TermsAndPolicyModal";
+import EditShiftModal from "./EditShiftModal";
+import HolidayModal from "./HolidayModal";
+import LocationModal from "./LocationModal";
+import GenerateReportModal from "./GenerateReportModal";
+import EditRequestsModal from "./EditRequestModal";
 
 export {
     Modal,
@@ -19,9 +19,9 @@ export {
     InviteUserModal,
     SuccessModal,
     TermsAndPolicyModal,
-    EmployeesModal,
+    EditShiftModal,
     HolidayModal,
     LocationModal,
-    ReportsModal,
-    RequestModal
-}
+    GenerateReportModal,
+    EditRequestsModal,
+};
