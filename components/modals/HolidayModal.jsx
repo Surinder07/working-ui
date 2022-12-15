@@ -8,6 +8,31 @@ const HolidayModal = (props) => {
 
     const fileEndpoint = process.env.endpoints.resources.fileTemplate;
 
+    
+    const handleChange = (e) => {
+        if (e.target.files.length) {
+            handleUpload(e.target.files[0]);
+            /**
+            * @todo change image in user details
+            */
+        }
+    }
+
+    const handleUpload = async file => {
+        console.log('data received', file);
+        // const formData = new FormData();
+        // formData.append("image", image.raw);
+
+        // await fetch("YOUR_URL", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "multipart/form-data"
+        //     },
+        //     body: formData
+        // });
+    };
+
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -19,7 +44,7 @@ const HolidayModal = (props) => {
             <div className={`${DashboardModalStyles.singleColumn} ${DashboardModalStyles.uploadContainer}`}>
                 <CloudUpload className={DashboardModalStyles.icon} />
                 <label htmlFor="upload">Select file to Import</label>
-                <input type="file" id="upload" style={{ display: "none" }} />
+                <input type="file" id="upload" style={{ display: "none" }}  onChange={handleChange}/>
                 <p>
                         {`Download `}
                         <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'holiday', format:'xlsx'})}
