@@ -128,7 +128,8 @@ const ResetPasswordFinish = (props) => {
                 setShowError={setConfirmPasswordError}
                 style={{ marginTop: 0 }}
             />
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+             <div className={FullPageLayout.fakeDivforMobileView}></div>
+            <div className={FullPageLayout.errorAndButtonDiv}>
                 {submitError && <p className={FullPageLayout.errorText}>{submitErrorMessage}</p>}
                 <p>Return to <Link href="/login">Log in</Link></p>
                 <Button
