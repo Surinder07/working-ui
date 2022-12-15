@@ -9,7 +9,7 @@ import HolidayModal from "./HolidayModal";
 import LocationModal from "./LocationModal";
 import GenerateReportModal from "./GenerateReportModal";
 import EditRequestsModal from "./EditRequestModal";
-
+import CreateRequestModal from "./CreateRequestModal";
 export {
     NewRoleModal,
     NewShiftModal,
@@ -22,6 +22,7 @@ export {
     LocationModal,
     GenerateReportModal,
     EditRequestsModal,
+    CreateRequestModal
 };
 
 export * from './base';
