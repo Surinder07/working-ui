@@ -59,12 +59,12 @@ const DropDown = (props) => {
                 {
                     props.options.map((option, i) => (
                         <p key={i} onClick={() => {
-                            props.setValue(option);
-                            setDisplayValue(option);
+                            props.setValue(option.value);
+                            setDisplayValue(option.display);
                             props.setShowError && props.setShowError(false);
                             setOpen(!open)
                         }}
-                        >{option}</p>
+                        >{option.display}</p>
                     ))
                 }
             </div>

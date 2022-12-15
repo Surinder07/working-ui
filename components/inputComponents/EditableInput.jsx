@@ -11,7 +11,10 @@ import ToggleWithValue from './ToggleWithValue';
 const EditableInput = (props) => {
     return (
         <div className={`${EditableInputStyles.container} ${props.className}`}>
-            {props.label && <label htmlFor={props.label}>{props.label}</label>}
+            {props.label && <label htmlFor={props.label}>
+                {props.label}
+                {props.required && <span style={{color: '#CC5252'}}> *</span>}
+                </label>}
             {
                 (props.type === 'text' || props.type === 'password') &&
                 (

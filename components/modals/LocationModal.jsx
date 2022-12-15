@@ -49,6 +49,7 @@ const LocationModal = (props) => {
                 error={errorLocation}
                 setError={setErrorLocation}
                 label="Location"
+                required
                 editOn
             />
             <EditableInput
@@ -59,6 +60,8 @@ const LocationModal = (props) => {
                 error={errorTimezone}
                 setError={setErrorTimezone}
                 label="Timezone"
+                placeholder='Choose a timezone'
+                required
                 editOn
             />
         </DashboardModal>
