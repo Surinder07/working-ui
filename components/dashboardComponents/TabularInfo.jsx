@@ -73,7 +73,7 @@ const TabularInfo = (props) => {
                         noData ?
                             <p className={TabularInfoStyles.loadingText}>No data available</p> :
                             <>
-                                <Table data={props.data} actions={props.actions} ref={tableRef} />
+                                <Table data={props.data} actions={props.actions} ref={tableRef} pagination={props.pagination} />
                                 {
                                     props.pagination &&
                                     <Pagination

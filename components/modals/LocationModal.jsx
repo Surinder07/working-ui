@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
+import { dropdownService, locationAndRoleService } from "../../services";
 
 const LocationModal = (props) => {
+
+    const [timezones, setTimezones] = useState([]); // List to display
 
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
@@ -14,7 +17,22 @@ const LocationModal = (props) => {
     const [errorTimezone, setErrorTimezone] = useState({
         errorMessage: "",
         showError: false
-    })
+    });
+
+    useEffect(() => {   
+        dropdownService.getTimezones().then(res => setTimezones(res));
+    },[])
+
+    const saveData = () => {
+        // @todo validate form
+        locationAndRoleService.saveLocation(location, timezone)
+        .then(res => {
+            if (res.error) {
+                // @todo Add error
+            }
+        });
+    }
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -22,6 +40,7 @@ const LocationModal = (props) => {
             buttonText="Submit"
             title="Add New Location"
             type="singleCol"
+            onClick={saveData}
         >
             <EditableInput
                 type="text"
@@ -34,7 +53,7 @@ const LocationModal = (props) => {
             />
             <EditableInput
                 type="dropdown"
-                options={["India", "Canada", "Germany"]}
+                options={timezones}
                 value={timezone}
                 setValue={setTimezone}
                 error={errorTimezone}

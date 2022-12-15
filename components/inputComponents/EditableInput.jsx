@@ -16,7 +16,7 @@ const EditableInput = (props) => {
                 (props.type === 'text' || props.type === 'password') &&
                 (
                     props.editOn ?
-                        <InputBox name={props.label} inputType={2} type={props.type} value={props.value} /> :
+                        <InputBox name={props.label} inputType={2} type={props.type} value={props.value} setValue={props.setValue} /> :
                         <p>{props.value}</p>
                 )
             }
@@ -40,7 +40,7 @@ const EditableInput = (props) => {
                 props.type === 'dropdown' &&
                 (
                     props.editOn ?
-                        <DropDown options={props.options} defaultDisplay={props.value ? props.value : `${props.placeholder}`} setValue={props.setvalue} inputType={2} /> :
+                        <DropDown options={props.options} defaultDisplay={props.value ? props.value : `${props.placeholder}`} setValue={props.setValue} inputType={2} /> :
                         <p>{props.value}</p>
                 )
             }

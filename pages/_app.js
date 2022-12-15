@@ -10,7 +10,9 @@ function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        role: 'ADMIN'
+    });
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);
     const [pageInfo, setPageinfo] = useState({

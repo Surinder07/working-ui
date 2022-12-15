@@ -13,7 +13,146 @@ import {
     EditShiftModal,
     EditRequestsModal,
 } from "../../../components";
-import { BrandingWatermark } from "@mui/icons-material";
+
+const requestsData = [
+    {
+        requestId: "6476475",
+        requestType: "request",
+        initiationDate: "01/01/2023",
+        location: "Canada",
+        initiatedBy: "Rahul",
+        assignedTo: "Rajiv",
+        status: "xyz",
+    },
+    {
+        requestId: "6476476",
+        requestType: "request",
+        initiationDate: "01/02/2023",
+        location: "India",
+        initiatedBy: "Arpit",
+        assignedTo: "Sandeep",
+        status: "xyz",
+    },
+    {
+        requestId: "6476477",
+        requestType: "request",
+        initiationDate: "03/01/2023",
+        location: "USA",
+        initiatedBy: "Albert",
+        assignedTo: "Edward",
+        status: "xyz",
+    },
+    {
+        requestId: "6476478",
+        requestType: "request",
+        initiationDate: "02/02/2023",
+        location: "Mexico",
+        initiatedBy: "Ethan",
+        assignedTo: "Ishac",
+        status: "xyz",
+    },
+];
+
+const attendanceData = [
+    {
+        date: "01/01/2023",
+        inTime: "10:00 AM",
+        outTime: "05:00 PM",
+        inDate: "01/01/2023",
+        outDate: "01/01/2023",
+        duration: "7 Hrs",
+        entryType: "Entry",
+        comments: "N/A",
+    },
+    {
+        date: "01/01/2023",
+        inTime: "10:00 AM",
+        outTime: "05:00 PM",
+        inDate: "01/01/2023",
+        outDate: "01/01/2023",
+        duration: "7 Hrs",
+        entryType: "Entry",
+        comments: "N/A",
+    },
+    {
+        date: "01/01/2023",
+        inTime: "10:00 AM",
+        outTime: "05:00 PM",
+        inDate: "01/01/2023",
+        outDate: "01/01/2023",
+        duration: "7 Hrs",
+        entryType: "Entry",
+        comments: "N/A",
+    },
+    {
+        date: "01/01/2023",
+        inTime: "10:00 AM",
+        outTime: "05:00 PM",
+        inDate: "01/01/2023",
+        outDate: "01/01/2023",
+        duration: "7 Hrs",
+        entryType: "Entry",
+        comments: "N/A",
+    },
+];
+
+const shiftData = [
+    {
+        shiftdate: "01/01/2023",
+        shiftName: "Day",
+        startTime: "10:00 AM",
+        endTime: "05:00 PM",
+        workingHours: "7 Hrs",
+        status: "Status",
+        comments: "N/A",
+    },
+    {
+        shiftdate: "01/01/2023",
+        shiftName: "Day",
+        startTime: "10:00 AM",
+        endTime: "05:00 PM",
+        workingHours: "7 Hrs",
+        status: "Status",
+        comments: "N/A",
+    },
+    {
+        shiftdate: "01/01/2023",
+        shiftName: "Day",
+        startTime: "10:00 AM",
+        endTime: "05:00 PM",
+        workingHours: "7 Hrs",
+        status: "Status",
+        comments: "N/A",
+    },
+    {
+        shiftdate: "01/01/2023",
+        shiftName: "Day",
+        startTime: "10:00 AM",
+        endTime: "05:00 PM",
+        workingHours: "7 Hrs",
+        status: "Status",
+        comments: "N/A",
+    },
+];
+
+const preferences = {
+    mondayStartTime: '10:00',
+    mondayEndTime: '05:00',
+    tuesdayStartTime: '10:00',
+    tuesdayEndTime: '05:00',
+    wednesdayStartTime: '10:00',
+    wednesdayEndTime: '05:00',
+    thursdayStartTime: '10:00',
+    thursdayEndTime: '05:00',
+    fridayStartTime: '10:00',
+    fridayEndTime: '05:00',
+    satdayStartTime: '10:00',
+    satdayEndTime: '05:00',
+    sundayStartTime: '10:00',
+    sundayEndTime: '05:00',
+    wagesPerHour: 22.3,
+    wagesCurrency: 'CAD',
+}
 
 const Employees = (props) => {
 
@@ -25,6 +164,7 @@ const Employees = (props) => {
         mobile: "",
         country: "",
     });
+    const [userPreferences, setUserPreferences] = useState({});
     const [showModalTimeSheet, setShowModalTimeSheet] = useState(false);
     const [showModalShift, setShowModalShift] = useState(false);
     const [showModalRequest, setShowModalRequest] = useState(false);
@@ -39,6 +179,7 @@ const Employees = (props) => {
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",
         });
+
     }, []);
 
     useEffect(() => {
@@ -60,7 +201,7 @@ const Employees = (props) => {
                         break;
                     case 'shift':
                         setShowModalShift(true);
-                        BrandingWatermark;
+                        break;
                 }
             }
         }
@@ -73,127 +214,6 @@ const Employees = (props) => {
             setExpandedMenu(clickedMenu);
         }
     };
-
-    const requestsData = [
-        {
-            requestId: "6476475",
-            requestType: "request",
-            initiationDate: "01/01/2023",
-            location: "Canada",
-            initiatedBy: "Rahul",
-            assignedTo: "Rajiv",
-            status: "xyz",
-        },
-        {
-            requestId: "6476476",
-            requestType: "request",
-            initiationDate: "01/02/2023",
-            location: "India",
-            initiatedBy: "Arpit",
-            assignedTo: "Sandeep",
-            status: "xyz",
-        },
-        {
-            requestId: "6476477",
-            requestType: "request",
-            initiationDate: "03/01/2023",
-            location: "USA",
-            initiatedBy: "Albert",
-            assignedTo: "Edward",
-            status: "xyz",
-        },
-        {
-            requestId: "6476478",
-            requestType: "request",
-            initiationDate: "02/02/2023",
-            location: "Mexico",
-            initiatedBy: "Ethan",
-            assignedTo: "Ishac",
-            status: "xyz",
-        },
-    ];
-
-    const attendanceData = [
-        {
-            date: "01/01/2023",
-            inTime: "10:00 AM",
-            outTime: "05:00 PM",
-            inDate: "01/01/2023",
-            outDate: "01/01/2023",
-            duration: "7 Hrs",
-            entryType: "Entry",
-            comments: "N/A",
-        },
-        {
-            date: "01/01/2023",
-            inTime: "10:00 AM",
-            outTime: "05:00 PM",
-            inDate: "01/01/2023",
-            outDate: "01/01/2023",
-            duration: "7 Hrs",
-            entryType: "Entry",
-            comments: "N/A",
-        },
-        {
-            date: "01/01/2023",
-            inTime: "10:00 AM",
-            outTime: "05:00 PM",
-            inDate: "01/01/2023",
-            outDate: "01/01/2023",
-            duration: "7 Hrs",
-            entryType: "Entry",
-            comments: "N/A",
-        },
-        {
-            date: "01/01/2023",
-            inTime: "10:00 AM",
-            outTime: "05:00 PM",
-            inDate: "01/01/2023",
-            outDate: "01/01/2023",
-            duration: "7 Hrs",
-            entryType: "Entry",
-            comments: "N/A",
-        },
-    ];
-
-    const shiftData = [
-        {
-            shiftdate: "01/01/2023",
-            shiftName: "Day",
-            startTime: "10:00 AM",
-            endTime: "05:00 PM",
-            workingHours: "7 Hrs",
-            status: "Status",
-            comments: "N/A",
-        },
-        {
-            shiftdate: "01/01/2023",
-            shiftName: "Day",
-            startTime: "10:00 AM",
-            endTime: "05:00 PM",
-            workingHours: "7 Hrs",
-            status: "Status",
-            comments: "N/A",
-        },
-        {
-            shiftdate: "01/01/2023",
-            shiftName: "Day",
-            startTime: "10:00 AM",
-            endTime: "05:00 PM",
-            workingHours: "7 Hrs",
-            status: "Status",
-            comments: "N/A",
-        },
-        {
-            shiftdate: "01/01/2023",
-            shiftName: "Day",
-            startTime: "10:00 AM",
-            endTime: "05:00 PM",
-            workingHours: "7 Hrs",
-            status: "Status",
-            comments: "N/A",
-        },
-    ];
 
     const getExpandableData = (title, data, actions) => {
         return (
@@ -212,6 +232,10 @@ const Employees = (props) => {
             </DashboardCard>
         );
     };
+
+    const getPreferenesData = () => {
+
+    }
 
     return (
         <>
@@ -252,23 +276,23 @@ const Employees = (props) => {
                 <div className={DashboardStyles.personalContainer}>
                     <ProfileImage size="big" />
                     <div className={DashboardStyles.personalContent}>
-                        <EditableInput label="First Name" type="text" editOn />
-                        <EditableInput label="Last Name" type="text" editOn />
+                        <EditableInput label="First Name" type="text" editOn={editOn} />
+                        <EditableInput label="Last Name" type="text" editOn={editOn} />
                         <EditableInput
                             label="Mobile"
                             type="mobile"
                             value={mobile}
                             setValue={setMobile}
-                            editOn
+                            editOn={editOn}
                         />
-                        <EditableInput label="Email" type="text" editOn />
-                        <EditableInput label="Employee Id" type="text" editOn />
-                        <EditableInput label="Location" type="text" editOn />
-                        <EditableInput label="Role" type="text" editOn />
+                        <EditableInput label="Email" type="text" editOn={editOn} />
+                        <EditableInput label="Employee Id" type="text" editOn={editOn} />
+                        <EditableInput label="Location" type="text" editOn={editOn} />
+                        <EditableInput label="Role" type="text" editOn={editOn} />
                         <EditableInput
                             label="Employee type"
                             type="text"
-                            editOn
+                            editOn={editOn}
                         />
                     </div>
                 </div>

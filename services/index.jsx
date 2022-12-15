@@ -1,2 +1,3 @@
-export * as userService from './user.service';
-export * as dropdownService from './dropdown.service';
+export *  from './user.service';
+export * from './dropdown.service';
+export * from './locationAndRole.service';
