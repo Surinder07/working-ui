@@ -5,6 +5,7 @@ import { WaawHead, TopLoader } from '../components';
 import { secureLocalStorage } from '../helpers';
 import { userService } from '../services/user.service';
 import { NavFooterPageLayout, DashboardLayout } from '../layouts';
+import { Toaster } from '../components';
 
 function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
@@ -22,6 +23,12 @@ function MyApp({ Component, pageProps }) {
         activeMenu: 'none',
         activeSubMenu: 'none'
     });
+    const [toasterInfo, setToasterInfo] = useState({
+        error: false,
+        title: '',
+        message: ''
+    })
+    const [showToaster, setShowToaster] = useState(false);
 
     const getActiveMenuFromPath = (path) => {
         if (path.includes('why-waaw')) {
@@ -30,6 +37,16 @@ function MyApp({ Component, pageProps }) {
             return 'PRICING';
         } else return 'none';
     }
+
+    useEffect(() => {
+        if (toasterInfo.title !== '') {
+            setShowToaster(true);
+            const timer = setTimeout(() => {
+                setShowToaster(false);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [toasterInfo])
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -103,6 +120,7 @@ function MyApp({ Component, pageProps }) {
             setToken={setToken}
             pageInfo={pageInfo}
             setPageInfo={setPageinfo}
+            setToasterInfo={setToasterInfo}
         />
     }
 
@@ -111,6 +129,12 @@ function MyApp({ Component, pageProps }) {
             <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
+                <Toaster
+                    style={{ display: showToaster ? 'grid' : 'none' }}
+                    error={toasterInfo.error}
+                    title={toasterInfo.title}
+                    message={toasterInfo.message}
+                />
                 {
                     pageInfo.pageView === 'loggedOut' &&
                     <NavFooterPageLayout

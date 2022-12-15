@@ -19,18 +19,24 @@ const LocationModal = (props) => {
         showError: false
     });
 
-    useEffect(() => {   
+    useEffect(() => {
         dropdownService.getTimezones().then(res => setTimezones(res));
-    },[])
+    }, [])
 
     const saveData = () => {
         // @todo validate form
         locationAndRoleService.saveLocation(location, timezone)
-        .then(res => {
-            if (res.error) {
-                // @todo Add error
-            }
-        });
+            .then(res => {
+                if (res.error) {
+                    // @todo Add error
+                } else {
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'Location added successfully'
+                    });
+                }
+            });
     }
 
     return (

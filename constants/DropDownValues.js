@@ -37,6 +37,12 @@ export const DaysOfWeekShort = [
     'Sun'
 ];
 
-export const hours = Array.from(Array(24).keys());
+export const hours = Array.from(Array(24).keys())
+    .map(str => {
+        return { display: str, value: str }
+    });
 
-export const minutes = Array.from(Array(60).keys());
+export const minutes = Array.from(Array(60).keys())
+    .map(str => {
+        return { display: str, value: str }
+    });

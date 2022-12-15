@@ -2,23 +2,24 @@ import { useState, useEffect, useRef } from 'react';
 import { TabularInfoStyles } from '../../styles/elements';
 import Pagination from './Pagination';
 import { SearchBar } from '../inputComponents';
-import { FilterAlt, ExpandMore, ExpandLess } from '@mui/icons-material';
+import { FilterAlt, ExpandMore, ExpandLess, Edit } from '@mui/icons-material';
 import Table from './Table';
 
 const TabularInfo = (props) => {
 
     const [noData, setNoData] = useState(false);
     const [pageNo, setPageNo] = useState(1);
-    const [tableHeight, setTableHeight] = useState('50px');
+    const [tableHeight, setTableHeight] = useState('450px');
 
     const tableRef = useRef();
     const searchRef = useRef();
     const filterRef = useRef();
+    const editRef = useRef();
 
     useEffect(() => {
         if (tableRef.current) {
-            setTableHeight(`${tableRef.current.clientHeight + 50}px`);
-        } else {
+            setTableHeight(`${tableRef.current.clientHeight + (props.pagination ? 50 : 0)}px`);
+        } else if (props.data) {
             setTableHeight('50px')
         }
     }, [tableRef.current]);
@@ -31,8 +32,10 @@ const TabularInfo = (props) => {
     }, [props.data]);
 
     const toggleExpansion = (e) => {
-        if (props.expandable && (searchRef.current || filterRef.current)) {
-            if ((searchRef.current && searchRef.current.contains(e.target)) || (filterRef.current && filterRef.current.contains(e.target))) {
+        if (props.expandable && (searchRef.current || filterRef.current || editRef.current)) {
+            if ((searchRef.current && searchRef.current.contains(e.target)) ||
+                (filterRef.current && filterRef.current.contains(e.target)) ||
+                (editRef.current && editRef.current.contains(e.target))) {
                 return;
             } else props.toggleExpansion();
         }
@@ -42,11 +45,24 @@ const TabularInfo = (props) => {
     return (
         <div className={TabularInfoStyles.tableContainer}>
             <div className={TabularInfoStyles.header} style={props.expandable && { cursor: 'pointer' }} onClick={toggleExpansion}>
-                <div style={props.expandable && { paddingLeft: '40px', position: 'relative' }}>
+                <div style={{ paddingLeft: props.expandable ? '40px' : '0' }}>
                     {props.expandable && (props.expanded ? <ExpandLess className={TabularInfoStyles.dropDownIcon} /> :
                         <ExpandMore className={TabularInfoStyles.dropDownIcon} />)}
                     {props.title && <h2>{props.title}</h2>}
                     {props.description && <h4>{props.description}</h4>}
+                    {
+                        props.isEditable && props.expanded &&
+                        <div className={TabularInfoStyles.editOption} ref={editRef}>
+                            {
+                                props.editOn ?
+                                    <>
+                                        <p style={{ color: '#CC5252' }} onClick={() => props.setEditOn(false)}>Cancel</p>
+                                        <p style={{ color: '#2996C3' }}>Save</p>
+                                    </> :
+                                    <p style={{ color: '#2996C3' }} onClick={() => props.setEditOn(true)}><Edit className={TabularInfoStyles.editIcon} /> Edit</p>
+                            }
+                        </div>
+                    }
                 </div>
                 <div className={TabularInfoStyles.searchFilterContainer}>
                     {
@@ -86,7 +102,9 @@ const TabularInfo = (props) => {
                                 }
                             </>
                         :
-                        <p className={TabularInfoStyles.loadingText}>Loading...</p>
+                        props.children ?
+                            props.children :
+                            <p className={TabularInfoStyles.loadingText}>Loading...</p>
                 }
             </div>
         </div>
