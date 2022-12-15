@@ -58,6 +58,9 @@ const nextConfig = {
             },
             dropdown: {
                 getTimezones: '/v1/unAuth/timezone/get'
+            },
+            resources: {
+                fileTemplate: '/v1/unAuth/resource/downloadFile'
             }
         }
     }

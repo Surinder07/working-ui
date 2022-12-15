@@ -46,7 +46,7 @@ const Table = (props, ref) => {
     return (
         <div className={TableStyles.table} style={{gridTemplateColumns: `repeat(${colNum}, auto)`}} ref={ref}>
             {/* headers */}
-            {props.data[0].subData && <div className={TableStyles.headerCell}></div>}
+            {props.data[0].subData && <div className={TableStyles.headerCell}></div>}{/* An empty header for expand button in the body below */}
             {displayHeaders.map((head, i) => (
                 <div className={TableStyles.headerCell} key={`head_${i}`}>
                     {head}
@@ -58,7 +58,7 @@ const Table = (props, ref) => {
             {props.data.map((row, i) => (
                 <>
                     {row.subData && (
-                        <div key={`expand${i}`} className={TableStyles.bodyCell}>
+                        <div key={`expand_${i}`} className={TableStyles.bodyCell}>
                             {expanded === i + 1 ? (
                                 <RemoveCircleOutline className={TableStyles.expandIcons} onClick={() => setExpanded(0)} />
                             ) : (

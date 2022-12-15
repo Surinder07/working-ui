@@ -7,13 +7,13 @@ const { publicRuntimeConfig } = getConfig();
 const baseUrl = publicRuntimeConfig.apiUrl;
 
 const getApiUrl = (endpoint, queryMap) => {
-    let queryString = '';
+    const queries = [];
     if (queryMap) {
         Object.entries(queryMap).map(query => (
-            queryString = queryString === '' ? queryString + query[0] + '=' + query[1] : '&' + queryString + query[0] + '=' + query[1]
+            queries.push(query[0] + '=' + query[1])
         ));
     }
-    return `${baseUrl}${endpoint}${queryString !== '' ? `?${queryString}` : ''}`;
+    return `${baseUrl}${endpoint}${queries.length > 0 ? `?${queries.join('&')}` : ''}`;
 }
 
 const get = async (url) => {

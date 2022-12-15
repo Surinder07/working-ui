@@ -3,8 +3,12 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { CloudUpload } from "@mui/icons-material";
+import { fetchWrapper } from "../../helpers";
+import Link from 'next/link';
 
 const InviteUserModal = (props) => {
+    
+    const fileEndpoint = process.env.endpoints.resources.fileTemplate;
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [employeeId, setEmployeeId] = useState("");
@@ -12,7 +16,6 @@ const InviteUserModal = (props) => {
     const [typeOfEmployee, setTypeOfEmployee] = useState("");
     const [location, setLocation] = useState("");
     const [toggleValue, setToggleValue] = useState("Permanent");
-
     const [errorFirstName, setErrorFirstName] = useState({
         errorMessage: "",
         showError: false,
@@ -41,6 +44,7 @@ const InviteUserModal = (props) => {
         errorMessage: "",
         showError: false,
     });
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -55,7 +59,15 @@ const InviteUserModal = (props) => {
                     <label htmlFor="upload">Select file to Import</label>
                     <input type="file" id="upload" style={{ display: "none" }} />
                     <p>Must be .xlsx or .csv file using our email template</p>
-                    <p>Click <span className={DashboardModalStyles.download}>here</span> to download template</p>
+                    <p>
+                        {`Download `}
+                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'xlsx'})}
+                            className={DashboardModalStyles.download} target='_blank'>xlsx</Link>
+                        {` or `}
+                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'csv'})}
+                            className={DashboardModalStyles.download}>csv</Link>
+                        {` template here`}
+                    </p>
                 </div>
                 <p className={DashboardModalStyles.seperator}>— OR —</p>
             </div>
