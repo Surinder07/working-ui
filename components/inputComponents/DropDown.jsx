@@ -8,7 +8,7 @@ const DropDown = (props) => {
 
     const [displayValue, setDisplayValue] = useState(props.defaultDisplay);
     const [open, setOpen] = useState(false);
-    const [openDown, setOpenDown] = useState(true);
+    const [openDown, setOpenDown] = useState(props.openUp ? false : true);
     const [inputHeight, setInputHeight] = useState(0);
 
     useEffect(() => {
@@ -33,10 +33,12 @@ const DropDown = (props) => {
     }
 
     const onClick = () => {
-        if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
-            setOpenDown(false);
-        if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
-            setOpenDown(true);
+        if (!props.openUp) {
+            if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
+                setOpenDown(false);
+            if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
+                setOpenDown(true);
+        }
         setOpen(!open);
     }
 

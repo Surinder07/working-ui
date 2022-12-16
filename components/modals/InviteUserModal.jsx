@@ -45,6 +45,30 @@ const InviteUserModal = (props) => {
         showError: false,
     });
 
+
+    const handleChange = (e) => {
+        if (e.target.files.length) {
+            handleUpload(e.target.files[0]);
+            /**
+            * @todo change image in user details
+            */
+        }
+    }
+
+    const handleUpload = async file => {
+        console.log('data received', file);
+        // const formData = new FormData();
+        // formData.append("image", image.raw);
+
+        // await fetch("YOUR_URL", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "multipart/form-data"
+        //     },
+        //     body: formData
+        // });
+    };
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -57,7 +81,7 @@ const InviteUserModal = (props) => {
                 <div className={`${DashboardModalStyles.uploadContainer}`}>
                     <CloudUpload className={DashboardModalStyles.icon} />
                     <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{ display: "none" }} />
+                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleChange} />
                     <p>Must be .xlsx or .csv file using our email template</p>
                     <p>
                         {`Download `}

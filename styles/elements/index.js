@@ -1,6 +1,7 @@
 import HamburgerStyles from './Hamburger.module.css';
+import ToasterStyles from './Toaster.module.css';
 
-export { HamburgerStyles };
+export { HamburgerStyles, ToasterStyles };
 
 export * from './inputs';
 export * from './dashboardStyles';

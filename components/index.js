@@ -2,12 +2,14 @@ import Card from './Card';
 import ComingSoonEl from './ComingSoonEl';
 import LinkedImage from './LinkedImage';
 import PasswordPolicy from './PasswordPolicy';
+import Toaster from './Toaster';
 
 export {
     Card,
     ComingSoonEl,
     LinkedImage,
-    PasswordPolicy
+    PasswordPolicy,
+    Toaster
 }
 
 export * from './dashboardComponents';
