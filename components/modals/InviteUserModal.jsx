@@ -16,6 +16,15 @@ const InviteUserModal = (props) => {
     const [typeOfEmployee, setTypeOfEmployee] = useState("");
     const [location, setLocation] = useState("");
     const [toggleValue, setToggleValue] = useState("Permanent");
+    const [initialFirstName,setInitialFirstName] = useState("")
+    const [initialLastName,setInitialLastName] = useState("")
+    const [initialEmployeeId,setInitialEmployeeId] = useState("")
+    const [initialEmail,setInitialEmail] = useState("")
+    const [initialTypeOfEmployee,setInitialTypeOfEmployee] = useState("")
+    const [initialLocation,setInitialLocation] = useState("")
+    const [initialToggleValue,setInitialToggleValue] = useState("Permanent")
+
+
     const [errorFirstName, setErrorFirstName] = useState({
         errorMessage: "",
         showError: false,
@@ -45,8 +54,46 @@ const InviteUserModal = (props) => {
         showError: false,
     });
 
+    const onCancel = () => {
+        setFirstName("")
+        setLastName("")
+        setEmployeeId("")
+        setEmail("")
+        setTypeOfEmployee("")
+        setLocation("")
+        setToggleValue("Permanent")
+        setErrorFirstName({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorLastName({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorEmployeeId({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorEmail({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorTypeOfEmployee({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorLocation({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorToggleValue({
+            errorMessage: "",
+            showError: false
+        })
+    }
 
-    const handleChange = (e) => {
+
+    const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
             /**
@@ -76,12 +123,13 @@ const InviteUserModal = (props) => {
             buttonText="Submit"
             title="Invite User"
             type="twoColWide"
+            onCancel={onCancel}
         >
             <div className={DashboardModalStyles.singleColumn}>
                 <div className={`${DashboardModalStyles.uploadContainer}`}>
                     <CloudUpload className={DashboardModalStyles.icon} />
                     <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleChange} />
+                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleFileChange} />
                     <p>Must be .xlsx or .csv file using our email template</p>
                     <p>
                         {`Download `}
@@ -100,6 +148,7 @@ const InviteUserModal = (props) => {
                 label="First Name"
                 value={firstName}
                 setValue={setFirstName}
+                initialValue={initialFirstName}
                 error={errorFirstName}
                 setError={setErrorFirstName}
                 required
@@ -110,6 +159,7 @@ const InviteUserModal = (props) => {
                 label="Last Name"
                 value={lastName}
                 setValue={setLastName}
+                initialValue={initialLastName}
                 error={errorLastName}
                 setError={setErrorLastName}
                 required
@@ -120,6 +170,7 @@ const InviteUserModal = (props) => {
                 label="External Employee ID"
                 value={employeeId}
                 setValue={setEmployeeId}
+                initialValue={initialEmployeeId}
                 error={errorEmployeeId}
                 setError={setErrorEmployeeId}
                 editOn
@@ -129,6 +180,7 @@ const InviteUserModal = (props) => {
                 label="Email Address"
                 value={email}
                 setValue={setEmail}
+                initialValue={initialEmail}
                 error={errorEmail}
                 setError={setErrorEmail}
                 editOn
@@ -139,6 +191,7 @@ const InviteUserModal = (props) => {
                 label="Type of Employee"
                 value={typeOfEmployee}
                 setValue={setTypeOfEmployee}
+                initialValue={initialTypeOfEmployee}
                 error={errorTypeOfEmployee}
                 setError={setErrorTypeOfEmployee}
                 required
@@ -150,6 +203,7 @@ const InviteUserModal = (props) => {
                 label="Location"
                 value={location}
                 setValue={setLocation}
+                initialValue={initialLocation}
                 error={errorLocation}
                 setError={setErrorLocation}
                 required
@@ -160,6 +214,7 @@ const InviteUserModal = (props) => {
                 options={["Permanent", "Part Time"]}
                 value={toggleValue}
                 setValue={setToggleValue}
+                initialValue={initialToggleValue}
                 error={errorToggleValue}
                 setError={setErrorToggleValue}
                 editOn

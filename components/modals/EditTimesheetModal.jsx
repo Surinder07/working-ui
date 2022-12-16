@@ -10,6 +10,12 @@ const EditTimesheetModal = (props) => {
     const [inTime, setInTime] = useState("");
     const [outTime, setOutTime] = useState("");
     const [comment, setComment] = useState("");
+
+    const [initialInDate,setInitialInDate] = useState("");
+    const [initialOutDate,setInitialOutDate] = useState("");
+    const [initialInTime,setInitialInTime] = useState("");
+    const [initialOutTime,setInitialOutTime] = useState("");
+    const [initialComment,setInitialComment] = useState("");
     const [inTimeError, setInTimeError] = useState({
         errorMessage: "",
         showError: false,
@@ -22,6 +28,27 @@ const EditTimesheetModal = (props) => {
         errorMessage: "",
         showError: false,
     });
+
+    const onCancel = () => {
+        setInDate("")
+        setOutDate("")
+        setInTime("")
+        setOutTime("")
+        setComment("")
+        setInTimeError({
+            errorMessage: "",
+            showError: false
+        })
+        setOutTimeError({
+            errorMessage: "",
+            showError: false
+        })
+        setCommentError({
+            errorMessage: "",
+            showError: false
+        })
+    }
+
     return (
         <div>
             <DashboardModal
@@ -30,12 +57,14 @@ const EditTimesheetModal = (props) => {
                 buttonText="Submit"
                 title="Edit Time Sheet"
                 type="twoColNarrow"
+                onCancel={onCancel}
             >
                 <EditableInput
                     type="date"
                     label="In Date"
                     value={inDate}
                     setValue={setInDate}
+                    initialValue={initialInDate}
                     editOn
                 />
                 <EditableInput
@@ -43,6 +72,7 @@ const EditTimesheetModal = (props) => {
                     label="Out Date"
                     value={outDate}
                     setValue={setOutDate}
+                    initialValue={initialOutDate}
                     editOn
                 />
                 <EditableInput
@@ -50,6 +80,7 @@ const EditTimesheetModal = (props) => {
                     label="In Time"
                     value={inTime}
                     setValue={setInTime}
+                    initialValue={initialInTime}
                     error={inTimeError}
                     setError={setInTimeError}
                     editOn
@@ -59,6 +90,7 @@ const EditTimesheetModal = (props) => {
                     label="Out Time"
                     value={outTime}
                     setValue={setOutTime}
+                    initialValue={initialOutTime}
                     error={outTimeError}
                     setError={setOutTimeError}
                     editOn
@@ -69,6 +101,7 @@ const EditTimesheetModal = (props) => {
                     className={DashboardModalStyles.singleColumn}
                     value={comment}
                     setValue={setComment}
+                    initialValue={initialComment}
                     error={commentError}
                     setError={setCommentError}
                     required

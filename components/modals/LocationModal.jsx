@@ -10,6 +10,8 @@ const LocationModal = (props) => {
 
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
+    const [initialLocation,setInitialLocation] = useState('');
+    const [initialTimezone,setInitialTimezone] = useState('');
     const [errorLocation, setErrorLocation] = useState({
         errorMessage: "",
         showError: false
@@ -18,6 +20,19 @@ const LocationModal = (props) => {
         errorMessage: "",
         showError: false
     });
+
+    const onCancel = () => {
+        setLocation("")
+        setTimezone("")
+        setErrorLocation({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorTimezone({
+            errorMessage: "",
+            showError: false
+        })
+    }
 
     useEffect(() => {
         dropdownService.getTimezones().then(res => setTimezones(res));
@@ -48,11 +63,13 @@ const LocationModal = (props) => {
             title="Add New Location"
             type="singleCol"
             onClick={saveData}
+            onCancel={onCancel}
         >
             <EditableInput
                 type="text"
                 value={location}
                 setValue={setLocation}
+                initialValue={initialLocation}
                 error={errorLocation}
                 setError={setErrorLocation}
                 label="Location"
@@ -64,6 +81,7 @@ const LocationModal = (props) => {
                 options={timezones}
                 value={timezone}
                 setValue={setTimezone}
+                initialValue={initialTimezone}
                 error={errorTimezone}
                 setError={setErrorTimezone}
                 label="Timezone"

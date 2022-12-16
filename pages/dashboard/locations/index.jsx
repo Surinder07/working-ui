@@ -23,7 +23,7 @@ const Locations = (props) => {
     }, []);
 
     useEffect(() => {
-        fetchData();        
+        fetchData();
     }, [pageNo, pageSize]);
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Locations = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Locations' />
-            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData}/>
+            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>

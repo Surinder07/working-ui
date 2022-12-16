@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardCard, TabularInfo, WaawNoIndexHead } from "../../../components";
 import { DashboardStyles } from "../../../styles/pages";
 
@@ -39,7 +39,7 @@ const actions = {
 }
 
 const Notifications = (props) => {
-
+ const [data,setData] = useState(notifications)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -59,7 +59,7 @@ const Notifications = (props) => {
                 <TabularInfo
                     title='Invoices'
                     description='Tabular list of all current invoices status.'
-                    data={notifications}
+                    data={data}
                     actions={actions}
                     pagination
                 />
