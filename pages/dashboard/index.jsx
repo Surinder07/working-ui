@@ -1,21 +1,9 @@
-import { useEffect } from 'react';
-import { DashboardStyles } from '../../styles/pages';
-import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead } from '../../components';
-import { pieConfig, areaConfig } from '../../constants';
-import { Pie, Line } from 'react-chartjs-2';
-import {
-    Chart,
-    ArcElement,
-    Legend,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Filler,
-    Tooltip,
-    Title,
-    SubTitle
-} from 'chart.js';
+import {useEffect} from "react";
+import {DashboardStyles} from "../../styles/pages";
+import {InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead} from "../../components";
+import {pieConfig, areaConfig} from "../../constants";
+import {Pie, Line} from "react-chartjs-2";
+import {Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle} from "chart.js";
 
 const Dashboard = (props) => {
     useEffect(() => {
@@ -30,14 +18,17 @@ const Dashboard = (props) => {
     Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 
     const getBlueBgList = (length) => {
-        var result = [], left = 0.1, right = 1, delta = (right - left) / (length - 1);
+        var result = [],
+            left = 0.1,
+            right = 1,
+            delta = (right - left) / (length - 1);
         while (left < right) {
             result.push(left);
             left += delta;
         }
         result.push(right);
-        return result.map(alpha => `rgba(41, 150, 195, ${alpha})`);
-    }
+        return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
+    };
 
     const invoices = [
         {
@@ -69,87 +60,136 @@ const Dashboard = (props) => {
         },
     ];
 
-    const months = ['Jan', 'Feb', "Mar", 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const shifts = [
+        {
+            Id: "8977890",
+            employeeName: "xyzabc",
+            employeeEmail: "XYZABC@GMAIL.COM",
+            locationName: "ABC",
+            shiftStartTime: "HH:MM",
+            shiftEndTime: "HH:MM",
+        },
+        {
+            Id: "8977890",
+            employeeName: "xyzabc",
+            employeeEmail: "XYZABC@GMAIL.COM",
+            locationName: "ABC",
+            shiftStartTime: "HH:MM",
+            shiftEndTime: "HH:MM",
+        },
+        {
+            Id: "8977890",
+            employeeName: "xyzabc",
+            employeeEmail: "XYZABC@GMAIL.COM",
+            locationName: "ABC",
+            shiftStartTime: "HH:MM",
+            shiftEndTime: "HH:MM",
+        },
+    ];
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     const invoice = {
         labels: months,
         datasets: [
             {
                 fill: true,
-                label: 'Invoices (Current Year)',
+                label: "Invoices (Current Year)",
                 data: [300, 600, 100, 900, 250, 500],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.1)',
+                borderColor: "rgb(53, 162, 235)",
+                backgroundColor: "rgba(53, 162, 235, 0.1)",
                 lineTension: 0.4,
                 radius: 6,
                 pointRadius: 3,
-                pointHoverRadius: 6
+                pointHoverRadius: 6,
             },
             {
                 fill: true,
-                label: 'Invoices (Previous Year)',
+                label: "Invoices (Previous Year)",
                 data: [310, 620, 80, 700, 350, 200, 400, 343, 200, 100, 400],
-                borderColor: 'rgb(223, 224, 235)',
-                backgroundColor: 'rgba(223, 224, 235, 0.3)',
+                borderColor: "rgb(223, 224, 235)",
+                backgroundColor: "rgba(223, 224, 235, 0.3)",
                 lineTension: 0.4,
                 radius: 6,
                 pointRadius: 3,
-                pointHoverRadius: 6
-            }
-        ]
-    }
+                pointHoverRadius: 6,
+            },
+        ],
+    };
 
     const employeeData = [
         {
-            location: 'Starbucks',
-            employees: 31
+            location: "Starbucks",
+            employees: 31,
         },
         {
-            location: 'Baristas',
-            employees: 20
+            location: "Baristas",
+            employees: 20,
         },
         {
-            location: 'Mr Crabs',
-            employees: 52
+            location: "Mr Crabs",
+            employees: 52,
         },
         {
-            location: 'Chai Point',
-            employees: 8
-        }
-    ]
+            location: "Chai Point",
+            employees: 8,
+        },
+    ];
 
     const employees = {
-        labels: employeeData.map(emp => emp.location),
-        datasets: [{
-            label: 'Total Employees',
-            data: employeeData.map(emp => emp.employees),
-            backgroundColor: getBlueBgList(employeeData.length),
-            hoverOffset: 4
-        }]
+        labels: employeeData.map((emp) => emp.location),
+        datasets: [
+            {
+                label: "Total Employees",
+                data: employeeData.map((emp) => emp.employees),
+                backgroundColor: getBlueBgList(employeeData.length),
+                hoverOffset: 4,
+            },
+        ],
+    };
+
+    const getTitle = () => {
+        if (props.user.role === "ADMIN" || props.user.role === "EMPLOYEES") {
+            return "Invoices";
+        } else {
+            return "Schedule shift for today";
+        }
+    };
+
+    const getDescription = () => {
+        if (props.user.role === "ADMIN" || props.user.role === "EMPLOYEES") {
+            return "Tabular list of the current invoice status.";
+        }
+    };
+
+    const getData = () => {
+        if (props.user.role === "ADMIN" || props.user.role === "EMPLOYEES") return invoices;
+        else if (props.user.role === "MANAGER") return shifts;
     };
 
     return (
         <>
-            <WaawNoIndexHead title='Dashboard' />
+            <WaawNoIndexHead title="Dashboard" />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Overview and Analytics</h1>
             </div>
             <InfoTileBanner />
-            <DashboardCard style={{ marginTop: "20px" }} >
-                {/* //   showOptions> */}
-                <TabularInfo title="Invoices" description="Tabular list of all WAAW invoices with status." data={invoices} />
+            <DashboardCard style={{marginTop: "20px"}}>
+                <TabularInfo title={getTitle()} description={getDescription()} data={getData()} showFilter={props.user.role === "EMPLOYEES"} showSearch={props.user.role === "EMPLOYEES"} />
             </DashboardCard>
-            <DashboardCard style={{
-                marginTop: "20px",
-                display: 'grid',
-                gridTemplateColumns: '3fr 2fr',
-                // columnGap: '20px'
-            }} >
-                <div style={{height: '100%'}}>
-                    <Line data={invoice} options={areaConfig('Invoice Trends', 'Current Year ( 2022-2023 )')} />
+            <DashboardCard
+                style={{
+                    marginTop: "20px",
+                    display: "grid",
+                    gridTemplateColumns: "3fr 2fr",
+                    // columnGap: '20px'
+                }}
+            >
+                <div style={{height: "100%"}}>
+                    <Line data={invoice} options={areaConfig("Invoice Trends", "Current Year ( 2022-2023 )")} />
                 </div>
                 <div style={{}}>
-                    <Pie data={employees} options={pieConfig('Employee Trends', 'Current Year ( 2022-2023 )', 'Month', 'Invoice Amount')} />
+                    <Pie data={employees} options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
                 </div>
             </DashboardCard>
         </>

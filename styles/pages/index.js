@@ -1,5 +1,6 @@
-import PageStyles from './Pages.module.css';
+import PageStyles from "./Pages.module.css";
+import PaymentStyles from "./Payment.module.css";
+export {PageStyles, PaymentStyles};
 
-export { PageStyles };
-export * from './dashboard';
-export * from './nonLoggedIn';
+export * from "./dashboard";
+export * from "./nonLoggedIn";
