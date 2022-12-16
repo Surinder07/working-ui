@@ -15,7 +15,7 @@ import {
     EmployeePreference,
 } from "../../../components";
 
-const requestsData = [
+const requestsD = [
     {
         requestId: "6476475",
         requestType: "request",
@@ -54,7 +54,7 @@ const requestsData = [
     },
 ];
 
-const attendanceData = [
+const attendanceD = [
     {
         date: "01/01/2023",
         inTime: "10:00 AM",
@@ -97,7 +97,7 @@ const attendanceData = [
     },
 ];
 
-const shiftData = [
+const shiftD = [
     {
         shiftdate: "01/01/2023",
         shiftName: "Day",
@@ -158,7 +158,9 @@ const preferences = {
 const Employees = (props) => {
 
     const router = useRouter();
-
+    const [attendanceData,setAttendanceData] = useState(attendanceD)
+    const [shiftData,setShiftData] = useState(shiftD)
+    const [requestsData,setRequestsData] = useState(requestsD)
     const [userId, setUserId] = useState("");
     const [mobile, setMobile] = useState({
         countryCode: "",
@@ -277,16 +279,19 @@ const Employees = (props) => {
             <EditTimesheetModal
                 showModal={showModalTimeSheet}
                 setShowModal={setShowModalTimeSheet}
+                setToasterInfo={props.setToasterInfo}
                 id={editId}
             />
             <EditShiftModal
                 showModal={showModalShift}
                 setShowModal={setShowModalShift}
+                setToasterInfo={props.setToasterInfo}
                 id={editId}
             />
             <EditRequestsModal
                 showModal={showModalRequest}
                 setShowModal={setShowModalRequest}
+                setToasterInfo={props.setToasterInfo}
                 id={editId}
             />
             <div className={DashboardStyles.dashboardTitles}>

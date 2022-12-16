@@ -2,8 +2,40 @@ import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal } from "../../../components";
 
+const locations = [
+    {
+        locationId: "6476475",
+        locatioName: "Canada",
+        creationDate: "01/01/2023",
+        timezone: "EST",
+        numberOfActiveEmployees: "200",
+        NumberOfInactiveEmployees: "25",
+        status: "xyz",
+    },
+    {
+        locationId: "6476475",
+        locatioName: "India",
+        creationDate: "02/01/2023",
+        timezone: "IST",
+        numberOfActiveEmployees: "200",
+        NumberOfInactiveEmployees: "25",
+        status: "xyz",
+    },
+    {
+        locationId: "6476475",
+        locatioName: "Australia",
+        creationDate: "03/01/2023",
+        timezone: "EST",
+        numberOfActiveEmployees: "200",
+        NumberOfInactiveEmployees: "25",
+        status: "xyz",
+    }
+]
+
+
 const Locations = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [data,setData] = useState(locations)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -28,35 +60,6 @@ const Locations = (props) => {
         },
     ];
 
-    const locations = [
-        {
-            locationId: "6476475",
-            locatioName: "Canada",
-            creationDate: "01/01/2023",
-            timezone: "EST",
-            numberOfActiveEmployees: "200",
-            NumberOfInactiveEmployees: "25",
-            status: "xyz",
-        },
-        {
-            locationId: "6476475",
-            locatioName: "India",
-            creationDate: "02/01/2023",
-            timezone: "IST",
-            numberOfActiveEmployees: "200",
-            NumberOfInactiveEmployees: "25",
-            status: "xyz",
-        },
-        {
-            locationId: "6476475",
-            locatioName: "Australia",
-            creationDate: "03/01/2023",
-            timezone: "EST",
-            numberOfActiveEmployees: "200",
-            NumberOfInactiveEmployees: "25",
-            status: "xyz",
-        }
-    ]
 
     return (
         <>
@@ -70,7 +73,7 @@ const Locations = (props) => {
                 <TabularInfo
                     title='Location Listing'
                     description='Tabular list of Locationwise employees.'
-                    data={locations}
+                    data={data}
                     pagination
                     actions={actions}
                 />

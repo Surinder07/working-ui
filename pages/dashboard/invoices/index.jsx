@@ -1,9 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardStyles } from '../../../styles/pages';
 import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
 
-const Invoices = (props) => {
+const invoices = [
+    {
+        invoiceId: '6476475',
+        service: 'One time register',
+        startDate: '-',
+        endDate: '-',
+        billingDate: '01/29/2022',
+        amount: '$960',
+        status: 'Paid',
+    },
+    {
+        invoiceId: '6476475',
+        service: 'Monthly Fees',
+        startDate: '01/01/2022',
+        endDate: '02/01/2022',
+        billingDate: '01/29/2022',
+        amount: '$200',
+        status: 'Paid',
+    },
+    {
+        invoiceId: '6476475',
+        service: 'Monthly Fees',
+        startDate: '02/01/2022',
+        endDate: '03/01/2022',
+        billingDate: '02/29/2022',
+        amount: '$250',
+        status: 'Due',
+    }
+]
 
+
+const Invoices = (props) => {
+const [data,setData] = useState(invoices)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -29,36 +60,7 @@ const Invoices = (props) => {
     ];
 
 
-    const invoices = [
-        {
-            invoiceId: '6476475',
-            service: 'One time register',
-            startDate: '-',
-            endDate: '-',
-            billingDate: '01/29/2022',
-            amount: '$960',
-            status: 'Paid',
-        },
-        {
-            invoiceId: '6476475',
-            service: 'Monthly Fees',
-            startDate: '01/01/2022',
-            endDate: '02/01/2022',
-            billingDate: '01/29/2022',
-            amount: '$200',
-            status: 'Paid',
-        },
-        {
-            invoiceId: '6476475',
-            service: 'Monthly Fees',
-            startDate: '02/01/2022',
-            endDate: '03/01/2022',
-            billingDate: '02/29/2022',
-            amount: '$250',
-            status: 'Due',
-        }
-    ]
-
+   
     return (
         <>
             <WaawNoIndexHead title='Invoices' />
@@ -69,7 +71,7 @@ const Invoices = (props) => {
                 <TabularInfo
                     title='Invoices'
                     description='Tabular list of all current invoices status.'
-                    data={invoices}
+                    data={data}
                     actions={actions}
                     pagination
                 />

@@ -10,6 +10,13 @@ const NewRoleModal = (props) => {
     const [minimumHours, setMinimumHours] = useState("");
     const [maximumWorkDays, setMaximumWorkDays] = useState("");
     const [gapsInShifts, setGapsInShifts] = useState("");
+    
+    const [initialRoleName, setInitialRoleName] = useState("");
+    const [initialLocation, setInitialLocation] = useState("");
+    const [initialMaximumHours, setInitialMaximumHours] = useState("");
+    const [initialMinimumHours, setInitialMinimumHours] = useState("");
+    const [initialMaximumWorkDays, setInitialMaximumWorkDays] = useState("");
+    const [initialGapsInShifts, setInitialGapsInShifts] = useState("");
 
     const [errorRoleName, setErrorRoleName] = useState({
         errorMessage: "",
@@ -35,6 +42,40 @@ const NewRoleModal = (props) => {
         errorMessage: "",
         showError: false,
     });
+
+    const onCancel = () => {
+        setRoleName("")
+        setLocation("")
+        setMaximumHours("")
+        setMinimumHours("")
+        setMaximumWorkDays("")
+        setGapsInShifts("")
+        setErrorRoleName({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorLocation({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorMaximumHours({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorMinimumHours({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorMaximumWorkDays({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorGapsInShifts({
+            errorMessage: "",
+            showError: false
+        })
+    }
+
     return (
         <div>
             <DashboardModal
@@ -49,6 +90,7 @@ const NewRoleModal = (props) => {
                     label="Role Name"
                     value={roleName}
                     setValue={setRoleName}
+                    initialValue={initialRoleName}
                     error={errorRoleName}
                     setError={setErrorRoleName}
                     editOn
@@ -60,6 +102,7 @@ const NewRoleModal = (props) => {
                     label="Location"
                     value={location}
                     setValue={setLocation}
+                    initialValue={initialLocation}
                     error={errorLocation}
                     setError={setErrorLocation}
                     editOn
@@ -69,6 +112,7 @@ const NewRoleModal = (props) => {
                     label="Total hours per day (Maximum)"
                     value={maximumHours}
                     setValue={setMaximumHours}
+                    initialValue={initialMaximumHours}
                     error={errorMaximumHours}
                     setError={setErrorMaximumHours}
                     editOn
@@ -78,6 +122,7 @@ const NewRoleModal = (props) => {
                     label="Total hours per day (Minimum)"
                     value={minimumHours}
                     setValue={setMinimumHours}
+                    initialValue={initialMinimumHours}
                     error={errorMinimumHours}
                     setError={setErrorMinimumHours}
                     editOn
@@ -87,6 +132,7 @@ const NewRoleModal = (props) => {
                     label="Maximum consequtive work days"
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
+                    initialValue={initialMaximumWorkDays}
                     error={errorMaximumWorkDays}
                     setError={setErrorMaximumWorkDays}
                     editOn
@@ -96,6 +142,7 @@ const NewRoleModal = (props) => {
                     label="Minimum gaps between shifts"
                     value={gapsInShifts}
                     setValue={setGapsInShifts}
+                    initialValue={initialGapsInShifts}
                     error={errorGapsInShifts}
                     setError={setErrorGapsInShifts}
                     editOn

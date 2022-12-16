@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { WaawNoIndexHead, Email, Profile } from "../../../components";
+import { WaawNoIndexHead, Email, Profile ,Organization,Security } from "../../../components";
 import { UserPreferenceStyles, DashboardStyles } from "../../../styles/pages";
 
 const UserPreference = (props) => {
@@ -39,7 +39,9 @@ const UserPreference = (props) => {
             </div>
             <div className={UserPreferenceStyles.preferenceBody}>
                 {active === 1 && <Profile />}
+                {active === 2 && <Organization />}
                 {active === 3 && <Email />}
+                {active === 4 && <Security/>}
             </div>
         </>
     );

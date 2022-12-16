@@ -15,7 +15,7 @@ const Calender = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Calender" />
-            <HolidayModal showModal={showModal} setShowModal={setShowModal} />
+            <HolidayModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Calender</h1>
                 {props.user.role === "MANAGER" && (

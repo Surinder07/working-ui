@@ -20,6 +20,18 @@ const CreateRequestModal = (props) => {
     const [startTime, setStartTime] = useState("");
     const [duration, setDuration] = useState("");
     const [description, setDescription] = useState("");
+     // initial states
+     const [initialRequestTypeValue,setInitialRequestTypeValue] = useState("");
+     const [initialTitle,setInitialTitle] = useState("");
+     const [initialFromDate,setInitialFromDate] = useState("");
+     const [initialTillDate,setInitialTillDate] = useState("");
+     const [initialTypeOfLeave,setInitialTypeOfLeave] = useState("");
+     const [initialOverTimeDate,setInitialOverTimeDate] = useState("");
+     const [initialStartTime,setInitialStartTime] = useState("");
+     const [initialDuration,setInitialDuration] = useState("");
+     const [initialDescription,setInitialDescription] = useState("");
+
+
 
     const [errorRequestTypeValue, setErrorRequestTypeValue] = useState({
         errorMessage: "",
@@ -49,6 +61,42 @@ const CreateRequestModal = (props) => {
         errorMessage: "",
         showError: false,
     });
+    
+    const onCancel = ()=> {
+        setRequestTypeValue("")
+        setTitle("")
+        setFromDate("")
+        setTillDate("")
+        setTypeOfLeave("")
+        setOverTimeDate("")
+        setStartTime("")
+        setDuration("")
+        setDescription("")
+        setErrorRequestTypeValue({
+            errorMessage: "",
+            showError:false
+        })
+        setErrorTitle({
+            errorMessage: "",
+            showError:false
+        })
+        setErrorTypeOfLeave({
+            errorMessage: "",
+            showError:false
+        })
+        setErrorStartTime({
+            errorMessage: "",
+            showError:false
+        })
+        setErrorDuration({
+            errorMessage: "",
+            showError:false
+        })
+        setErrorDescription({
+            errorMessage: "",
+            showError:false
+        })
+    }
 
     return (
         <DashboardModal
@@ -57,6 +105,7 @@ const CreateRequestModal = (props) => {
             buttonText="Submit"
             title="Create Request"
             type="twoColNarrow"
+            onCancel={onCancel}
         >
             <EditableInput
                 type="dropdown"
@@ -67,6 +116,7 @@ const CreateRequestModal = (props) => {
                 ]}
                 value={requestTypeValue}
                 setValue={setRequestTypeValue}
+                initialValue={initialRequestTypeValue}
                 label="Request Type"
                 className={DashboardModalStyles.singleColumn}
                 error={errorRequestTypeValue}
@@ -80,6 +130,7 @@ const CreateRequestModal = (props) => {
                         label="Title"
                         value={title}
                         setValue={setTitle}
+                        initialValue={initialTitle}
                         className={DashboardModalStyles.singleColumn}
                         error={errorTitle}
                         setError={setErrorTitle}
@@ -102,6 +153,7 @@ const CreateRequestModal = (props) => {
                                 label="From"
                                 value={fromDate}
                                 setValue={setFromDate}
+                                initialValue={initialFromDate}
                                 required
                                 editOn
                             />
@@ -109,6 +161,7 @@ const CreateRequestModal = (props) => {
                                 type="date"
                                 value={tillDate}
                                 setValue={setTillDate}
+                                initialValue={initialTillDate}
                                 label="Till"
                                 required
                                 editOn
@@ -123,6 +176,7 @@ const CreateRequestModal = (props) => {
                         label="Type of Leave"
                         value={typeOfLeave}
                         setValue={setTypeOfLeave}
+                        initialValue={initialTypeOfLeave}
                         className={DashboardModalStyles.singleColumn}
                         error={errorTypeOfLeave}
                         setError={setErrorTypeOfLeave}
@@ -136,6 +190,7 @@ const CreateRequestModal = (props) => {
                         label="Date"
                         value={overTimeDate}
                         setValue={setOverTimeDate}
+                        initialValue={initialOverTimeDate}
                         className={DashboardModalStyles.singleColumn}
                         required
                         editOn
@@ -145,6 +200,7 @@ const CreateRequestModal = (props) => {
                         label="Start Time"
                         value={startTime}
                         setValue={setStartTime}
+                        initialValue={initialStartTime}
                         error={errorStartTime}
                         setError={setErrorStartTime}
                         editOn
@@ -154,6 +210,7 @@ const CreateRequestModal = (props) => {
                         label="Duration"
                         value={duration}
                         setValue={setDuration}
+                        initialValue={initialDuration}
                         error={errorDuration}
                         setError={setErrorDuration}
                         editOn
@@ -166,6 +223,7 @@ const CreateRequestModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={description}
                 setValue={setDescription}
+                initialValue={initialDescription}
                 error={errorDescription}
                 setError={setErrorDescription}
                 editOn

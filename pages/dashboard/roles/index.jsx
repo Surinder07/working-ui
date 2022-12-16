@@ -2,6 +2,38 @@ import {useEffect, useState} from "react";
 import {DashboardStyles} from "../../../styles/pages";
 import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal} from "../../../components";
 
+const roles = [
+    {
+        roleId: "6476475",
+        name: "Frontend",
+        creationDate: "01/01/2023",
+        location: "Canada",
+        createdBy: "Name",
+    },
+    {
+        roleId: "6476476",
+        name: "Backend",
+        creationDate: "01/01/2023",
+        location: "India",
+        createdBy: "Name",
+    },
+    {
+        roleId: "6476477",
+        name: "Mern",
+        creationDate: "01/01/2023",
+        location: "India",
+        createdBy: "Name",
+    },
+    {
+        roleId: "6476478",
+        name: "operation",
+        creationDate: "01/01/2023",
+        location: "USA",
+        createdBy: "Name",
+    },
+];
+
+
 const Roles = (props) => {
     useEffect(() => {
         props.setPageInfo({
@@ -12,7 +44,7 @@ const Roles = (props) => {
         });
     }, []);
     const [showModal, setShowModal] = useState(false);
-
+    const [data,setData] = useState(roles);
     const actions = [
         {
             key: "View",
@@ -28,37 +60,7 @@ const Roles = (props) => {
         },
     ];
 
-    const roles = [
-        {
-            roleId: "6476475",
-            name: "Frontend",
-            creationDate: "01/01/2023",
-            location: "Canada",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476476",
-            name: "Backend",
-            creationDate: "01/01/2023",
-            location: "India",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476477",
-            name: "Mern",
-            creationDate: "01/01/2023",
-            location: "India",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476478",
-            name: "operation",
-            creationDate: "01/01/2023",
-            location: "USA",
-            createdBy: "Name",
-        },
-    ];
-
+ 
     return (
         <>
             <WaawNoIndexHead title="Roles" />
@@ -71,9 +73,9 @@ const Roles = (props) => {
                 )}
             </div>
             <DashboardCard style={{marginTop: "20px"}}>
-                <TabularInfo title="Roles" description="Tabular list for current role." data={roles} actions={actions} pagination />
+                <TabularInfo title="Roles" description="Tabular list for current role." data={data} actions={actions} pagination />
             </DashboardCard>
-            <NewRoleModal setShowModal={setShowModal} showModal={showModal} />
+            <NewRoleModal setShowModal={setShowModal} showModal={showModal} setToasterInfo={props.setToasterInfo}/>
         </>
     );
 };
