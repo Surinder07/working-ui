@@ -1,0 +1,169 @@
+.gridContainer {
+    display: grid;
+    height: 100%;
+    grid-template-columns: auto 300px;
+    column-gap: 20px;
+}
+
+.dateNav {
+    display: flex;
+    align-items: center;
+}
+
+.holidayContainer {
+    background: #F7F2E5;
+    padding: 14px 38px;
+    overflow-y: scroll;
+}
+
+.dateNav h2 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 45px;
+    color: #000000;
+}
+
+.arrowIcon {
+    font-size: 60px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.arrowIcon:hover {
+    color: #333;
+}
+
+.disabledIcon {
+    color: #6B7280 !important;
+    cursor: default !important;
+}
+
+.daysContainer {
+    display: grid;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    text-align: center;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.days {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #646464;
+}
+
+.datesContainer {
+    display: grid;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    grid-template-columns: repeat(7, 1fr);
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+}
+
+.dateInMonths {
+    border-top-width: 1px;
+    border-color: #E5E7EB;
+}
+
+.dateContainer {
+    background: #F6F6F6;
+    border: 0.5px solid #C2C2C2;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    text-align: left;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.publicHoliday {
+    background-color: #FDE69D;
+}
+
+.organizationHoliday {
+    background-color: #90D9D3;
+}
+
+.dateValue {
+    margin-left: 10px;
+    padding: 5px;
+    width: fit-content;
+}
+
+.todayDate {
+    background-color: #2996C3;
+    border-radius: 100%;
+    color: #FFFFFF;
+}
+
+.notTodayDate {
+    color: #000000
+}
+
+.notActiveMonth {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.dateData {
+    width: 100%;
+    text-align: left;
+    background-color: #2996C3;
+    color: white;
+    padding: 0 8px;
+}
+
+.dateData p {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    margin: 0;
+}
+
+.holidayList {
+    list-style: none;
+}
+
+.dateHoliday {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000;
+    opacity: 0.75;
+    margin-bottom: 14px;
+}
+
+.events {
+    padding: 5px 22px;
+}
+
+.event {
+    display: flex;
+    align-items: center;
+    margin-top: 10px
+}
+
+.eventBullet {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.event p {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.1px;
+    color: #000000;
+    margin: 0;
+}

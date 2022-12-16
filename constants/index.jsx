@@ -7,3 +7,4 @@ export * from './DropDownValues';
 export * from './SideNavInfo';
 export * from './TermsAndPolicy';
 export * from './DashboardInfoTiles';
+export * from './ChartsConfig';

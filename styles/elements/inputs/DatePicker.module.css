@@ -1,0 +1,147 @@
+.container {
+    position: relative;
+    background-color: #fff;
+    height: fit-content;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.container input {
+    font-family: Mulish;
+    padding: 7px 30px 7px 15px;
+    outline: none;
+    border: none;
+    background-color: #FFFFFF00;
+}
+
+.container input::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: Mulish;
+}
+
+.default {
+    color: #000000;
+    border: 1px solid #BFBFBF;
+}
+
+.error {
+    border: 1px solid var(--error-message-color);
+    color: var(--error-message-color);
+}
+
+.icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.arrowIcon {
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.icon:hover,
+.arrowIcon:hover {
+    color: #000;
+}
+
+.calendar {
+    position: absolute;
+    width: 210px;
+    background: #FFF;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    border: 1px solid #BFBFBF;
+    user-select: none;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.dateNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 30px;
+}
+
+.dateNav .childNav {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    height: 30px;
+}
+
+.dateNav p {
+    margin: 0 10px;
+}
+
+.daysContainer,
+.datesContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.days,
+.dates {
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.days {
+    font-weight: 600;
+}
+
+.dates {
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.dates:hover {
+    background-color: #e6e4e4;
+}
+
+.todayDate {
+    position: relative;
+}
+
+.todayMarker {
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: #2996C3;
+    top: 5px;
+    right: 5px;
+}
+
+.selectedDate {
+    border-radius: 50%;
+    background-color: #2996C3;
+    color: #FFF!important;
+    font-weight: 600;
+}
+
+.selectedDate:hover {
+    border-radius: 50%!important;
+    background-color: #2996C3!important;
+    color: #FFF!important;
+}
+
+.notActiveMonth {
+    cursor: default!important;
+    color: #d3d3d3!important;
+}
+
+.notActiveMonth:hover {
+    background-color: #fff!important;
+}

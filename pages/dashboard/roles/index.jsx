@@ -1,66 +1,81 @@
-import { useEffect } from "react";
-import styles from '../../../styles/pages/Dashboard.module.css';
-import WaawHead from "../../../components/WaawHead";
-import Button from '../../../components/Button';
-import DashboardCard from "../../../components/dashboardComponents/DashboardCard";
-import TabularInfo from "../../../components/dashboardComponents/TabularInfo";
+import {useEffect, useState} from "react";
+import {DashboardStyles} from "../../../styles/pages";
+import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal} from "../../../components";
 
 const Roles = (props) => {
-
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
-            pageView: 'dashboard',
-            activeMenu: 'ROLES',
-            activeSubMenu: 'none'
-        })
+            pageView: "dashboard",
+            activeMenu: "ROLES",
+            activeSubMenu: "none",
+        });
     }, []);
+    const [showModal, setShowModal] = useState(false);
+
+    const actions = [
+        {
+            key: "View",
+            action: (id) => console.log(`/dashboard/roles/?id=${id}`),
+        },
+        {
+            key: "Deactivate",
+            action: () => console.log("Api call will be added here"),
+        },
+        {
+            key: "Delete",
+            action: () => console.log("Api call will be added here"),
+        },
+    ];
 
     const roles = [
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
-            Actions: 'not added'
+            roleId: "6476475",
+            name: "Frontend",
+            creationDate: "01/01/2023",
+            location: "Canada",
+            createdBy: "Name",
         },
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
-            Actions: 'not added'
+            roleId: "6476476",
+            name: "Backend",
+            creationDate: "01/01/2023",
+            location: "India",
+            createdBy: "Name",
         },
         {
-            'Role Id': '6476475',
-            Name: 'Name',
-            'Creation date': '01/01/2023',
-            Location: 'Canada',
-            'Created By': 'Name',
-            Actions: 'not added'
-        }
-    ]
+            roleId: "6476477",
+            name: "Mern",
+            creationDate: "01/01/2023",
+            location: "India",
+            createdBy: "Name",
+        },
+        {
+            roleId: "6476478",
+            name: "operation",
+            creationDate: "01/01/2023",
+            location: "USA",
+            createdBy: "Name",
+        },
+    ];
 
     return (
         <>
-            <WaawHead title={"WaaW | Roles"} />
-            <div className={styles.dashboardTitles}>
+            <WaawNoIndexHead title="Roles" />
+            <div className={DashboardStyles.dashboardTitles}>
                 <h1>Roles</h1>
-                <Button type='plain'>+ Add new Roles</Button>
+                {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
+                    <Button type="plain" onClick={() => setShowModal(true)}>
+                        + Add new Roles
+                    </Button>
+                )}
             </div>
-            <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo 
-                title='Roles' 
-                description='Tabular list for current role.' 
-                data={roles}
-                pagination
-                />
+            <DashboardCard style={{marginTop: "20px"}}>
+                <TabularInfo title="Roles" description="Tabular list for current role." data={roles} actions={actions} pagination />
             </DashboardCard>
+            <NewRoleModal setShowModal={setShowModal} showModal={showModal} role={props.user.role} />
         </>
-    )
-
-}
+    );
+};
 
 export default Roles;

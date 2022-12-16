@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useRef } from 'react';
-import WaawHead from '../components/WaawHead';
-import styles from '../styles/layouts/FullPageWithImage.module.css';
-import Modal from "../components/modals/Modal";
+import { useState, useEffect, useRef } from 'react';
+import { WaawHead, Modal } from '../components';
+import { FullPageLayout } from '../styles/layouts';
 
 const FullPageWithImageLayout = (props) => {
 
@@ -18,8 +16,8 @@ const FullPageWithImageLayout = (props) => {
 
     return (
         <>
-            <WaawHead title={`WaaW | ${props.title}`} />
-            <div className={styles.page}>
+            <WaawHead title={props.title} />
+            <div className={FullPageLayout.page}>
                 {
                     props.showSuccessModal &&
                     <Modal
@@ -29,19 +27,19 @@ const FullPageWithImageLayout = (props) => {
                         buttonText={props.successButtonText}
                         link={props.successRedirect}
                     >
-                        <div className={styles.successBg} style={{ backgroundImage: `url(${props.successModalBg})` }}>
+                        <div className={FullPageLayout.successBg} style={{ backgroundImage: `url(${props.successModalBg})` }}>
                         </div>
                         <h1>{props.successTitle}</h1>
                         <h3>{props.successMessage}</h3>
                     </Modal>
                 }
-                <div className={styles.pageContainer} ref={containerRef}>
-                    <div className={styles.pageBackground}
+                <div className={FullPageLayout.pageContainer} ref={containerRef}>
+                    <div className={FullPageLayout.pageBackground}
                         style={{
                             height: `${backgroundHeight}`,
                             backgroundImage: `url(${props.background})`
                         }}></div>
-                    <div className={styles.contentContainer} ref={contentRef}>
+                    <div className={FullPageLayout.contentContainer} ref={contentRef}>
                         {props.children}
                     </div>
                 </div>

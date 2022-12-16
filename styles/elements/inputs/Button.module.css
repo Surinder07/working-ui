@@ -1,0 +1,85 @@
+.button {
+    position: relative;
+    border-radius: 5px;
+    padding: 7px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.313rem;
+    border: none;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    min-width: 40px;
+}
+
+.plainButton {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-color: #2996C3;
+    color: white;
+}
+
+.defaultButton {
+    background-color: #2996C3;
+    color: white;
+}
+
+.fullWidthButton {
+    width: 100%;
+    background-color: #2996C3;
+    color: white;
+}
+
+.closeButton,
+.dashboardButton {
+    font-weight: 700!important;
+    font-size: 16px!important;
+    line-height: 20px!important;
+    letter-spacing: 0.2px!important;
+    border-radius: 0!important;
+    box-shadow: none!important;
+}
+
+.closeButton {
+    width: 100%;
+    background-color: #FFFFFF00;
+    color: var(--error-message-color);
+    border: solid 1.5px var(--error-message-color);
+}
+
+.dashboardButton {
+    background: #2996C3;
+    color: #FFFFFF;
+}
+
+.socialButton {
+    background: #EEEEEE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px !important;
+    padding: 10px 0 !important;
+    width: 100%;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.disabledButton {
+    background-color: #287191;
+    color: var(--grey-border-color);
+    cursor: default;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+}
+
+.socialIcon {
+    left: 50%;
+    transform: translate(-120px, -50%);
+}
+
+.defaultIcon {
+    right: 30px;
+    transform: translateY(-50%);
+}

@@ -1,18 +1,21 @@
-import getConfig from 'next/config';
 import { fetchWrapper } from '../helpers';
 
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = publicRuntimeConfig.apiUrl;
 const endpoints = process.env.endpoints.dropdown;
 
-const getApiUrl = (endpoint) => {
-    return `${baseUrl}${endpoint}`
+const stringToDropdownObj = (list) => {
+    return list.map(str => {
+        return { display: str, value: str }
+    })
 }
 
 const getTimezones = async () => {
-    return fetchWrapper.get(getApiUrl(endpoints.getTimezones));
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getTimezones))
+        .then(res => {
+            return stringToDropdownObj(res);
+        });
 }
 
 export const dropdownService = {
-    getTimezones
+    getTimezones,
+    stringToDropdownObj
 };

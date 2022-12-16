@@ -1,0 +1,183 @@
+.nav {
+    width: 100%;
+    border-bottom: solid 1px var(--grey-border-color);
+    height: var(--navigation-height);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 2fr 1.5fr;
+    position: relative;
+}
+
+.nav .navEl {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.nav .navEnd {
+    justify-content: end;
+}
+
+.nav .menu .menuItems {
+    list-style: none;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    transition: all .5s ease;
+}
+
+.nav .menu .menuItem {
+    font-size: 0.9rem;
+    font-weight: 500;
+    position: relative;
+}
+
+.navEl .button {
+    padding: 0.625rem 1.25rem;
+    border: solid 1px var(--grey-border-color);
+    color: var(--button-blue-color);
+    cursor: pointer;
+    background-color: #FFFFFF00;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.navEl .button:hover {
+    background-color: var(--button-hover-grey-color);
+}
+
+.navEl p {
+    user-select: none;
+    font-weight: 400;
+    margin-left: 2rem;
+}
+
+.menu .expandableMenu {
+    cursor: pointer;
+}
+
+.menu .expandableMenu:hover .subMenu {
+    display: flex;
+    height: 150px;
+}
+
+.menu .subMenu {
+    height: 0;
+    width: fit-content;
+    padding-top: 30px;
+    list-style: none;
+    list-style-type: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    transform: translateX(-35px);
+    transition: all 0.5s ease;
+}
+
+.menu .subMenu a {
+    width: 100%;
+}
+
+.menu .subMenu .menuItem {
+    padding: 20px 50px;
+    width: 100%;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #0C0C0C;
+    background-color: whitesmoke;
+}
+
+.menu .subMenu .menuItemActive,
+.menu .subMenu .menuItem:hover {
+    background: #DFEFF6!important;
+    color: #2996C3!important;
+    font-weight: 600!important;
+    border-left: 2px solid #2996C3!important;
+}
+
+@media only screen and (max-width: 640px) {
+    .nav .menu {
+        position: absolute;
+        height: fit-content;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        top: var(--navigation-height);
+        background-color: var(--button-blue-color);
+        color: white;
+        flex-direction: column;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .nav .menu .menuItems {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav .menu .menuItem {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.2rem;
+    }
+
+    .nav {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .navEl .button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .menu .subMenu {
+        height: 120px;
+        width: 100%;
+        background-color: var(--lighter-blue-color);
+        color: white;
+        align-items: flex-start;
+        overflow: hidden;
+        padding: 0;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        border-radius: 0;
+    }
+
+    .menu .subMenu .menuItem {
+        height: 60px;
+        color: #333;
+    }
+}
+
+@media only screen and (max-width: 800px) and (min-width: 641px) {
+    .nav .navEl {
+        font-size: 0.8rem;
+    }
+
+    .nav .menuItem {
+        font-size: 0.8rem;
+
+    }
+
+    .navEl .button {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {}

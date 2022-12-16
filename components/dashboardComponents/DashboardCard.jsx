@@ -1,9 +1,9 @@
-import styles from '../../styles/pages/Dashboard.module.css';
+import { DashboardStyles } from '../../styles/pages';
 import Options from './Options';
 
 const DashboardCard = (props) => {
     return (
-        <div className={`${styles.card} ${props.className}`} style={props.style}>
+        <div className={`${DashboardStyles.card} ${props.className}`} style={props.style}>
             {
                 props.showOptions &&
                 <Options vertical options={[
@@ -15,7 +15,7 @@ const DashboardCard = (props) => {
                         key: 'Delete',
                         action: () => console.log('delete')
                     }
-                ]}/>
+                ]} />
             }
             {props.children}
         </div>

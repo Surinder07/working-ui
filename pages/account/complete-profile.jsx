@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/router';
-import InputBox from '../../components/inputComponents/InputBox';
-import ContactInput from "../../components/inputComponents/ContactInput";
-import styles from '../../styles/pages/LoginRegister.module.css';
-import layoutStyles from '../../styles/layouts/LoginRegistration.module.css';
-import { userService } from '../../services/user.service';
-import { dropdownService } from "../../services/dropdown.service";
-import DropDown from "../../components/inputComponents/DropDown";
-import { DayOfWeeks } from "../../constants";
-import InputWithButton from "../../components/inputComponents/InputWithButton";
-import LoginRegistrationLayout from "../../layouts/LoginRegistrationLayout";
-import Button from "../../components/Button";
+import { InputBox, ContactInput, DropDown, InputWithButton, Button } from '../../components';
+import { LoginRegisterStyles } from '../../styles/pages';
+import { LoginRegisterLayout } from '../../styles/layouts';
+import { userService, dropdownService } from '../../services';
+import { DaysOfWeek } from "../../constants";
+import { LoginRegistrationLayout } from "../../layouts";
 import { validateUsername } from "../../helpers";
 
 const CompleteProfile = (props) => {
@@ -45,7 +40,7 @@ const CompleteProfile = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: true,
+            authenticationRequired: false,
             pageView: 'fullPage',
             activeMenu: 'none',
             activeSubMenu: 'none'
@@ -129,8 +124,8 @@ const CompleteProfile = (props) => {
             logoRight
         >
             <legend>COMPLETE <span style={{ color: '#000' }}>YOUR PROFILE</span></legend>
-            <div className={styles.formType}>Personal Details / Organization Details </div>
-            <div className={layoutStyles.twoHalves}>
+            <div className={LoginRegisterStyles.formType}>Personal Details / Organization Details </div>
+            <div className={LoginRegisterLayout.twoHalves}>
                 <InputBox
                     type='user'
                     name='firstName'
@@ -184,8 +179,8 @@ const CompleteProfile = (props) => {
                 showError={showErrorOrganization}
                 setShowError={setShowErrorOrganization}
             />
-            <div className={layoutStyles.twoHalves}>
-                <DropDown options={DayOfWeeks}
+            <div className={LoginRegisterLayout.twoHalves}>
+                <DropDown options={DaysOfWeek}
                     defaultDisplay={'Week Start On'}
                     setValue={setWeekStartOn}
                 />
@@ -197,7 +192,7 @@ const CompleteProfile = (props) => {
                     setShowError={setShowErrorTimezone}
                 />
             </div>
-            <div className={layoutStyles.twoHalves} style={{ position: 'relative' }}>
+            <div className={LoginRegisterLayout.twoHalves} style={{ position: 'relative' }}>
                 <InputWithButton
                     style={{ marginTop: '40px' }}
                     placeholder='Promo Code'
@@ -208,9 +203,9 @@ const CompleteProfile = (props) => {
                     showMessage={promoMessage.showMessage}
                     setValue={promoValue}
                 />
-                {submitError && <p className={layoutStyles.errorTextUp}>{submitErrorMessage}</p>}
+                {submitError && <p className={LoginRegisterLayout.errorTextUp}>{submitErrorMessage}</p>}
             </div>
-            <div className={layoutStyles.twoHalves}>
+            <div className={LoginRegisterLayout.twoHalves}>
                 <Button
                     type='fullWidth'
                     onClick={onSubmit}

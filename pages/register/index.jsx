@@ -1,16 +1,12 @@
-import InputBox from '../../components/inputComponents/InputBox';
-import styles from '../../styles/pages/LoginRegister.module.css';
-import layoutStyles from '../../styles/layouts/LoginRegistration.module.css';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { userService } from '../../services/user.service';
+import { LoginRegisterStyles } from '../../styles/pages';
+import { LoginRegisterLayout } from '../../styles/layouts';
+import { userService } from '../../services';
 import { validateEmail, validatePassword } from '../../helpers';
-import PasswordPolicy from '../../components/PasswordPolicy';
-import LoginRegistrationLayout from '../../layouts/LoginRegistrationLayout';
-import Button from '../../components/Button';
-import SuccessModal from '../../components/modals/SuccessModal';
-import TermsAndPolicyModal from '../../components/modals/TermsAndPolicyModal';
+import { LoginRegistrationLayout } from '../../layouts';
+import { InputBox, PasswordPolicy, Button, SuccessModal, TermsAndPolicyModal } from '../../components';
 
 const Register = (props) => {
 
@@ -96,10 +92,10 @@ const Register = (props) => {
 
     const handleRegister = () => {
         if (loading) return;
-        setLoading(true);
         validateForms()
             .then((error) => {
                 if (!error) {
+                    setLoading(true);
                     userService.registerUser(email, password, userRole === 'contractor')
                         .then((res) => {
                             if (res.error) {
@@ -130,11 +126,11 @@ const Register = (props) => {
                     setShowModal={setShowTermsPrivacyModal} />
             }
             <legend style={{ color: '#000' }}>start y<span style={{ color: '#90D9D3' }}>our </span><span style={{ color: '#2996C3' }}>journey</span></legend>
-            <div className={styles.choiceContainer}>
-                <div className={`${styles.choice} ${userRole === 'admin' && styles.selected}`}
+            <div className={LoginRegisterStyles.choiceContainer}>
+                <div className={`${LoginRegisterStyles.choice} ${userRole === 'admin' && LoginRegisterStyles.selected}`}
                     onClick={() => setUserRole('admin')}
                 >For Business</div>
-                <div className={`${styles.choice} ${userRole === 'contractor' && styles.selected}`}
+                <div className={`${LoginRegisterStyles.choice} ${userRole === 'contractor' && LoginRegisterStyles.selected}`}
                     onClick={() => setUserRole('contractor')}
                 >For Talent</div>
             </div>
@@ -149,7 +145,7 @@ const Register = (props) => {
                 setShowError={setEmailError}
                 style={{ marginTop: 0 }}
             />
-            <div className={layoutStyles.twoHalves}>
+            <div className={LoginRegisterLayout.twoHalves}>
                 <InputBox
                     type='password'
                     name='password'
@@ -176,7 +172,7 @@ const Register = (props) => {
             <PasswordPolicy password={password} showError={passwordError} />
             <p style={{ position: 'relative', textAlign: 'left', margin: 0 }}>
                 Already have an account?? <Link href='/login'>Log In</Link>
-                {submitError && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
+                {submitError && <p className={LoginRegisterLayout.errorText}>{submitErrorMessage}</p>}
             </p>
 
             <Button

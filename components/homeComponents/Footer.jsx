@@ -1,11 +1,11 @@
 import SubscribeBar from './SubscribeBar';
-import styles from '../../styles/elements/Footer.module.css';
-import pageStyles from '../../styles/Pages.module.css';
+import { FooterStyles } from '../../styles/elements';
+import { PageStyles } from '../../styles/pages';
 import Link from 'next/link';
-import { ImagesInfo } from '../../constants/ImagesInfo';
+import { ImagesInfo } from '../../constants';
 import LinkedImage from '../LinkedImage';
 import { useState } from 'react';
-import TermsAndPolicyModal from '../modals/TermsAndPolicyModal';
+import { TermsAndPolicyModal } from '../modals';
 
 const Footer = (props) => {
 
@@ -19,7 +19,7 @@ const Footer = (props) => {
     }
 
     return (
-        <footer className={styles.footer}>
+        <footer className={FooterStyles.footer}>
             {/* Top Part of the footer  */}
             {
                 showTermsPrivacyModal &&
@@ -28,18 +28,18 @@ const Footer = (props) => {
                     showModal={showTermsPrivacyModal}
                     setShowModal={setShowTermsPrivacyModal} />
             }
-            <div className={`${styles.footerTop} ${pageStyles.pagePadding}`}>
-                <div className={styles.footerComponent} >
+            <div className={`${FooterStyles.footerTop} ${PageStyles.pagePadding}`}>
+                <div className={FooterStyles.footerComponent} >
                     <h1>Company</h1>
-                    <Link className={styles.link} href='/why-waaw'>About Us</Link>
-                    <p className={styles.link} onClick={() => showModal('nda')}>Confidentiality and Non Disclosure</p>
-                    <p className={styles.link} onClick={() => showModal('cookies')}>Cookies and Policy</p>
-                    <p className={styles.link} onClick={() => showModal('disclaimer')}>Disclaimer</p>
+                    <Link className={FooterStyles.link} href='/why-waaw'>About Us</Link>
+                    <p className={FooterStyles.link} onClick={() => showModal('nda')}>Confidentiality and Non Disclosure</p>
+                    <p className={FooterStyles.link} onClick={() => showModal('cookies')}>Cookies and Policy</p>
+                    <p className={FooterStyles.link} onClick={() => showModal('disclaimer')}>Disclaimer</p>
                 </div>
-                <div className={`${styles.footerComponent} ${styles.appContainer}`}>
-                    <div className={styles.appCover}></div>
+                <div className={`${FooterStyles.footerComponent} ${FooterStyles.appContainer}`}>
+                    <div className={FooterStyles.appCover}></div>
                     <h1>Mobile App</h1>
-                    <div className={styles.mobileIcons}>
+                    <div className={FooterStyles.mobileIcons}>
                         <LinkedImage
                             // link={ImagesInfo.footerIcons.mobileApps.apple.link}
                             src={ImagesInfo.footerIcons.mobileApps.apple.src}
@@ -56,22 +56,22 @@ const Footer = (props) => {
                         />
                     </div>
                 </div>
-                <div className={styles.footerComponent} >
+                <div className={FooterStyles.footerComponent} >
                     <h1>Contact Us</h1>
-                    <Link className={styles.link} href={`mailto:${contactEmail}`}>{contactEmail}</Link>
+                    <Link className={FooterStyles.link} href={`mailto:${contactEmail}`}>{contactEmail}</Link>
                 </div>
-                <div className={styles.footerComponent} >
+                <div className={FooterStyles.footerComponent} >
                     <h1>Subscribe us to know more</h1>
                     <SubscribeBar style={{ marginBottom: '20px' }} />
                     <h3>Join our team and continue your hassle free journey</h3>
                 </div>
             </div>
             {/* Bottom Part of the footer  */}
-            <div className={`${styles.footerBottom}  ${pageStyles.pageMargin}`}>
-                <div className={`${styles.footerComponent} ${styles.socialContainer}`} >
-                    <div className={styles.appCover}></div>
+            <div className={`${FooterStyles.footerBottom}  ${PageStyles.pageMargin}`}>
+                <div className={`${FooterStyles.footerComponent} ${FooterStyles.socialContainer}`} >
+                    <div className={FooterStyles.appCover}></div>
                     <h1>Connect Us</h1>
-                    <div className={styles.socialIcons}>
+                    <div className={FooterStyles.socialIcons}>
                         {
                             ImagesInfo.footerIcons.socialIcons.map((social, i) => (
                                 <LinkedImage
@@ -87,30 +87,30 @@ const Footer = (props) => {
                         }
                     </div>
                 </div>
-                <div className={`${styles.footerComponent} `} >
-                    <div className={styles.iconContainer}>
-                        <div className={styles.iconTextContainer}>
+                <div className={`${FooterStyles.footerComponent} `} >
+                    <div className={FooterStyles.iconContainer}>
+                        <div className={FooterStyles.iconTextContainer}>
                             <LinkedImage
                                 src={ImagesInfo.footerIcons.language.src}
                                 alt={ImagesInfo.footerIcons.language.alt}
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
                             />
-                            <p className={styles.noMargin}>English</p>
+                            <p className={FooterStyles.noMargin}>English</p>
                         </div>
-                        <div className={styles.iconTextContainer}>
+                        <div className={FooterStyles.iconTextContainer}>
                             <LinkedImage
                                 src={ImagesInfo.footerIcons.location.src}
                                 alt={ImagesInfo.footerIcons.location.alt}
                                 height={ImagesInfo.footerIcons.height[props.screenType]}
                                 style={{ marginRight: props.screenType == 2 ? '5px' : '20px' }}
                             />
-                            <p className={styles.noMargin}>Toronto</p>
+                            <p className={FooterStyles.noMargin}>Toronto</p>
                         </div>
                     </div>
                 </div>
-                <div className={styles.footerComponent} style={{ margin: '0' }}></div>
-                <div className={`${styles.footerComponent} ${styles.footerLogo}`}>
+                <div className={FooterStyles.footerComponent} style={{ margin: '0' }}></div>
+                <div className={`${FooterStyles.footerComponent} ${FooterStyles.footerLogo}`}>
                     <LinkedImage
                         link={ImagesInfo.logo.link}
                         src={ImagesInfo.logo.src}

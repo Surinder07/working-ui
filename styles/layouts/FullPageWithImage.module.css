@@ -9,6 +9,7 @@
 }
 
 .pageContainer {
+    position: relative;
     width: 100%;
     height: 100%;
     background-color: #FFF;
@@ -30,7 +31,6 @@
 
 .contentContainer {
     width: 100%;
-    max-width: 550px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,7 +81,7 @@
 }
 
 .errorText {
-    color: var(--error-message-color)!important;
+    color: var(--error-message-color) !important;
     position: absolute;
     top: -20px
 }
@@ -93,4 +93,60 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.errorAndButtonDiv{
+ position: relative;
+  display: flex; 
+  justify-content: space-between;
+   width: 100%;
+  max-width: 600px;
+}
+
+.fakeDivforMobileView{
+    display:none;
+}
+
+@media only screen and (max-width: 480px) {
+    .page {
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .pageContainer {
+        padding: 2rem 0.5rem;
+        border: none;
+    }
+    
+    .gridContainer {
+        grid-template-columns: 1fr;
+    }
+    
+    .gridRightContainer {
+        display:none;
+    }
+    .gridContainer .twoHalves {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 15px;
+    }
+    .errorAndButtonDiv{
+        display: inline-block;
+    }
+    .fakeDivforMobileView{
+        display:block;
+        height: 6.25rem;
+    }
+}
+
+@media only screen and (max-width: 640px) and (min-width: 480px) {
+
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+   
+}
+
+@media only screen and (min-width: 1200px) {
+  
 }

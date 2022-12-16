@@ -1,0 +1,85 @@
+.formType {
+    text-transform: uppercase;
+    width: 100%;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    border: 2px solid #2996C3;
+    border-radius: 5px;
+    padding: 7px 0;
+    text-align: center;
+    color: #2996C3;
+    margin: 25px 0;
+}
+
+.choiceContainer {
+    display: flex;
+    padding: 5px;
+    background: #D3E9F2;
+    border-radius: 6px;
+    width: 80%;
+    margin: 1.5rem 0 2rem 0;
+    align-items: center;
+}
+
+.choice {
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: rgb(0, 0, 0);
+    width: 50%;
+    cursor: pointer;
+    padding: 7px 0;
+}
+
+.selected {
+    background: #FFFFFF;
+    box-shadow: 5px 4px 4px rgba(40, 168, 224, 0.08);
+    border-radius: 6px;
+    font-weight: 600 !important;
+    cursor: default;
+}
+
+.partition {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.line {
+    width: 13px;
+    height: 0;
+    opacity: 0.5;
+    border: 1px solid #000000;
+}
+
+.partitionText {
+    width: auto !important;
+    color: #000000 !important;
+    opacity: 0.5 !important;
+    padding: 0 10px;
+    margin: 1rem 0 !important;
+}
+
+
+@media only screen and (max-width: 480px) {
+    
+.choiceContainer{
+    width: 100%;
+}
+
+}
+
+@media only screen and (max-width: 640px) and (min-width: 480px) {
+
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 641px) {
+   
+}
+
+@media only screen and (min-width: 1200px) {
+  
+}

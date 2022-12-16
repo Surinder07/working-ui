@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Card from '../Card';
-import styles from '../../styles/elements/HomeSectionCard.module.css';
+import { HomeSectionCardStyles } from '../../styles/elements';
 
 const HomeSectionCard = (props) => {
 
@@ -18,7 +18,7 @@ const HomeSectionCard = (props) => {
         if (typeof props.height != 'undefined') {
             newWidth = (props.height * width) / height;
             newHeight = props.height;
-            style={width: 'auto'}
+            style = { width: 'auto' }
         } else {
             newWidth = width;
             newHeight = height;
@@ -30,7 +30,7 @@ const HomeSectionCard = (props) => {
     }, [])
 
     return (
-        <Card className={styles.infoTile}>
+        <Card className={HomeSectionCardStyles.infoTile}>
             <div style={{ width: '100%' }}>
                 <Image
                     src={props.tile.icon}

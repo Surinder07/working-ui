@@ -1,4 +1,4 @@
-import styles from '../../styles/elements/InputBox.module.css';
+import { InputBoxStyles } from '../../styles/elements/inputs';
 import { Phone } from '@mui/icons-material';
 import { useEffect, useState, useRef } from 'react';
 import CountryCodeDropdown from './CountryCodeDropdown';
@@ -22,10 +22,11 @@ const ContactInput = (props) => {
     }
 
     return (
-        <div ref={ref} className={`${props.inputType === 2 ? styles.inputBoxWithDropdown2 : styles.inputBoxWithDropdown} ${props.className} ${props.showError ?
-            styles.inputBoxError : styles.inputBoxDefault}`} style={props.style}>
-            {props.inputType !== 2 && <div className={styles.inputIconContainer}><Phone /></div>}
+        <div ref={ref} className={`${props.inputType === 2 ? InputBoxStyles.inputBoxWithDropdown2 : InputBoxStyles.inputBoxWithDropdown} ${props.className} ${props.showError ?
+            InputBoxStyles.inputBoxError : InputBoxStyles.inputBoxDefault}`} style={props.style}>
+            {props.inputType !== 2 && <div className={InputBoxStyles.inputIconContainer}><Phone /></div>}
             <CountryCodeDropdown
+                inputType={props.inputType}
                 onClick={onClick}
                 value={props.value}
                 setValue={props.setValue}
@@ -51,7 +52,7 @@ const ContactInput = (props) => {
                 }}
                 style={{ paddingLeft: '15px' }}
                 autoComplete='off' />
-            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
+            {props.showError && <p className={InputBoxStyles.errorMessage}>{props.errorMessage}</p>}
         </div>
     )
 }

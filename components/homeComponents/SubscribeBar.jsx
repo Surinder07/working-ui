@@ -1,9 +1,9 @@
-import styles from '../../styles/elements/SubscribeBar.module.css';
+import { SubscribeBarStyles } from '../../styles/elements';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
-import Modal from '../modals/Modal';
+import { Modal } from '../modals';
 import { firebaseDb } from '../../services/firebase.service';
-import RotatingLoader from '../loaders/RotatingLoader';
+import { RotatingLoader } from '../loaders';
 
 const SubscribeBar = (props) => {
 
@@ -61,7 +61,7 @@ const SubscribeBar = (props) => {
     };
 
     return (
-        <div className={styles.inputBar} style={barStyle}>
+        <div className={SubscribeBarStyles.inputBar} style={barStyle}>
             <Modal
                 size='small'
                 buttonText='Accept and Close'
@@ -74,7 +74,7 @@ const SubscribeBar = (props) => {
             <RotatingLoader visible={showLoader} />
             <input id='contactEmail' type="email" autoComplete='off' placeholder='Your Email'
                 value={email} onChange={(e) => setEmail(e.target.value)} />
-            <button className={styles.button} type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>
+            <button className={SubscribeBarStyles.button} type='submit' style={buttonStyle} onClick={handleSubmit}>{<ArrowForward />}</button>
         </div>
     )
 }

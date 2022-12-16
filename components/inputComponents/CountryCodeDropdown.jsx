@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styles from '../../styles/elements/InputBox.module.css';
+import { DropdownStyles } from '../../styles/elements/inputs';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import Image from 'next/image';
 
@@ -10,7 +10,7 @@ const CountryCodeDropdown = (props) => {
     const [displayValue, setDisplayValue] = useState('');
     const [open, setOpen] = useState(false);
     const openedDownStyle = {
-        top: '37px',
+        top: props.inputType === 2 ? '32px' : '37px',
         left: 0
     }
     const openedUpStyle = {
@@ -47,11 +47,13 @@ const CountryCodeDropdown = (props) => {
     }
 
     return (
-        <div ref={ref} className={styles.dropdownContainer} onClick={onClick} style={props.style}>
-            <div className={styles.selected}>
-                {displayValue}{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+        <div ref={ref} className={`${props.inputType === 2 ? DropdownStyles.mulishCountryCodeContainer : DropdownStyles.poppinsBasicContainer}`} onClick={onClick} style={props.style}>
+            <div className={DropdownStyles.selected}>
+                {displayValue}
+                {open ? <KeyboardArrowUp className={DropdownStyles.dropDownIcon} /> :
+                    <KeyboardArrowDown className={DropdownStyles.dropDownIcon} />}
             </div>
-            <div className={`${styles.options} ${!open && styles.closedOptions}`}
+            <div className={`${DropdownStyles.options} ${!open && DropdownStyles.closedOptions}`}
                 style={props.openDown ? openedDownStyle : openedUpStyle}>
                 {
                     props.options.map((option, i) => (

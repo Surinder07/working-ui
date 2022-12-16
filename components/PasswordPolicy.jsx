@@ -1,6 +1,4 @@
-import { textAlign } from "@mui/system";
-import { useEffect } from "react";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const PasswordPolicy = (props) => {
 

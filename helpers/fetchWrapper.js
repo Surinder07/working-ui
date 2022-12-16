@@ -7,13 +7,19 @@ const { publicRuntimeConfig } = getConfig();
 const baseUrl = publicRuntimeConfig.apiUrl;
 
 const getApiUrl = (endpoint, queryMap) => {
-    let queryString = '';
+    const queries = [];
     if (queryMap) {
         Object.entries(queryMap).map(query => (
-            queryString = queryString === '' ? queryString + query[0] + '=' + query[1] : '&' + queryString + query[0] + '=' + query[1]
+            queries.push(query[0] + '=' + query[1])
         ));
     }
-    return `${baseUrl}${endpoint}${queryString !== '' ? `?${queryString}` : ''}`;
+    return `${baseUrl}${endpoint}${queries.length > 0 ? `?${queries.join('&')}` : ''}`;
+}
+
+const getPaginationUrl = (endpoint, pageNo, pageSize, queryMap) => {
+    const updatedEndpoint = `${endpoint}/${pageNo - 1}/${pageSize}`;
+    console.log(updatedEndpoint)
+    return getApiUrl(updatedEndpoint, queryMap);
 }
 
 const get = async (url) => {
@@ -51,6 +57,22 @@ const _delete = async (url) => {
         method: 'DELETE',
         headers: authHeader(url)
     };
+    const response = await fetch(url, requestOptions);
+    return handleResponse(response);
+}
+
+const postForm = async (url, data) => {
+    const formData = new FormData();
+    Object.entries(data).map(form => {
+        formData.append(form[0], form[1]);
+    })
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data", ...authHeader(url)
+        },
+        body: FormData
+    }
     const response = await fetch(url, requestOptions);
     return handleResponse(response);
 }
@@ -106,5 +128,7 @@ export const fetchWrapper = {
     post,
     put,
     delete: _delete,
-    getApiUrl
+    postForm,
+    getApiUrl,
+    getPaginationUrl
 };

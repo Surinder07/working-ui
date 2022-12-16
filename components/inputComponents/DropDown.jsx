@@ -1,6 +1,6 @@
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { useRef, useState, useEffect } from "react";
-import styles from '../../styles/elements/InputBox.module.css';
+import { DropdownStyles } from '../../styles/elements/inputs';
 
 const DropDown = (props) => {
 
@@ -8,7 +8,7 @@ const DropDown = (props) => {
 
     const [displayValue, setDisplayValue] = useState(props.defaultDisplay);
     const [open, setOpen] = useState(false);
-    const [openDown, setOpenDown] = useState(true);
+    const [openDown, setOpenDown] = useState(props.openUp ? false : true);
     const [inputHeight, setInputHeight] = useState(0);
 
     useEffect(() => {
@@ -16,9 +16,10 @@ const DropDown = (props) => {
     }, [ref]);
 
     const openedDownStyle = {
-        top: '37px',
+        top: props.inputType === 2 ? '32px' : '37px',
         left: 0
     }
+
     const openedUpStyle = {
         bottom: 0,
         left: 0,
@@ -32,10 +33,12 @@ const DropDown = (props) => {
     }
 
     const onClick = () => {
-        if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
-            setOpenDown(false);
-        if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
-            setOpenDown(true);
+        if (!props.openUp) {
+            if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
+                setOpenDown(false);
+            if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
+                setOpenDown(true);
+        }
         setOpen(!open);
     }
 
@@ -47,27 +50,27 @@ const DropDown = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={`${props.inputType === 2 ? styles.dropdownContainer2 : styles.dropdownContainer} ${styles.dropdownRelative} ${props.showError ? styles.inputBoxError : styles.inputBoxDefault}`}
+        <div ref={ref} className={`${props.inputType === 2 ? DropdownStyles.mulishBasicCountainer : DropdownStyles.poppinsBasicContainer} ${DropdownStyles.dropdownRelative} ${props.showError ? DropdownStyles.inputBoxError : DropdownStyles.inputBoxDefault}`}
             style={props.style}>
-            <div className={styles.selected2} onClick={onClick}>
-                {displayValue}{open ? <KeyboardArrowUp className={styles.dropDownIcon} /> : 
-                <KeyboardArrowDown className={styles.dropDownIcon} />}
+            <div className={DropdownStyles.selected2} onClick={onClick}>
+                {displayValue}{open ? <KeyboardArrowUp className={DropdownStyles.dropDownIcon} /> :
+                    <KeyboardArrowDown className={DropdownStyles.dropDownIcon} />}
             </div>
-            <div className={`${styles.options} ${!open && styles.closedOptions}`}
+            <div className={`${DropdownStyles.options} ${!open && DropdownStyles.closedOptions}`}
                 style={openDown ? openedDownStyle : openedUpStyle}>
                 {
                     props.options.map((option, i) => (
                         <p key={i} onClick={() => {
-                            props.setValue(option);
-                            setDisplayValue(option);
+                            props.setValue(option.value);
+                            setDisplayValue(option.display);
                             props.setShowError && props.setShowError(false);
                             setOpen(!open)
                         }}
-                        >{option}</p>
+                        >{option.display}</p>
                     ))
                 }
             </div>
-            {props.showError && <p className={styles.errorMessage}>{props.errorMessage}</p>}
+            {props.showError && <p className={DropdownStyles.errorMessage}>{props.errorMessage}</p>}
         </div>
     )
 

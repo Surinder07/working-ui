@@ -1,15 +1,15 @@
 import { Notifications } from '@mui/icons-material';
 import { useState } from 'react';
-import styles from '../../styles/elements/Notifications.module.css';
+import { NotificationsStyles } from '../../styles/elements';
 
 const NotificationBell = (props) => {
 
     const [unread, setUnread] = useState(false);
 
     return (
-        <div className={styles.container}>
-            <Notifications className={styles.bell} />
-            {unread && <div className={styles.unreadInd}></div>}
+        <div className={NotificationsStyles.container}>
+            <Notifications className={NotificationsStyles.bell} />
+            {unread && <div className={NotificationsStyles.unreadInd}></div>}
         </div>
     )
 }

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import InputBox from "../../components/inputComponents/InputBox";
-import PasswordPolicy from "../../components/PasswordPolicy";
-import FullPageWithImageLayout from "../../layouts/FullPageWithImageLayout";
-import Button from "../../components/Button";
-import { userService } from "../../services/user.service";
+import { InputBox, PasswordPolicy, Button } from "../../components";
+import { FullPageWithImageLayout } from "../../layouts";
+import { FullPageLayout } from '../../styles/layouts';
+import { userService } from "../../services";
 
 const ResetPasswordFinish = (props) => {
 
@@ -79,16 +78,16 @@ const ResetPasswordFinish = (props) => {
             .then(error => {
                 if (!error) {
                     userService.finishResetPassword(resetKey, password)
-                    .then(res => {
-                        if (res.error) {
-                            setSubmitErrorMessage(res.message);
-                            setSubmitError(true);
-                            setTimeout(() => setSubmitError(false), 3000);
-                            setLoading(false);
-                        } else {
-                            setResetSuccess(true);
-                        }
-                    })
+                        .then(res => {
+                            if (res.error) {
+                                setSubmitErrorMessage(res.message);
+                                setSubmitError(true);
+                                setTimeout(() => setSubmitError(false), 3000);
+                                setLoading(false);
+                            } else {
+                                setResetSuccess(true);
+                            }
+                        })
                 }
             })
     }
@@ -129,8 +128,9 @@ const ResetPasswordFinish = (props) => {
                 setShowError={setConfirmPasswordError}
                 style={{ marginTop: 0 }}
             />
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                {submitError && <p className={layoutStyles.errorText}>{submitErrorMessage}</p>}
+             <div className={FullPageLayout.fakeDivforMobileView}></div>
+            <div className={FullPageLayout.errorAndButtonDiv}>
+                {submitError && <p className={FullPageLayout.errorText}>{submitErrorMessage}</p>}
                 <p>Return to <Link href="/login">Log in</Link></p>
                 <Button
                     type='default'

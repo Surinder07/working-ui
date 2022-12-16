@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
-import WaawHead from "../components/WaawHead";
-import styles from '../styles/pages/404.module.css'
+import { WaawNoIndexHead } from "../components";
+import { NotFoundStyles } from '../styles/pages';
 
 const NotFound = (props) => {
 
@@ -12,14 +12,14 @@ const NotFound = (props) => {
             activeMenu: 'none',
             activeSubMenu: 'none'
         })
-      }, []);
+    }, []);
 
     return (
         <>
-            <WaawHead title='WaaW | 404 - Page Not Found' meta={{robots:'noindex, nofollow'}} />
-            <div className={styles.notFoundPage}>
-                <div className={styles.notFound}>
-                    <div className={styles.notFound404}>
+            <WaawNoIndexHead title='404 - Page Not Found' />
+            <div className={NotFoundStyles.notFoundPage}>
+                <div className={NotFoundStyles.notFound}>
+                    <div className={NotFoundStyles.notFound404}>
                         <h3>Oops! Page not found</h3>
                         <h1>
                             <span>4</span>
