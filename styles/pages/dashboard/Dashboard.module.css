@@ -51,9 +51,18 @@
     margin: 0;
 }
 
-.infoTile h1 {
+.infoTile .normalValue {
     font-weight: 600;
     font-size: 28px;
+    line-height: 42px;
+    color: #535255;
+    margin: 25px 0 15px 0;
+}
+
+.infoTile .compareValue {
+    position: relative;
+    font-size: 25px;
+    font-weight: 600;
     line-height: 42px;
     color: #535255;
     margin: 25px 0 15px 0;

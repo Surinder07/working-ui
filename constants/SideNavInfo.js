@@ -46,9 +46,9 @@ export const SideNavInfo = {
         },
         {
             icon: <Receipt style={{ fontSize: '16px' }} />,
-            text: 'Invoices',
-            link: '/dashboard/invoices',
-            activeKey: 'INVOICES'
+            text: 'Payment History',
+            link: '/dashboard/payment-history',
+            activeKey: 'PAYMENT'
         },
         {
             icon: <Notifications style={{ fontSize: '16px' }} />,

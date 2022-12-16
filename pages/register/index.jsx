@@ -92,10 +92,10 @@ const Register = (props) => {
 
     const handleRegister = () => {
         if (loading) return;
-        setLoading(true);
         validateForms()
             .then((error) => {
                 if (!error) {
+                    setLoading(true);
                     userService.registerUser(email, password, userRole === 'contractor')
                         .then((res) => {
                             if (res.error) {

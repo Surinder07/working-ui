@@ -13,7 +13,7 @@ const ProfileImage = (props) => {
                     style={{ cursor: 'pointer' }}
                     height={height}
                     src={props.src ? props.src : Images.ProfilePlaceholderSmall}
-                    alt={props.user && (props.user.firstName + ' ' + props.user.lastName)}
+                    alt={props.user ? (props.user.firstName + ' ' + props.user.lastName) : 'profile'}
                     link={props.header ? '/dashboard/user/preference' : '#'}
                 />
             </div>

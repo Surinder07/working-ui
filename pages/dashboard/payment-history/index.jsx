@@ -8,7 +8,7 @@ const Invoices = (props) => {
         props.setPageInfo({
             authenticationRequired: false,
             pageView: 'dashboard',
-            activeMenu: 'INVOICES',
+            activeMenu: 'PAYMENT',
             activeSubMenu: 'none'
         })
     }, []);
@@ -63,12 +63,12 @@ const Invoices = (props) => {
         <>
             <WaawNoIndexHead title='Invoices' />
             <div className={DashboardStyles.dashboardTitles}>
-                <h1>Invoices</h1>
+                <h1>Payment History</h1>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
-                    title='Invoices'
-                    description='Tabular list of all current invoices status.'
+                    title='Payment History'
+                    description='Tabular list of all payments with status.'
                     data={invoices}
                     actions={actions}
                     pagination

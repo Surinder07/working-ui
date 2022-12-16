@@ -73,7 +73,7 @@ const Roles = (props) => {
             <DashboardCard style={{marginTop: "20px"}}>
                 <TabularInfo title="Roles" description="Tabular list for current role." data={roles} actions={actions} pagination />
             </DashboardCard>
-            <NewRoleModal setShowModal={setShowModal} showModal={showModal} />
+            <NewRoleModal setShowModal={setShowModal} showModal={showModal} role={props.user.role} />
         </>
     );
 };

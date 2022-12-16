@@ -5,6 +5,7 @@ import { ImagesInfo, SideNavInfo } from "../constants";
 import Images from "../public/Images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
+import { userService } from "../services";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
@@ -60,7 +61,7 @@ const Dashboard = (props) => {
                             <Settings style={{ fontSize: "16px" }} />
                             {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
                         </div>
-                        <div className={`${DashboardLayout.menuItem}`}>
+                        <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
                             <Logout style={{ fontSize: "16px" }} />
                             {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
                         </div>

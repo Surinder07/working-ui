@@ -30,6 +30,8 @@ const DashboardModal = (props) => {
     const handleClick = (action) => {
         if (action === 1) {
             props.onClick();
+        } else {
+            props.onCancel();
         }
         document.body.style.overflow = "unset";
         props.setShowModal(false);

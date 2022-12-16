@@ -18,7 +18,7 @@ const Calender = (props) => {
             <HolidayModal showModal={showModal} setShowModal={setShowModal} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Calender</h1>
-                {props.user.role === "MANAGER" && (
+                {props.user.role === "MANAGER" || props.user.role === 'ADMIN' && (
                     <Button type="plain" onClick={() => setShowModal(true)}>
                         + Upload Organization Holiday
                     </Button>
