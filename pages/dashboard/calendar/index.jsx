@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, CalendarComponent, HolidayModal } from "../../../components";
+import {useEffect, useState} from "react";
+import {DashboardStyles} from "../../../styles/pages";
+import {WaawNoIndexHead, Button, CalendarComponent, HolidayModal} from "../../../components";
 
 const Calender = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -15,10 +15,14 @@ const Calender = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Calender" />
-            <HolidayModal showModal={showModal} setShowModal={setShowModal}/>
+            <HolidayModal showModal={showModal} setShowModal={setShowModal} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Calender</h1>
-                <Button type="plain" onClick={()=> setShowModal(true)}>+ Upload Organization Holiday</Button>
+                {props.user.role === "MANAGER" && (
+                    <Button type="plain" onClick={() => setShowModal(true)}>
+                        + Upload Organization Holiday
+                    </Button>
+                )}
             </div>
             <CalendarComponent />
         </>
