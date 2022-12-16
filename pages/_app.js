@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
-import "../styles/globals.css";
-import router from "next/router";
-import {WaawHead, TopLoader} from "../components";
-import {secureLocalStorage} from "../helpers";
-import {userService} from "../services/user.service";
-import {NavFooterPageLayout, DashboardLayout} from "../layouts";
+import React, { useState, useEffect } from 'react';
+import '../styles/globals.css';
+import router from 'next/router';
+import { WaawHead, TopLoader } from '../components';
+import { secureLocalStorage } from '../helpers';
+import { userService } from '../services/user.service';
+import { NavFooterPageLayout, DashboardLayout } from '../layouts';
+import { Toaster } from '../components';
 
 function MyApp({Component, pageProps}) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
@@ -22,6 +23,12 @@ function MyApp({Component, pageProps}) {
         activeMenu: "none",
         activeSubMenu: "none",
     });
+    const [toasterInfo, setToasterInfo] = useState({
+        error: false,
+        title: '',
+        message: ''
+    })
+    const [showToaster, setShowToaster] = useState(false);
 
     const getActiveMenuFromPath = (path) => {
         if (path.includes("why-waaw")) {
@@ -32,8 +39,18 @@ function MyApp({Component, pageProps}) {
     };
 
     useEffect(() => {
-        router.beforePopState(({as}) => {
-            setPageinfo({...pageInfo, activeMenu: getActiveMenuFromPath(as)});
+        if (toasterInfo.title !== '') {
+            setShowToaster(true);
+            const timer = setTimeout(() => {
+                setShowToaster(false);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [toasterInfo])
+
+    useEffect(() => {
+        router.beforePopState(({ as }) => {
+            setPageinfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
             return true;
         });
 
@@ -96,16 +113,36 @@ function MyApp({Component, pageProps}) {
     };
 
     const getComponentForPages = () => {
-        return <Component {...pageProps} screenType={screenType} user={user} setUser={setUser} token={token} setToken={setToken} pageInfo={pageInfo} setPageInfo={setPageinfo} />;
-    };
+        return <Component {...pageProps}
+            screenType={screenType}
+            user={user}
+            setUser={setUser}
+            token={token}
+            setToken={setToken}
+            pageInfo={pageInfo}
+            setPageInfo={setPageinfo}
+            setToasterInfo={setToasterInfo}
+        />
+    }
 
     return (
         <React.Fragment>
             <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
-                {pageInfo.pageView === "loggedOut" && (
-                    <NavFooterPageLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType}>
+                <Toaster
+                    style={{ display: showToaster ? 'grid' : 'none' }}
+                    error={toasterInfo.error}
+                    title={toasterInfo.title}
+                    message={toasterInfo.message}
+                />
+                {
+                    pageInfo.pageView === 'loggedOut' &&
+                    <NavFooterPageLayout
+                        pageInfo={pageInfo}
+                        setPageinfo={setPageinfo}
+                        screenType={screenType}
+                    >
                         {getComponentForPages()}
                     </NavFooterPageLayout>
                 )}

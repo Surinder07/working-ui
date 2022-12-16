@@ -12,6 +12,7 @@ import {
     EditTimesheetModal,
     EditShiftModal,
     EditRequestsModal,
+    EmployeePreference,
 } from "../../../components";
 
 const requestsData = [
@@ -146,8 +147,8 @@ const preferences = {
     thursdayEndTime: '05:00',
     fridayStartTime: '10:00',
     fridayEndTime: '05:00',
-    satdayStartTime: '10:00',
-    satdayEndTime: '05:00',
+    saturdayStartTime: '10:00',
+    saturdayEndTime: '05:00',
     sundayStartTime: '10:00',
     sundayEndTime: '05:00',
     wagesPerHour: 22.3,
@@ -164,12 +165,16 @@ const Employees = (props) => {
         mobile: "",
         country: "",
     });
-    const [userPreferences, setUserPreferences] = useState({});
+    const [initialMobile, setInitialMobile] = useState({
+        countryCode: "",
+        mobile: "",
+        country: "",
+    });
     const [showModalTimeSheet, setShowModalTimeSheet] = useState(false);
     const [showModalShift, setShowModalShift] = useState(false);
     const [showModalRequest, setShowModalRequest] = useState(false);
     const [expandedMenu, setExpandedMenu] = useState("none");
-    const [editOn, setEditOn] = useState(false);
+    const [personalEditOn, setPersonalEditOn] = useState(false);
     const [editId, setEditId] = useState("");
 
     useEffect(() => {
@@ -179,7 +184,6 @@ const Employees = (props) => {
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",
         });
-
     }, []);
 
     useEffect(() => {
@@ -226,16 +230,10 @@ const Employees = (props) => {
                     expandable
                     actions={actions}
                     pagination
-                    showSearch
-                    showFilter
                 />
             </DashboardCard>
         );
     };
-
-    const getPreferenesData = () => {
-
-    }
 
     return (
         <>
@@ -257,12 +255,7 @@ const Employees = (props) => {
             />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>
-                    <Link
-                        href="/dashboard/employees"
-                        style={{ color: "#535255" }}
-                    >
-                        Employees
-                    </Link>
+                    <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
                     {` > Employee Details`}
                 </h1>
             </div>
@@ -270,34 +263,39 @@ const Employees = (props) => {
             <UserPreferenceCard
                 title="Personal Details"
                 isEditable
-                editOn={editOn}
-                setEditOn={setEditOn}
+                editOn={personalEditOn}
+                setEditOn={setPersonalEditOn}
             >
                 <div className={DashboardStyles.personalContainer}>
                     <ProfileImage size="big" />
                     <div className={DashboardStyles.personalContent}>
-                        <EditableInput label="First Name" type="text" editOn={editOn} />
-                        <EditableInput label="Last Name" type="text" editOn={editOn} />
+                        <EditableInput label="First Name" type="text" editOn={personalEditOn} />
+                        <EditableInput label="Last Name" type="text" editOn={personalEditOn} />
                         <EditableInput
                             label="Mobile"
                             type="mobile"
                             value={mobile}
+                            initialValue={initialMobile}
                             setValue={setMobile}
-                            editOn={editOn}
+                            editOn={personalEditOn}
                         />
-                        <EditableInput label="Email" type="text" editOn={editOn} />
-                        <EditableInput label="Employee Id" type="text" editOn={editOn} />
-                        <EditableInput label="Location" type="text" editOn={editOn} />
-                        <EditableInput label="Role" type="text" editOn={editOn} />
+                        <EditableInput label="Email" type="text" editOn={personalEditOn} />
+                        <EditableInput label="Employee Id" type="text" editOn={personalEditOn} />
+                        <EditableInput label="Location" type="text" editOn={personalEditOn} />
+                        <EditableInput label="Role" type="text" editOn={personalEditOn} />
                         <EditableInput
                             label="Employee type"
                             type="text"
-                            editOn={editOn}
+                            editOn={personalEditOn}
                         />
                     </div>
                 </div>
             </UserPreferenceCard>
-            {getExpandableData("Preference")}
+            <EmployeePreference
+                data={preferences}
+                expanded={expandedMenu === 'preferences'}
+                toggleExpansion={() => handleExpansion('preferences')}
+            />
             {getExpandableData("Shifts", shiftData, getActions('shift'))}
             {getExpandableData("Requests", requestsData, getActions('request'))}
             {getExpandableData("Attendance", attendanceData, getActions('attendance'))}

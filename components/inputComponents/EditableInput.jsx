@@ -20,7 +20,7 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <InputBox name={props.label} inputType={2} type={props.type} value={props.value} setValue={props.setValue} /> :
-                        <p>{props.value}</p>
+                        <p>{props.initialValue}</p>
                 )
             }
             {
@@ -28,23 +28,23 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <ContactInput name={props.label} inputType={2} value={props.value} setValue={props.setValue} /> :
-                        <p>{props.value.countryCode} - {props.value.mobile}</p>
+                        <p>{props.initialValue.countryCode} - {props.value.mobile}</p>
                 )
             }
             {
                 props.type === 'time' &&
                 (
                     props.editOn ?
-                        <TimeInput value={props.value} setValue={props.setValue} /> :
-                        <p>{props.value.hours}:{props.value.minutes}</p>
+                        <TimeInput value={props.value} setValue={props.setValue} openUp={props.openUp}/> :
+                        <p>{props.initialValue.hours}:{props.initialValue.minutes}</p>
                 )
             }
             {
                 props.type === 'dropdown' &&
                 (
                     props.editOn ?
-                        <DropDown options={props.options} defaultDisplay={props.value ? props.value : `${props.placeholder}`} setValue={props.setValue} inputType={2} /> :
-                        <p>{props.value}</p>
+                        <DropDown options={props.options} defaultDisplay={props.value ? props.value : `${props.placeholder}`} setValue={props.setValue} inputType={2}/> :
+                        <p>{props.initialValue}</p>
                 )
             }
             {
@@ -52,7 +52,7 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <Toggle value={props.value} setValue={props.setValue} /> :
-                        <p>{props.value ? <CheckCircle style={{color: '#2996C3'}} /> : <Cancel style={{color: '#999'}}/>}</p>
+                        <p>{props.initialValue ? <CheckCircle style={{color: '#2996C3'}} /> : <Cancel style={{color: '#999'}}/>}</p>
                 )
             }
             {
@@ -60,7 +60,7 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <ToggleWithValue options={props.options} selected={props.value} setSelected={props.setValue} /> :
-                        <p>{props.value}</p>
+                        <p>{props.initialValue}</p>
                 )
             }
             {
@@ -68,7 +68,7 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <DatePicker value={props.value} setValue={props.setValue} /> :
-                        <p>{props.value}</p>
+                        <p>{props.initialValue}</p>
                 )
             }
         </div>

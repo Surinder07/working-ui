@@ -61,7 +61,7 @@ const Locations = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Locations' />
-            <LocationModal showModal={showModal} setShowModal={setShowModal}/>
+            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <Button type='plain' onClick={()=> setShowModal(true)}>+ Add new Location</Button>
