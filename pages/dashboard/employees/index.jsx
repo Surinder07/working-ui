@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal } from "../../../components";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {DashboardStyles} from "../../../styles/pages";
+import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal} from "../../../components";
 
 const Employees = (props) => {
-
     const [showModal, setShowModal] = useState(false);
 
     const router = useRouter();
@@ -51,7 +50,7 @@ const Employees = (props) => {
             locationId: "Location Id",
             typeOfEmployee: "FullTime",
             status: "xyz",
-        }
+        },
     ];
 
     const actions = [
@@ -71,23 +70,17 @@ const Employees = (props) => {
 
     return (
         <>
-            <WaawNoIndexHead title='Employees' />
+            <WaawNoIndexHead title="Employees" />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Employees</h1>
-                <Button type="plain" onClick={() => setShowModal(true)}>
-                    + Invite Users
-                </Button>
+                {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
+                    <Button type="plain" onClick={() => setShowModal(true)}>
+                        + Invite Users
+                    </Button>
+                )}
             </div>
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title="Employee Sheet"
-                    description="Tabular list Employee details."
-                    data={employees}
-                    actions={actions}
-                    pagination
-                    showSearch
-                    showFilter
-                />
+            <DashboardCard style={{marginTop: "20px"}}>
+                <TabularInfo title="Employee Sheet" description="Tabular list Employee details." data={employees} actions={actions} pagination showSearch showFilter />
             </DashboardCard>
             <InviteUserModal setShowModal={setShowModal} showModal={showModal} />
         </>
