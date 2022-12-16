@@ -79,6 +79,7 @@ const Profile = (props) => {
                         label='Mobile No.'
                         value={mobile}
                         setValue={setMobile}
+                        initialValue={mobile}
                         editOn={editPersonalDetails}
                     />
                     <EditableInput type='text' label='WAAW ID' editOn={editPersonalDetails} nonEditable />
