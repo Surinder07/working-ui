@@ -170,6 +170,42 @@ const Employees = (props) => {
         mobile: "",
         country: "",
     });
+    const [firstName,setFirstName]= useState("")
+    const [initialFirstName,setInitialFirstName]= useState("")
+    const [lastName,setLastName]= useState("")
+    const [initialLastName,setInitialLastName]= useState("")
+    const [email,setEmail]= useState("")
+    const [initialEmail,setInitialEmail]= useState("")
+    const [employeeId,setEmployeeId]= useState("")
+    const [initialEmployeeId,setInitialEmployeeID]= useState("")
+    const [location,setLocation]= useState("")
+    const [initialLocation,setInitialLocation]= useState("")
+    const [role,setRole]= useState("")
+    const [initialRole,setInitialRole]= useState("")
+    const [employeeType,setEmployeeType]= useState("")
+    const [initialEmployeeType,setInitialEmployeeType]= useState("")
+    // error states 
+    const [errorMobile,setErrorMobile]= useState({
+        errorMessage: "",
+        showError: false
+    })
+    const [errorFirstName,setErrorFirstName]= useState({
+        errorMessage: "",
+        showError: false
+    })
+    const [errorLastName,setErrorLastName]= useState({
+        errorMessage: "",
+        showError: false
+    })
+    const [errorEmail,setErrorEmail]= useState({
+        errorMessage: "",
+        showError: false
+    })
+    const [errorEmployeeId,setErrorEmployeeId]= useState({
+        errorMessage: "",
+        showError: false
+    })
+   
     const [showModalTimeSheet, setShowModalTimeSheet] = useState(false);
     const [showModalShift, setShowModalShift] = useState(false);
     const [showModalRequest, setShowModalRequest] = useState(false);
@@ -269,23 +305,25 @@ const Employees = (props) => {
                 <div className={DashboardStyles.personalContainer}>
                     <ProfileImage size="big" />
                     <div className={DashboardStyles.personalContent}>
-                        <EditableInput label="First Name" type="text" editOn={personalEditOn} />
-                        <EditableInput label="Last Name" type="text" editOn={personalEditOn} />
+                        <EditableInput label="First Name" type="text" value={firstName} initialValue={initialFirstName} setValue={setFirstName} error={errorFirstName} setError={setErrorFirstName} editOn={personalEditOn} />
+                        <EditableInput label="Last Name" type="text"  value={lastName} initialValue={initialLastName} setValue={setLastName} error={errorLastName} setError={setErrorLastName}  editOn={personalEditOn} />
                         <EditableInput
                             label="Mobile"
                             type="mobile"
                             value={mobile}
                             initialValue={initialMobile}
                             setValue={setMobile}
+                            error={errorMobile} setError={setErrorMobile} 
                             editOn={personalEditOn}
                         />
-                        <EditableInput label="Email" type="text" editOn={personalEditOn} />
-                        <EditableInput label="Employee Id" type="text" editOn={personalEditOn} />
-                        <EditableInput label="Location" type="text" editOn={personalEditOn} />
-                        <EditableInput label="Role" type="text" editOn={personalEditOn} />
+                        <EditableInput label="Email" type="text"  value={email} initialValue={initialEmail} setValue={setEmail} error={errorEmail} setError={setErrorEmail}  editOn={personalEditOn} />
+                        <EditableInput label="Employee Id" type="text"  value={employeeId} initialValue={initialEmployeeId} setValue={setEmployeeId} error={errorEmployeeId} setError={setErrorEmployeeId}  editOn={personalEditOn} />
+                        <EditableInput label="Location" type="text"  value={location} initialValue={initialLocation} setValue={setLocation} editOn={personalEditOn} />
+                        <EditableInput label="Role" type="text"  value={role} initialValue={initialRole} setValue={setRole} editOn={personalEditOn} />
                         <EditableInput
                             label="Employee type"
                             type="text"
+                            value={employeeType} initialValue={initialEmployeeType} setValue={setEmployeeType}
                             editOn={personalEditOn}
                         />
                     </div>

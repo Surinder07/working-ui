@@ -46,7 +46,7 @@ const InviteUserModal = (props) => {
     });
 
 
-    const handleChange = (e) => {
+    const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
             /**
@@ -81,7 +81,7 @@ const InviteUserModal = (props) => {
                 <div className={`${DashboardModalStyles.uploadContainer}`}>
                     <CloudUpload className={DashboardModalStyles.icon} />
                     <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleChange} />
+                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleFileChange} />
                     <p>Must be .xlsx or .csv file using our email template</p>
                     <p>
                         {`Download `}

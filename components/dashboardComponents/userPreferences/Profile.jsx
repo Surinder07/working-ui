@@ -15,7 +15,7 @@ const Profile = (props) => {
         country: ''
     })
 
-    const handleChange = (e) => {
+    const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
             /**
@@ -58,7 +58,7 @@ const Profile = (props) => {
                                 type="file"
                                 id="upload-button"
                                 style={{ display: "none" }}
-                                onChange={handleChange}
+                                onChange={handleFileChange}
                             />
                         </label>
                     }
