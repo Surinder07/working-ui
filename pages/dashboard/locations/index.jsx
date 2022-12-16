@@ -37,7 +37,6 @@ const Locations = (props) => {
                 if (res.error) {
                     console.log(res.message);
                 } else {
-                    console.log(res)
                     setData(res.data.map(loc => {
                         return {
                             internalId: loc.id,

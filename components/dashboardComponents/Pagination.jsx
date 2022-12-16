@@ -36,7 +36,6 @@ const Pagination = (props) => {
             start: ((props.pageNo - 1) * props.entryPerPage) + 1,
             end: ((props.pageNo - 1) * props.entryPerPage) + props.currentPageEntries
         })
-        console.log(props.totalEntries)
     }, [props.currentPageEntries, props.entryPerPage])
 
     return (

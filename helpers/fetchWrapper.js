@@ -18,7 +18,6 @@ const getApiUrl = (endpoint, queryMap) => {
 
 const getPaginationUrl = (endpoint, pageNo, pageSize, queryMap) => {
     const updatedEndpoint = `${endpoint}/${pageNo - 1}/${pageSize}`;
-    console.log(updatedEndpoint)
     return getApiUrl(updatedEndpoint, queryMap);
 }
 

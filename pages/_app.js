@@ -11,9 +11,7 @@ function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({
-        role: "ADMIN",
-    });
+    const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);
     const [pageInfo, setPageinfo] = useState({
@@ -63,7 +61,7 @@ function MyApp({ Component, pageProps }) {
         checkPageLoading();
         updateScreenTypeProp();
         if (Object.keys(user).length === 0 && secureLocalStorage.getData(userService.USER_KEY)) {
-            setUser(secureLocalStorage.getData(userService.USER_KEY))
+            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
         }
     }, [])
 
