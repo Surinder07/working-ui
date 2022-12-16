@@ -53,8 +53,6 @@ const Employees = (props) => {
         });
     }, []);
 
-
-
     const actions = [
         {
             key: "View",

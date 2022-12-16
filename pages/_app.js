@@ -7,13 +7,11 @@ import { userService } from '../services/user.service';
 import { NavFooterPageLayout, DashboardLayout } from '../layouts';
 import { Toaster } from '../components';
 
-function MyApp({Component, pageProps}) {
+function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({
-        role: "EMPLOYEES",
-    });
+    const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);
     const [pageInfo, setPageinfo] = useState({
@@ -62,7 +60,10 @@ function MyApp({Component, pageProps}) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
-    }, []);
+        if (Object.keys(user).length === 0 && secureLocalStorage.getData(userService.USER_KEY)) {
+            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
+        }
+    }, [])
 
     useEffect(() => {
         checkIfLoggedIn();
@@ -145,12 +146,12 @@ function MyApp({Component, pageProps}) {
                     >
                         {getComponentForPages()}
                     </NavFooterPageLayout>
-                )}
-                {pageInfo.pageView === "dashboard" && (
+                }
+                {pageInfo.pageView === "dashboard" &&
                     <DashboardLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
                     </DashboardLayout>
-                )}
+                }
                 {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>

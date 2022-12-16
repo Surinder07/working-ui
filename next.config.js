@@ -15,7 +15,7 @@ const apiEndpoints = {
     },
     locationAndRole: {
         new: '/v1/location/save',
-        get: '/api/v1/location/get'
+        get: '/v1/location/get'
     },
     dropdown: {
         getTimezones: '/v1/unAuth/timezone/get'

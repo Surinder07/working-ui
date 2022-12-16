@@ -32,14 +32,14 @@ const invoices = [
     }
 ]
 
+const PaymentHistory = (props) => {
 
-const Invoices = (props) => {
 const [data,setData] = useState(invoices)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
             pageView: 'dashboard',
-            activeMenu: 'INVOICES',
+            activeMenu: 'PAYMENT',
             activeSubMenu: 'none'
         })
     }, []);
@@ -59,18 +59,16 @@ const [data,setData] = useState(invoices)
         },
     ];
 
-
-   
     return (
         <>
             <WaawNoIndexHead title='Invoices' />
             <div className={DashboardStyles.dashboardTitles}>
-                <h1>Invoices</h1>
+                <h1>Payment History</h1>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
-                    title='Invoices'
-                    description='Tabular list of all current invoices status.'
+                    title='Payment History'
+                    description='Tabular list of all payments with status.'
                     data={data}
                     actions={actions}
                     pagination
@@ -81,4 +79,4 @@ const [data,setData] = useState(invoices)
 
 }
 
-export default Invoices;
+export default PaymentHistory;

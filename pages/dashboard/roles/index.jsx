@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal} from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal } from "../../../components";
 
 const roles = [
     {
@@ -44,7 +44,7 @@ const Roles = (props) => {
         });
     }, []);
     const [showModal, setShowModal] = useState(false);
-    const [data,setData] = useState(roles);
+    const [data, setData] = useState(roles);
     const actions = [
         {
             key: "View",
@@ -60,7 +60,7 @@ const Roles = (props) => {
         },
     ];
 
- 
+
     return (
         <>
             <WaawNoIndexHead title="Roles" />
@@ -72,10 +72,10 @@ const Roles = (props) => {
                     </Button>
                 )}
             </div>
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo title="Roles" description="Tabular list for current role." data={data} actions={actions} pagination />
             </DashboardCard>
-            <NewRoleModal setShowModal={setShowModal} showModal={showModal} setToasterInfo={props.setToasterInfo}/>
+            <NewRoleModal setShowModal={setShowModal} showModal={showModal} role={props.user.role} setToasterInfo={props.setToasterInfo} />
         </>
     );
 };

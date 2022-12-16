@@ -1,10 +1,7 @@
-import {useEffect} from "react";
-import Image from "next/Image";
-import {Button, InputBox} from "../../components";
-import {PaymentStyles as styles} from "../../styles/pages";
-
-import {FullPageWithImageLayout} from "../../layouts";
-import {style} from "@mui/system";
+import { useEffect } from "react";
+import Image from "next/image";
+import { Button, InputBox } from "../../components";
+import { PaymentStyles as styles } from "../../styles/pages";
 
 const Payment = (props) => {
     useEffect(() => {
@@ -24,53 +21,53 @@ const Payment = (props) => {
             <div className={styles.gridContainer}>
                 <div className={styles.leftGridContainer}>
                     <label htmlFor="firstName">
-                        First Name <sup style={{color: "red"}}>*</sup>
+                        First Name <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <InputBox type="text" name="creditCardNumber" />
                     <label htmlFor="firstName">
-                        Credit Card Number <sup style={{color: "red"}}>*</sup>
+                        Credit Card Number <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <InputBox type="text" name="creditCardNumber" />
                     <label htmlFor="country">
-                        Country <sup style={{color: "red"}}>*</sup>
+                        Country <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <InputBox type="text" name="country" />
                 </div>
                 <div className={styles.rightGridContainer}>
                     <label htmlFor="lastName">
-                        Last Name <sup style={{color: "red"}}>*</sup>
+                        Last Name <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <InputBox type="text" name="lastName" />
                     <div className={styles.flexContainer}>
                         <div>
                             <label htmlFor="expirationDate">
-                                Expiration Date <sup style={{color: "red"}}>*</sup>
+                                Expiration Date <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <InputBox type="text" name="expirationDate" placeholder="MM/YYYY" className={styles.inputHalfDivLeft} />
                         </div>
                         <div>
                             <label htmlFor="securityDate">
-                                Security Code <sup style={{color: "red"}}>*</sup>
+                                Security Code <sup style={{ color: "red" }}>*</sup>
                             </label>
                             <InputBox type="text" name="securityDate" className={styles.inputHalfDivRight} />
                         </div>
                     </div>
                     <label htmlFor="postalCode">
-                        Postal Code <sup style={{color: "red"}}>*</sup>
+                        Postal Code <sup style={{ color: "red" }}>*</sup>
                     </label>
                     <InputBox type="text" name="postalCode" placeholder="Billing Postal Code" />
                 </div>
             </div>
             <div className={styles.addressBar}>
                 <label htmlFor="enterBillingAddress">
-                    Address <sup style={{color: "red"}}>*</sup>
+                    Address <sup style={{ color: "red" }}>*</sup>
                 </label>
                 <InputBox type="text" name="enterBillingAddress" placeholder="Enter billing address" />
             </div>
             <p className={styles.fields}>
                 <sup>*</sup>Required Fields
             </p>
-            <Button style={({marginTop: "20px"}, {width: "300px"})}>Save</Button>
+            <Button style={({ marginTop: "20px" }, { width: "300px" })}>Save</Button>
         </div>
     );
 };

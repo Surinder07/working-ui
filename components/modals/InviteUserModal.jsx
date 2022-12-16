@@ -134,7 +134,7 @@ const InviteUserModal = (props) => {
                     <p>
                         {`Download `}
                         <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'xlsx'})}
-                            className={DashboardModalStyles.download} target='_blank'>xlsx</Link>
+                            className={DashboardModalStyles.download}>xlsx</Link>
                         {` or `}
                         <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'csv'})}
                             className={DashboardModalStyles.download}>csv</Link>

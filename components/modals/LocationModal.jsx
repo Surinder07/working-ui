@@ -50,6 +50,7 @@ const LocationModal = (props) => {
                         title: 'Success!',
                         message: 'Location added successfully'
                     });
+                    props.setReloadData(true);
                 }
             });
     }

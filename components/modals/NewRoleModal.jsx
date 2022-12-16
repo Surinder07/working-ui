@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {DashboardModal} from "./base";
-// import { DashboardModalStyles } from "../../styles/elements";
-import {EditableInput} from "../inputComponents";
+import React, { useState } from "react";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
+import { Checkbox, EditableInput } from "../inputComponents";
 
 const NewRoleModal = (props) => {
     const [roleName, setRoleName] = useState("");
@@ -10,13 +10,13 @@ const NewRoleModal = (props) => {
     const [minimumHours, setMinimumHours] = useState("");
     const [maximumWorkDays, setMaximumWorkDays] = useState("");
     const [gapsInShifts, setGapsInShifts] = useState("");
-    
     const [initialRoleName, setInitialRoleName] = useState("");
     const [initialLocation, setInitialLocation] = useState("");
     const [initialMaximumHours, setInitialMaximumHours] = useState("");
     const [initialMinimumHours, setInitialMinimumHours] = useState("");
     const [initialMaximumWorkDays, setInitialMaximumWorkDays] = useState("");
     const [initialGapsInShifts, setInitialGapsInShifts] = useState("");
+    const [adminRights, setAdminRights] = useState(false);
 
     const [errorRoleName, setErrorRoleName] = useState({
         errorMessage: "",
@@ -95,18 +95,21 @@ const NewRoleModal = (props) => {
                     setError={setErrorRoleName}
                     editOn
                 />
-                <EditableInput
-                    type="dropdown"
-                    options={["India", "Canada", "USA", "Germany"]}
-                    placeholder="Location"
-                    label="Location"
-                    value={location}
-                    setValue={setLocation}
-                    initialValue={initialLocation}
-                    error={errorLocation}
-                    setError={setErrorLocation}
-                    editOn
-                />
+                {
+                    props.role === 'ADMIN' &&
+                    <EditableInput
+                        type="dropdown"
+                        options={["India", "Canada", "USA", "Germany"]}
+                        placeholder="Location"
+                        label="Location"
+                        value={location}
+                        setValue={setLocation}
+                        initialValue={initialLocation}
+                        error={errorLocation}
+                        setError={setErrorLocation}
+                        editOn
+                    />
+                }
                 <EditableInput
                     type="text"
                     label="Total hours per day (Maximum)"
@@ -147,6 +150,7 @@ const NewRoleModal = (props) => {
                     setError={setErrorGapsInShifts}
                     editOn
                 />
+                <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />
             </DashboardModal>
         </div>
     );
