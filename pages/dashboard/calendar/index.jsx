@@ -20,7 +20,7 @@ const Calender = (props) => {
                 <h1>Calender</h1>
                 {props.user.role === "MANAGER" || props.user.role === 'ADMIN' && (
                     <Button type="plain" onClick={() => setShowModal(true)}>
-                        + Upload Organization Holiday
+                        + Upload {`${props.user.role === 'ADMIN' ? 'Organization' : 'Location'}`} Holiday
                     </Button>
                 )}
             </div>

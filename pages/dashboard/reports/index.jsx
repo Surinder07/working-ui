@@ -85,7 +85,6 @@ const payrollD = [
 ];
 
 const Reports = (props) => {
-    
     const router = useRouter();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
@@ -163,16 +162,21 @@ const Reports = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Reports</h1>
                 <div>
-                    <Button type="plain" style={{marginRight: "15px"}}>
-                        + Generate Payroll
-                    </Button>
-                    <Button type="plain">+ Generate Attendance</Button>
+                    {props.user.role === "MANAGER" ||
+                        (props.user.role === "ADMIN" && (
+                            <>
+                                <Button type="plain" style={{marginRight: "15px"}}>
+                                    + Generate Payroll
+                                </Button>
+                                <Button type="plain">+ Generate Attendance</Button>
+                            </>
+                        ))}
                 </div>
             </div>
             {getExpandableData("Payroll", payrollData, getActions("shift"))}
             {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
             {getExpandableData("Location Holidays", requestsData, getActions("request"))}
-            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}/>
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal} />
         </>
     );
 };
