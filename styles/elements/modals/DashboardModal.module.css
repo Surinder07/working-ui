@@ -39,6 +39,15 @@
 
 }
 
+.closeIcon {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+    color: var(--footer-text-color);
+    font-size: 30px;
+    cursor: pointer;
+}
+
 .subContainer h1 {
     width: 100%;
     text-align: center;
