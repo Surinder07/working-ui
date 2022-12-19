@@ -49,6 +49,7 @@ const InputBox = (props) => {
                 name={props.name}
                 placeholder={props.placeholder}
                 value={props.value}
+                disabled={props.disabled}
                 onChange={(e) => {
                     props.setValue(e.target.value);
                     props.setShowError && props.setShowError(false);

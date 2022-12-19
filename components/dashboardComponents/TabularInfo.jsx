@@ -3,12 +3,11 @@ import { TabularInfoStyles } from '../../styles/elements';
 import Pagination from './Pagination';
 import { SearchBar } from '../inputComponents';
 import { FilterAlt, ExpandMore, ExpandLess, Edit } from '@mui/icons-material';
-import Table from './Table';
+import { Table } from './table';
 
 const TabularInfo = (props) => {
 
     const [noData, setNoData] = useState(false);
-    const [pageNo, setPageNo] = useState(1);
     const [tableHeight, setTableHeight] = useState('450px');
 
     const tableRef = useRef();
@@ -93,11 +92,12 @@ const TabularInfo = (props) => {
                                 {
                                     props.pagination &&
                                     <Pagination
-                                        totalEntries={70}
-                                        entryPerPage={10}
-                                        currentPageEntries={10}
-                                        pageNo={pageNo}
-                                        setPageNo={setPageNo}
+                                        totalEntries={props.totalEntries}
+                                        entryPerPage={props.pageSize}
+                                        currentPageEntries={props.data.length}
+                                        totalPages={props.totalPages}
+                                        pageNo={props.pageNo}
+                                        setPageNo={props.setPageNo}
                                     />
                                 }
                             </>

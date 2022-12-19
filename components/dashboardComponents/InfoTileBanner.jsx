@@ -7,8 +7,8 @@ import DashboardCard from './DashboardCard';
 const InfoTileBanner = () => {
 
     const [tileValues, setTileValues] = useState({
-        employee: 256,
-        location: 10,
+        employee: '256/260',
+        location: '10/12',
         holiday: 2,
         requests: 2
     })
@@ -23,7 +23,11 @@ const InfoTileBanner = () => {
                                 <h2>{info.title}</h2>
                                 {info.timeframe && <h3>{info.timeframe}</h3>}
                             </div>
-                            <h1>{tileValues[info.name]}</h1>
+                            {
+                                typeof tileValues[info.name] === 'string' && tileValues[info.name].includes('/') ?
+                                <h1 className={DashboardStyles.compareValue}>{tileValues[info.name]}</h1> :
+                                <h1 className={DashboardStyles.normalValue}>{tileValues[info.name]}</h1>
+                            }
                         </DashboardCard>
                     </Link>
                 ))

@@ -31,7 +31,9 @@ const Options = (props) => {
                 }}>
                 {
                     props.options.map((opt, i) => (
-                        <p key={i} onClick={() => opt.action(props.actionId)}>{opt.key}</p>
+                        <p key={i} onClick={() => opt.action(props.actionId)}>
+                            {opt.key === 'activeToggle' ? (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate') : opt.key}
+                        </p>
                     ))
                 }
             </div>

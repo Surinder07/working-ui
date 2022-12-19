@@ -11,11 +11,25 @@ const GenerateReportsModal = (props) => {
     const [fromValue,setFromValue] = useState("");
     const [tillValue,setTillValue]= useState("")
     const [location,setLocation] = useState("")
+
+    const [initialFromValue,setInitialFromValue] = useState("")
+    const [initialTillValue,setInitialTillValue] = useState("")
+    const [initialLocation,setInitialLocation] = useState("")
  
     const [locationError,setLocationError] = useState({
         errorMessage:"",
         showError: false
     })
+
+    const onCancel = () =>{
+        setFromValue("")
+        setTillValue("")
+        setLocation("")
+        setLocationError({
+            errorMessage:"",
+            showError: false
+        })
+    }
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -23,9 +37,10 @@ const GenerateReportsModal = (props) => {
             buttonText="Submit"
             title="Generate Reports"
             type="twoColNarrow"
+            onCancel={onCancel}
         >
-            <EditableInput type="date"  value={fromValue} setValue={setFromValue} label="From"  editOn />
-            <EditableInput type="date"  value={tillValue} setValue={setTillValue} label="Till"  editOn />
+            <EditableInput type="date"  value={fromValue} setValue={setFromValue} initialValue={initialFromValue} label="From"  editOn />
+            <EditableInput type="date"  value={tillValue} setValue={setTillValue} initialValue={initialTillValue} label="Till"  editOn />
             <EditableInput
                 type="dropdown"
                 options={["India", "Canada", "Germany"]}
@@ -33,6 +48,7 @@ const GenerateReportsModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={location}
                 setValue={setLocation}
+                initialValue={initialLocation}
                 error={locationError}
                 setError={setLocationError}
                 editOn

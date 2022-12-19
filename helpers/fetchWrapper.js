@@ -16,6 +16,11 @@ const getApiUrl = (endpoint, queryMap) => {
     return `${baseUrl}${endpoint}${queries.length > 0 ? `?${queries.join('&')}` : ''}`;
 }
 
+const getPaginationUrl = (endpoint, pageNo, pageSize, queryMap) => {
+    const updatedEndpoint = `${endpoint}/${pageNo - 1}/${pageSize}`;
+    return getApiUrl(updatedEndpoint, queryMap);
+}
+
 const get = async (url) => {
     const requestOptions = {
         method: 'GET',
@@ -55,6 +60,22 @@ const _delete = async (url) => {
     return handleResponse(response);
 }
 
+const postForm = async (url, data) => {
+    const formData = new FormData();
+    Object.entries(data).map(form => {
+        formData.append(form[0], form[1]);
+    })
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data", ...authHeader(url)
+        },
+        body: FormData
+    }
+    const response = await fetch(url, requestOptions);
+    return handleResponse(response);
+}
+
 const authHeader = (url) => {
     let token = secureLocalStorage.getData(userService.TOKEN_KEY);
     const isAuthUrl = !url.includes('unAuth');
@@ -80,7 +101,9 @@ const handleResponse = async (response) => {
                         Router.push('/account/payment-info');
                         break;
                     default:
-                        userService.logout();
+                        localStorage.removeItem(TOKEN_KEY);
+                        localStorage.removeItem(USER_KEY);
+                        Router.push('/login');
                 }
                 return {};
             }
@@ -106,5 +129,7 @@ export const fetchWrapper = {
     post,
     put,
     delete: _delete,
-    getApiUrl
+    postForm,
+    getApiUrl,
+    getPaginationUrl
 };

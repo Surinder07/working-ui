@@ -1,7 +1,7 @@
 import { UserPreferenceStyles } from '../../../styles/pages';
 import Images from '../../../public/Images';
 import { CameraAlt } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserPreferenceCard from './UserPreferenceCard';
 import { EditableInput } from '../../inputComponents';
 
@@ -13,9 +13,27 @@ const Profile = (props) => {
         mobile: '',
         countryCode: '',
         country: ''
-    })
+    });
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [initialMobile, setInitialMobile] = useState({
+        mobile: '',
+        countryCode: '',
+        country: ''
+    });
 
-    const handleChange = (e) => {
+    useEffect(() => {
+        setFirstName(props.user.firstName);
+        setLastName(props.user.lastName);
+        setMobile({
+            mobile: props.user.mobile,
+            countryCode: props.user.countryCode,
+            country: props.user.country
+        });
+        setInitialMobile(mobile);
+    }, [])
+
+    const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
             /**
@@ -58,7 +76,7 @@ const Profile = (props) => {
                                 type="file"
                                 id="upload-button"
                                 style={{ display: "none" }}
-                                onChange={handleChange}
+                                onChange={handleFileChange}
                             />
                         </label>
                     }
@@ -72,16 +90,40 @@ const Profile = (props) => {
                     editOn={editPersonalDetails}
                     setEditOn={setEditPersonalDetails}
                 >
-                    <EditableInput type='text' label='First Name' value='Test' editOn={editPersonalDetails} />
-                    <EditableInput type='text' label='Last Name' editOn={editPersonalDetails} />
+                    <EditableInput
+                        type='text'
+                        label='First Name'
+                        value={firstName}
+                        setValue={setFirstName}
+                        initialValue={props.user.firstName}
+                        editOn={editPersonalDetails}
+                        required
+                    />
+                    <EditableInput
+                        type='text'
+                        label='Last Name'
+                        value={lastName}
+                        setValue={setLastName}
+                        initialValue={props.user.lastName}
+                        editOn={editPersonalDetails}
+                        required
+                    />
                     <EditableInput
                         type='mobile'
                         label='Mobile No.'
                         value={mobile}
                         setValue={setMobile}
+                        initialValue={initialMobile}
                         editOn={editPersonalDetails}
                     />
-                    <EditableInput type='text' label='WAAW ID' editOn={editPersonalDetails} nonEditable />
+                    <EditableInput
+                        type='text'
+                        label='WAAW ID'
+                        value={props.user.waawId}
+                        initialValue={props.user.waawId}
+                        editOn={editPersonalDetails}
+                        nonEditable
+                    />
                 </UserPreferenceCard>
             </div>
         </div>

@@ -1,8 +1,18 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal} from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal } from "../../../components";
+import { locationAndRoleService } from "../../../services";
 
 const Roles = (props) => {
+    const [updateModal, setUpdateModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [data, setData] = useState();
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -11,12 +21,46 @@ const Roles = (props) => {
             activeSubMenu: "none",
         });
     }, []);
-    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        fetchData();
+    }, [pageNo, pageSize]);
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData])
+
+    const fetchData = () => {
+        locationAndRoleService.getAllRoles(pageNo, pageSize)
+            .then(res => {
+                if (res.error) {
+                    console.log(res.message);
+                } else {
+                    setData(res.data.map(role => {
+                        return {
+                            internalId: role.id,
+                            id: role.waawId,
+                            roleName: role.name,
+                            location: role.location,
+                            creationDate: role.creationDate,
+                            createdBy: role.createdBy,
+                            status: role.active ? 'Active' : 'Disabled'
+                        }
+                    }));
+                    setTotalEntries(res.totalEntries);
+                    setTotalPages(res.totalPages);
+                }
+            })
+    }
 
     const actions = [
         {
-            key: "View",
-            action: (id) => console.log(`/dashboard/roles/?id=${id}`),
+            key: "Edit",
+            action: (id) => {
+                setUpdateModal(true);
+                setShowModal(true);
+            },
         },
         {
             key: "Deactivate",
@@ -28,36 +72,6 @@ const Roles = (props) => {
         },
     ];
 
-    const roles = [
-        {
-            roleId: "6476475",
-            name: "Frontend",
-            creationDate: "01/01/2023",
-            location: "Canada",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476476",
-            name: "Backend",
-            creationDate: "01/01/2023",
-            location: "India",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476477",
-            name: "Mern",
-            creationDate: "01/01/2023",
-            location: "India",
-            createdBy: "Name",
-        },
-        {
-            roleId: "6476478",
-            name: "operation",
-            creationDate: "01/01/2023",
-            location: "USA",
-            createdBy: "Name",
-        },
-    ];
 
     return (
         <>
@@ -65,15 +79,35 @@ const Roles = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Roles</h1>
                 {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
-                    <Button type="plain" onClick={() => setShowModal(true)}>
+                    <Button type="plain" onClick={() => {
+                        setUpdateModal(false);
+                        setShowModal(true)
+                    }}>
                         + Add new Roles
                     </Button>
                 )}
             </div>
-            <DashboardCard style={{marginTop: "20px"}}>
-                <TabularInfo title="Roles" description="Tabular list for current role." data={roles} actions={actions} pagination />
+            <DashboardCard style={{ marginTop: "20px" }}>
+                <TabularInfo
+                    title="Roles"
+                    description="Tabular list for current role."
+                    data={data}
+                    actions={actions}
+                    pagination
+                    totalEntries={totalEntries}
+                    pageSize={pageSize}
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
+                />
             </DashboardCard>
-            <NewRoleModal setShowModal={setShowModal} showModal={showModal} />
+            <NewRoleModal
+                setShowModal={setShowModal}
+                showModal={showModal}
+                role={props.user.role}
+                setToasterInfo={props.setToasterInfo}
+                update={updateModal}
+            />
         </>
     );
 };

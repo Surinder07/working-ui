@@ -5,6 +5,7 @@ import { ImagesInfo, SideNavInfo } from "../constants";
 import Images from "../public/Images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
+import { userService } from "../services";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
@@ -12,6 +13,7 @@ const Dashboard = (props) => {
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
     const [navOpen, setNavOpen] = useState(true);
+    const [userName, setUserName] = useState('');
 
     const handleNavigation = useCallback(
         (e) => {
@@ -25,6 +27,10 @@ const Dashboard = (props) => {
         },
         [y]
     );
+
+    useEffect(() => {
+        setUserName(props.user ? (props.user.firstName + (props.user.lastName ? (" " + props.user.lastName) : "")) : '');
+    }, [props.user])
 
     useEffect(() => {
         setY(window.scrollY);
@@ -44,7 +50,8 @@ const Dashboard = (props) => {
                         </div>
                         <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                         <div style={{ marginTop: "20px" }}>
-                            {SideNavInfo["admin"].map((info, key) => (
+                            {props.user &&
+                            SideNavInfo[props.user.role.toLowerCase()].map((info, key) => (
                                 <Link href={info.link} key={key}>
                                     <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
                                         {info.icon}
@@ -60,7 +67,7 @@ const Dashboard = (props) => {
                             <Settings style={{ fontSize: "16px" }} />
                             {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
                         </div>
-                        <div className={`${DashboardLayout.menuItem}`}>
+                        <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
                             <Logout style={{ fontSize: "16px" }} />
                             {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
                         </div>
@@ -74,7 +81,7 @@ const Dashboard = (props) => {
                         <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />
                         <div className={DashboardLayout.helpIcon}>?</div>
                         <NotificationBell />
-                        <h3 className={DashboardLayout.userName}>{props.user && props.user.firstName + (props.user.lastName ? " " + props.user.lastName : "")}</h3>
+                        <h3 className={DashboardLayout.userName}>{userName}</h3>
                         <ProfileImage size={"small"} header />
                     </div>
                 </div>
@@ -83,7 +90,7 @@ const Dashboard = (props) => {
                     <div className={DashboardLayout.leftContainer}>
                         <p style={{ marginRight: "20px" }}>&#169;{` ${new Date().getFullYear()} WAAW GLOBAL INC. All Rights Reserved`}</p>
                         {ImagesInfo.footerIcons.socialIcons.map((icon, i) => (
-                            <LinkedImage style={{ marginRight: "10px" }} height={20} src={icon.src} alt={icon.alt} link={icon.link} />
+                            <LinkedImage key={`social_${i}`} style={{ marginRight: "10px" }} height={20} src={icon.src} alt={icon.alt} link={icon.link} />
                         ))}
                     </div>
                     <LinkedImage src={Images.Favicon} height={25} alt="WAAW" />
