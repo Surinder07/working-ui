@@ -33,7 +33,7 @@ const nextConfig = {
     publicRuntimeConfig: {
         apiUrl: process.env.NODE_ENV === 'development'
             ? 'http://localhost:8080/api' // development api
-            : 'https://staging-api.waaw.ca' // production api
+            : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
         version: '1.0',
