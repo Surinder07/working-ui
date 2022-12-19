@@ -4,6 +4,7 @@ import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
 import Tabs from "../dashboardComponents/Tabs";
+
 const CreateRequestModal = (props) => {
     const [formType, setFormType] = useState("Full Day");
     const [options, setOptions] = useState("Overtime Request"); //"Personal Information Update" "Time of Request","Overtime Request"

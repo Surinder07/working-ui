@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, DashboardCard, TabularInfo, Button} from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button } from "../../../components";
 import RequestsModal from "../../../components/modals/EditRequestModal";
 
 const requests = [
@@ -12,6 +12,26 @@ const requests = [
         initiatedBy: "Rahul",
         assignedTo: "Rajiv",
         status: "xyz",
+        history: [
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'bad'
+            },
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'basic'
+            },
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'ok'
+            }
+        ]
     },
     {
         requestId: "6476476",
@@ -21,6 +41,14 @@ const requests = [
         initiatedBy: "Arpit",
         assignedTo: "Sandeep",
         status: "xyz",
+        history: [
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'bad'
+            }
+        ]
     },
     {
         requestId: "6476477",
@@ -29,7 +57,19 @@ const requests = [
         location: "USA",
         initiatedBy: "Albert",
         assignedTo: "Edward",
-        status: "xyz",
+        status: {
+            text: "OPEN",
+            displayType: 'bg',
+            status: 'ok'
+        },
+        history: [
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'bad'
+            }
+        ]
     },
     {
         requestId: "6476478",
@@ -38,14 +78,26 @@ const requests = [
         location: "Mexico",
         initiatedBy: "Ethan",
         assignedTo: "Ishac",
-        status: "xyz",
+        status: {
+            text: "CLOSED",
+            displayType: 'bg',
+            status: 'warn'
+        },
+        history: [
+            {
+                title: 'Xyz Raised a Request',
+                description: 'Request for early leave on the next to next week',
+                date: '29th August,2022',
+                status: 'bad'
+            }
+        ]
     },
 ];
 
 const Requests = (props) => {
     const [editId, setEditId] = useState("");
     const [showEditModal, setShowEditModal] = useState(false);
-    const [data,setData] = useState(requests)
+    const [data, setData] = useState(requests)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -82,7 +134,7 @@ const Requests = (props) => {
                 <h1>Requests</h1>
                 {props.user.role === "MANAGER" && <Button type="plain">+ Invite Users</Button>}
             </div>
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo title="Request Details" description="Tabular representation of all the requests" data={data} actions={actions} pagination />
             </DashboardCard>
         </>

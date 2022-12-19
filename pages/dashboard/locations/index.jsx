@@ -6,7 +6,7 @@ import { locationAndRoleService } from "../../../services";
 const Locations = (props) => {
 
     const [showModal, setShowModal] = useState(false);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
@@ -20,6 +20,7 @@ const Locations = (props) => {
             activeMenu: "LOCATIONS",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(['ADMIN'])
     }, []);
 
     useEffect(() => {
@@ -40,7 +41,7 @@ const Locations = (props) => {
                     setData(res.data.map(loc => {
                         return {
                             internalId: loc.id,
-                            locationId: loc.waawId,
+                            id: loc.waawId,
                             locationName: loc.name,
                             creationDate: loc.creationDate,
                             timezone: loc.timezone,
@@ -61,7 +62,7 @@ const Locations = (props) => {
             action: (id) => console.log(`/dashboard/locations/`),
         },
         {
-            key: "Deactivate",
+            key: "activeToggle",
             action: () => console.log("Api call will be added here"),
         },
         {

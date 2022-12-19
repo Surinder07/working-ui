@@ -20,7 +20,10 @@ const shifts = [
                 shiftInTime: "10:00 AM",
                 shiftOutTime: "05:00 PM",
                 status: "N/A",
-                comments: "N/A",
+                comments: {
+                    text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
+                    displayType: "comment"
+                }
             },
             {
                 employeeId: "229966",
@@ -30,7 +33,10 @@ const shifts = [
                 shiftInTime: "10:00 AM",
                 shiftOutTime: "05:00 PM",
                 status: "N/A",
-                comments: "N/A",
+                comments: {
+                    text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
+                    displayType: "comment"
+                }
             },
         ],
     },

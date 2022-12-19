@@ -10,8 +10,8 @@ const LocationModal = (props) => {
 
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
-    const [initialLocation,setInitialLocation] = useState('');
-    const [initialTimezone,setInitialTimezone] = useState('');
+    const [initialLocation, setInitialLocation] = useState('');
+    const [initialTimezone, setInitialTimezone] = useState('');
     const [errorLocation, setErrorLocation] = useState({
         errorMessage: "",
         showError: false
@@ -69,7 +69,7 @@ const LocationModal = (props) => {
                 type="text"
                 value={location}
                 setValue={setLocation}
-                initialValue={initialLocation}
+                // initialValue={initialLocation}
                 error={errorLocation}
                 setError={setErrorLocation}
                 label="Location"
@@ -81,7 +81,7 @@ const LocationModal = (props) => {
                 options={timezones}
                 value={timezone}
                 setValue={setTimezone}
-                initialValue={initialTimezone}
+                // initialValue={initialTimezone}
                 error={errorTimezone}
                 setError={setErrorTimezone}
                 label="Timezone"

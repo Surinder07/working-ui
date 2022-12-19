@@ -26,7 +26,7 @@ const CountryCodeDropdown = (props) => {
     }
 
     useEffect(() => {
-        const selectedOption = props.value.country !== '' ? props.options.find(option => {
+        const selectedOption = props.value.country && props.value.country !== '' ? props.options.find(option => {
             return option.country === props.value.country;
         }) : props.options[0];
         setDisplayValue(selectedOption.selectDisplay);

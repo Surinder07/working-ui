@@ -101,7 +101,9 @@ const handleResponse = async (response) => {
                         Router.push('/account/payment-info');
                         break;
                     default:
-                        userService.logout();
+                        localStorage.removeItem(TOKEN_KEY);
+                        localStorage.removeItem(USER_KEY);
+                        Router.push('/login');
                 }
                 return {};
             }

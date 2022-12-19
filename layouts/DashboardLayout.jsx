@@ -50,7 +50,8 @@ const Dashboard = (props) => {
                         </div>
                         <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                         <div style={{ marginTop: "20px" }}>
-                            {SideNavInfo["admin"].map((info, key) => (
+                            {props.user &&
+                            SideNavInfo[props.user.role.toLowerCase()].map((info, key) => (
                                 <Link href={info.link} key={key}>
                                     <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
                                         {info.icon}

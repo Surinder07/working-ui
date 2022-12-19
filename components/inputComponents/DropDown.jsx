@@ -6,14 +6,25 @@ const DropDown = (props) => {
 
     const ref = useRef();
 
-    const [displayValue, setDisplayValue] = useState(props.defaultDisplay);
+    const [displayValue, setDisplayValue] = useState(props.placeholder);
     const [open, setOpen] = useState(false);
     const [openDown, setOpenDown] = useState(props.openUp ? false : true);
     const [inputHeight, setInputHeight] = useState(0);
 
     useEffect(() => {
         setInputHeight(ref.current.clientHeight);
-    }, [ref]);
+    }, [ref.current]);
+
+    useEffect(() => {
+        if (props.initialValue === '') {
+            console.log('entered empty')
+            setDisplayValue(props.placeholder)
+        } else {
+            console.log('entered loop')
+            props.options.filter(opt => opt.value === props.initialValue)
+                .map(opt => setDisplayValue(opt.display))
+        }
+    }, [props.options])
 
     const openedDownStyle = {
         top: props.inputType === 2 ? '32px' : '37px',
@@ -59,15 +70,17 @@ const DropDown = (props) => {
             <div className={`${DropdownStyles.options} ${!open && DropdownStyles.closedOptions}`}
                 style={openDown ? openedDownStyle : openedUpStyle}>
                 {
-                    props.options.map((option, i) => (
-                        <p key={i} onClick={() => {
-                            props.setValue(option.value);
-                            setDisplayValue(option.display);
-                            props.setShowError && props.setShowError(false);
-                            setOpen(!open)
-                        }}
-                        >{option.display}</p>
-                    ))
+                    props.options.length > 0 ?
+                        props.options.map((option, i) => (
+                            <p key={i} onClick={() => {
+                                props.setValue(option.value);
+                                setDisplayValue(option.display);
+                                props.setShowError && props.setShowError(false);
+                                setOpen(!open)
+                            }}
+                            >{option.display}</p>
+                        )) :
+                        <p>No data to show</p>
                 }
             </div>
             {props.showError && <p className={DropdownStyles.errorMessage}>{props.errorMessage}</p>}
