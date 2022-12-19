@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal} from "../../../components";
+import {WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter} from "../../../components";
 
 const shifts = [
     {
@@ -109,6 +109,7 @@ const Shifts = (props) => {
     }, []);
 
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showFilterModal,setShowFilterModal] = useState(true);
     const [data,setData] = useState(shifts);
     const actions = [
         {
@@ -142,6 +143,7 @@ const Shifts = (props) => {
                 <TabularInfo title="Shifts" description="Tabular list of all Shifts." data={data} actions={actions} pagination />
             </DashboardCard>
             <NewShiftModal setShowModal={setShowAddModal} showModal={showAddModal} buttonText="CreateShift" setToasterInfo={props.setToasterInfo} />
+            <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} />
         </>
     );
 };
