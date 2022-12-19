@@ -1,14 +1,24 @@
 .container {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 1.25em;
+    right: 1.25em;
     color: #FFF;
-    grid-template-columns: 50px auto;
-    max-width: 350px;
+    display: grid;
+    grid-template-columns: 3.125em auto;
     z-index: 10000;
-    column-gap: 20px;
-    padding: 1.25rem 2rem;
+    column-gap: 1.25em;
     transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.visible {
+    width: 21.875em;
+    padding: 1.25rem 2rem;
+}
+
+.hidden {
+    width: 0;
+    padding: 0;
 }
 
 .error {
@@ -26,20 +36,20 @@
 }
 
 .icon {
-    font-size: 40px;
+    font-size: 2.5em;
 }
 
 .messageContainer h1 {
     font-weight: 500;
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 1.25em;
+    line-height: 1.875em;
     margin: 0;
-    margin-bottom: 5px;
+    margin-bottom: 0.3125em;
 }
 
 .messageContainer p {
     font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 1em;
+    line-height: 1.5em;
     margin: 0;
 }

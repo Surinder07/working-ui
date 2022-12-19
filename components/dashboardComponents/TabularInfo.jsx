@@ -3,7 +3,7 @@ import { TabularInfoStyles } from '../../styles/elements';
 import Pagination from './Pagination';
 import { SearchBar } from '../inputComponents';
 import { FilterAlt, ExpandMore, ExpandLess, Edit } from '@mui/icons-material';
-import Table from './Table';
+import { Table } from './table';
 
 const TabularInfo = (props) => {
 

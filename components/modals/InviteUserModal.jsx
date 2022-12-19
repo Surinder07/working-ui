@@ -1,29 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { CloudUpload } from "@mui/icons-material";
+import { dropdownService } from "../../services";
 import { fetchWrapper } from "../../helpers";
 import Link from 'next/link';
 
 const InviteUserModal = (props) => {
-    
+
     const fileEndpoint = process.env.endpoints.resources.fileTemplate;
+    // ------------ Dropdown values
+    const [locations, setLocations] = useState([]);
+    const [roles, setRoles] = useState([]);
+    // ----------------------------
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [employeeId, setEmployeeId] = useState("");
     const [email, setEmail] = useState("");
-    const [typeOfEmployee, setTypeOfEmployee] = useState("");
     const [location, setLocation] = useState("");
+    const [role, setRole] = useState("");
     const [toggleValue, setToggleValue] = useState("Permanent");
-    const [initialFirstName,setInitialFirstName] = useState("")
-    const [initialLastName,setInitialLastName] = useState("")
-    const [initialEmployeeId,setInitialEmployeeId] = useState("")
-    const [initialEmail,setInitialEmail] = useState("")
-    const [initialTypeOfEmployee,setInitialTypeOfEmployee] = useState("")
-    const [initialLocation,setInitialLocation] = useState("")
-    const [initialToggleValue,setInitialToggleValue] = useState("Permanent")
-
 
     const [errorFirstName, setErrorFirstName] = useState({
         errorMessage: "",
@@ -41,57 +38,74 @@ const InviteUserModal = (props) => {
         errorMessage: "",
         showError: false,
     });
-    const [errorTypeOfEmployee, setErrorTypeOfEmployee] = useState({
-        errorMessage: "",
-        showError: false,
-    });
     const [errorLocation, setErrorLocation] = useState({
         errorMessage: "",
         showError: false,
     });
-    const [errorToggleValue, setErrorToggleValue] = useState({
+    const [errorRole, setErrorRole] = useState({
         errorMessage: "",
         showError: false,
     });
 
     const onCancel = () => {
-        setFirstName("")
-        setLastName("")
-        setEmployeeId("")
-        setEmail("")
-        setTypeOfEmployee("")
-        setLocation("")
-        setToggleValue("Permanent")
+        setFirstName("");
+        setLastName("");
+        setEmployeeId("");
+        setEmail("");
+        setLocation("");
+        setRole("");
+        setRoles([]);
+        setToggleValue("Permanent");
         setErrorFirstName({
             errorMessage: "",
             showError: false
-        })
+        });
         setErrorLastName({
             errorMessage: "",
             showError: false
-        })
+        });
         setErrorEmployeeId({
             errorMessage: "",
             showError: false
-        })
+        });
         setErrorEmail({
             errorMessage: "",
             showError: false
-        })
-        setErrorTypeOfEmployee({
-            errorMessage: "",
-            showError: false
-        })
+        });
         setErrorLocation({
             errorMessage: "",
             showError: false
-        })
-        setErrorToggleValue({
-            errorMessage: "",
-            showError: false
-        })
+        });
     }
 
+    useEffect(() => {
+        if (props.role === 'ADMIN') {
+            dropdownService.getLocations()
+                .then(res => {
+                    if (!res.error) {
+                        setLocations(res);
+                    }
+                })
+        } else {
+            dropdownService.getRoles(null)
+                .then(res => {
+                    if (!res.error) {
+                        setRoles(res);
+                    }
+                });
+        }
+    }, [])
+
+    useEffect(() => {
+        if (location !== '') {
+            dropdownService.getRoles(location)
+                .then(res => {
+                    if (!res.error) {
+                        setRoles(res);
+                    }
+                });
+        }
+    }, [location])
 
     const handleFileChange = (e) => {
         if (e.target.files.length) {
@@ -129,14 +143,14 @@ const InviteUserModal = (props) => {
                 <div className={`${DashboardModalStyles.uploadContainer}`}>
                     <CloudUpload className={DashboardModalStyles.icon} />
                     <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{ display: "none" }}  onChange={handleFileChange} />
+                    <input type="file" id="upload" style={{ display: "none" }} onChange={handleFileChange} />
                     <p>Must be .xlsx or .csv file using our email template</p>
                     <p>
                         {`Download `}
-                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'xlsx'})}
+                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, { resource: 'inviteUser', format: 'xlsx' })}
                             className={DashboardModalStyles.download}>xlsx</Link>
                         {` or `}
-                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'inviteUser', format:'csv'})}
+                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, { resource: 'inviteUser', format: 'csv' })}
                             className={DashboardModalStyles.download}>csv</Link>
                         {` template here`}
                     </p>
@@ -148,7 +162,7 @@ const InviteUserModal = (props) => {
                 label="First Name"
                 value={firstName}
                 setValue={setFirstName}
-                initialValue={initialFirstName}
+                initialValue={firstName}
                 error={errorFirstName}
                 setError={setErrorFirstName}
                 required
@@ -159,7 +173,7 @@ const InviteUserModal = (props) => {
                 label="Last Name"
                 value={lastName}
                 setValue={setLastName}
-                initialValue={initialLastName}
+                initialValue={lastName}
                 error={errorLastName}
                 setError={setErrorLastName}
                 required
@@ -170,7 +184,7 @@ const InviteUserModal = (props) => {
                 label="External Employee ID"
                 value={employeeId}
                 setValue={setEmployeeId}
-                initialValue={initialEmployeeId}
+                initialValue={employeeId}
                 error={errorEmployeeId}
                 setError={setErrorEmployeeId}
                 editOn
@@ -180,43 +194,46 @@ const InviteUserModal = (props) => {
                 label="Email Address"
                 value={email}
                 setValue={setEmail}
-                initialValue={initialEmail}
+                initialValue={email}
                 error={errorEmail}
                 setError={setErrorEmail}
+                required
                 editOn
             />
+            {props.role === 'ADMIN' &&
+                <EditableInput
+                    type="dropdown"
+                    options={locations}
+                    label="Location"
+                    value={location}
+                    setValue={setLocation}
+                    initialValue={location}
+                    error={errorLocation}
+                    setError={setErrorLocation}
+                    placeholder='Select a Location'
+                    required
+                    editOn
+                />}
             <EditableInput
                 type="dropdown"
-                options={["admin", "user"]}
-                label="Type of Employee"
-                value={typeOfEmployee}
-                setValue={setTypeOfEmployee}
-                initialValue={initialTypeOfEmployee}
-                error={errorTypeOfEmployee}
-                setError={setErrorTypeOfEmployee}
+                options={roles}
+                label="Role"
+                value={role}
+                setValue={setRole}
+                initialValue={role}
+                error={errorRole}
+                setError={setErrorRole}
+                placeholder='Select a Role'
                 required
                 editOn
             />
             <EditableInput
-                type="dropdown"
-                options={["India", "Canada", "France", "Germany"]}
-                label="Location"
-                value={location}
-                setValue={setLocation}
-                initialValue={initialLocation}
-                error={errorLocation}
-                setError={setErrorLocation}
-                required
-                editOn
-            />
-            <EditableInput
+                className={DashboardModalStyles.singleColumn}
                 type="toggle2"
                 options={["Permanent", "Part Time"]}
                 value={toggleValue}
                 setValue={setToggleValue}
-                initialValue={initialToggleValue}
-                error={errorToggleValue}
-                setError={setErrorToggleValue}
+                initialValue={toggleValue}
                 editOn
             />
         </DashboardModal>

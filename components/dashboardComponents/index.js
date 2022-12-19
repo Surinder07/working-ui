@@ -5,7 +5,6 @@ import NotificationBell from './NotificationBell';
 import Options from './Options';
 import Pagination from './Pagination';
 import ProfileImage from './ProfileImage';
-import Table from './Table';
 import TabularInfo from './TabularInfo';
 import EmployeePreference from './EmployeePreference';
 
@@ -17,7 +16,6 @@ export {
     Options,
     Pagination,
     ProfileImage,
-    Table,
     TabularInfo,
     EmployeePreference
 };

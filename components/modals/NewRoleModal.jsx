@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
+import { dropdownService } from "../../services";
 
 const NewRoleModal = (props) => {
+    //------------- Dropdown values
+    const [locations, setLocations] = useState([]);
+    //-----------------------------
     const [roleName, setRoleName] = useState("");
     const [location, setLocation] = useState("");
     const [maximumHours, setMaximumHours] = useState("");
@@ -70,13 +74,26 @@ const NewRoleModal = (props) => {
         })
     }
 
+    useEffect(() => {
+        if (props.role === 'ADMIN') {
+            dropdownService.getLocations()
+                .then(res => {
+                    if (!res.error) {
+                        setLocations(res);
+                    }
+                })
+        }
+    }, [])
+
     return (
         <div>
             <DashboardModal
                 showModal={props.showModal}
                 setShowModal={props.setShowModal}
                 buttonText="Submit"
-                title="Create New Role"
+                onClick={() => console.log('clicked')}
+                onCancel={onCancel}
+                title={props.update ? "UpdateRole" : "Create New Role"}
                 type="twoColWide"
                 onCancel={onCancel}
             >
@@ -88,6 +105,7 @@ const NewRoleModal = (props) => {
                     initialValue={roleName}
                     error={errorRoleName}
                     setError={setErrorRoleName}
+                    nonEditable={props.update}
                     editOn
                 />
                 {
@@ -127,7 +145,7 @@ const NewRoleModal = (props) => {
                 />
                 <EditableInput
                     type="text"
-                    label="Maximum consequtive work days"
+                    label="Maximum consecutive work days"
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
                     initialValue={maximumWorkDays}
@@ -145,7 +163,7 @@ const NewRoleModal = (props) => {
                     setError={setErrorGapsInShifts}
                     editOn
                 />
-                <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />
+                {props.update && <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />}
             </DashboardModal>
         </div>
     );
