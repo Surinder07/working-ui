@@ -12,7 +12,7 @@ function MyApp({Component, pageProps}) {
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
     const [user, setUser] = useState({
-        role: "EMPLOYEES",
+        role: "ADMIN",
     });
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);

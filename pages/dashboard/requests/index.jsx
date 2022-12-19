@@ -79,7 +79,7 @@ const Requests = (props) => {
             <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
-                {props.user.role === "MANAGER" && <Button type="plain">+ Invite Users</Button>}
+                {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Invite Users</Button>)}
             </div>
             <DashboardCard style={{marginTop: "20px"}}>
                 <TabularInfo title="Request Details" description="Tabular representation of all the requests" data={requests} actions={actions} pagination />

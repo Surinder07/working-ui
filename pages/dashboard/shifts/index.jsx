@@ -130,11 +130,12 @@ const Shifts = (props) => {
             <WaawNoIndexHead title="Shifts" />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
-                {props.user.role === "MANAGER" && (
-                    <Button type="plain" onClick={() => setShowAddModal(true)}>
-                        + Create new Shifts
-                    </Button>
-                )}
+                {props.user.role === "MANAGER" ||
+                    (props.user.role === "ADMIN" && (
+                        <Button type="plain" onClick={() => setShowAddModal(true)}>
+                            + Create new Shifts
+                        </Button>
+                    ))}
             </div>
             <DashboardCard style={{marginTop: "20px"}}>
                 <TabularInfo title="Shifts" description="Tabular list of all Shifts." data={shifts} actions={actions} pagination />
