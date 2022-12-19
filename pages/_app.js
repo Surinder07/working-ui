@@ -139,7 +139,7 @@ function MyApp({ Component, pageProps }) {
                     <NavFooterPageLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType}>
                         {getComponentForPages()}
                     </NavFooterPageLayout>
-                )}
+                }
                 {pageInfo.pageView === "dashboard" &&
                     <DashboardLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
