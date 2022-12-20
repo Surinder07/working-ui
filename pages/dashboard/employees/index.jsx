@@ -87,11 +87,9 @@ const Employees = (props) => {
             <WaawNoIndexHead title="Employees" />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Employees</h1>
-                {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
-                    <Button type="plain" onClick={() => setShowModal(true)}>
-                        + Invite Users
-                    </Button>
-                )}
+                <Button type="plain" onClick={() => setShowModal(true)}>
+                    + Invite Users
+                </Button>
             </div>
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo

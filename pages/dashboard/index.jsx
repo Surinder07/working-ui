@@ -125,7 +125,7 @@ const Dashboard = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.user) {
+        if (props.user.role) {
             setTabularData({
                 title: props.user.role === "ADMIN" ? "Payment History" : "Schedule shift for today",
                 description: props.user.role === "ADMIN" ? "Tabular list of payment history." : "Tabular list of all shifts assigned for today",

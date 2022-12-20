@@ -95,9 +95,16 @@ const requests = [
 ];
 
 const Requests = (props) => {
+
     const [editId, setEditId] = useState("");
     const [showEditModal, setShowEditModal] = useState(false);
-    const [data, setData] = useState(requests)
+    const [data, setData] = useState(requests);
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -135,7 +142,20 @@ const Requests = (props) => {
                 {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Invite Users</Button>)}
             </div>
             <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo title="Request Details" description="Tabular representation of all the requests" data={data} actions={actions} pagination />
+                <TabularInfo
+                    title="Request Details"
+                    description="Tabular representation of all the requests"
+                    data={data}
+                    actions={actions}
+                    pagination
+                    totalEntries={totalEntries}
+                    pageSize={pageSize}
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
+                    showSearch
+                    showFilter
+                />
             </DashboardCard>
         </>
     );

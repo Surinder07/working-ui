@@ -26,7 +26,7 @@ const UserPreference = (props) => {
 
     useEffect(() => {
         if (props.user) {
-        setShownContent(getProfileElement(active, props.user, props.setUser))
+            setShownContent(getProfileElement(active, props.user, props.setUser))
         }
     }, [active])
 

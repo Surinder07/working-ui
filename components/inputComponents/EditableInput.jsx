@@ -11,7 +11,7 @@ import ToggleWithValue from './ToggleWithValue';
 const EditableInput = (props) => {
 
     const setValue = (value) => {
-        props.setError({
+        props.setError && props.setError({
             message: '',
             show: 'false'
         })
