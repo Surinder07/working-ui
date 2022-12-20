@@ -48,7 +48,7 @@ const SubTable = (props) => {
             }}
         >
             {
-                props.data && props.data.length > 0 &&
+                (props.data && props.data.length > 0) &&
                 displayHeaders.map((subHead, j) => (
                     <div
                         key={`head_${j}`}
@@ -59,7 +59,8 @@ const SubTable = (props) => {
                     </div>
                 ))}
             {
-                props.data && props.data.map((subData, j) =>
+                (props.data && props.data.length > 0) &&
+                props.data.map((subData, j) =>
                     dataKeyList.map((subKey, k) => (
                         <Cell
                             key={`cell_${j}_${k}`}
@@ -71,7 +72,7 @@ const SubTable = (props) => {
                 )
             }
             {
-                props.history && props.history.length > 0 &&
+                (props.history && props.history.length > 0) &&
                 props.history.map((item, i) => (
                     <div className={TableStyles.requestContainer} key={`req_${i}`}>
                         <div className={TableStyles.requestTitle}

@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter} from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter } from "../../../components";
 
 const shifts = [
     {
@@ -105,6 +105,7 @@ const shifts = [
 ];
 
 const Shifts = (props) => {
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -115,8 +116,14 @@ const Shifts = (props) => {
     }, []);
 
     const [showAddModal, setShowAddModal] = useState(false);
-    const [showFilterModal,setShowFilterModal] = useState(true);
-    const [data,setData] = useState(shifts);
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [data, setData] = useState(shifts);
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
+
     const actions = [
         {
             key: "View",
@@ -132,22 +139,35 @@ const Shifts = (props) => {
         },
     ];
 
-    
+
 
     return (
         <>
             <WaawNoIndexHead title="Shifts" />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
-                {props.user.role === "MANAGER" ||
-                    (props.user.role === "ADMIN" && (
-                        <Button type="plain" onClick={() => setShowAddModal(true)}>
-                            + Create new Shifts
-                        </Button>
-                    ))}
+                {
+                    (props.user.role === "MANAGER" || props.user.role === "ADMIN") &&
+                    <Button type="plain" onClick={() => setShowAddModal(true)}>
+                        + Create new Shifts
+                    </Button>
+                }
             </div>
-            <DashboardCard style={{marginTop: "20px"}}>
-                <TabularInfo title="Shifts" description="Tabular list of all Shifts." data={data} actions={actions} pagination />
+            <DashboardCard style={{ marginTop: "20px" }}>
+                <TabularInfo
+                    title="Shifts"
+                    description="Tabular list of all Shifts."
+                    data={data}
+                    actions={actions}
+                    pagination
+                    totalEntries={totalEntries}
+                    pageSize={pageSize}
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
+                    showSearch
+                    showFilter
+                />
             </DashboardCard>
             <NewShiftModal setShowModal={setShowAddModal} showModal={showAddModal} buttonText="CreateShift" setToasterInfo={props.setToasterInfo} />
             <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} />

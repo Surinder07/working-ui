@@ -34,7 +34,13 @@ const invoices = [
 
 const PaymentHistory = (props) => {
 
-const [data,setData] = useState(invoices)
+    const [data, setData] = useState(invoices);
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -72,6 +78,11 @@ const [data,setData] = useState(invoices)
                     data={data}
                     actions={actions}
                     pagination
+                    totalEntries={totalEntries}
+                    pageSize={pageSize}
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
                 />
             </DashboardCard>
         </>

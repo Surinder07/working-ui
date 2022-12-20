@@ -6,7 +6,13 @@ const Cell = (props) => {
 
     const ref = useRef();
     const [commentHeight, setCommentHeight] = useState(0);
-    const [activeStyle, setActiveStyle] = useState();
+    const [activeStyle, setActiveStyle] = useState({
+        height: 0,
+        overflow: 'hidden',
+        padding: 0,
+        border: 'none',
+        boxShadow: 'none'
+    });
 
     useEffect(() => {
         if (props.data && props.data.displayType && props.data.displayType === 'comment') {

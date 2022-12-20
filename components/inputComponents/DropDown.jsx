@@ -17,10 +17,8 @@ const DropDown = (props) => {
 
     useEffect(() => {
         if (props.initialValue === '') {
-            console.log('entered empty')
             setDisplayValue(props.placeholder)
         } else {
-            console.log('entered loop')
             props.options.filter(opt => opt.value === props.initialValue)
                 .map(opt => setDisplayValue(opt.display))
         }

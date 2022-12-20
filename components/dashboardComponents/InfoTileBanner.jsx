@@ -4,7 +4,7 @@ import { DashboardInfoTiles } from '../../constants';
 import { useState } from 'react';
 import DashboardCard from './DashboardCard';
 
-const InfoTileBanner = () => {
+const InfoTileBanner = (props) => {
 
     const [tileValues, setTileValues] = useState({
         employee: '256/260',

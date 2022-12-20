@@ -30,7 +30,7 @@ const Dashboard = (props) => {
     );
 
     useEffect(() => {
-        if (props.user) {
+        if (props.user.role) {
             setUserName(props.user ? (props.user.firstName + (props.user.lastName ? (" " + props.user.lastName) : "")) : '');
             setSideNav(SideNavInfo[props.user.role.toLowerCase()]);
         }
