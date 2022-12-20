@@ -1,4 +1,4 @@
 import DashboardModal from './DashboardModal';
 import Modal from './Modal';
-
-export { DashboardModal, Modal }
+import FilterModal from './FilterModal';
+export { DashboardModal, Modal, FilterModal}

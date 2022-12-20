@@ -18,7 +18,6 @@ const getApiUrl = (endpoint, queryMap) => {
 
 const getPaginationUrl = (endpoint, pageNo, pageSize, queryMap) => {
     const updatedEndpoint = `${endpoint}/${pageNo - 1}/${pageSize}`;
-    console.log(updatedEndpoint)
     return getApiUrl(updatedEndpoint, queryMap);
 }
 
@@ -102,7 +101,9 @@ const handleResponse = async (response) => {
                         Router.push('/account/payment-info');
                         break;
                     default:
-                        userService.logout();
+                        localStorage.removeItem(TOKEN_KEY);
+                        localStorage.removeItem(USER_KEY);
+                        Router.push('/login');
                 }
                 return {};
             }

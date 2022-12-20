@@ -8,3 +8,4 @@ export * from './SideNavInfo';
 export * from './TermsAndPolicy';
 export * from './DashboardInfoTiles';
 export * from './ChartsConfig';
+export * from './UserPreferenceInfo';

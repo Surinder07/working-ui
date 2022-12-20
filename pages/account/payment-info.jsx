@@ -15,8 +15,21 @@ const Payment = (props) => {
 
     return (
         <div className={styles.mainContainer}>
-            <div className={styles.imageContainer}>
-                <Image src="/creditCard.svg" width={900} height={150} />
+            <div className={styles.creditContainer}>
+                <div className={styles.bullet}>
+                    <div className={styles.nestedBullet}></div>
+                </div>
+                <div>
+                    <h4 className={styles.header}>Credit Card</h4>
+                    <p className={styles.description}>
+                        Safe money transfer using your bank account <br /> only using credit cards.
+                    </p>
+                </div>
+                <div className={styles.imageContainer}>
+                    <Image src="/american-express.svg" width={50} height={50} />
+                    <Image src="/visa.svg" width={60} height={60} />
+                    <Image src="/mastercard.svg" width={60} height={60} />
+                </div>
             </div>
             <div className={styles.gridContainer}>
                 <div className={styles.leftGridContainer}>

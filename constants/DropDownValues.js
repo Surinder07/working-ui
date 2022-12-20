@@ -1,4 +1,5 @@
 import { CountryIcons } from '../public/icons/countryIcons/CountryIcons';
+import { dropdownService } from '../services';
 
 export const CountryCodes = [
     {
@@ -46,3 +47,11 @@ export const minutes = Array.from(Array(60).keys())
     .map(str => {
         return { display: str, value: str }
     });
+
+export const currencies = dropdownService.stringToDropdownObj(['CAD', 'USD']);
+
+export const PayrollFrequency = [
+    'Weekly',
+    'Half Month',
+    'Monthly'
+]

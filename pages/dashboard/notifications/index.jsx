@@ -1,15 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DashboardCard, TabularInfo, WaawNoIndexHead } from "../../../components";
 import { DashboardStyles } from "../../../styles/pages";
 
-const notifications =[
+const notifications = [
     {
         title: 'New Request',
         type: 'Request',
         date: '2022-02-21',
         status: {
             text: 'Read',
-            color: '#02A799'
+            status: 'ok',
+            displayType: 'color'
         },
         subData: [
             {
@@ -23,7 +24,8 @@ const notifications =[
         date: '2022-02-22',
         status: {
             text: 'Unread',
-            color: '#999999'
+            status: 'warn',
+            displayType: 'color'
         },
         subData: [
             {
@@ -34,12 +36,12 @@ const notifications =[
 ];
 
 const actions = {
-    key: 'Delete', 
+    key: 'Delete',
     action: () => console.log('delete')
 }
 
 const Notifications = (props) => {
-
+    const [data, setData] = useState(notifications)
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -54,14 +56,18 @@ const Notifications = (props) => {
             <WaawNoIndexHead title='Notifications' />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Notifications</h1>
+                <p style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3' }}>
+                    Mark All as Read</p>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
-                    title='Invoices'
-                    description='Tabular list of all current invoices status.'
-                    data={notifications}
+                    title='Notifications'
+                    description='Tabular list of all your notifications.'
+                    data={data}
                     actions={actions}
                     pagination
+                    showSearch
+                    showFilter
                 />
             </DashboardCard>
         </>

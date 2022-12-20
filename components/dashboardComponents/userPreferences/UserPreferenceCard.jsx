@@ -2,8 +2,18 @@ import { UserPreferenceStyles } from '../../../styles/pages';
 import { Edit } from '@mui/icons-material';
 
 const UserPreferenceCard = (props) => {
+
+    const handleCancel = () => {
+        props.setEditOn(false);
+        handleCancel && props.handleCancel();
+    }
+
+    const handleSave = () => {
+        console.log('save')
+    }
+
     return (
-        <div className={UserPreferenceStyles.userPreferenceCard}>
+        <div className={`${UserPreferenceStyles.userPreferenceCard}`}>
             {
                 props.title &&
                 <div className={UserPreferenceStyles.cardTitle}>
@@ -14,8 +24,8 @@ const UserPreferenceCard = (props) => {
                             {
                                 props.editOn ?
                                     <>
-                                        <p style={{ color: '#CC5252' }} onClick={() => props.setEditOn(false)}>Cancel</p>
-                                        <p style={{ color: '#2996C3' }}>Save</p>
+                                        <p style={{ color: '#CC5252' }} onClick={handleCancel}>Cancel</p>
+                                        <p style={{ color: '#2996C3' }} onClick={handleSave}>Save</p>
                                     </> :
                                     <p style={{ color: '#2996C3' }} onClick={() => props.setEditOn(true)}><Edit className={UserPreferenceStyles.editIcon} /> Edit</p>
                             }

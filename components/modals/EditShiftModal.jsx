@@ -8,6 +8,11 @@ const EditShiftModal = (props) => {
     const [comment, setComment] = useState("");
     const [inTime, setInTime] = useState("");
     const [outTime, setOutTime] = useState("");
+    const [initialDate,setInitialDate] = useState("");
+    const [initialInTime,setInitialInTime] = useState("");
+    const [initialOutTime,setInitialOutTime] = useState("");
+    const [initialComment,setInitialComment] = useState("");
+
     const [inTimeError, setInTimeError] = useState({
         errorMessage: "",
         showError: false,
@@ -20,6 +25,26 @@ const EditShiftModal = (props) => {
         errorMessage: "",
         showError: false,
     });
+
+    const onCancel = () =>{
+        setValue("")
+        setInTime("")
+        setOutTime("")
+        setComment("")
+        setInTimeError({
+            errorMessage: "",
+            showError: false
+        })
+        setOutTimeError({
+            errorMessage: "",
+            showError: false
+        })
+        setCommentError({
+            errorMessage: "",
+            showError: false
+        })
+    }
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -27,12 +52,14 @@ const EditShiftModal = (props) => {
             buttonText="Submit"
             title="Update Shift"
             type="twoColNarrow"
+            onCancel={onCancel}
         >
             <EditableInput
                 type="date"
                 label="Date"
                 value={value}
                 setValue={setValue}
+                initialValue={initialDate}
                 className={DashboardModalStyles.singleColumn}
                 editOn
             />
@@ -41,6 +68,7 @@ const EditShiftModal = (props) => {
                 label="In Time"
                 value={inTime}
                 setValue={setInTime}
+                initialValue={initialInTime}
                 error={inTimeError}
                 setError={setInTimeError}
                 editOn
@@ -50,6 +78,7 @@ const EditShiftModal = (props) => {
                 label="Out Time"
                 value={outTime}
                 setValue={setOutTime}
+                initialValue={initialOutTime}
                 error={outTimeError}
                 setError={setOutTimeError}
                 editOn
@@ -60,6 +89,7 @@ const EditShiftModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={comment}
                 setValue={setComment}
+                initialValue={initialComment}
                 error={commentError}
                 setError={setCommentError}
                 required

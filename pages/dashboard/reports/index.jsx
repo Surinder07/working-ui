@@ -3,13 +3,96 @@ import {useRouter} from "next/router";
 import {DashboardStyles} from "../../../styles/pages";
 import {WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal} from "../../../components";
 
+const requestsD = [
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+];
+
+const attendanceD = [
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+];
+
+const payrollD = [
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+    {
+        Id: "Name",
+        From: "Date",
+        till: "Date",
+        locationName: "Type",
+    },
+];
+
 const Reports = (props) => {
-    
     const router = useRouter();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
 
     const [showModal, setShowModal] = useState(true);
+    const [requestsData,setRequestsData] = useState(requestsD)
+    const [attendanceData,setAttendanceData] = useState(attendanceD)
+    const [payrollData,setPayrollData] = useState(payrollD)
 
     useEffect(() => {
         props.setPageInfo({
@@ -53,86 +136,7 @@ const Reports = (props) => {
         }
     };
 
-    const requestsData = [
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-    ];
-
-    const attendanceData = [
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-    ];
-
-    const payrollData = [
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-        {
-            Id: "Name",
-            From: "Date",
-            till: "Date",
-            locationName: "Type",
-        },
-    ];
+ 
 
     const getExpandableData = (title, data, actions) => {
         return (
@@ -158,16 +162,21 @@ const Reports = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Reports</h1>
                 <div>
-                    <Button type="plain" style={{marginRight: "15px"}}>
-                        + Generate Payroll
-                    </Button>
-                    <Button type="plain">+ Generate Attendance</Button>
+                    {props.user.role === "MANAGER" ||
+                        (props.user.role === "ADMIN" && (
+                            <>
+                                <Button type="plain" style={{marginRight: "15px"}}>
+                                    + Generate Payroll
+                                </Button>
+                                <Button type="plain">+ Generate Attendance</Button>
+                            </>
+                        ))}
                 </div>
             </div>
             {getExpandableData("Payroll", payrollData, getActions("shift"))}
             {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
             {getExpandableData("Location Holidays", requestsData, getActions("request"))}
-            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}/>
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal} />
         </>
     );
 };

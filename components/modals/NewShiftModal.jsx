@@ -45,6 +45,43 @@ const NewShiftModal = (props) => {
         showError: false,
     });
     
+    const onCancel = () => {
+        setStartTime({})
+        setEndTime({})
+        setStartDateShift("")
+        setEndDateShift("")
+        setStartDateBatches("")
+        setEndDateBatches("")
+        setUser("")
+        setLocation("")
+        setRole("")
+        setShiftName("")
+        setErrorStartTime({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorEndTime({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorUser({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorLocation({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorRole({
+            errorMessage: "",
+            showError: false
+        })
+        setErrorShiftName({
+            errorMessage: "",
+            showError: false
+        })
+    }
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -52,6 +89,7 @@ const NewShiftModal = (props) => {
             buttonText="Create Shift"
             title="Create New Shift"
             type="twoColNarrow"
+            onCancel={onCancel}
         >
             <Tabs
                 className={DashboardModalStyles.singleColumn}
@@ -66,6 +104,7 @@ const NewShiftModal = (props) => {
                         type="date"
                         value={startDateShift}
                         setValue={setStartDateShift}
+                        initialValue={startDateShift}
                         label="Start Date"
                         required
                         editOn
@@ -74,6 +113,7 @@ const NewShiftModal = (props) => {
                         type="date"
                         value={endDateShift}
                         setValue={setEndDateShift}
+                        initialValue={endDateShift}
                         label="End Date"
                         required
                         editOn
@@ -83,6 +123,7 @@ const NewShiftModal = (props) => {
                         label="Start Time"
                         value={startTime}
                         setValue={setStartTime}
+                        initialValue={startTime}
                         error={errorStartTime}
                         setError={setErrorStartTime}
                         editOn
@@ -92,6 +133,7 @@ const NewShiftModal = (props) => {
                         label="End Time"
                         value={endTime}
                         setValue={setEndTime}
+                        initialValue={endTime}
                         error={errorEndTime}
                         setError={setErrorEndTime}
                         editOn
@@ -103,6 +145,7 @@ const NewShiftModal = (props) => {
                         type="date"
                         value={startDateBatches}
                         setValue={setStartDateBatches}
+                        initialValue={startDateBatches}
                         label="Start Date"
                         required
                         editOn
@@ -111,6 +154,7 @@ const NewShiftModal = (props) => {
                         type="date"
                         value={endDateBatches}
                         setValue={setEndDateBatches}
+                        initialValue={endDateBatches}
                         label="End Date"
                         required
                         editOn
@@ -133,6 +177,7 @@ const NewShiftModal = (props) => {
                     className={DashboardModalStyles.singleColumn}
                     value={user}
                     setValue={setUser}
+                    initialValue={user}
                     error={errorUser}
                     setError={setErrorUser}
                     required
@@ -147,6 +192,7 @@ const NewShiftModal = (props) => {
                         className={DashboardModalStyles.singleColumn}
                         value={location}
                         setValue={setLocation}
+                        initialValue={location}
                         error={errorLocation}
                         setError={setErrorLocation}
                         required
@@ -158,6 +204,7 @@ const NewShiftModal = (props) => {
                         className={DashboardModalStyles.singleColumn}
                         value={role}
                         setValue={setRole}
+                        initialValue={role}
                         error={errorRole}
                         setError={setErrorRole}
                         required
@@ -172,6 +219,7 @@ const NewShiftModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={shiftName}
                 setValue={setShiftName}
+                initialValue={shiftName}
                 error={errorShiftName}
                 setError={setErrorShiftName}
                 editOn
@@ -184,6 +232,7 @@ const NewShiftModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 isChecked={releaseImmediately}
                 setIsChecked={setReleaseImmediately}
+                initialValue={releaseImmediately}
             />
         </DashboardModal>
     );

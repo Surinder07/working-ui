@@ -1,4 +1,5 @@
-.table, .subTable {
+.table,
+.subTable {
     display: grid;
 }
 
@@ -9,7 +10,7 @@
 .subTable {
     background-color: #F5F5F5;
     max-height: 230px;
-    transition: all 0.2s ease ;
+    transition: all 0.2s ease;
     padding-left: 60px;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .subHeaderCellLeft {
-    justify-content: flex-start!important;
+    justify-content: flex-start !important;
 }
 
 .headerCell {
@@ -50,14 +51,13 @@
 .subBodyCell {
     height: 50px;
     background: repeating-linear-gradient(to bottom,
-      transparent 0, transparent 49px,
-      #DFE0EB 49px,#DFE0EB 50px
-    );
+            transparent 0, transparent 49px,
+            #DFE0EB 49px, #DFE0EB 50px);
     word-break: break-all;
 }
 
 .subBodyCellLeft {
-    height: auto!important;
+    height: auto !important;
 }
 
 .subBodyCell {
@@ -73,4 +73,35 @@
 .expandIcons {
     color: #999999;
     cursor: pointer;
+}
+
+.historyTable {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+}
+
+.requestTitle {
+    background: #FFFFFF;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.1px;
+    padding: 20px;
+}
+
+.requestDescription {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.1px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.employeePreferenceGrid {
+    padding: 10px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
 }

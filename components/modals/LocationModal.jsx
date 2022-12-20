@@ -18,26 +18,69 @@ const LocationModal = (props) => {
         errorMessage: "",
         showError: false
     });
+    const [loading, setLoading] = useState(false);
+
+    const onCancel = () => {
+        setLocation("")
+        setTimezone("")
+        setErrorLocation({
+            message: "",
+            show: false
+        })
+        setErrorTimezone({
+            message: "",
+            show: false
+        })
+    }
 
     useEffect(() => {
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
 
+    const validateForm = async () => {
+        if (location === '') {
+            setErrorLocation({
+                message: 'Name is required',
+                show: true
+            })
+            return true;
+        }
+        if (timezone === '') {
+            setErrorTimezone({
+                message: 'Timezone is required',
+                show: true
+            })
+            return true;
+        }
+        return false;
+    }
+
     const saveData = () => {
-        // @todo validate form
-        locationAndRoleService.saveLocation(location, timezone)
-            .then(res => {
-                if (res.error) {
-                    // @todo Add error
-                } else {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Location added successfully'
-                    });
-                    props.setReloadData(true);
-                }
-            });
+        validateForm()
+        .then(error => {
+            if (!error) {
+                setLoading(true);
+                locationAndRoleService.saveLocation(location, timezone)
+                .then(res => {
+                    if (res.error) {
+                        props.setToasterInfo({
+                            error: true,
+                            title: 'Error!',
+                            message: res.message
+                        });
+                    } else {
+                        props.setToasterInfo({
+                            error: false,
+                            title: 'Success!',
+                            message: 'Location added successfully'
+                        });
+                        props.setReloadData(true);
+                        onCancel();
+                    }
+                    setLoading(false);
+                });
+            }
+        })
     }
 
     return (
@@ -48,11 +91,14 @@ const LocationModal = (props) => {
             title="Add New Location"
             type="singleCol"
             onClick={saveData}
+            onCancel={onCancel}
+            loading={loading}
         >
             <EditableInput
                 type="text"
                 value={location}
                 setValue={setLocation}
+                initialValue={location}
                 error={errorLocation}
                 setError={setErrorLocation}
                 label="Location"
@@ -64,6 +110,7 @@ const LocationModal = (props) => {
                 options={timezones}
                 value={timezone}
                 setValue={setTimezone}
+                initialValue={timezone}
                 error={errorTimezone}
                 setError={setErrorTimezone}
                 label="Timezone"

@@ -5,7 +5,6 @@ const apiEndpoints = {
         authorization: '/v1/unAuth/authenticate',
         registerNewUser: '/v1/unAuth/user/registration/new',
         verifyEmail: '/v1/unAuth/user/registration/verifyEmail',
-        checkUserNameExistence: '/v1/unAuth/user/checkUserNameExistence',
         completeProfile: '/v1/registration/user/completeProfile',
         validateInviteKey: '/v1/unAuth/user/invitation/validateKey',
         registerByInvite: '/v1/unAuth/user/invitation/register',
@@ -13,12 +12,31 @@ const apiEndpoints = {
         resetPasswordInit: '/v1/unAuth/user/resetPassword/init',
         resetPasswordFinish: '/v1/unAuth/user/resetPassword/finish'
     },
+    member: {
+        sendInvite: '/v1/member/invite/send',
+        resendInvite: '/v1/member/invite/resend',
+        sendInviteByUpload: '/v1/member/invite/upload',
+        getAllMembers: '/v1/member/getAll',
+        getMemberById: '/v1/member/getById',
+        updateMember: '/v1/member/update',
+        addEmployeePreferences: '/v1/member/addPreference'
+    },
     locationAndRole: {
-        new: '/v1/location/save',
-        get: '/v1/location/get'
+        newLocation: '/v1/location/save',
+        getLocation: '/v1/location/get',
+        deleteLocation: '/v1/location/delete',
+        toggleActiveLocation: '/v1/location/toggleActive',
+        getLocationRole: '/v1/location/role/get',
+        newLocationRole: '/v1/location/role/save',
+        deleteLocationRole: '/v1/location/role/delete',
+        updateLocationRole: '/v1/location/role/update',
+        toggleActiveLocationRole: '/v1/location/role/toggleActive'
     },
     dropdown: {
-        getTimezones: '/v1/unAuth/timezone/get'
+        getTimezones: '/v1/dropdown/timezones',
+        getLocations: '/v1/dropdown/locations',
+        getRoles: '/v1/dropdown/roles',
+        getUsers: '/v1/dropdown/users'
     },
     resources: {
         fileTemplate: '/v1/unAuth/resource/downloadFile'

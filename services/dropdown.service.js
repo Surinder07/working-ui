@@ -15,7 +15,37 @@ const getTimezones = async () => {
         });
 }
 
+const getLocations = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getLocations))
+        .then(res => {
+            return res.map(options => {
+                return { display: options.name, value: options.id }
+            })
+        });
+}
+
+const getRoles = async (locationId) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getRoles, { locationId }))
+        .then(res => {
+            return res.map(options => {
+                return { display: options.name, value: options.id }
+            })
+        });
+}
+
+const getUsers = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getUsers))
+        .then(res => {
+            return res.map(options => {
+                return { display: options.name, value: options.id }
+            })
+        });
+}
+
 export const dropdownService = {
     getTimezones,
-    stringToDropdownObj
+    stringToDropdownObj,
+    getLocations,
+    getRoles,
+    getUsers
 };

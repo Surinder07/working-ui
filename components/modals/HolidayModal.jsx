@@ -9,7 +9,7 @@ const HolidayModal = (props) => {
     const fileEndpoint = process.env.endpoints.resources.fileTemplate;
 
     
-    const handleChange = (e) => {
+    const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
             /**
@@ -44,7 +44,7 @@ const HolidayModal = (props) => {
             <div className={`${DashboardModalStyles.singleColumn} ${DashboardModalStyles.uploadContainer}`}>
                 <CloudUpload className={DashboardModalStyles.icon} />
                 <label htmlFor="upload">Select file to Import</label>
-                <input type="file" id="upload" style={{ display: "none" }}  onChange={handleChange}/>
+                <input type="file" id="upload" style={{ display: "none" }}  onChange={handleFileChange}/>
                 <p>
                         {`Download `}
                         <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'holiday', format:'xlsx'})}

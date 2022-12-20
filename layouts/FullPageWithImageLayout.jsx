@@ -40,7 +40,9 @@ const FullPageWithImageLayout = (props) => {
                             backgroundImage: `url(${props.background})`
                         }}></div>
                     <div className={FullPageLayout.contentContainer} ref={contentRef}>
-                        {props.children}
+                        <div className={FullPageLayout.contentSubContainer}>
+                            {props.children}
+                        </div>
                     </div>
                 </div>
             </div>

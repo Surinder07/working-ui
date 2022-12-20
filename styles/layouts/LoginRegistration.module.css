@@ -10,6 +10,7 @@
 .pageContainer {
     position: relative;
     width: 100%;
+    min-height: calc(100vh - 6rem);
     height: 100%;
     background-color: #FFF;
     border-radius: 1.25rem;
@@ -24,13 +25,16 @@
     grid-template-columns: 1fr 1fr;
 }
 
+.gridLeftContainer {
+    padding-right: 100px;
+}
+
 .gridRightContainer {
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
-
 }
 
 .rightLogo {
