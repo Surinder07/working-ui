@@ -27,3 +27,8 @@
     line-height: 21px;
     color: #999;
 }
+
+.darkContainer {
+    background: transparent;
+    border: 1px solid #D7D7D9;
+}

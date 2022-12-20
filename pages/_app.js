@@ -7,12 +7,13 @@ import {userService} from "../services/user.service";
 import {NavFooterPageLayout, DashboardLayout} from "../layouts";
 import {Toaster} from "../components";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState();
-    const [allowedRoles, setAllowedRoles] = useState([]); // On each page this will be set to check if given role can access the page
+    const [user, setUser] = useState({
+        role: "ADMIN",
+    });
     const [token, setToken] = useState(null);
     const [firstVisit, setFirstVisit] = useState(true);
     const [pageInfo, setPageinfo] = useState({
@@ -38,12 +39,6 @@ function MyApp({ Component, pageProps }) {
     };
 
     useEffect(() => {
-        if (pageInfo.authenticationRequired && user && !allowedRoles.includes(user.role)) {
-            router.push('/dashboard')
-        }
-    }, [allowedRoles])
-
-    useEffect(() => {
         if (toasterInfo.title !== "") {
             setShowToaster(true);
             const timer = setTimeout(() => {
@@ -67,10 +62,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
-        if (Object.keys(user).length === 0 && secureLocalStorage.getData(userService.USER_KEY)) {
-            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-        }
-    }, [])
+    }, []);
 
     useEffect(() => {
         checkIfLoggedIn();
@@ -132,7 +124,6 @@ function MyApp({ Component, pageProps }) {
                 pageInfo={pageInfo}
                 setPageInfo={setPageinfo}
                 setToasterInfo={setToasterInfo}
-                setAllowedRoles={setAllowedRoles}
             />
         );
     };
@@ -142,17 +133,17 @@ function MyApp({ Component, pageProps }) {
             <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
-                <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
-                {pageInfo.pageView === "loggedOut" && 
+                <Toaster style={{display: showToaster ? "grid" : "none"}} error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} />
+                {pageInfo.pageView === "loggedOut" && (
                     <NavFooterPageLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType}>
                         {getComponentForPages()}
                     </NavFooterPageLayout>
-                }
-                {pageInfo.pageView === "dashboard" &&
+                )}
+                {pageInfo.pageView === "dashboard" && (
                     <DashboardLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
                     </DashboardLayout>
-                }
+                )}
                 {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>

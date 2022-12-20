@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { DashboardStyles } from "../../styles/pages";
-import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead } from "../../components";
-import { pieConfig, areaConfig } from "../../constants";
-import { Pie, Line } from "react-chartjs-2";
-import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
+import {useEffect} from "react";
+import {DashboardStyles} from "../../styles/pages";
+import {InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead} from "../../components";
+import {pieConfig, areaConfig} from "../../constants";
+import {Pie, Line} from "react-chartjs-2";
+import {Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle} from "chart.js";
 
 const Dashboard = (props) => {
     useEffect(() => {
@@ -160,7 +160,7 @@ const Dashboard = (props) => {
         if (props.user.role === "ADMIN" || props.user.role === "EMPLOYEES") {
             return "Tabular list of payment history.";
         } else {
-            return "Tabular list of all shifts assigned for today"
+            return "Tabular list of all shifts assigned for today";
         }
     };
 
@@ -176,22 +176,19 @@ const Dashboard = (props) => {
                 <h1>Overview and Analytics</h1>
             </div>
             <InfoTileBanner />
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title={getTitle()}
-                    description={getDescription()}
-                    data={getData()}
-                    showFilter={props.user.role === "EMPLOYEES"}
-                    showSearch={props.user.role === "EMPLOYEES"} />
+            <DashboardCard style={{marginTop: "20px"}}>
+                <TabularInfo title={getTitle()} description={getDescription()} data={getData()} showFilter={props.user.role === "EMPLOYEES"} showSearch={props.user.role === "EMPLOYEES"} />
             </DashboardCard>
             <DashboardCard
+                className={DashboardStyles.graph}
                 style={{
                     marginTop: "20px",
-                    display: 'grid',
-                    gridTemplateColumns: '3fr 2fr'
-                }} >
-                <div style={{ height: '100%' }}>
-                    <Line data={invoice} options={areaConfig('Payment History Trends', 'Current Year ( 2022-2023 )')} />
+                    display: "grid",
+                    gridTemplateColumns: "3fr 2fr",
+                }}
+            >
+                <div style={{height: "100%"}}>
+                    <Line data={invoice} options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                 </div>
                 <div style={{}}>
                     <Pie data={employees} options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
