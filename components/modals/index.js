@@ -17,6 +17,7 @@ import NotificationFilter from "./NotificationFilter";
 import RolesFilter from "./RolesFilter";
 import EmployeeAttendanceFilter from "./EmployeeAttendanceFilter";
 import EmployeesShiftFilter from "./EmployeesShiftFilter";
+import DeleteModal from './DeleteModal';
 export {
     NewRoleModal,
     NewShiftModal,
@@ -36,7 +37,8 @@ export {
     NotificationFilter,
     RolesFilter,
     EmployeeAttendanceFilter,
-    EmployeesShiftFilter
+    EmployeesShiftFilter,
+    DeleteModal
 };
 
 export * from './base';
