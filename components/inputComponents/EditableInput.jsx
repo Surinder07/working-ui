@@ -81,7 +81,10 @@ const EditableInput = (props) => {
                         <p>{props.initialValue}</p>
                 )
             }
-            <p className={EditableInputStyles.errorMessage}>{props.error.message}</p>
+            {
+                props.error && props.error.show &&
+                <p className={EditableInputStyles.errorMessage}>{props.error.message}</p>
+            }
         </div>
     )
 }

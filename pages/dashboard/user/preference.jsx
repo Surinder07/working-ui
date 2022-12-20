@@ -13,13 +13,21 @@ const UserPreference = (props) => {
         });
     }, []);
 
-    const tabsToShow = ProfileTabs[props.user.role.toLowerCase()];
-    const [active, setActive] = useState(tabsToShow[0]);
+    const [tabsToShow, setTabsToShow] = useState([]);
+    const [active, setActive] = useState([]);
     const [shownContent, setShownContent] = useState();
 
     useEffect(() => {
-        setShownContent(getProfileElement(active, {email:'test@test.com'}, props.setUser))
-        // setShownContent(getProfileElement(active, props.user, props.setUser))
+        if (props.user) {
+            setTabsToShow(ProfileTabs[props.user.role.toLowerCase()])
+            setActive(tabsToShow[0])
+        }
+    }, [props.user])
+
+    useEffect(() => {
+        if (props.user) {
+        setShownContent(getProfileElement(active, props.user, props.setUser))
+        }
     }, [active])
 
     return (
