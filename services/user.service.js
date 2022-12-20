@@ -38,6 +38,18 @@ const registerUser = async (email, password, contractor) => {
         { email, password, contractor })
 }
 
+const emailVerification = async (email) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.verifyEmail,{email}))
+}
+
+const inviteKeyValidation = async (key) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validateInviteKey,{key}))
+}
+
+const inviteAndRegister = async (data) => {
+  return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite,{data}))
+}
+
 const getUser = async () => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getUserDetails));
 }
@@ -63,5 +75,8 @@ export const userService = {
     finishResetPassword,
     completeProfile,
     TOKEN_KEY,
-    USER_KEY
+    USER_KEY,
+    emailVerification,
+    inviteKeyValidation,
+    inviteAndRegister
 };

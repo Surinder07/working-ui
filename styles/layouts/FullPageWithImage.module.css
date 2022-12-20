@@ -29,7 +29,8 @@
     background-size: contain;
 }
 
-.contentContainer {
+
+.contentSubContainer{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -60,7 +61,7 @@
     line-height: 30px;
     text-align: center;
     color: rgba(37, 37, 37, 0.75);
-    max-width: 600px;
+    /* max-width: 600px; */
     margin: 0;
 }
 
