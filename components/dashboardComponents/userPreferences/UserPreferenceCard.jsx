@@ -1,5 +1,5 @@
 import { UserPreferenceStyles } from '../../../styles/pages';
-import { Edit, PropaneSharp } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 
 const UserPreferenceCard = (props) => {
 
@@ -13,7 +13,7 @@ const UserPreferenceCard = (props) => {
     }
 
     return (
-        <div className={UserPreferenceStyles.userPreferenceCard}>
+        <div className={`${UserPreferenceStyles.userPreferenceCard}`}>
             {
                 props.title &&
                 <div className={UserPreferenceStyles.cardTitle}>

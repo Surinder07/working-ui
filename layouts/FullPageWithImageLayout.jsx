@@ -41,7 +41,7 @@ const FullPageWithImageLayout = (props) => {
                         }}></div>
                     <div className={FullPageLayout.contentContainer} ref={contentRef}>
                         <div className={FullPageLayout.contentSubContainer}>
-                        {props.children}
+                            {props.children}
                         </div>
                     </div>
                 </div>

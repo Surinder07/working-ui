@@ -9,6 +9,7 @@ const TabularInfo = (props) => {
 
     const [noData, setNoData] = useState(false);
     const [tableHeight, setTableHeight] = useState('450px');
+    const [containerExtraHeight, setContainerExtraHeight] = useState('50');
 
     const tableRef = useRef();
     const searchRef = useRef();
@@ -42,7 +43,7 @@ const TabularInfo = (props) => {
     }
 
     return (
-        <div className={TabularInfoStyles.tableContainer}>
+        <div className={TabularInfoStyles.tableContainer} >
             <div className={TabularInfoStyles.header} style={props.expandable && { cursor: 'pointer' }} onClick={toggleExpansion}>
                 <div style={{ paddingLeft: props.expandable ? '40px' : '0' }}>
                     {props.expandable && (props.expanded ? <ExpandLess className={TabularInfoStyles.dropDownIcon} /> :

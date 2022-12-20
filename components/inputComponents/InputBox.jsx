@@ -8,7 +8,7 @@ const InputBox = (props) => {
     const [visibilityIcon, setVisibilityIcon] = useState(<Visibility />);
 
     useEffect(() => {
-        if (props.type === 'user' || props.type === 'org') {
+        if (props.type === 'user' || props.type === 'org' || props.type === 'email') {
             setType('text')
         }
     })

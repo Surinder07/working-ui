@@ -14,6 +14,7 @@ const Dashboard = (props) => {
     const [sideNavStyle, setSideNavStyle] = useState({});
     const [navOpen, setNavOpen] = useState(true);
     const [userName, setUserName] = useState('');
+    const [sideNav, setSideNav] = useState([]);
 
     const handleNavigation = useCallback(
         (e) => {
@@ -29,7 +30,10 @@ const Dashboard = (props) => {
     );
 
     useEffect(() => {
-        setUserName(props.user ? (props.user.firstName + (props.user.lastName ? (" " + props.user.lastName) : "")) : '');
+        if (props.user) {
+            setUserName(props.user ? (props.user.firstName + (props.user.lastName ? (" " + props.user.lastName) : "")) : '');
+            setSideNav(SideNavInfo[props.user.role.toLowerCase()]);
+        }
     }, [props.user])
 
     useEffect(() => {
@@ -50,27 +54,30 @@ const Dashboard = (props) => {
                         </div>
                         <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                         <div style={{ marginTop: "20px" }}>
-                            {props.user &&
-                            SideNavInfo[props.user.role.toLowerCase()].map((info, key) => (
-                                <Link href={info.link} key={key}>
-                                    <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
-                                        {info.icon}
-                                        {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
-                                    </div>
-                                </Link>
-                            ))}
+                            {
+                                sideNav.map((info, key) => (
+                                    <Link href={info.link} key={key}>
+                                        <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
+                                            {info.icon}
+                                            {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
+                                        </div>
+                                    </Link>
+                                ))
+                            }
                         </div>
                     </div>
                     <div style={{ height: "80px" }}></div>
                     <div>
-                        <div className={`${DashboardLayout.menuItem} ${props.pageInfo.activeMenu === "SETTINGS" ? DashboardLayout.activeMenuItem : ""}`}>
-                            <Settings style={{ fontSize: "16px" }} />
-                            {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
-                        </div>
-                        <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
-                            <Logout style={{ fontSize: "16px" }} />
-                            {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
-                        </div>
+                        <Link href='/dashboard/settings'>
+                            <div className={`${DashboardLayout.menuItem} ${props.pageInfo.activeMenu === "SETTINGS" ? DashboardLayout.activeMenuItem : ""}`}>
+                                <Settings style={{ fontSize: "16px" }} />
+                                {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
+                            </div>
+                            <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
+                                <Logout style={{ fontSize: "16px" }} />
+                                {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -23,13 +23,13 @@ const Profile = (props) => {
     });
 
     useEffect(() => {
-        setFirstName(props.user.firstName);
-        setLastName(props.user.lastName);
-        setMobile({
-            mobile: props.user.mobile,
-            countryCode: props.user.countryCode,
-            country: props.user.country
-        });
+        // setFirstName(props.user.firstName);
+        // setLastName(props.user.lastName);
+        // setMobile({
+        //     mobile: props.user.mobile,
+        //     countryCode: props.user.countryCode,
+        //     country: props.user.country
+        // });
         setInitialMobile(mobile);
     }, [])
 
@@ -95,7 +95,7 @@ const Profile = (props) => {
                         label='First Name'
                         value={firstName}
                         setValue={setFirstName}
-                        initialValue={props.user.firstName}
+                        // initialValue={props.user.firstName}
                         editOn={editPersonalDetails}
                         required
                     />
@@ -104,7 +104,7 @@ const Profile = (props) => {
                         label='Last Name'
                         value={lastName}
                         setValue={setLastName}
-                        initialValue={props.user.lastName}
+                        // initialValue={props.user.lastName}
                         editOn={editPersonalDetails}
                         required
                     />
@@ -119,8 +119,8 @@ const Profile = (props) => {
                     <EditableInput
                         type='text'
                         label='WAAW ID'
-                        value={props.user.waawId}
-                        initialValue={props.user.waawId}
+                        // value={props.user.waawId}
+                        // initialValue={props.user.waawId}
                         editOn={editPersonalDetails}
                         nonEditable
                     />

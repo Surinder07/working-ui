@@ -21,6 +21,7 @@
 .defaultButton {
     background-color: #2996C3;
     color: white;
+    width: fit-content;
 }
 
 .fullWidthButton {
@@ -30,13 +31,16 @@
 }
 
 .closeButton,
-.dashboardButton {
+.dashboardButton,
+.cancelButton,
+.deleteButton {
     font-weight: 700!important;
     font-size: 16px!important;
     line-height: 20px!important;
     letter-spacing: 0.2px!important;
     border-radius: 0!important;
     box-shadow: none!important;
+    padding: 7px 30px!important;
 }
 
 .closeButton {
@@ -49,6 +53,20 @@
 .dashboardButton {
     background: #2996C3;
     color: #FFFFFF;
+    width: fit-content;
+}
+
+.cancelButton {
+    background: white;
+    color: #535255;
+    border: 1px solid #535255;
+    width: fit-content;
+}
+
+.deleteButton {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(255, 0, 0, 0.6);
+    color: #FFFFFF;
+    width: fit-content;
 }
 
 .socialButton {
@@ -64,8 +82,8 @@
 }
 
 .disabledButton {
-    background-color: #287191;
-    color: var(--grey-border-color);
+    background-color: #666666;
+    color: whitesmoke;
     cursor: default;
 }
 

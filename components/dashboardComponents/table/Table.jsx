@@ -39,7 +39,7 @@ const Table = (props, ref) => {
     return (
         <div className={TableStyles.table} style={{ gridTemplateColumns: `repeat(${colNum}, auto)` }} ref={ref}>
             {/* headers */}
-            {props.data[0] && (props.data[0].subData|| props.data[0].history) && <div className={TableStyles.headerCell}></div>}{/* An empty header for expand button in the body below */}
+            {props.data[0] && (props.data[0].subData || props.data[0].history) && <div className={TableStyles.headerCell}></div>}{/* An empty header for expand button in the body below */}
             {displayHeaders.map((head, i) => (
                 <div className={TableStyles.headerCell} key={`head_${i}`}>
                     {head}
@@ -48,7 +48,7 @@ const Table = (props, ref) => {
             {props.actions && <div className={TableStyles.headerCell}>Actions</div>}
 
             {/* body */}
-            {props.data.map((row, i) => (
+            {dataKeyList.length > 0 && props.data.map((row, i) => (
                 <>
                     {row.subData || row.history && (
                         <div key={`expand_${i}`} className={TableStyles.bodyCell}>
@@ -78,11 +78,12 @@ const Table = (props, ref) => {
                         </div>
                     )}
                     {row.subData || row.history &&
-                        <SubTable 
-                        data={row.subData} 
-                        history={row.history}
-                        mainColNum={colNum} 
-                        expanded={expanded === i + 1} />
+                        <SubTable
+                            data={row.subData}
+                            history={row.history}
+                            mainColNum={colNum}
+                            expanded={expanded === i + 1}
+                        />
                     }
                 </>
             ))}

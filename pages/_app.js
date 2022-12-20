@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import {WaawHead, TopLoader} from "../components";
-import {secureLocalStorage} from "../helpers";
-import {userService} from "../services/user.service";
-import {NavFooterPageLayout, DashboardLayout} from "../layouts";
-import {Toaster} from "../components";
+import { WaawHead, TopLoader, LoadingScreen } from "../components";
+import { secureLocalStorage } from "../helpers";
+import { userService } from "../services/user.service";
+import { NavFooterPageLayout, DashboardLayout } from "../layouts";
+import { Toaster } from "../components";
+import { PropaneSharp } from "@mui/icons-material";
 
 function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
@@ -54,8 +55,8 @@ function MyApp({ Component, pageProps }) {
     }, [toasterInfo]);
 
     useEffect(() => {
-        router.beforePopState(({as}) => {
-            setPageinfo({...pageInfo, activeMenu: getActiveMenuFromPath(as)});
+        router.beforePopState(({ as }) => {
+            setPageinfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
             return true;
         });
 
@@ -67,7 +68,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
-        if (Object.keys(user).length === 0 && secureLocalStorage.getData(userService.USER_KEY)) {
+        if (!user && secureLocalStorage.getData(userService.USER_KEY)) {
             setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
         }
     }, [])
@@ -133,6 +134,7 @@ function MyApp({ Component, pageProps }) {
                 setPageInfo={setPageinfo}
                 setToasterInfo={setToasterInfo}
                 setAllowedRoles={setAllowedRoles}
+                setPageLoading={setPageLoading}
             />
         );
     };
@@ -143,7 +145,8 @@ function MyApp({ Component, pageProps }) {
             <div>
                 <TopLoader pageLoading={pageLoading} />
                 <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
-                {pageInfo.pageView === "loggedOut" && 
+                {pageLoading && <LoadingScreen />}
+                {pageInfo.pageView === "loggedOut" &&
                     <NavFooterPageLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType}>
                         {getComponentForPages()}
                     </NavFooterPageLayout>

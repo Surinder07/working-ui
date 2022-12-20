@@ -86,7 +86,7 @@
 }
 
 .buttonContainer {
-    margin-top: 20px;
+    margin-top: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;
@@ -149,4 +149,8 @@
     line-height: 18px;
     color: #000000;
     opacity: 0.5;
+}
+
+.deleteModal h1 {
+    color: #535255!important;
 }

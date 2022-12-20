@@ -32,9 +32,9 @@ const DashboardModal = (props) => {
             props.onClick();
         } else {
             props.onCancel();
+            props.setShowModal(false);
         }
         document.body.style.overflow = "unset";
-        props.setShowModal(false);
     };
 
     const gridClass = props.type === 'twoColWide' ? DashboardModalStyles.gridDouble : props.type === 'twoColNarrow' ?
@@ -49,10 +49,10 @@ const DashboardModal = (props) => {
                         {props.children}
                     </div>
                     <div className={DashboardModalStyles.buttonContainer}>
-                        <Button type="dashboard" onClick={() => handleClick(1)}>
+                        <Button type="dashboard" onClick={() => handleClick(1)} disabled={props.loading} >
                             {props.buttonText}
                         </Button>
-                        <Button type="close" onClick={() => handleClick(2)}>
+                        <Button type="close" onClick={() => handleClick(2)} disabled={props.loading} >
                             Cancel
                         </Button>
                     </div>

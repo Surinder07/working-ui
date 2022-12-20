@@ -3,6 +3,7 @@ import DashboardCard from "./DashboardCard";
 import TabularInfo from "./TabularInfo";
 import { TableStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
+import { currencies } from "../../constants";
 
 const EmployeePreference = (props) => {
 
@@ -132,6 +133,27 @@ const EmployeePreference = (props) => {
                                         </>
                                     ))
                                 }
+                            </div>
+                            <div className={TableStyles.employeePreferenceGrid}>
+                                <EditableInput
+                                    type='text'
+                                    editOn={editOn}
+                                    label='Wages (Per hour)'
+                                    value={preferences.wagesPerHour}
+                                    initialValue={initialPreferences.wagesPerHour}
+                                    setValue={(val) => setPreferences({ ...preferences, wagesPerHour: val })}
+                                />
+                                <EditableInput
+                                    openUp
+                                    type='dropdown'
+                                    editOn={editOn}
+                                    options={currencies}
+                                    label='Wages Currency'
+                                    placeholder='Choose Currency'
+                                    value={preferences.wagesCurrency}
+                                    initialValue={initialPreferences.wagesCurrency}
+                                    setValue={(val) => setPreferences({ ...preferences, wagesCurrency: val })}
+                                />
                             </div>
                         </> :
                         <p>Loading Data...</p>

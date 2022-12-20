@@ -1,6 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .container label {
@@ -17,4 +18,11 @@
     line-height: 18px;
     color: #999;
     padding: 7px 0;
+}
+
+.errorMessage {
+    position: absolute;
+    bottom: -25px;
+    margin: 0;
+    color: var(--error-message-color) !important;
 }

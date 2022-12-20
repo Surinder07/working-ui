@@ -8,7 +8,7 @@ const TimeInput = (props) => {
             <DropDown
                 inputType={2}
                 options={hours}
-                defaultDisplay={props.value.hours ? props.value.hours : 'HH'}
+                placeholder='HH'
                 value={props.value.hours}
                 setValue={(h) => props.setValue({ ...props.value, hours: h })}
                 openUp={props.openUp}
@@ -16,7 +16,7 @@ const TimeInput = (props) => {
             <DropDown
                 inputType={2}
                 options={minutes}
-                defaultDisplay={props.value.minutes ? props.value.minutes : 'MM'}
+                placeholder='MM'
                 value={props.value.minutes}
                 setValue={(m) => props.setValue({ ...props.value, minutes: m })}
                 openUp={props.openUp}
