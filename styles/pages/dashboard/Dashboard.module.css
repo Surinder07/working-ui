@@ -16,6 +16,10 @@
     margin: 0;
 }
 
+.dashboardTitles .rightContainer {
+    display: flex;
+}
+
 .card {
     position: relative;
     background: #FFFFFF;

@@ -81,20 +81,15 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
-        if (!user && localStorage.getData(userService.USER_KEY)) {
-            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-        } else if (!user) {
-            router.push('/login')
-        }
     }, [])
 
     useEffect(() => {
-        if (!user && localStorage.getData(userService.USER_KEY)) {
+        if (!user.role && localStorage.getItem(userService.USER_KEY)) {
             setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-        } else if (!user) {
+        } else if (!user.role && pageInfo.authenticationRequired) {
             router.push('/login')
         }
-    }, []);
+    }, [pageInfo.authenticationRequired])
 
     const updateScreenTypeProp = () => {
         if (window.innerWidth < 640) {

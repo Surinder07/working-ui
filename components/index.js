@@ -3,13 +3,15 @@ import ComingSoonEl from './ComingSoonEl';
 import LinkedImage from './LinkedImage';
 import PasswordPolicy from './PasswordPolicy';
 import Toaster from './Toaster';
+import LinkExpired from './LinkExpired';
 
 export {
     Card,
     ComingSoonEl,
     LinkedImage,
     PasswordPolicy,
-    Toaster
+    Toaster,
+    LinkExpired
 }
 
 export * from './dashboardComponents';
