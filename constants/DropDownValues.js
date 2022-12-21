@@ -50,8 +50,8 @@ export const minutes = Array.from(Array(60).keys())
 
 export const currencies = dropdownService.stringToDropdownObj(['CAD', 'USD']);
 
-export const PayrollFrequency = [
+export const PayrollFrequency = dropdownService.stringToDropdownObj([
     'Weekly',
     'Half Month',
     'Monthly'
-]
+])

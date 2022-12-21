@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal, DeleteModal } from "../../../components";
 import { locationAndRoleService } from "../../../services";
+import { PaginationDropdown } from "../../../components";
 
 const Locations = (props) => {
 
@@ -88,7 +89,10 @@ const Locations = (props) => {
             <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
-                <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
+                <div className={DashboardStyles.rightContainer}>
+                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                    <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
+                </div>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
@@ -102,6 +106,8 @@ const Locations = (props) => {
                     totalPages={totalPages}
                     pageNo={pageNo}
                     setPageNo={setPageNo}
+                    showSearch
+                    showFilter
                 />
             </DashboardCard>
         </>

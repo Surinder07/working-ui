@@ -38,49 +38,50 @@ const LocationModal = (props) => {
     }, [])
 
     const validateForm = async () => {
+        let error = false;
         if (location === '') {
             setErrorLocation({
                 message: 'Name is required',
                 show: true
             })
-            return true;
+            error = true;
         }
         if (timezone === '') {
             setErrorTimezone({
                 message: 'Timezone is required',
                 show: true
             })
-            return true;
+            error = true;
         }
-        return false;
+        return error;
     }
 
     const saveData = () => {
         validateForm()
-        .then(error => {
-            if (!error) {
-                setLoading(true);
-                locationAndRoleService.saveLocation(location, timezone)
-                .then(res => {
-                    if (res.error) {
-                        props.setToasterInfo({
-                            error: true,
-                            title: 'Error!',
-                            message: res.message
+            .then(error => {
+                if (!error) {
+                    setLoading(true);
+                    locationAndRoleService.saveLocation(location, timezone)
+                        .then(res => {
+                            if (res.error) {
+                                props.setToasterInfo({
+                                    error: true,
+                                    title: 'Error!',
+                                    message: res.message
+                                });
+                            } else {
+                                props.setToasterInfo({
+                                    error: false,
+                                    title: 'Success!',
+                                    message: 'Location added successfully'
+                                });
+                                props.setReloadData(true);
+                                onCancel();
+                            }
+                            setLoading(false);
                         });
-                    } else {
-                        props.setToasterInfo({
-                            error: false,
-                            title: 'Success!',
-                            message: 'Location added successfully'
-                        });
-                        props.setReloadData(true);
-                        onCancel();
-                    }
-                    setLoading(false);
-                });
-            }
-        })
+                }
+            })
     }
 
     return (

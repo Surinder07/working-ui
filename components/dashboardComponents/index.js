@@ -7,6 +7,7 @@ import Pagination from './Pagination';
 import ProfileImage from './ProfileImage';
 import TabularInfo from './TabularInfo';
 import EmployeePreference from './EmployeePreference';
+import PaginationDropdown from './PaginationDropdown';
 
 export {
     CalendarComponent,
@@ -17,7 +18,8 @@ export {
     Pagination,
     ProfileImage,
     TabularInfo,
-    EmployeePreference
+    EmployeePreference,
+    PaginationDropdown
 };
 
 export * from './userPreferences';

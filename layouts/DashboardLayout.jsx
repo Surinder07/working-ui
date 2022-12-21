@@ -8,12 +8,13 @@ import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
 
 const Dashboard = (props) => {
+    
     const sideNavRef = useRef();
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
     const [navOpen, setNavOpen] = useState(true);
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState('...');
     const [sideNav, setSideNav] = useState([]);
 
     const handleNavigation = useCallback(
@@ -54,7 +55,8 @@ const Dashboard = (props) => {
                         </div>
                         <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                         <div style={{ marginTop: "20px" }}>
-                            {
+                            { 
+                            props.user.role ? 
                                 sideNav.map((info, key) => (
                                     <Link href={info.link} key={key}>
                                         <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
@@ -62,7 +64,8 @@ const Dashboard = (props) => {
                                             {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
                                         </div>
                                     </Link>
-                                ))
+                                )) :
+                                <div className={DashboardLayout.menuItem}>Loading...</div>
                             }
                         </div>
                     </div>
