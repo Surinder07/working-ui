@@ -167,3 +167,10 @@
     color: #000000;
     margin: 0;
 }
+
+@media only screen and (max-width: 480px) {
+    .gridContainer {
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+    }
+}

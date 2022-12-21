@@ -104,4 +104,10 @@
         grid-row-gap: 15px;
         grid-template-columns: 1fr;
     }
+
+    .employeeCard {
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
 }

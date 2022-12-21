@@ -166,6 +166,7 @@
     .sideNav {
         position: absolute;
         z-index: 100;
+        overflow-x: hidden;
     }
 
 
@@ -175,11 +176,12 @@
 
     .version {
         margin-left: 80px;
+        margin-bottom: 25px;
         text-align: left;
     }
 
     .openNavDashboard .sideNav {
-        width: 100vw;
+        width: 100%;
     }
 
     .closeNavDashboard .sideNav {
@@ -200,6 +202,12 @@
     .openNavDashboard .footer,
     .closeNavDashboard .footer {
         max-width: 100%;
+    }
+
+    .sideNavHam {
+        position: absolute;
+        top: 9px;
+        right: 60px;
     }
 
     .profileContainer {

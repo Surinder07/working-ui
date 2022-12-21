@@ -1,6 +1,6 @@
 import {useRef, useEffect, useState, useCallback} from "react";
 import Link from "next/link";
-import {ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger} from "../components";
+import {ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger} from "../components";
 import {ImagesInfo, SideNavInfo} from "../constants";
 import Images from "../public/Images";
 import {DashboardLayout} from "../styles/layouts";
@@ -12,7 +12,7 @@ const Dashboard = (props) => {
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
-    const [navOpen, setNavOpen] = useState(true);
+    const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState("");
 
     const handleNavigation = useCallback(
@@ -57,6 +57,11 @@ const Dashboard = (props) => {
                                 </div>
                             )}
                             {props.screenType === 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search darkTheme />}
+                            {props.screenType === 3 && (
+                                <div className={DashboardLayout.sideNavHam}>
+                                    <Hamburger setOpenMenu={setNavOpen} openMenu={navOpen} />
+                                </div>
+                            )}
                         </div>
                         <div style={{marginTop: "20px"}}>
                             {props.user &&
