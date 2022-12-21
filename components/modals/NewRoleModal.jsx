@@ -17,30 +17,30 @@ const NewRoleModal = (props) => {
     const [adminRights, setAdminRights] = useState(false);
 
     const [errorRoleName, setErrorRoleName] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorLocation, setErrorLocation] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorMaximumHours, setErrorMaximumHours] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorMinimumHours, setErrorMinimumHours] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorMaximumWorkDays, setErrorMaximumWorkDays] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorGapsInShifts, setErrorGapsInShifts] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
-
+    const [loading, setLoading] = useState(false);
     const onCancel = () => {
         setRoleName("")
         setLocation("")
@@ -49,28 +49,28 @@ const NewRoleModal = (props) => {
         setMaximumWorkDays("")
         setGapsInShifts("")
         setErrorRoleName({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorLocation({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorMaximumHours({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorMinimumHours({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorMaximumWorkDays({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorGapsInShifts({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
     }
 
@@ -85,17 +85,54 @@ const NewRoleModal = (props) => {
         }
     }, [])
 
+
+    const validateForm = async () => {
+        let error = false;
+
+    }
+    
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{ props.update ?
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'Role updated successfully'
+                    }): props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'Role added successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
+        })
+    }
+
     return (
         <div>
             <DashboardModal
                 showModal={props.showModal}
                 setShowModal={props.setShowModal}
                 buttonText="Submit"
-                onClick={() => console.log('clicked')}
+                onClick={saveData}
                 onCancel={onCancel}
                 title={props.update ? "UpdateRole" : "Create New Role"}
                 type="twoColWide"
-                onCancel={onCancel}
+                loading={loading}
             >
                 <EditableInput
                     type="text"

@@ -360,18 +360,21 @@ const Employees = (props) => {
                 showModal={showModalTimeSheet}
                 setShowModal={setShowModalTimeSheet}
                 setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
                 id={editId}
             />
             <EditShiftModal
                 showModal={showModalShift}
                 setShowModal={setShowModalShift}
                 setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
                 id={editId}
             />
             <EditRequestsModal
                 showModal={showModalRequest}
                 setShowModal={setShowModalRequest}
                 setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
                 id={editId}
             />
             <div className={DashboardStyles.dashboardTitles}>
