@@ -40,13 +40,19 @@ const CompleteProfile = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: 'fullPage',
             activeMenu: 'none',
             activeSubMenu: 'none'
         })
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
+
+    useEffect(() => {
+        if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
+            router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? '/account/payment-info' : '/dashboard');
+        }
+    }, [props.user])
 
     const validateFields = async () => {
         let error = false;
@@ -98,17 +104,27 @@ const CompleteProfile = (props) => {
                 if (!error) {
                     setLoading(true);
                     userService.completeProfile({
-                        firstName, lastName, username, countryCode, mobile,
+                        firstName, lastName, username, countryCode: contact.countryCode,
+                        mobile: contact.mobile, country: contact.country,
                         organizationName: organization, firstDayOfWeek: weekStartOn,
                         timezone, promoCode
                     })
                         .then(res => {
+                            if (res.wait) return;
                             if (res.error) {
-                                setSubmitErrorMessage(res.message);
-                                setSubmitError(true);
-                                setTimeout(() => setSubmitError(false), 3000);
-                                setLoading(false);
+                                if (res.message) {
+                                    props.setToasterInfo({
+                                        error: true,
+                                        title: "Error!",
+                                        message: res.message,
+                                    })
+                                }
                             } else {
+                                props.setToasterInfo({
+                                    error: false,
+                                    title: "Success!",
+                                    message: "Profile details saved successfully",
+                                })
                                 router.push('/account/payment-info');
                             }
                         })
@@ -181,11 +197,11 @@ const CompleteProfile = (props) => {
             />
             <div className={LoginRegisterLayout.twoHalves}>
                 <DropDown options={DaysOfWeek}
-                    defaultDisplay={'Week Start On'}
+                    placeholder='Week Start On'
                     setValue={setWeekStartOn}
                 />
                 <DropDown options={timezones}
-                    defaultDisplay={'Timezone'}
+                    placeholder='Select Timezone'
                     setValue={setTimezone}
                     errorMessage={'Field is required'}
                     showError={showErrorTimezone}

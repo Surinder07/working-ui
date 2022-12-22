@@ -6,6 +6,7 @@ export const pieConfig = (title, subTitle) => {
                 borderWidth: 3
             }
         },
+        responsive: true,
         aspectRatio: 1,
         plugins: {
             title: generateTitleConfig(title),

@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
     };
 
     useEffect(() => {
-        if (pageInfo.authenticationRequired && user && !allowedRoles.includes(user.role)) {
+        if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
             router.push('/dashboard')
         }
     }, [allowedRoles])
@@ -89,7 +89,7 @@ function MyApp({ Component, pageProps }) {
         } else if (!user.role && pageInfo.authenticationRequired) {
             router.push('/login')
         }
-    }, [pageInfo.authenticationRequired])
+    }, [])
 
     const updateScreenTypeProp = () => {
         if (window.innerWidth < 640) {

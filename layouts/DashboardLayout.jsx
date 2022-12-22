@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger } from "../components";
+import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger } from "../components";
 import { ImagesInfo, SideNavInfo } from "../constants";
 import Images from "../public/Images";
 import { DashboardLayout } from "../styles/layouts";
@@ -8,12 +8,12 @@ import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
 
 const Dashboard = (props) => {
-    
+
     const sideNavRef = useRef();
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
-    const [navOpen, setNavOpen] = useState(true);
+    const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState('...');
     const [sideNav, setSideNav] = useState([]);
 
@@ -50,22 +50,36 @@ const Dashboard = (props) => {
             <div style={{ position: "relative", width: "inherit" }}>
                 <div className={DashboardLayout.sideNav} ref={sideNavRef} style={sideNavStyle}>
                     <div>
-                        <div style={{ margin: "0 auto", width: "fit-content" }}>
-                            <LinkedImage src={navOpen ? Images.LogoWhite : Images.FaviconWhite} width={navOpen ? 160 : 30} alt="Logo" link="/dashboard" />
+                        <div>
+                            <div style={{ margin: "0 auto", width: "fit-content" }} className={DashboardLayout.logo}>
+                                <LinkedImage src={navOpen ? Images.LogoWhite : Images.FaviconWhite} width={navOpen ? 160 : 30} alt="Logo" link="/dashboard" />
+                            </div>
+                            <p className={DashboardLayout.version}>Version: {process.env.version}</p>
+                            {props.screenType === 3 && (
+                                <div className={DashboardLayout.profileContainer}>
+                                    <p>Hi, John Ferdinand</p>
+                                    <ProfileImage size={"small"} header />
+                                </div>
+                            )}
+                            {props.screenType === 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search darkTheme />}
+                            {props.screenType === 3 && (
+                                <div className={DashboardLayout.sideNavHam}>
+                                    <Hamburger setOpenMenu={setNavOpen} openMenu={navOpen} />
+                                </div>
+                            )}
                         </div>
-                        <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                         <div style={{ marginTop: "20px" }}>
-                            { 
-                            props.user.role ? 
-                                sideNav.map((info, key) => (
-                                    <Link href={info.link} key={key}>
-                                        <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
-                                            {info.icon}
-                                            {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
-                                        </div>
-                                    </Link>
-                                )) :
-                                <div className={DashboardLayout.menuItem}>Loading...</div>
+                            {
+                                props.user.role ?
+                                    sideNav.map((info, key) => (
+                                        <Link href={info.link} key={key}>
+                                            <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
+                                                {info.icon}
+                                                {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
+                                            </div>
+                                        </Link>
+                                    )) :
+                                    <div className={DashboardLayout.menuItem}>Loading...</div>
                             }
                         </div>
                     </div>
@@ -76,24 +90,29 @@ const Dashboard = (props) => {
                                 <Settings style={{ fontSize: "16px" }} />
                                 {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
                             </div>
-                            <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
-                                <Logout style={{ fontSize: "16px" }} />
-                                {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
-                            </div>
                         </Link>
+                        <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
+                            <Logout style={{ fontSize: "16px" }} />
+                            {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div style={{ position: "relative" }}>
+            <div className={`${navOpen ? DashboardLayout.openNavRightContainer : DashboardLayout.closeNavRightContainer}`}>
                 <div className={DashboardLayout.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
                     <div className={DashboardLayout.headerRight}>
-                        <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />
+                        {props.screenType !== 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />}
                         <div className={DashboardLayout.helpIcon}>?</div>
                         <NotificationBell />
-                        <h3 className={DashboardLayout.userName}>{userName}</h3>
-                        <ProfileImage size={"small"} header />
+                        {props.screenType !== 3 && <h3 className={DashboardLayout.userName}>{userName}</h3>}
+                        {props.screenType !== 3 && <ProfileImage size={"small"} header />}
                     </div>
+                    {props.screenType === 3 &&
+                        <div style={{ width: "fit-content" }}>
+                            <LinkedImage src={Images.Logo} width={160} alt="Logo" link="/dashboard" />
+                        </div>
+                    }
                 </div>
                 <div className={DashboardLayout.content}>{props.children}</div>
                 <div className={DashboardLayout.footer}>

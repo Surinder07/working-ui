@@ -18,9 +18,9 @@ const UserPreference = (props) => {
     const [shownContent, setShownContent] = useState();
 
     useEffect(() => {
-        if (props.user) {
+        if (props.user.role) {
             setTabsToShow(ProfileTabs[props.user.role.toLowerCase()])
-            setActive(tabsToShow[0])
+            setActive(ProfileTabs[props.user.role.toLowerCase()][0])
         }
     }, [props.user])
 

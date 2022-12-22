@@ -80,7 +80,7 @@ const Table = (props, ref) => {
                                     background: !props.pagination && (props.data.length === i + 1) ? 'none' :
                                         'repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )'
                                 }}>
-                                {getAction(row["internalId"], row["status"])}
+                                {getAction(row["internalId"], row["status"] && row["status"].text)}
                             </div>
                         )}
                     {

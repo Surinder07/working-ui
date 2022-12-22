@@ -11,18 +11,17 @@ import SocialIcons from '../../public/icons/socials/SocialIcons';
 import { LoginRegistrationLayout } from '../../layouts';
 
 const Login = (props) => {
+
     const router = useRouter();
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(true);
+    const [rememberMe, setRememberMe] = useState(false);
     const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [emailMessage, setEmailMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState('');
-    const [submitError, setSubmitError] = useState(false);
-    const [submitErrorMessage, setSubmitErrorMessage] = useState('');
 
     useEffect(() => {
         props.setPageInfo({
@@ -34,14 +33,13 @@ const Login = (props) => {
         if (localStorage.getItem(userService.TOKEN_KEY)) {
             userService.getUser()
                 .then(res => {
-                    if (res && res.email) {
+                    if (res.error) {
+                        localStorage.removeItem(userService.TOKEN_KEY);
+                        localStorage.removeItem(userService.USER_KEY);
+                    } else {
                         props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-                        router.push('/dashboard')
+                        router.push('/dashboard');
                     }
-                })
-                .catch(() => {
-                    localStorage.removeItem(userService.TOKEN_KEY);
-                    localStorage.removeItem(userService.USER_KEY);
                 })
         }
     }, [])
@@ -85,15 +83,20 @@ const Login = (props) => {
         validateForms()
             .then(error => {
                 if (!error) {
-                    // setLoading(true);
+                    setLoading(true);
+                    props.setPageLoading(true);
                     userService.login(login, password, rememberMe, props.setToken, props.setUser)
                         .then((res) => {
+                            if (res.wait) return;
                             if (res.error) {
-                                setSubmitErrorMessage(res.message);
-                                setSubmitError(true);
-                                setTimeout(() => setSubmitError(false), 3000);
-                                setLoading(false);
+                                props.setPageLoading(false);
+                                props.setToasterInfo({
+                                    error: true,
+                                    title: "Error!",
+                                    message: res.message,
+                                })
                             } else {
+                                setLoading(false);
                                 router.push('/dashboard');
                             }
                         });
@@ -131,7 +134,6 @@ const Login = (props) => {
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
                 <Checkbox isChecked={rememberMe} setIsChecked={setRememberMe} label={'Remember Me'} />
                 <Link href='account/reset-password-init'>Forgot Password</Link>
-                {submitError && <p className={LoginRegisterLayout.errorText}>{submitErrorMessage}</p>}
             </div>
             <Button
                 type='fullWidth'

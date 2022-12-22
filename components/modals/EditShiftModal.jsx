@@ -14,17 +14,18 @@ const EditShiftModal = (props) => {
     const [initialComment,setInitialComment] = useState("");
 
     const [inTimeError, setInTimeError] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [outTimeError, setOutTimeError] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [commentError, setCommentError] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
+    const [loading, setLoading] = useState(false);
 
     const onCancel = () =>{
         setValue("")
@@ -32,16 +33,54 @@ const EditShiftModal = (props) => {
         setOutTime("")
         setComment("")
         setInTimeError({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setOutTimeError({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setCommentError({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
+        })
+    }
+
+    const validateForm = async () => {
+        let error = false;
+        if(comment === '') {setCommentError({
+            message: 'comment is required',
+            show: true
+        })
+        error = true
+    }
+        return error
+    }
+
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'User invited successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
         })
     }
 
@@ -52,7 +91,9 @@ const EditShiftModal = (props) => {
             buttonText="Submit"
             title="Update Shift"
             type="twoColNarrow"
+            onClick={saveData}
             onCancel={onCancel}
+            loading={loading}
         >
             <EditableInput
                 type="date"

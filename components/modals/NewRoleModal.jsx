@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
-import { dropdownService } from "../../services";
+import { dropdownService, locationAndRoleService } from "../../services";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values
@@ -10,36 +10,21 @@ const NewRoleModal = (props) => {
     //-----------------------------
     const [roleName, setRoleName] = useState("");
     const [location, setLocation] = useState("");
-    const [maximumHours, setMaximumHours] = useState("");
-    const [minimumHours, setMinimumHours] = useState("");
-    const [maximumWorkDays, setMaximumWorkDays] = useState("");
-    const [gapsInShifts, setGapsInShifts] = useState("");
+    const [maximumHours, setMaximumHours] = useState(0);
+    const [minimumHours, setMinimumHours] = useState(0);
+    const [maximumWorkDays, setMaximumWorkDays] = useState(0);
+    const [gapsInShifts, setGapsInShifts] = useState(0);
     const [adminRights, setAdminRights] = useState(false);
 
     const [errorRoleName, setErrorRoleName] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorLocation, setErrorLocation] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
-    const [errorMaximumHours, setErrorMaximumHours] = useState({
-        errorMessage: "",
-        showError: false,
-    });
-    const [errorMinimumHours, setErrorMinimumHours] = useState({
-        errorMessage: "",
-        showError: false,
-    });
-    const [errorMaximumWorkDays, setErrorMaximumWorkDays] = useState({
-        errorMessage: "",
-        showError: false,
-    });
-    const [errorGapsInShifts, setErrorGapsInShifts] = useState({
-        errorMessage: "",
-        showError: false,
-    });
+    const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
         setRoleName("")
@@ -49,41 +34,105 @@ const NewRoleModal = (props) => {
         setMaximumWorkDays("")
         setGapsInShifts("")
         setErrorRoleName({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
         setErrorLocation({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         })
-        setErrorMaximumHours({
-            errorMessage: "",
-            showError: false
-        })
-        setErrorMinimumHours({
-            errorMessage: "",
-            showError: false
-        })
-        setErrorMaximumWorkDays({
-            errorMessage: "",
-            showError: false
-        })
-        setErrorGapsInShifts({
-            errorMessage: "",
-            showError: false
-        })
+        setAdminRights(false);
     }
 
     useEffect(() => {
-        if (props.role === 'ADMIN') {
-            dropdownService.getLocations()
-                .then(res => {
-                    if (!res.error) {
-                        setLocations(res);
-                    }
-                })
+        if (props.showModal) {
+            if (props.role === 'ADMIN') {
+                dropdownService.getLocations()
+                    .then(res => {
+                        if (!res.error) {
+                            setLocations(res);
+                        }
+                    })
+            }
+            if (props.update) {
+                props.setPageLoading(false);
+            }
         }
-    }, [])
+    }, [props.showModal])
+
+
+    const validateForm = async () => {
+        let error = false;
+        if (!props.update && roleName === '') {
+            setErrorRoleName({
+                message: 'Name is required',
+                show: true
+            })
+            error = true;
+        }
+        if (props.role === 'ADMIN' && location === '') {
+            setErrorLocation({
+                message: 'Location is required',
+                show: true
+            })
+            error = true;
+        }
+        return error;
+    }
+
+    const saveData = () => {
+        validateForm()
+            .then(error => {
+                if (!error) {
+                    setLoading(true)
+                    if (props.update) {
+                        locationAndRoleService.editLocationRole({
+                            id: props.id,
+                            totalHoursPerDayMin: minimumHours,
+                            totalHoursPerDayMax: maximumHours,
+                            minHoursBetweenShifts: gapsInShifts,
+                            maxConsecutiveWorkDays: maximumWorkDays
+                        })
+                            .then(res => {
+                                handleResponse(res);
+                            })
+                    } else {
+                        locationAndRoleService.addNewLocationRole({
+                            locationId: location,
+                            name: roleName,
+                            totalHoursPerDayMin: minimumHours,
+                            totalHoursPerDayMax: maximumHours,
+                            minHoursBetweenShifts: gapsInShifts,
+                            maxConsecutiveWorkDays: maximumWorkDays,
+                            isAdmin: adminRights
+                        })
+                            .then(res => {
+                                handleResponse(res);
+                            })
+                    }
+                }
+            })
+    }
+
+    const handleResponse = (res) => {
+        if (res.error) {
+            props.setToasterInfo({
+                error: true,
+                title: 'Error!',
+                message: res.message
+            })
+        }
+        else {
+            props.setToasterInfo({
+                error: false,
+                title: 'Success!',
+                message: props.update ? 'Role updated successfully' : 'Role added successfully'
+            });
+            props.setReloadData(true);
+            onCancel();
+        }
+        setLoading(false);
+    }
 
     return (
         <div>
@@ -91,11 +140,11 @@ const NewRoleModal = (props) => {
                 showModal={props.showModal}
                 setShowModal={props.setShowModal}
                 buttonText="Submit"
-                onClick={() => console.log('clicked')}
+                onClick={saveData}
                 onCancel={onCancel}
                 title={props.update ? "UpdateRole" : "Create New Role"}
                 type="twoColWide"
-                onCancel={onCancel}
+                loading={loading}
             >
                 <EditableInput
                     type="text"
@@ -106,13 +155,14 @@ const NewRoleModal = (props) => {
                     error={errorRoleName}
                     setError={setErrorRoleName}
                     nonEditable={props.update}
+                    required
                     editOn
                 />
                 {
                     props.role === 'ADMIN' &&
                     <EditableInput
                         type="dropdown"
-                        options={["India", "Canada", "USA", "Germany"]}
+                        options={locations}
                         placeholder="Location"
                         label="Location"
                         value={location}
@@ -120,6 +170,7 @@ const NewRoleModal = (props) => {
                         initialValue={location}
                         error={errorLocation}
                         setError={setErrorLocation}
+                        required
                         editOn
                     />
                 }
@@ -129,8 +180,6 @@ const NewRoleModal = (props) => {
                     value={maximumHours}
                     setValue={setMaximumHours}
                     initialValue={maximumHours}
-                    error={errorMaximumHours}
-                    setError={setErrorMaximumHours}
                     editOn
                 />
                 <EditableInput
@@ -139,8 +188,6 @@ const NewRoleModal = (props) => {
                     value={minimumHours}
                     setValue={setMinimumHours}
                     initialValue={minimumHours}
-                    error={errorMinimumHours}
-                    setError={setErrorMinimumHours}
                     editOn
                 />
                 <EditableInput
@@ -149,8 +196,6 @@ const NewRoleModal = (props) => {
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
                     initialValue={maximumWorkDays}
-                    error={errorMaximumWorkDays}
-                    setError={setErrorMaximumWorkDays}
                     editOn
                 />
                 <EditableInput
@@ -159,11 +204,9 @@ const NewRoleModal = (props) => {
                     value={gapsInShifts}
                     setValue={setGapsInShifts}
                     initialValue={gapsInShifts}
-                    error={errorGapsInShifts}
-                    setError={setErrorGapsInShifts}
                     editOn
                 />
-                {props.update && <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />}
+                {!props.update && <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />}
             </DashboardModal>
         </div>
     );

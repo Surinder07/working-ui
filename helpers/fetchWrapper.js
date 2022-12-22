@@ -41,6 +41,7 @@ const post = async (url, body) => {
 }
 
 const put = async (url, body) => {
+    console.log(url)
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', ...authHeader(url) },
@@ -96,13 +97,13 @@ const handleResponse = async (response) => {
                 switch (data.waawErrorCode) {
                     case 'WE_001':
                         Router.push('/account/complete-profile');
-                        break;
+                        return { wait: true };
                     case 'WE_002':
                         Router.push('/account/payment-info');
-                        break;
+                        return { wait: true };
                     default:
-                        localStorage.removeItem(TOKEN_KEY);
-                        localStorage.removeItem(USER_KEY);
+                        localStorage.removeItem(userService.TOKEN_KEY);
+                        localStorage.removeItem(userService.USER_KEY);
                         Router.push('/login');
                 }
                 return {};

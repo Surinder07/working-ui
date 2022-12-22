@@ -23,6 +23,7 @@
 }
 
 .creditContainer {
+	position: relative;
 	width: 100%;
 	margin-bottom: 70px;
 	background-color: #e6f0f4;
@@ -124,4 +125,74 @@
 	font-size: 14px !important;
 	line-height: 21px !important;
 	color: red !important;
+}
+
+@media only screen and (max-width: 480px) {
+
+	.mainContainer {
+		display: block;
+		padding: 2rem 2rem;
+		border: none;
+	}
+
+	.bullet {
+		position: absolute;
+		top: 20px;
+		left: 15px;
+		margin: 0;
+	}
+
+	.headerContainer {
+		margin-left: 14px;
+	}
+
+	.header {
+		font-size: 20px;
+		margin: 0;
+	}
+
+	.description {
+		font-size: 14px;
+		line-height: normal;
+		margin: 0;
+		margin-top: 4px;
+	}
+
+	.imageContainer {
+		margin-left: 29px;
+		margin-top: 10px;
+	}
+
+	.creditContainer {
+		display: block;
+		padding: 15px 35px;
+	}
+
+	.gridContainer,
+	.flexContainer {
+		display: flex;
+		flex-direction: column;
+		width: auto;
+	}
+
+	.leftGridContainer,
+	.rightGridContainer {
+		margin: 0;
+	}
+
+	.inputHalfDivLeft,
+	.inputHalfDivRight {
+		width: 100%;
+	}
+
+	.fields {
+		z-index: 100;
+		bottom: 76px;
+		left: 38px;
+	}
+
+	.btn {
+		width: 100%;
+		margin-top: 35px;
+	}
 }

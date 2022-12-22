@@ -3,6 +3,7 @@
     grid-template-columns: 200px auto;
     font-family: Mulish;
     transition: all 0.2s ease;
+    overflow-x: hidden;
 }
 
 .openNavDashboard {
@@ -14,11 +15,11 @@
 }
 
 .openNavDashboard .sideNav {
-    max-width: 200px;
+    width: 200px;
 }
 
 .closeNavDashboard .sideNav {
-    max-width: 70px;
+    width: 70px;
 }
 
 .sideNav {
@@ -29,6 +30,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: all 0.1s ease-in-out;
 }
 
 .version {
@@ -59,6 +61,18 @@
     border-left: solid 3px #DDE2FF;
     color: #DDE2FF !important;
     background-color: #3E4049;
+}
+
+.openNavRightContainer, .closeNavRightContainer {
+    position: relative;
+}
+
+.openNavRightContainer {
+    max-width: calc(100vw - 200px); /* 60 px for padding */
+}
+
+.closeNavRightContainer {
+    max-width: calc(100vw - 70px); /* 60 px for padding */
 }
 
 .header {
@@ -155,4 +169,82 @@
     border-radius: 50%;
     color: #C5C7CD;
     font-size: 24px;
+}
+
+@media only screen and (max-width: 480px) {
+    .dashboardPage {
+        grid-template-columns: 1fr;
+    }
+
+    .sideNav {
+        position: absolute;
+        z-index: 100;
+        overflow-x: hidden;
+    }
+
+
+    .logo {
+        margin-left: 25px !important;
+    }
+
+    .version {
+        margin-left: 80px;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .openNavDashboard .sideNav {
+        width: 100%;
+    }
+
+    .closeNavDashboard .sideNav {
+        width: 0;
+    }
+
+    .header {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+
+    .headerRight {
+        margin-right: 20px;
+    }
+
+    .openNavDashboard .header,
+    .closeNavDashboard .header,
+    .openNavDashboard .footer,
+    .closeNavDashboard .footer {
+        max-width: 100%;
+    }
+
+    .sideNavHam {
+        position: absolute;
+        top: 9px;
+        right: 60px;
+    }
+
+    .profileContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: #F7F8FC;
+    }
+
+    .profileContainer p {
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: right;
+        letter-spacing: 0.2px;
+        color: #535255;
+        margin-right: 20px;
+    }
+
+    .searchBar {
+        width: 80%;
+        margin: 29px 20px;
+    }
 }

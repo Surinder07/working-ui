@@ -5,17 +5,23 @@ import { Button } from '../inputComponents'
 const DeleteModal = (props) => {
 
     useEffect(() => {
-        if (props.showModal) {
+        if (props.modal.show) {
             document.body.style.overflow = "hidden";
         }
-    }, []);
+    }, [props.modal]);
 
 
-    const handleClick = () => {
+    const handleClick = (action) => {
+        if (action === 1) {
+            props.onDelete && props.onDelete()
+        }
         document.body.style.overflow = "unset";
-        props.setShowModal(false);
+        props.setModal({
+            id: '',
+            show: false
+        });
     };
-    
+
     return (
         props.modal.show ?
             <div className={DashboardModalStyles.modalBackdrop}>

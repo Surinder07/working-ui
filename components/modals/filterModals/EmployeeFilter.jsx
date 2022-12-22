@@ -1,12 +1,48 @@
 import React, {useState} from "react";
-import {FilterModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
-import {EditableInput} from "../inputComponents";
+import {FilterModal} from "../base";
+import {DashboardModalStyles} from "../../../styles/elements";
+import {EditableInput} from "../../inputComponents";
 
 const EmployeeFilter = (props) => {
     const [employeeType, setEmployeeType] = useState("");
     const [role, setRole] = useState("");
     const [status, setStatus] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const onCancel = () => {
+        setEmployeeType("")
+        setRole("")
+        setStatus("")
+
+    }
+
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'User invited successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
+        })
+    }
+    
     return (
         <div>
             <FilterModal
@@ -15,13 +51,15 @@ const EmployeeFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                showCloseButton
+                onClick={saveData}
+                onCancel={onCancel}
+                loading={loading}
             >
-                 <EditableInput
+                <EditableInput
                     type="dropdown"
                     label="Type of Employee"
-                    value={role}
-                    setValue={setRole}
+                    value={employeeType}
+                    setValue={setEmployeeType}
                     options={["Admin", "Manager", "Employee"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn

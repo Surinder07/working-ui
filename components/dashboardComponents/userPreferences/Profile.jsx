@@ -16,21 +16,15 @@ const Profile = (props) => {
     });
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [initialMobile, setInitialMobile] = useState({
-        mobile: '',
-        countryCode: '',
-        country: ''
-    });
 
     useEffect(() => {
-        // setFirstName(props.user.firstName);
-        // setLastName(props.user.lastName);
-        // setMobile({
-        //     mobile: props.user.mobile,
-        //     countryCode: props.user.countryCode,
-        //     country: props.user.country
-        // });
-        setInitialMobile(mobile);
+        setFirstName(props.data.firstName);
+        setLastName(props.data.lastName);
+        setMobile({
+            mobile: props.data.mobile,
+            countryCode: props.data.countryCode,
+            country: props.data.country
+        });
     }, [])
 
     const handleFileChange = (e) => {
@@ -95,7 +89,7 @@ const Profile = (props) => {
                         label='First Name'
                         value={firstName}
                         setValue={setFirstName}
-                        // initialValue={props.user.firstName}
+                        initialValue={props.data.firstName}
                         editOn={editPersonalDetails}
                         required
                     />
@@ -104,7 +98,7 @@ const Profile = (props) => {
                         label='Last Name'
                         value={lastName}
                         setValue={setLastName}
-                        // initialValue={props.user.lastName}
+                        initialValue={props.data.lastName}
                         editOn={editPersonalDetails}
                         required
                     />
@@ -113,14 +107,18 @@ const Profile = (props) => {
                         label='Mobile No.'
                         value={mobile}
                         setValue={setMobile}
-                        initialValue={initialMobile}
+                        initialValue={{
+                            mobile: props.data.mobile,
+                            countryCode: props.data.countryCode,
+                            country: props.data.country
+                        }}
                         editOn={editPersonalDetails}
                     />
                     <EditableInput
                         type='text'
                         label='WAAW ID'
-                        // value={props.user.waawId}
-                        // initialValue={props.user.waawId}
+                        value={props.data.waawId}
+                        initialValue={props.data.waawId}
                         editOn={editPersonalDetails}
                         nonEditable
                     />

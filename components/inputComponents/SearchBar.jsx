@@ -1,6 +1,6 @@
-import React from 'react';
-import { SearchBarStyles } from "../../styles/elements/inputs";
-import { Search } from "@mui/icons-material";
+import React, {useEffect} from "react";
+import {SearchBarStyles} from "../../styles/elements/inputs";
+import {Search} from "@mui/icons-material";
 
 const SearchBar = (props, ref) => {
 
@@ -10,10 +10,14 @@ const SearchBar = (props, ref) => {
         }
     };
 
+    const classNames = (...classes) => {
+        return classes.filter(Boolean).join(" ");
+    };
+
     return (
-        <div className={`${SearchBarStyles.container} ${props.className}`} style={props.style} ref={ref}>
-            <Search style={{ marginLeft: "5px" }} />
-            <input placeholder={props.placeholder} value={props.value} onChange={(e) => props.setValue(e.target.value)} onKeyUp={onEnter} disabled />
+        <div className={classNames(SearchBarStyles.container, props.className, props.darkTheme && SearchBarStyles.darkContainer)} style={props.style} ref={ref}>
+            <Search style={{marginLeft: "5px"}} />
+            <input placeholder={props.placeholder} value={props.value} onChange={(e) => props.setValue(e.target.value)} onKeyUp={onEnter} />
         </div>
     );
 };

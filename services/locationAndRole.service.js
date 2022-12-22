@@ -3,19 +3,19 @@ import { fetchWrapper } from '../helpers';
 const endpoints = process.env.endpoints.locationAndRole;
 
 const saveLocation = (name, timezone) => {
-    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocation), {name, timezone});
+    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocation), { name, timezone });
 }
 
 const getAllLocations = (pageNo, pageSize) => {
     return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocation, pageNo, pageSize));
 }
 
-const removeLocation = async (location) => {
-    return fetchWrapper.delete(fetchWrapper.getApiUrl(endpoints.deleteLocation),{location})
+const removeLocation = async (id) => {
+    return fetchWrapper.delete(fetchWrapper.getApiUrl(endpoints.deleteLocation, { id }))
 }
 
-const toggleLocation = async (location) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveLocation),{location})
+const toggleActiveLocation = async (id) => {
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveLocation, { id }))
 }
 
 const getAllRoles = (pageNo, pageSize) => {
@@ -23,19 +23,19 @@ const getAllRoles = (pageNo, pageSize) => {
 }
 
 const addNewLocationRole = async (data) => {
-    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocationRole),{data})
+    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocationRole), data)
 }
 
-const removeLocationRole = async (data) => {
-    return fetchWrapper.delete(fetchWrapper.getApiUrl(endpoints.deleteLocationRole),{data})
+const removeLocationRole = async (id) => {
+    return fetchWrapper.delete(fetchWrapper.getApiUrl(endpoints.deleteLocationRole, { id }))
 }
 
 const editLocationRole = async (data) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateLocationRole),{data})
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateLocationRole), data)
 }
 
-const toggleLocationRole = async (data) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveLocationRole),{data})
+const toggleActiveLocationRole = async (id) => {
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveLocationRole, { id }))
 }
 
 export const locationAndRoleService = {
@@ -43,9 +43,9 @@ export const locationAndRoleService = {
     getAllLocations,
     getAllRoles,
     removeLocation,
-    toggleLocation,
+    toggleActiveLocation,
     addNewLocationRole,
     removeLocationRole,
     editLocationRole,
-    toggleLocationRole
+    toggleActiveLocationRole
 }

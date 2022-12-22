@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
@@ -11,12 +11,12 @@ const LocationModal = (props) => {
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
     const [errorLocation, setErrorLocation] = useState({
-        errorMessage: "",
-        showError: false
+        message: "",
+        show: false
     });
     const [errorTimezone, setErrorTimezone] = useState({
-        errorMessage: "",
-        showError: false
+        message: "",
+        show: false
     });
     const [loading, setLoading] = useState(false);
 

@@ -23,30 +23,30 @@ const InviteUserModal = (props) => {
     const [toggleValue, setToggleValue] = useState("Permanent");
 
     const [errorFirstName, setErrorFirstName] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorLastName, setErrorLastName] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorEmployeeId, setErrorEmployeeId] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorEmail, setErrorEmail] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorLocation, setErrorLocation] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorRole, setErrorRole] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
-
+    const [loading, setLoading] = useState(false);
     const onCancel = () => {
         setFirstName("");
         setLastName("");
@@ -57,25 +57,29 @@ const InviteUserModal = (props) => {
         setRoles([]);
         setToggleValue("Permanent");
         setErrorFirstName({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         });
         setErrorLastName({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         });
         setErrorEmployeeId({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         });
         setErrorEmail({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         });
         setErrorLocation({
-            errorMessage: "",
-            showError: false
+            message: "",
+            show: false
         });
+        setErrorRole({
+            message: "",
+            show: false
+        })
     }
 
     useEffect(() => {
@@ -107,6 +111,61 @@ const InviteUserModal = (props) => {
         }
     }, [location])
 
+    const validateForm = async () => {
+        let error = false;
+        if(firstName === '') {setErrorFirstName({
+            message: 'First Name is required',
+            show: true
+        })
+        error = true;
+        }
+        if(lastName === '') {setErrorLastName({
+            message: 'Last Name is required',
+            show: true
+        })
+        error = true;
+        }
+        if(email === '') {setErrorEmail({
+            message: 'Email is required',
+            show: true
+        })
+        error = true;
+        }
+        if(role === '') {setErrorRole({
+            message: 'Role is required',
+            show: true
+        })}
+     
+        return error
+    }
+
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'User invited successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
+        })
+    }
+
     const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
@@ -137,7 +196,9 @@ const InviteUserModal = (props) => {
             buttonText="Submit"
             title="Invite User"
             type="twoColWide"
+            onClick={saveData}
             onCancel={onCancel}
+            loading={loading}
         >
             <div className={DashboardModalStyles.singleColumn}>
                 <div className={`${DashboardModalStyles.uploadContainer}`}>

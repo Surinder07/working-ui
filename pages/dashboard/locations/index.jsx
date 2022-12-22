@@ -42,7 +42,11 @@ const Locations = (props) => {
         locationAndRoleService.getAllLocations(pageNo, pageSize)
             .then(res => {
                 if (res.error) {
-                    console.log(res.message);
+                    props.setToasterInfo({
+                        error: true,
+                        title: "Error!",
+                        message: res.message,
+                    })
                 } else {
                     setData(res.data.map(loc => {
                         return {
@@ -51,10 +55,10 @@ const Locations = (props) => {
                             locationName: loc.name,
                             creationDate: loc.creationDate,
                             timezone: loc.timezone,
-                            activeEmployees: loc.activeEmployees,
-                            inactiveEmployees: loc.inactiveEmployees,
+                            activeEmployees: loc.activeEmployees + '',
+                            inactiveEmployees: loc.inactiveEmployees + '',
                             status: {
-                                text: loc.active ? 'Active' : 'Disabled',
+                                text: loc.active ? 'ACTIVE' : 'DISABLED',
                                 displayType: 'bg',
                                 status: loc.active ? 'ok' : 'bad'
                             }
@@ -63,18 +67,47 @@ const Locations = (props) => {
                     setTotalEntries(res.totalEntries);
                     setTotalPages(res.totalPages);
                 }
+                props.setPageLoading(false);
+            })
+    }
+
+    const handleResponse = (apiResponse, successMessage) => {
+        if (apiResponse.error) {
+            props.setToasterInfo({
+                error: true,
+                title: "Error!",
+                message: apiResponse.message,
+            })
+        } else {
+            props.setToasterInfo({
+                error: false,
+                title: "Success!",
+                message: successMessage,
+            })
+            setReloadData(true);
+        }
+    }
+
+    const deleteLocation = () => {
+        props.setPageLoading(true);
+        locationAndRoleService.removeLocation(confirmDeleteModal.id)
+            .then(res => {
+                handleResponse(res, "Location Deleted Successfully")
             })
         props.setPageLoading(false);
     }
 
     const actions = [
         {
-            key: "View",
-            action: (id) => console.log(`/dashboard/locations/`),
-        },
-        {
             key: "activeToggle",
-            action: () => console.log("Api call will be added here"),
+            action: (id) => {
+                props.setPageLoading(true);
+                locationAndRoleService.toggleActiveLocation(id)
+                    .then(res => {
+                        handleResponse(res, "Location updated Successfully")
+                    });
+                props.setPageLoading(false);
+            },
         },
         {
             key: "Delete",
@@ -85,8 +118,18 @@ const Locations = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Locations' />
-            <DeleteModal modal={confirmDeleteModal} setModal={setConfirmDeleteModal} />
-            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} />
+            <DeleteModal
+                modal={confirmDeleteModal}
+                setModal={setConfirmDeleteModal}
+                onDelete={deleteLocation}
+            />
+            <LocationModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                setToasterInfo={props.setToasterInfo}
+                setReloadData={setReloadData}
+                role={props.user.role}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <div className={DashboardStyles.rightContainer}>
