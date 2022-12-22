@@ -18,7 +18,7 @@ export const CountryCodes = [
     }
 ];
 
-export const DaysOfWeek = [
+export const DaysOfWeek = dropdownService.stringToDropdownObj([
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -26,7 +26,7 @@ export const DaysOfWeek = [
     'Friday',
     'Saturday',
     'Sunday'
-];
+]);
 
 export const DaysOfWeekShort = [
     'Mon',

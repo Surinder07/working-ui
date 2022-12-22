@@ -54,7 +54,7 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <DropDown options={props.options} initialValue={props.initialValue} value={props.value} setValue={setValue} placeholder={props.placeholder} disabled={props.nonEditable} inputType={2} openUp={props.openUp} /> :
-                        <p>{props.initialValue}</p>
+                        <p>{!props.initialValue || props.initialValue === '' ? '-' : props.initialValue}</p>
                 )
             }
             {

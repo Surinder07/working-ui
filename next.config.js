@@ -5,7 +5,7 @@ const apiEndpoints = {
         authorization: '/v1/unAuth/authenticate',
         registerNewUser: '/v1/unAuth/user/registration/new',
         verifyEmail: '/v1/unAuth/user/registration/verifyEmail',
-        completeProfile: '/v1/registration/user/completeProfile',
+        completeProfile: '/v1/user/registration/completeProfile',
         validateInviteKey: '/v1/unAuth/user/invitation/validateKey',
         registerByInvite: '/v1/unAuth/user/invitation/register',
         getUserDetails: '/v1/user/getAccount',
@@ -33,10 +33,13 @@ const apiEndpoints = {
         toggleActiveLocationRole: '/v1/location/role/toggleActive'
     },
     dropdown: {
-        getTimezones: '/v1/dropdown/timezones',
+        getTimezones: '/v1/unAuth/dropdown/timezones',
         getLocations: '/v1/dropdown/locations',
         getRoles: '/v1/dropdown/roles',
         getUsers: '/v1/dropdown/users'
+    },
+    dashboard: {
+        getData: '/v1/dashboard/getData'
     },
     resources: {
         fileTemplate: '/v1/unAuth/resource/downloadFile'

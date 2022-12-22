@@ -189,7 +189,7 @@ const Dashboard = (props) => {
                 <div style={{height: "100%"}}>
                     <Line data={invoice} options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                 </div>
-                <div style={{}}>
+                <div style={{display:'flex', justifyContent:'end'}}>
                     <Pie data={employees} options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
                 </div>
             </DashboardCard>

@@ -54,7 +54,7 @@ const InputBox = (props) => {
                     props.setValue(e.target.value);
                     props.setShowError && props.setShowError(false);
                 }}
-                autoComplete='off' />
+                autoComplete="one-time-code" />
             {
                 props.type.toLowerCase() === 'password' &&
                 <div className={InputBoxStyles.inputIconContainer} style={{ cursor: 'pointer' }} onClick={switchPasswordVisibility}>

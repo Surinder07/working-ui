@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { dropdownService, locationAndRoleService } from "../../services";
 
 const LocationModal = (props) => {
-    const [locations,setLocations] = useState([])
 
     const [timezones, setTimezones] = useState([]); // List to display
 
@@ -40,7 +39,7 @@ const LocationModal = (props) => {
 
     const validateForm = async () => {
         let error = false;
-        if ( props.role === 'ADMIN' && location === '') {
+        if (location === '') {
             setErrorLocation({
                 message: 'Name is required',
                 show: true
@@ -96,7 +95,6 @@ const LocationModal = (props) => {
             onCancel={onCancel}
             loading={loading}
         >
-            {props.role === 'ADMIN' && 
             <EditableInput
                 type="text"
                 value={location}
@@ -108,7 +106,6 @@ const LocationModal = (props) => {
                 required
                 editOn
             />
-            }
             <EditableInput
                 type="dropdown"
                 options={timezones}

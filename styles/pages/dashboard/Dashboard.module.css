@@ -98,9 +98,16 @@
     padding-right: 20px;
 }
 
+.graph {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    overflow: hidden;
+}
+
 @media only screen and (max-width: 480px) {
     .graph {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
         grid-template-rows: 3fr 2fr;
     }
 

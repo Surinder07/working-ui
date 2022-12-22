@@ -53,7 +53,7 @@ const Notifications = (props) => {
         props.setPageInfo({
             authenticationRequired: false,
             pageView: "dashboard",
-            activeMenu: "NOTIFICATIIONS",
+            activeMenu: "NOTIFICATIONS",
             activeSubMenu: "none",
         });
     }, []);
@@ -63,8 +63,9 @@ const Notifications = (props) => {
             <WaawNoIndexHead title='Notifications' />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Notifications</h1>
-                <p style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3' }}>
-                    Mark All as Read</p>
+                <p style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3', margin: 0 }}>
+                    Mark all as Read
+                </p>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo

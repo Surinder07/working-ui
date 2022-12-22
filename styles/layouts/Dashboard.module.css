@@ -3,6 +3,7 @@
     grid-template-columns: 200px auto;
     font-family: Mulish;
     transition: all 0.2s ease;
+    overflow-x: hidden;
 }
 
 .openNavDashboard {
@@ -60,6 +61,18 @@
     border-left: solid 3px #DDE2FF;
     color: #DDE2FF !important;
     background-color: #3E4049;
+}
+
+.openNavRightContainer, .closeNavRightContainer {
+    position: relative;
+}
+
+.openNavRightContainer {
+    max-width: calc(100vw - 200px); /* 60 px for padding */
+}
+
+.closeNavRightContainer {
+    max-width: calc(100vw - 70px); /* 60 px for padding */
 }
 
 .header {

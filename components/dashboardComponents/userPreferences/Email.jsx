@@ -24,7 +24,7 @@ const Email = (props) => {
                         editOn
                     />
                     <div></div>
-                    <Button type='dashboard' >Save Changes</Button>
+                    <Button disabled type='dashboard' >Save Changes</Button>
                 </UserPreferenceCard>
             </div>
         </div>

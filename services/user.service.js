@@ -38,16 +38,16 @@ const registerUser = async (email, password, contractor) => {
         { email, password, contractor })
 }
 
-const emailVerification = async (email) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.verifyEmail,{email}))
+const emailVerification = async (key) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.verifyEmail, { key }))
 }
 
 const inviteKeyValidation = async (key) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validateInviteKey,{key}))
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validateInviteKey, { key }))
 }
 
 const inviteAndRegister = async (data) => {
-  return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite,{data}))
+    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite, { data }))
 }
 
 const getUser = async () => {
@@ -55,14 +55,14 @@ const getUser = async () => {
 }
 
 const requestResetPassword = async (email) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.resetPasswordInit, {email}));
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.resetPasswordInit, { email }));
 }
 
 const finishResetPassword = async (key, newPassword) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.resetPasswordFinish), {key, newPassword});
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.resetPasswordFinish), { key, newPassword });
 }
 
-const completeProfile = async(data) => {
+const completeProfile = async (data) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.completeProfile), data);
 }
 

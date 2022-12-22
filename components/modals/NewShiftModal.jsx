@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import {DashboardModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
-import {Checkbox, EditableInput} from "../inputComponents";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
+import { Checkbox, EditableInput } from "../inputComponents";
 import Tabs from "../dashboardComponents/Tabs";
 import { dropdownService } from "../../services";
 
 const NewShiftModal = (props) => {
-     //------------- Dropdown values
-     const [locations, setLocations] = useState([]);
-     //-----------------------------
+    //------------- Dropdown values
+    const [locations, setLocations] = useState([]);
+    //-----------------------------
     const [formType, setFormType] = useState("Single Shift");
     const [assignTo, setAssignTo] = useState("Users");
     const [releaseImmediately, setReleaseImmediately] = useState(false);
@@ -112,64 +112,69 @@ const NewShiftModal = (props) => {
 
     const validateForm = async () => {
         let error = false;
-        if(startDateShift === '') {setErrorStartDate({
-            message: 'Start Date required',
-            show: true,
-        })
-          error = true;  
+        if (startDateShift === '') {
+            setErrorStartDate({
+                message: 'Start Date required',
+                show: true,
+            })
+            error = true;
         }
-        if(endDateShift === '') {setErrorEndDate({
-            message: 'End Date required',
-            show: true,
-        })
-        error = true;
-     }
-     if(props.role === 'ADMIN' && location === '') {setErrorLocation({
-        message: 'Location is required',
-        show: true
-     })
-     error = true
-     }
-      if(role === '') {setErrorRole({
-        message: 'Role is required',
-        show: true
-      })
-       error = true
-      }
-        if(user === '') {setErrorUser({
-        message: 'User is required',
-      show: true
-      })
-      error = true
-     } 
-     return error
+        if (endDateShift === '') {
+            setErrorEndDate({
+                message: 'End Date required',
+                show: true,
+            })
+            error = true;
+        }
+        if (props.role === 'ADMIN' && location === '') {
+            setErrorLocation({
+                message: 'Location is required',
+                show: true
+            })
+            error = true
+        }
+        if (role === '') {
+            setErrorRole({
+                message: 'Role is required',
+                show: true
+            })
+            error = true
+        }
+        if (user === '') {
+            setErrorUser({
+                message: 'User is required',
+                show: true
+            })
+            error = true
+        }
+        return error
     }
 
     const saveData = () => {
         validateForm()
-        .then(error => {
-            if(!error) {
+            .then(error => {
+                if (!error) {
 
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
+                    setLoading(true)
+                    if (error == true) {
+                        props.setToasterInfo({
+                            error: true,
+                            title: 'Error!',
+                            message: res.message
+                        })
+                    }
+                    else {
+                        props.setToasterInfo({
+                            error: false,
+                            title: 'Success!',
+                            message: 'User invited successfully'
+                        });
+                        props.setReloadData(true)
+                        onCancel()
+                    }
+                    setLoading(false)
                 }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'User invited successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+            })
     }
 
     return (
@@ -190,31 +195,31 @@ const NewShiftModal = (props) => {
                 setSelected={setFormType}
                 size="big"
             />
-             <EditableInput
-                        type="date"
-                        value={startDateShift}
-                        setValue={setStartDateShift}
-                        initialValue={startDateShift}
-                        label="Start Date"
-                        error={errorStartDate}
-                        setError={setErrorStartDate}
-                        required
-                        editOn
-                    />
-                    <EditableInput
-                        type="date"
-                        value={endDateShift}
-                        setValue={setEndDateShift}
-                        initialValue={endDateShift}
-                        label="End Date"
-                        error={errorEndDate}
-                        setError={setErrorEndDate}
-                        required
-                        editOn
-                    />
-            {formType && formType === "Single Shift" ? (
+            <EditableInput
+                type="date"
+                value={startDateShift}
+                setValue={setStartDateShift}
+                initialValue={startDateShift}
+                label="Start Date"
+                error={errorStartDate}
+                setError={setErrorStartDate}
+                required
+                editOn
+            />
+            <EditableInput
+                type="date"
+                value={endDateShift}
+                setValue={setEndDateShift}
+                initialValue={endDateShift}
+                label="End Date"
+                error={errorEndDate}
+                setError={setErrorEndDate}
+                required
+                editOn
+            />
+            {
+                formType === "Single Shift" &&
                 <>
-                   
                     <EditableInput
                         type="time"
                         label="Start Time"
@@ -223,6 +228,7 @@ const NewShiftModal = (props) => {
                         initialValue={startTime}
                         error={errorStartTime}
                         setError={setErrorStartTime}
+                        required
                         editOn
                     />
                     <EditableInput
@@ -233,14 +239,11 @@ const NewShiftModal = (props) => {
                         initialValue={endTime}
                         error={errorEndTime}
                         setError={setErrorEndTime}
+                        required
                         editOn
                     />
                 </>
-            ) : (
-                <>
-                </>
-            )}
-
+            }
             <Tabs
                 className={DashboardModalStyles.singleColumn}
                 options={["Users", "Locations"]}
@@ -249,52 +252,52 @@ const NewShiftModal = (props) => {
                 size="small"
                 title="Assign Shift to"
             />
-            {assignTo && assignTo === "Users" ? (
-                <EditableInput
-                    type="text"
-                    label="User"
-                    className={DashboardModalStyles.singleColumn}
-                    value={user}
-                    setValue={setUser}
-                    initialValue={user}
-                    error={errorUser}
-                    setError={setErrorUser}
-                    required
-                    editOn
-                />
-            ) : (
-                <>
-                {props.role === 'ADMIN' && 
-                    <EditableInput
-                        type="dropdown"
-                        label="Location"
-                        options={["India", "Canada", "Mexico"]}
-                        placeholder="Location"
-                        className={DashboardModalStyles.singleColumn}
-                        value={location}
-                        setValue={setLocation}
-                        initialValue={location}
-                        error={errorLocation}
-                        setError={setErrorLocation}
-                        required
-                        editOn
-                    />
-                } 
+            {
+                assignTo === "Users" ?
                     <EditableInput
                         type="text"
-                        label="Role"
+                        label="User"
                         className={DashboardModalStyles.singleColumn}
-                        value={role}
-                        setValue={setRole}
-                        initialValue={role}
-                        error={errorRole}
-                        setError={setErrorRole}
+                        value={user}
+                        setValue={setUser}
+                        initialValue={user}
+                        error={errorUser}
+                        setError={setErrorUser}
                         required
                         editOn
-                    />
-                </>
-            )}
-
+                    /> :
+                    <>
+                        {
+                            props.role === 'ADMIN' &&
+                            <EditableInput
+                                type="dropdown"
+                                label="Location"
+                                options={["India", "Canada", "Mexico"]}
+                                placeholder="Location"
+                                className={DashboardModalStyles.singleColumn}
+                                value={location}
+                                setValue={setLocation}
+                                initialValue={location}
+                                error={errorLocation}
+                                setError={setErrorLocation}
+                                required
+                                editOn
+                            />
+                        }
+                        <EditableInput
+                            type="text"
+                            label="Role"
+                            className={DashboardModalStyles.singleColumn}
+                            value={role}
+                            setValue={setRole}
+                            initialValue={role}
+                            error={errorRole}
+                            setError={setErrorRole}
+                            required
+                            editOn
+                        />
+                    </>
+            }
             <EditableInput
                 type="text"
                 label="Shift name"

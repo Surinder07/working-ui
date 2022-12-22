@@ -12,6 +12,10 @@ const Employees = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [confirmDeleteModal, setConfirmDeleteModal] = useState({
+        id: '',
+        show: false
+    })
     const router = useRouter();
 
     useEffect(() => {
@@ -21,6 +25,7 @@ const Employees = (props) => {
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(['ADMIN', 'MANAGER'])
     }, []);
 
     useEffect(() => {
@@ -39,18 +44,32 @@ const Employees = (props) => {
     };
 
     const fetchData = () => {
+        props.setPageLoading(true);
         memberService.listAllUsers(pageNo, pageSize, null).then((res) => {
             if (res.error) {
-                console.log(res.message);
+                props.setToasterInfo({
+                    error: true,
+                    title: "Error!",
+                    message: res.message,
+                })
             } else {
                 setData(
                     res.data.map((user) => {
-                        return {
+                        return props.user.role === 'ADMIN' ? {
                             internalId: user.id,
                             id: user.waawId,
                             employeeName: user.fullName,
                             email: user.email,
                             location: user.location,
+                            role: user.role,
+                            employeeType: user.fullTime ? "Full Time" : "Contractor",
+                            lastLogin: user.lastLogin,
+                            status: getStatus(user.status),
+                        } : {
+                            internalId: user.id,
+                            id: user.waawId,
+                            employeeName: user.fullName,
+                            email: user.email,
                             role: user.role,
                             employeeType: user.fullTime ? "Full Time" : "Contractor",
                             lastLogin: user.lastLogin,
@@ -62,7 +81,34 @@ const Employees = (props) => {
                 setTotalPages(res.totalPages);
             }
         });
+        props.setPageLoading(true);
     };
+
+    const handleResponse = (apiResponse, successMessage) => {
+        if (apiResponse.error) {
+            props.setToasterInfo({
+                error: true,
+                title: "Error!",
+                message: apiResponse.message,
+            })
+        } else {
+            props.setToasterInfo({
+                error: false,
+                title: "Success!",
+                message: successMessage,
+            })
+            setReloadData(true);
+        }
+    }
+
+    const deleteUser = () => {
+        props.setPageLoading(true);
+        // locationAndRoleService.removeLocation(confirmDeleteModal.id)
+        //     .then(res => {
+        //         handleResponse(res, "Location Deleted Successfully")
+        //     })
+        props.setPageLoading(false);
+    }
 
     const actions = [
         {
