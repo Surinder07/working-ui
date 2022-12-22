@@ -84,7 +84,7 @@
     line-height: 21px;
     color: #999999;
 }
-    
+
 .personalContainer {
     display: grid;
     grid-column: span 2;
@@ -96,4 +96,22 @@
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 10px;
     padding-right: 20px;
+}
+
+@media only screen and (max-width: 480px) {
+    .graph {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 3fr 2fr;
+    }
+
+    .infoTileContainer {
+        grid-row-gap: 15px;
+        grid-template-columns: 1fr;
+    }
+
+    .employeeCard {
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
 }

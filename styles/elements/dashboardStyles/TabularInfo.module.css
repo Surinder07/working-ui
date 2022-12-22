@@ -159,3 +159,18 @@
 .editIcon {
     font-size: 12px;
 }
+
+@media only screen and (max-width: 480px) {
+    .searchFilterContainer {
+        justify-content: space-between;
+    }
+
+    .tableContainer h2,
+    .tableContainer h4 {
+        display: none;
+    }
+
+    .search {
+        width: 60%;
+    }
+}

@@ -179,13 +179,15 @@ const Dashboard = (props) => {
                     showSearch={tabularData.showSearch} />
             </DashboardCard>
             <DashboardCard
+                className={DashboardStyles.graph}
                 style={{
                     marginTop: "20px",
-                    display: 'grid',
-                    gridTemplateColumns: '3fr 2fr'
-                }} >
-                <div style={{ height: '100%' }}>
-                    <Line data={invoice} options={areaConfig('Payment History Trends', 'Current Year ( 2022-2023 )')} />
+                    display: "grid",
+                    gridTemplateColumns: "3fr 2fr",
+                }}
+            >
+                <div style={{height: "100%"}}>
+                    <Line data={invoice} options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                 </div>
                 <div style={{}}>
                     <Pie data={employees} options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />

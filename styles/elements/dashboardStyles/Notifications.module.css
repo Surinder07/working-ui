@@ -90,7 +90,7 @@
 }
 
 .readNotification {
-    background: #f0efef!important;
+    background: #f0efef !important;
 }
 
 .notification .unreadInd {
@@ -148,4 +148,11 @@
     font-size: 12px;
     line-height: 18px;
     color: #000000;
+}
+
+@media only screen and (max-width: 480px) {
+    .notifications {
+        right: -83px;
+        width: 370px;
+    }
 }

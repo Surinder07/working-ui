@@ -7,7 +7,7 @@ import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
 import { Toaster } from "../components";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
@@ -35,12 +35,6 @@ function MyApp({ Component, pageProps }) {
             return "PRICING";
         } else return "none";
     };
-
-    useEffect(() => {
-        if (pageInfo.authenticationRequired && user && !allowedRoles.includes(user.role)) {
-            router.push('/dashboard')
-        }
-    }, [allowedRoles])
 
     useEffect(() => {
         if (toasterInfo.title !== "") {
@@ -135,7 +129,7 @@ function MyApp({ Component, pageProps }) {
                     <DashboardLayout pageInfo={pageInfo} setPageInfo={setPageInfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
                     </DashboardLayout>
-                }
+                )}
                 {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>

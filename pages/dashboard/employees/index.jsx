@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal } from "../../../components";
-import { memberService } from "../../../services";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {DashboardStyles} from "../../../styles/pages";
+import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal} from "../../../components";
+import {memberService} from "../../../services";
 
 const Employees = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -21,7 +21,6 @@ const Employees = (props) => {
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",
         });
-
     }, []);
 
     useEffect(() => {
@@ -31,24 +30,21 @@ const Employees = (props) => {
     useEffect(() => {
         if (reloadData) fetchData();
         setReloadData(false);
-    }, [reloadData])
+    }, [reloadData]);
 
     const getStatus = (status) => {
-        if (status === 'PAID_AND_ACTIVE')
-            return { text: 'ACTIVE', displayType: 'bg', status: 'ok' };
-        else if (status === 'PROFILE_PENDING')
-            return { text: 'INCOMPLETE', displayType: 'bg', status: 'warn' };
-        else if (status === 'DISABLED')
-            return { text: 'INACTIVE', displayType: 'bg', status: 'bad' }
-    }
+        if (status === "PAID_AND_ACTIVE") return {text: "ACTIVE", displayType: "bg", status: "ok"};
+        else if (status === "PROFILE_PENDING") return {text: "INCOMPLETE", displayType: "bg", status: "warn"};
+        else if (status === "DISABLED") return {text: "INACTIVE", displayType: "bg", status: "bad"};
+    };
 
     const fetchData = () => {
-        memberService.listAllUsers(pageNo, pageSize, null)
-            .then(res => {
-                if (res.error) {
-                    console.log(res.message);
-                } else {
-                    setData(res.data.map(user => {
+        memberService.listAllUsers(pageNo, pageSize, null).then((res) => {
+            if (res.error) {
+                console.log(res.message);
+            } else {
+                setData(
+                    res.data.map((user) => {
                         return {
                             internalId: user.id,
                             id: user.waawId,
@@ -56,16 +52,17 @@ const Employees = (props) => {
                             email: user.email,
                             location: user.location,
                             role: user.role,
-                            employeeType: user.fullTime ? 'Full Time' : 'Contractor',
+                            employeeType: user.fullTime ? "Full Time" : "Contractor",
                             lastLogin: user.lastLogin,
-                            status: getStatus(user.status)
-                        }
-                    }));
-                    setTotalEntries(res.totalEntries);
-                    setTotalPages(res.totalPages);
-                }
-            })
-    }
+                            status: getStatus(user.status),
+                        };
+                    })
+                );
+                setTotalEntries(res.totalEntries);
+                setTotalPages(res.totalPages);
+            }
+        });
+    };
 
     const actions = [
         {
@@ -91,7 +88,7 @@ const Employees = (props) => {
                     + Invite Users
                 </Button>
             </div>
-            <DashboardCard style={{ marginTop: "20px" }}>
+            <DashboardCard style={{marginTop: "20px"}} className={DashboardStyles.employeeCard}>
                 <TabularInfo
                     title="Employee Sheet"
                     description="Tabular list Employee details."
@@ -104,7 +101,8 @@ const Employees = (props) => {
                     pageNo={pageNo}
                     setPageNo={setPageNo}
                     showSearch
-                    showFilter />
+                    showFilter
+                />
             </DashboardCard>
             <InviteUserModal setShowModal={setShowModal} showModal={showModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
         </>

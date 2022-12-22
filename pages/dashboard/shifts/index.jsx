@@ -22,8 +22,8 @@ const shifts = [
                 status: "N/A",
                 comments: {
                     text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
-                    displayType: "comment"
-                }
+                    displayType: "comment",
+                },
             },
             {
                 employeeId: "229966",
@@ -35,8 +35,8 @@ const shifts = [
                 status: "N/A",
                 comments: {
                     text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
-                    displayType: "comment"
-                }
+                    displayType: "comment",
+                },
             },
         ],
     },
