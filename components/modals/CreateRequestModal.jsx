@@ -35,34 +35,44 @@ const CreateRequestModal = (props) => {
 
 
     const [errorRequestTypeValue, setErrorRequestTypeValue] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
+    const [errorDate,setErrorDate] = useState({
+        message: "",
+        show: false,
+    })
     //Personal Information Update"
     const [errorTitle, setErrorTitle] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
 
     // Time of Requests
     const [errorTypeOfLeave, setErrorTypeOfLeave] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     //Overtime Requests
     const [errorStartTime, setErrorStartTime] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
+    const [errorOverTimeDate, setErrorOverTimeDate] = useState({
+        message: "",
+        show: false,
+    })
     const [errorDuration, setErrorDuration] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     const [errorDescription, setErrorDescription] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     
+    const [loading, setLoading] = useState(false);
+
     const onCancel = ()=> {
         setRequestTypeValue("")
         setTitle("")
@@ -74,28 +84,87 @@ const CreateRequestModal = (props) => {
         setDuration("")
         setDescription("")
         setErrorRequestTypeValue({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
         })
         setErrorTitle({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
+        })
+        setErrorDate({
+            message: "",
+            show:false
+        })
+        setErrorOverTimeDate({
+            message: "",
+            show:false
         })
         setErrorTypeOfLeave({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
         })
         setErrorStartTime({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
         })
         setErrorDuration({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
         })
         setErrorDescription({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
+        })
+    }
+
+    const validateForm = async () => {
+        let error = false;
+        if(fromDate === '') {setErrorDate({
+            message: 'Date is required',
+            show: true
+        })
+        error = true;
+      }
+      if(toDate === '') {setErrorDate({
+        message: 'Date is required',
+        show: true
+      })
+      error = true;
+    }
+     if(overTimeDate === '') {setErrorOverTimeDate({
+        message: 'Date is required',
+        show: true
+     })
+     error = true;
+    }
+    return error
+    }
+
+
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'Request created successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
         })
     }
 
@@ -106,7 +175,9 @@ const CreateRequestModal = (props) => {
             buttonText="Submit"
             title="Create Request"
             type="twoColNarrow"
+            onClick={saveData}
             onCancel={onCancel}
+            loading={loading}
         >
             <EditableInput
                 type="dropdown"
@@ -155,6 +226,8 @@ const CreateRequestModal = (props) => {
                                 value={fromDate}
                                 setValue={setFromDate}
                                 initialValue={initialFromDate}
+                                error={errorDate}
+                                setError={setErrorDate}
                                 required
                                 editOn
                             />
@@ -163,6 +236,8 @@ const CreateRequestModal = (props) => {
                                 value={tillDate}
                                 setValue={setTillDate}
                                 initialValue={initialTillDate}
+                                error={errorDate}
+                                setError={setErrorDate}
                                 label="Till"
                                 required
                                 editOn
@@ -192,6 +267,8 @@ const CreateRequestModal = (props) => {
                         value={overTimeDate}
                         setValue={setOverTimeDate}
                         initialValue={initialOverTimeDate}
+                        error={errorOverTimeDate}
+                        setError={setErrorOverTimeDate}
                         className={DashboardModalStyles.singleColumn}
                         required
                         editOn

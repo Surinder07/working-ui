@@ -203,7 +203,7 @@ const Reports = (props) => {
             {getExpandableData("Payroll", payrollData, getActions("shift"))}
             {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
             {getExpandableData("Location Holidays", requestsData, getActions("request"))}
-            <GenerateReportModal showModal={showModal} setShowModal={setShowModal} />
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
         </>
     );
 };

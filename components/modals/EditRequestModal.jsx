@@ -10,24 +10,63 @@ const EditRequestsModal = (props) => {
     const [initialValue,setInitialValue] = useState("");
     const [initialComment,setInitialComment] = useState("");
     const [commentError, setCommentError] = useState({
-        errorMessage: "",
-        showError: false,
+        message: "",
+        show: false,
     });
     // const [radioError, setRadioError] = useState({
     //     errorMessage: "",
     //     showError: false,
     // });
-
+    const [loading, setLoading] = useState(false);
     const onCancel = ()=> {
         setValue("")
         setComment("")
     
         setCommentError({
-            errorMessage: "",
-            showError:false
+            message: "",
+            show:false
         })
     
     }
+
+    const validateForm = async () => {
+        let error = false;
+        if(comment === '') {setCommentError({
+            message: 'comment is required',
+            show: true
+        })
+        error = true
+    }
+        return error
+    }
+
+    const saveData = () => {
+        validateForm()
+        .then(error => {
+            if(!error) {
+
+                setLoading(true)
+                if(error == true){
+                    props.setToasterInfo({
+                        error: true,
+                        title: 'Error!',
+                        message: res.message
+                    })
+                }
+                else{
+                    props.setToasterInfo({
+                        error: false,
+                        title: 'Success!',
+                        message: 'User invited successfully'
+                    });
+                    props.setReloadData(true)
+                    onCancel()
+                }
+                setLoading(false)
+            }
+        })
+    }
+
     return (
         <DashboardModal
             showModal={props.showModal}
@@ -35,7 +74,9 @@ const EditRequestsModal = (props) => {
             buttonText="Submit"
             title="Edit Request"
             type="singleCol"
+            onClick={saveData}
             onCancel={onCancel}
+            loading={loading}
         >
             <EditableInput type="radio" label="Approve" value={value} setValue={setValue} initialValue={initialValue} editOn />
             <EditableInput type="radio" label="Reject" value={value} setValue={setValue} initialValue={initialValue} editOn />

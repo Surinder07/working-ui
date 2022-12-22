@@ -5,18 +5,19 @@ import { DashboardModal } from "./base";
 import { dropdownService, locationAndRoleService } from "../../services";
 
 const LocationModal = (props) => {
+    const [locations,setLocations] = useState([])
 
     const [timezones, setTimezones] = useState([]); // List to display
 
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
     const [errorLocation, setErrorLocation] = useState({
-        errorMessage: "",
-        showError: false
+        message: "",
+        show: false
     });
     const [errorTimezone, setErrorTimezone] = useState({
-        errorMessage: "",
-        showError: false
+        message: "",
+        show: false
     });
     const [loading, setLoading] = useState(false);
 
@@ -39,7 +40,7 @@ const LocationModal = (props) => {
 
     const validateForm = async () => {
         let error = false;
-        if (location === '') {
+        if ( props.role === 'ADMIN' && location === '') {
             setErrorLocation({
                 message: 'Name is required',
                 show: true
@@ -95,6 +96,7 @@ const LocationModal = (props) => {
             onCancel={onCancel}
             loading={loading}
         >
+            {props.role === 'ADMIN' && 
             <EditableInput
                 type="text"
                 value={location}
@@ -106,6 +108,7 @@ const LocationModal = (props) => {
                 required
                 editOn
             />
+            }
             <EditableInput
                 type="dropdown"
                 options={timezones}

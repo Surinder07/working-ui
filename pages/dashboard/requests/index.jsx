@@ -136,7 +136,7 @@ const Requests = (props) => {
     return (
         <>
             <WaawNoIndexHead title={"Requests"} />
-            <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId} />
+            <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
                 {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Invite Users</Button>)}

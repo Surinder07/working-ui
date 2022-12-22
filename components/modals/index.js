@@ -10,14 +10,7 @@ import LocationModal from "./LocationModal";
 import GenerateReportModal from "./GenerateReportModal";
 import EditRequestsModal from "./EditRequestModal";
 import CreateRequestModal from "./CreateRequestModal";
-import ShiftsFilter from "./ShiftsFilter";
-import EmployeeFilter from "./EmployeeFilter"
-import RequestsFilter from "./RequestsFilter"
-import NotificationFilter from "./NotificationFilter";
-import RolesFilter from "./RolesFilter";
-import EmployeeAttendanceFilter from "./EmployeeAttendanceFilter";
-import EmployeesShiftFilter from "./EmployeesShiftFilter";
-import DeleteModal from './DeleteModal';
+import DeleteModal from "./DeleteModal";
 
 export {
     NewRoleModal,
@@ -32,14 +25,8 @@ export {
     GenerateReportModal,
     EditRequestsModal,
     CreateRequestModal,
-    ShiftsFilter,
-    EmployeeFilter,
-    RequestsFilter,
-    NotificationFilter,
-    RolesFilter,
-    EmployeeAttendanceFilter,
-    EmployeesShiftFilter,
     DeleteModal
 };
 
-export * from './base';
+export * from "./base";
+export * from "./filterModals"

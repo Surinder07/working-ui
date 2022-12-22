@@ -32,6 +32,7 @@ const FilterModal = (props) => {
         if (action === 1) {
             props.onClick();
         } else {
+            props.onCancel();
             props.setShowModal(false);
         }
         document.body.style.overflow = "unset";
@@ -46,7 +47,7 @@ const FilterModal = (props) => {
             <div className={`${DashboardModalStyles.modal}`} ref={modalRef} style={{height: scrollable ? 'fit-content' : 'unset'}}>
                 <div className={DashboardModalStyles.subContainer}>
                     <h1>{props.title}</h1>
-                    {props.showCloseButton && (
+                   
                     <Close
                         className={DashboardModalStyles.closeIcon}
                         onClick={() => {
@@ -54,7 +55,7 @@ const FilterModal = (props) => {
                             document.body.style.overflow = "unset";
                         }}
                     />
-                )}
+               
                     <div className={gridClass}>
                         {props.children}
                     </div>

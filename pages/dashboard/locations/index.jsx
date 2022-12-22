@@ -86,7 +86,7 @@ const Locations = (props) => {
         <>
             <WaawNoIndexHead title='Locations' />
             <DeleteModal modal={confirmDeleteModal} setModal={setConfirmDeleteModal} />
-            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} />
+            <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} role={props.user.role}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <div className={DashboardStyles.rightContainer}>
