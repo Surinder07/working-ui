@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LoginRegisterStyles } from '../../styles/pages';
 import { LoginRegisterLayout } from '../../styles/layouts';
@@ -19,7 +18,6 @@ const Register = (props) => {
         })
     }, []);
 
-    const Router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

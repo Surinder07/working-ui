@@ -98,3 +98,10 @@
     display: flex;
     justify-content: space-between;
 }
+
+.employeePreferenceGrid {
+    padding: 10px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+}

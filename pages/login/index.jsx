@@ -6,7 +6,7 @@ import { LoginRegisterStyles } from '../../styles/pages';
 import { LoginRegisterLayout } from '../../styles/layouts';
 import { userService } from '../../services';
 import { ArrowRightAlt } from '@mui/icons-material';
-import { validateUsernameEmail, validatePassword } from '../../helpers';
+import { validateUsernameEmail, validatePassword, secureLocalStorage } from '../../helpers';
 import SocialIcons from '../../public/icons/socials/SocialIcons';
 import { LoginRegistrationLayout } from '../../layouts';
 
@@ -35,6 +35,7 @@ const Login = (props) => {
             userService.getUser()
                 .then(res => {
                     if (res && res.email) {
+                        props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
                         router.push('/dashboard')
                     }
                 })

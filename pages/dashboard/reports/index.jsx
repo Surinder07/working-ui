@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal} from "../../../components";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal } from "../../../components";
 
 const requestsD = [
     {
@@ -85,14 +85,36 @@ const payrollD = [
 ];
 
 const Reports = (props) => {
+
     const router = useRouter();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
 
-    const [showModal, setShowModal] = useState(true);
-    const [requestsData,setRequestsData] = useState(requestsD)
-    const [attendanceData,setAttendanceData] = useState(attendanceD)
-    const [payrollData,setPayrollData] = useState(payrollD)
+    const [showModal, setShowModal] = useState(false);
+    const [requestsData, setRequestsData] = useState(requestsD);
+    const [attendanceData, setAttendanceData] = useState(attendanceD);
+    const [payrollData, setPayrollData] = useState(payrollD);
+    const [pageNo, setPageNo] = useState({
+        "Payroll": 1,
+        "Attendance": 1,
+        "Location Holidays": 1
+    });
+    const [pageSize, setPageSize] = useState({
+        "Payroll": 10,
+        "Attendance": 10,
+        "Location Holidays": 10
+    });
+    const [totalPages, setTotalPages] = useState({
+        "Payroll": 1,
+        "Attendance": 1,
+        "Location Holidays": 1
+    });
+    const [totalEntries, setTotalEntries] = useState({
+        "Payroll": 0,
+        "Attendance": 0,
+        "Location Holidays": 0
+    });
+    const [reloadData, setReloadData] = useState(false);
 
     useEffect(() => {
         props.setPageInfo({
@@ -136,11 +158,11 @@ const Reports = (props) => {
         }
     };
 
- 
+
 
     const getExpandableData = (title, data, actions) => {
         return (
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     data={data}
                     title={title}
@@ -149,6 +171,11 @@ const Reports = (props) => {
                     expandable
                     actions={actions}
                     pagination
+                    totalEntries={totalEntries[title]}
+                    pageSize={pageSize[title]}
+                    totalPages={totalPages[title]}
+                    pageNo={pageNo[title]}
+                    setPageNo={(no) => setPageNo({ ...pageNo, title: no })}
                     showSearch
                     showFilter
                 />
@@ -162,15 +189,15 @@ const Reports = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Reports</h1>
                 <div>
-                    {props.user.role === "MANAGER" ||
-                        (props.user.role === "ADMIN" && (
+                    {
+                    props.user.role === "MANAGER" || props.user.role === "ADMIN" && 
                             <>
-                                <Button type="plain" style={{marginRight: "15px"}}>
+                                <Button type="plain" style={{ marginRight: "15px" }}>
                                     + Generate Payroll
                                 </Button>
                                 <Button type="plain">+ Generate Attendance</Button>
                             </>
-                        ))}
+                        }
                 </div>
             </div>
             {getExpandableData("Payroll", payrollData, getActions("shift"))}

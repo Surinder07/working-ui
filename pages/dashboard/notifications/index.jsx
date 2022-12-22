@@ -41,7 +41,14 @@ const actions = {
 }
 
 const Notifications = (props) => {
-    const [data, setData] = useState(notifications)
+
+    const [data, setData] = useState(notifications);
+    const [pageNo, setPageNo] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalEntries, setTotalEntries] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
+
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: false,
@@ -66,6 +73,11 @@ const Notifications = (props) => {
                     data={data}
                     actions={actions}
                     pagination
+                    totalEntries={totalEntries}
+                    pageSize={pageSize}
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
                     showSearch
                     showFilter
                 />

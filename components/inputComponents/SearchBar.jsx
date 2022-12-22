@@ -3,6 +3,7 @@ import {SearchBarStyles} from "../../styles/elements/inputs";
 import {Search} from "@mui/icons-material";
 
 const SearchBar = (props, ref) => {
+
     const onEnter = (e) => {
         if (e.key === "Enter") {
             props.onEnter && props.onEnter();

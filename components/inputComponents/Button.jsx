@@ -15,7 +15,9 @@ const Button = (props) => {
         else if (props.type === 'plain') setButtonClass(ButtonStyles.plainButton);
         else if (props.type === 'close') setButtonClass(ButtonStyles.closeButton);
         else if (props.type === 'dashboard') setButtonClass(ButtonStyles.dashboardButton);
-    }, []);
+        else if (props.type === 'delete') setButtonClass(ButtonStyles.deleteButton);
+        else if (props.type === 'cancel') setButtonClass(ButtonStyles.cancelButton);
+    }, [props.type]);
 
     const onClick = (e) => {
         e.preventDefault();

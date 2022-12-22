@@ -28,7 +28,7 @@ const PasswordPolicy = (props) => {
         color: '#535255',
         opacity: '0.75',
         textAlign: 'left',
-        marginBottom: '20px'
+        marginBottom: props.noMargin ? 0 : '20px'
     }
 
     const satisfiedStyle = {

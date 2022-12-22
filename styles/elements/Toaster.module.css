@@ -5,7 +5,7 @@
     color: #FFF;
     display: grid;
     grid-template-columns: 3.125em auto;
-    z-index: 10000;
+    z-index: 10001;
     column-gap: 1.25em;
     transition: all 0.2s ease;
     overflow: hidden;

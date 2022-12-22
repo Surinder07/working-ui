@@ -1,22 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import {WaawHead, TopLoader} from "../components";
-import {secureLocalStorage} from "../helpers";
-import {userService} from "../services/user.service";
-import {NavFooterPageLayout, DashboardLayout} from "../layouts";
-import {Toaster} from "../components";
+import { WaawHead, TopLoader, LoadingScreen } from "../components";
+import { secureLocalStorage } from "../helpers";
+import { userService } from "../services/user.service";
+import { NavFooterPageLayout, DashboardLayout } from "../layouts";
+import { Toaster } from "../components";
 
 function MyApp({Component, pageProps}) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({
-        role: "ADMIN",
-    });
+    const [user, setUser] = useState({});
+    const [allowedRoles, setAllowedRoles] = useState([]); // On each page this will be set to check if given role can access the page
     const [token, setToken] = useState(null);
-    const [firstVisit, setFirstVisit] = useState(true);
-    const [pageInfo, setPageinfo] = useState({
+    const [pageInfo, setPageInfo] = useState({
         authenticationRequired: false,
         // Possible values: {loggedOut, dashboard, fullPage}
         pageView: "loggedOut",
@@ -49,8 +47,8 @@ function MyApp({Component, pageProps}) {
     }, [toasterInfo]);
 
     useEffect(() => {
-        router.beforePopState(({as}) => {
-            setPageinfo({...pageInfo, activeMenu: getActiveMenuFromPath(as)});
+        router.beforePopState(({ as }) => {
+            setPageInfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
             return true;
         });
 
@@ -58,15 +56,6 @@ function MyApp({Component, pageProps}) {
             router.beforePopState(() => true);
         };
     }, [router]);
-
-    useEffect(() => {
-        checkPageLoading();
-        updateScreenTypeProp();
-    }, []);
-
-    useEffect(() => {
-        checkIfLoggedIn();
-    });
 
     const checkPageLoading = () => {
         const handleStart = (url) => url !== router.asPath && setPageLoading(true);
@@ -83,6 +72,19 @@ function MyApp({Component, pageProps}) {
         };
     };
 
+    useEffect(() => {
+        checkPageLoading();
+        updateScreenTypeProp();
+    }, [])
+
+    useEffect(() => {
+        if (!user.role && localStorage.getItem(userService.USER_KEY)) {
+            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
+        } else if (!user.role && pageInfo.authenticationRequired) {
+            router.push('/login')
+        }
+    }, [pageInfo.authenticationRequired])
+
     const updateScreenTypeProp = () => {
         if (window.innerWidth < 640) {
             setScreenType(3);
@@ -90,25 +92,6 @@ function MyApp({Component, pageProps}) {
             setScreenType(1);
         } else {
             setScreenType(2);
-        }
-    };
-
-    const checkIfLoggedIn = () => {
-        if (firstVisit && pageInfo.authenticationRequired) {
-            userService
-                .getUser()
-                .then((res) => {
-                    if (res.error) router.push("/login");
-                    secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
-                    setUser(res);
-                })
-                .catch((e) => {
-                    router.push("/login");
-                });
-            setFirstVisit(false);
-        }
-        if (!secureLocalStorage.getData(userService.USER_KEY) && pageInfo.authenticationRequired) {
-            router.push("/login");
         }
     };
 
@@ -122,8 +105,10 @@ function MyApp({Component, pageProps}) {
                 token={token}
                 setToken={setToken}
                 pageInfo={pageInfo}
-                setPageInfo={setPageinfo}
+                setPageInfo={setPageInfo}
                 setToasterInfo={setToasterInfo}
+                setAllowedRoles={setAllowedRoles}
+                setPageLoading={setPageLoading}
             />
         );
     };
@@ -133,14 +118,15 @@ function MyApp({Component, pageProps}) {
             <WaawHead />
             <div>
                 <TopLoader pageLoading={pageLoading} />
-                <Toaster style={{display: showToaster ? "grid" : "none"}} error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} />
-                {pageInfo.pageView === "loggedOut" && (
-                    <NavFooterPageLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType}>
+                <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
+                {pageLoading && <LoadingScreen />}
+                {pageInfo.pageView === "loggedOut" &&
+                    <NavFooterPageLayout pageInfo={pageInfo} setPageInfo={setPageInfo} screenType={screenType}>
                         {getComponentForPages()}
                     </NavFooterPageLayout>
-                )}
-                {pageInfo.pageView === "dashboard" && (
-                    <DashboardLayout pageInfo={pageInfo} setPageinfo={setPageinfo} screenType={screenType} user={user}>
+                }
+                {pageInfo.pageView === "dashboard" &&
+                    <DashboardLayout pageInfo={pageInfo} setPageInfo={setPageInfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
                     </DashboardLayout>
                 )}

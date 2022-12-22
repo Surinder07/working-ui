@@ -18,6 +18,7 @@ import RolesFilter from "./RolesFilter";
 import EmployeeAttendanceFilter from "./EmployeeAttendanceFilter";
 import EmployeesShiftFilter from "./EmployeesShiftFilter";
 import DeleteModal from './DeleteModal';
+
 export {
     NewRoleModal,
     NewShiftModal,

@@ -12,6 +12,10 @@ const Roles = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [confirmDeleteModal, setConfirmDeleteModal] = useState({
+        id: '',
+        show: false
+    })
 
     useEffect(() => {
         props.setPageInfo({
@@ -32,26 +36,43 @@ const Roles = (props) => {
     }, [reloadData])
 
     const fetchData = () => {
-        locationAndRoleService.getAllRoles(pageNo, pageSize)
-            .then(res => {
-                if (res.error) {
-                    console.log(res.message);
-                } else {
-                    setData(res.data.map(role => {
-                        return {
-                            internalId: role.id,
-                            id: role.waawId,
-                            roleName: role.name,
-                            location: role.location,
-                            creationDate: role.creationDate,
-                            createdBy: role.createdBy,
-                            status: role.active ? 'Active' : 'Disabled'
-                        }
-                    }));
-                    setTotalEntries(res.totalEntries);
-                    setTotalPages(res.totalPages);
-                }
-            })
+        if (props.user) {
+            locationAndRoleService.getAllRoles(pageNo, pageSize)
+                .then(res => {
+                    if (res.error) {
+                        console.log(res.message);
+                    } else {
+                        setData(res.data.map(role => {
+                            return props.user.role === 'ADMIN' ? {
+                                internalId: role.id,
+                                id: role.waawId,
+                                roleName: role.name,
+                                location: role.location,
+                                creationDate: role.creationDate,
+                                createdBy: role.createdBy,
+                                status: {
+                                    text: role.active ? 'Active' : 'Disabled',
+                                    displayType: 'bg',
+                                    status: role.active ? 'ok' : 'bad'
+                                }
+                            } : {
+                                internalId: role.id,
+                                id: role.waawId,
+                                roleName: role.name,
+                                creationDate: role.creationDate,
+                                createdBy: role.createdBy,
+                                status: {
+                                    text: role.active ? 'Active' : 'Disabled',
+                                    displayType: 'bg',
+                                    status: role.active ? 'ok' : 'bad'
+                                }
+                            }
+                        }));
+                        setTotalEntries(res.totalEntries);
+                        setTotalPages(res.totalPages);
+                    }
+                })
+        }
     }
 
     const actions = [
@@ -63,12 +84,12 @@ const Roles = (props) => {
             },
         },
         {
-            key: "Deactivate",
-            action: () => console.log("Api call will be added here"),
+            key: "activeToggle",
+            action: (id) => console.log("Api call will be added here"),
         },
         {
             key: "Delete",
-            action: () => console.log("Api call will be added here"),
+            action: (id) => setConfirmDeleteModal({ id: id, show: true }),
         },
     ];
 

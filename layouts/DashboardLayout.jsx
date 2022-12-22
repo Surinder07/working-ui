@@ -8,12 +8,14 @@ import {Logout, Settings} from "@mui/icons-material";
 import {userService} from "../services";
 
 const Dashboard = (props) => {
+    
     const sideNavRef = useRef();
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
     const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState('...');
+    const [sideNav, setSideNav] = useState([]);
 
     const handleNavigation = useCallback(
         (e) => {
@@ -29,8 +31,11 @@ const Dashboard = (props) => {
     );
 
     useEffect(() => {
-        setUserName(props.user ? props.user.firstName + (props.user.lastName ? " " + props.user.lastName : "") : "");
-    }, [props.user]);
+        if (props.user.role) {
+            setUserName(props.user ? (props.user.firstName + (props.user.lastName ? (" " + props.user.lastName) : "")) : '');
+            setSideNav(SideNavInfo[props.user.role.toLowerCase()]);
+        }
+    }, [props.user])
 
     useEffect(() => {
         setY(window.scrollY);
@@ -63,31 +68,34 @@ const Dashboard = (props) => {
                                 </div>
                             )}
                         </div>
-                        <div style={{marginTop: "20px"}}>
-                            {props.user &&
-                                SideNavInfo[props.user.role.toLowerCase()].map((info, key) => (
+                        <p className={DashboardLayout.version}>Version: {process.env.version}</p>
+                        <div style={{ marginTop: "20px" }}>
+                            { 
+                            props.user.role ? 
+                                sideNav.map((info, key) => (
                                     <Link href={info.link} key={key}>
-                                        <div
-                                            className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`}
-                                            style={navOpen ? {} : {margin: "auto", width: "100%"}}
-                                        >
+                                        <div className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`} style={navOpen ? {} : { margin: "auto", width: "100%" }}>
                                             {info.icon}
-                                            {navOpen && <p style={{marginLeft: "10px"}}>{info.text}</p>}
+                                            {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
                                         </div>
                                     </Link>
-                                ))}
+                                )) :
+                                <div className={DashboardLayout.menuItem}>Loading...</div>
+                            }
                         </div>
                     </div>
                     <div style={{height: "80px"}}></div>
                     <div>
-                        <div className={`${DashboardLayout.menuItem} ${props.pageInfo.activeMenu === "SETTINGS" ? DashboardLayout.activeMenuItem : ""}`}>
-                            <Settings style={{fontSize: "16px"}} />
-                            {navOpen && <p style={{marginLeft: "10px"}}>Settings</p>}
-                        </div>
-                        <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
-                            <Logout style={{fontSize: "16px"}} />
-                            {navOpen && <p style={{marginLeft: "10px"}}>Logout</p>}
-                        </div>
+                        <Link href='/dashboard/settings'>
+                            <div className={`${DashboardLayout.menuItem} ${props.pageInfo.activeMenu === "SETTINGS" ? DashboardLayout.activeMenuItem : ""}`}>
+                                <Settings style={{ fontSize: "16px" }} />
+                                {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
+                            </div>
+                            <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
+                                <Logout style={{ fontSize: "16px" }} />
+                                {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>

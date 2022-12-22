@@ -5,7 +5,6 @@ const apiEndpoints = {
         authorization: '/v1/unAuth/authenticate',
         registerNewUser: '/v1/unAuth/user/registration/new',
         verifyEmail: '/v1/unAuth/user/registration/verifyEmail',
-        checkUserNameExistence: '/v1/unAuth/user/checkUserNameExistence',
         completeProfile: '/v1/registration/user/completeProfile',
         validateInviteKey: '/v1/unAuth/user/invitation/validateKey',
         registerByInvite: '/v1/unAuth/user/invitation/register',

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal, DeleteModal } from "../../../components";
 import { locationAndRoleService } from "../../../services";
+import { PaginationDropdown } from "../../../components";
 
 const Locations = (props) => {
 
@@ -12,6 +13,10 @@ const Locations = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [confirmDeleteModal, setConfirmDeleteModal] = useState({
+        id: '',
+        show: false
+    })
 
     useEffect(() => {
         props.setPageInfo({
@@ -33,6 +38,7 @@ const Locations = (props) => {
     }, [reloadData])
 
     const fetchData = () => {
+        props.setPageLoading(true);
         locationAndRoleService.getAllLocations(pageNo, pageSize)
             .then(res => {
                 if (res.error) {
@@ -47,13 +53,18 @@ const Locations = (props) => {
                             timezone: loc.timezone,
                             activeEmployees: loc.activeEmployees,
                             inactiveEmployees: loc.inactiveEmployees,
-                            status: loc.active ? 'Active' : 'Disabled'
+                            status: {
+                                text: loc.active ? 'Active' : 'Disabled',
+                                displayType: 'bg',
+                                status: loc.active ? 'ok' : 'bad'
+                            }
                         }
                     }));
                     setTotalEntries(res.totalEntries);
                     setTotalPages(res.totalPages);
                 }
             })
+        props.setPageLoading(false);
     }
 
     const actions = [
@@ -67,17 +78,21 @@ const Locations = (props) => {
         },
         {
             key: "Delete",
-            action: () => console.log("Api call will be added here"),
+            action: (id) => setConfirmDeleteModal({ id: id, show: true }),
         },
     ];
 
     return (
         <>
             <WaawNoIndexHead title='Locations' />
+            <DeleteModal modal={confirmDeleteModal} setModal={setConfirmDeleteModal} />
             <LocationModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} setReloadData={setReloadData} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
-                <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
+                <div className={DashboardStyles.rightContainer}>
+                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                    <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
+                </div>
             </div>
             <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
@@ -91,6 +106,8 @@ const Locations = (props) => {
                     totalPages={totalPages}
                     pageNo={pageNo}
                     setPageNo={setPageNo}
+                    showSearch
+                    showFilter
                 />
             </DashboardCard>
         </>
