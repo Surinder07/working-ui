@@ -19,7 +19,7 @@
 .bodyCell,
 .subBodyCell {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 14px!important;;
     line-height: 18px;
     letter-spacing: 0.2px;
     width: 100%;
@@ -65,7 +65,7 @@
 }
 
 .actionIcon {
-    font-size: 14px;
+    font-size: 14px !important;
     cursor: pointer;
     color: #2996C3;
 }

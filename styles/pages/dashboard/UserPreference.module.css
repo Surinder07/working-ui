@@ -84,7 +84,7 @@
 .uploadBox p {
     margin: 0;
     font-weight: 700;
-    font-size: 10px;
+    font-size: 10px !important;
     line-height: 13px;
     letter-spacing: 0.3px;
     margin-left: 10px;
@@ -108,7 +108,7 @@
 
 .nonProfileContainer p {
     font-weight: 400;
-    font-size: 12px;
+    font-size: 12px !important;
     line-height: 18px;
     color: #535255;
 }
@@ -140,7 +140,7 @@
 
 .userPreferenceCard p {
     font-weight: 400;
-    font-size: 12px;
+    font-size: 12px!important;
     line-height: 18px;
     margin: 0;
 }
@@ -177,7 +177,7 @@
 }
 
 .editIcon {
-    font-size: 12px;
+    font-size: 12px !important;;
 }
 
 .inputLabelContainer {
