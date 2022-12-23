@@ -206,9 +206,10 @@ const CalendarComponent = () => {
             newdate.inTime = item.startDatetime.slice(11),
             newdate.outTime = item.endDatetime.slice(11),
             newdate.name = item.name,
-            setEventArr(...eventArr,newdate)
+            newArr.push(newdate)
+           
       ))
-      
+      setEventArr(newArr)
     },[referenceDays])
 
     return (
