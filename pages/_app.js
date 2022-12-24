@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import { WaawHead, TopLoader, LoadingScreen } from "../components";
-import { secureLocalStorage } from "../helpers";
-import { userService } from "../services/user.service";
-import { NavFooterPageLayout, DashboardLayout } from "../layouts";
-import { Toaster } from "../components";
+import {WaawHead, TopLoader, LoadingScreen} from "../components";
+import {secureLocalStorage} from "../helpers";
+import {userService} from "../services/user.service";
+import {NavFooterPageLayout, DashboardLayout} from "../layouts";
+import {Toaster} from "../components";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({role: "ADMIN"});
     const [allowedRoles, setAllowedRoles] = useState([]); // On each page this will be set to check if given role can access the page
     const [token, setToken] = useState(null);
     const [pageInfo, setPageInfo] = useState({
@@ -38,9 +38,9 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
-            router.push('/dashboard')
+            router.push("/dashboard");
         }
-    }, [allowedRoles])
+    }, [allowedRoles]);
 
     useEffect(() => {
         if (toasterInfo.title !== "") {
@@ -53,8 +53,8 @@ function MyApp({ Component, pageProps }) {
     }, [toasterInfo]);
 
     useEffect(() => {
-        router.beforePopState(({ as }) => {
-            setPageInfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
+        router.beforePopState(({as}) => {
+            setPageInfo({...pageInfo, activeMenu: getActiveMenuFromPath(as)});
             return true;
         });
 
@@ -81,15 +81,15 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (!user.role && localStorage.getItem(userService.USER_KEY)) {
-            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
+            setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
         } else if (!user.role && pageInfo.authenticationRequired) {
-            router.push('/login')
+            router.push("/login");
         }
-    }, [])
+    }, []);
 
     const updateScreenTypeProp = () => {
         if (window.innerWidth < 640) {
@@ -126,16 +126,16 @@ function MyApp({ Component, pageProps }) {
                 <TopLoader pageLoading={pageLoading} />
                 <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
                 {pageLoading && <LoadingScreen />}
-                {pageInfo.pageView === "loggedOut" &&
+                {pageInfo.pageView === "loggedOut" && (
                     <NavFooterPageLayout pageInfo={pageInfo} setPageInfo={setPageInfo} screenType={screenType}>
                         {getComponentForPages()}
                     </NavFooterPageLayout>
-                }
-                {pageInfo.pageView === "dashboard" &&
+                )}
+                {pageInfo.pageView === "dashboard" && (
                     <DashboardLayout pageInfo={pageInfo} setPageInfo={setPageInfo} screenType={screenType} user={user}>
                         {getComponentForPages()}
                     </DashboardLayout>
-                }
+                )}
                 {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>
