@@ -5,6 +5,7 @@ import { FullPageWithImageLayout } from "../../layouts";
 import { FullPageLayout } from '../../styles/layouts';
 import { userService } from "../../services";
 import { validateEmail } from "../../helpers";
+import { ResetPasswordInitBg, ResetPasswordInitSuccessBg } from "../../public/images";
 
 const ResetPasswordInit = (props) => {
     useEffect(() => {
@@ -62,10 +63,10 @@ const ResetPasswordInit = (props) => {
     return (
         <FullPageWithImageLayout
             title='Reset Password'
-            background='/bg/reset-password-init-bg.svg'
+            background={ResetPasswordInitBg.src}
             showSuccessModal={showSuccessModal}
             setShowSuccessModal={setShowSuccessModal}
-            successModalBg='/bg/password-reset-init-success-bg.svg'
+            successModalBg={ResetPasswordInitSuccessBg.src}
             successButtonText='OK'
             successTitle='Email Sent Successfully!'
             successMessage='The reset password link has been successfully sent to your email.'

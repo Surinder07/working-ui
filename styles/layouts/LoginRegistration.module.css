@@ -9,6 +9,8 @@
 
 .pageContainer {
     position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
     min-height: calc(100vh - 6rem);
     height: 100%;
@@ -22,11 +24,13 @@
 .gridContainer {
     display: grid;
     height: 100%;
+    width: 100%;
     grid-template-columns: 1fr 1fr;
 }
 
 .gridLeftContainer {
     padding-right: 100px;
+    height: 100%
 }
 
 .gridRightContainer {
@@ -37,9 +41,21 @@
     position: relative;
 }
 
+.logoLeftContainer {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.leftLogo {
+    height: 60px;
+}
+
 .rightLogo {
     position: absolute;
     right: 20%;
+    height: 70px;
 }
 
 .page legend {
@@ -49,6 +65,7 @@
     color: #2996C3;
     text-transform: uppercase;
     user-select: none;
+    margin-bottom: 1rem;
 }
 
 .page p {
@@ -88,6 +105,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 15px;
+    row-gap: 10px;
 }
 
 .inactiveCover {
@@ -98,42 +116,58 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-
+.passwordPolicy {
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    line-height: 16px !important;
+    color: #535255 !important;
+    opacity: 0.75 !important;
+    text-align: left !important;
+}
 
 @media only screen and (max-width: 480px) {
     .page {
-        text-align: center;
+        /* text-align: center; */
         padding: 1.5rem;
     }
-    
+
     .pageContainer {
+        align-items: flex-start;
         padding: 2rem 0.5rem;
         border: none;
     }
-    
+
+    .logoLeftContainer {
+        justify-content: center;
+    }
+
     .gridContainer {
         grid-template-columns: 1fr;
     }
-    
-    .gridRightContainer {
-        display:none;
+
+    .gridLeftContainer {
+        padding-right: 0;
     }
+
+    .gridRightContainer {
+        width: 0;
+        height: 0;
+    }
+
     .gridContainer .twoHalves {
         display: grid;
         grid-template-columns: 1fr;
         column-gap: 15px;
     }
 
+    .passwordPolicy {
+        margin-bottom: 20px !important;
+    }
+
 }
 
-@media only screen and (max-width: 640px) and (min-width: 480px) {
+@media only screen and (max-width: 640px) and (min-width: 480px) {}
 
-}
+@media only screen and (max-width: 1000px) and (min-width: 641px) {}
 
-@media only screen and (max-width: 1000px) and (min-width: 641px) {
-   
-}
-
-@media only screen and (min-width: 1200px) {
-  
-}
+@media only screen and (min-width: 1200px) {}

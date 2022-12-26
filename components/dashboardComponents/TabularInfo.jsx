@@ -1,9 +1,9 @@
-import {useState, useEffect, useRef} from "react";
-import {TabularInfoStyles} from "../../styles/elements";
+import { useState, useEffect, useRef } from "react";
+import { TabularInfoStyles } from "../../styles/elements";
 import Pagination from "./Pagination";
-import {SearchBar} from "../inputComponents";
-import {FilterAlt, ExpandMore, ExpandLess, Edit} from "@mui/icons-material";
-import {Table} from "./table";
+import { SearchBar } from "../inputComponents";
+import { FilterAlt, ExpandMore, ExpandLess, Edit } from "@mui/icons-material";
+import { Table } from "./table";
 
 const TabularInfo = (props) => {
     const [noData, setNoData] = useState(false);
@@ -39,8 +39,8 @@ const TabularInfo = (props) => {
 
     return (
         <div className={TabularInfoStyles.tableContainer}>
-            <div className={TabularInfoStyles.header} style={props.expandable && {cursor: "pointer"}} onClick={toggleExpansion}>
-                <div style={{paddingLeft: props.expandable ? "40px" : "0"}}>
+            <div className={TabularInfoStyles.header} style={props.expandable && { cursor: "pointer" }} onClick={toggleExpansion}>
+                <div style={{ paddingLeft: props.expandable ? "40px" : "0" }}>
                     {props.expandable && (props.expanded ? <ExpandLess className={TabularInfoStyles.dropDownIcon} /> : <ExpandMore className={TabularInfoStyles.dropDownIcon} />)}
                     {props.title && <h2>{props.title}</h2>}
                     {props.description && <h4>{props.description}</h4>}
@@ -48,13 +48,13 @@ const TabularInfo = (props) => {
                         <div className={TabularInfoStyles.editOption} ref={editRef}>
                             {props.editOn ? (
                                 <>
-                                    <p style={{color: "#CC5252"}} onClick={() => props.setEditOn(false)}>
+                                    <p style={{ color: "#CC5252" }} onClick={() => props.setEditOn(false)}>
                                         Cancel
                                     </p>
-                                    <p style={{color: "#2996C3"}}>Save</p>
+                                    <p style={{ color: "#2996C3" }}>Save</p>
                                 </>
                             ) : (
-                                <p style={{color: "#2996C3"}} onClick={() => props.setEditOn(true)}>
+                                <p style={{ color: "#2996C3" }} onClick={() => props.setEditOn(true)}>
                                     <Edit className={TabularInfoStyles.editIcon} /> Edit
                                 </p>
                             )}
@@ -62,13 +62,23 @@ const TabularInfo = (props) => {
                     )}
                 </div>
                 <div className={TabularInfoStyles.searchFilterContainer}>
-                    {props.showSearch && ((props.expandable && props.expanded) || !props.expandable) && <SearchBar ref={searchRef} className={TabularInfoStyles.search} placeholder="Search" />}
-                    {props.showFilter && ((props.expandable && props.expanded) || !props.expandable) && (
+                    {
+                        props.showSearch && ((props.expandable && props.expanded) || !props.expandable) &&
+                        <SearchBar
+                            value={props.search}
+                            setValue={props.setSearch}
+                            ref={searchRef}
+                            className={TabularInfoStyles.search}
+                            placeholder="Search"
+                        />
+                    }
+                    {
+                        props.showFilter && ((props.expandable && props.expanded) || !props.expandable) &&
                         <div ref={filterRef} className={TabularInfoStyles.filter}>
                             <FilterAlt />
                             <p>Filter</p>
                         </div>
-                    )}
+                    }
                 </div>
             </div>
             <div

@@ -2,7 +2,7 @@ import { SubscribeBarStyles } from '../../styles/elements';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
 import { Modal } from '../modals';
-import { firebaseDb } from '../../services/firebase.service';
+import { firebaseDb } from '../../services';
 import { RotatingLoader } from '../loaders';
 
 const SubscribeBar = (props) => {

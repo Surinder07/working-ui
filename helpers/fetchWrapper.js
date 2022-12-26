@@ -68,10 +68,8 @@ const postForm = async (url, data) => {
     })
     const requestOptions = {
         method: "POST",
-        headers: {
-            "Content-Type": "multipart/form-data", ...authHeader(url)
-        },
-        body: FormData
+        headers: authHeader(url),
+        body: formData
     }
     const response = await fetch(url, requestOptions);
     return handleResponse(response);

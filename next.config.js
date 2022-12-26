@@ -19,6 +19,8 @@ const apiEndpoints = {
         getAllMembers: '/v1/member/getAll',
         getMemberById: '/v1/member/getById',
         updateMember: '/v1/member/update',
+        deleteMember: '/v1/member/delete',
+        toggleActiveMember: '/v1/member/toggleActive',
         addEmployeePreferences: '/v1/member/addPreference'
     },
     locationAndRole: {

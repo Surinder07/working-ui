@@ -18,8 +18,7 @@
 .subHeaderCell,
 .bodyCell,
 .subBodyCell {
-    font-weight: 700;
-    font-size: 14px!important;;
+    font-size: 14px;
     line-height: 18px;
     letter-spacing: 0.2px;
     width: 100%;
@@ -29,14 +28,16 @@
 }
 
 .headerCell,
-.subHeaderCell,
-.bodyCell {
+.subHeaderCell {
     color: #535255;
+    font-weight: 700;
+    height: 30px;
 }
 
-.headerCell,
-.subHeaderCell {
-    height: 30px;
+.subBodyCell,
+.bodyCell {
+    font-weight: 500;
+    color: #999;
 }
 
 .subHeaderCellLeft {

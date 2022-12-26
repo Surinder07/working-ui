@@ -102,6 +102,7 @@
 }
 
 .uploadContainer {
+    position: relative;
     background-color: #DDDCDD;
     display: flex;
     flex-direction: column;
@@ -117,6 +118,7 @@
     color: #535255;
     text-decoration: underline;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .uploadContainer .icon {
@@ -133,6 +135,20 @@
     color: #999999;
     margin: 0;
     margin-top: 1rem;
+}
+
+.fileName {
+    position: absolute;
+    top: 77px;
+    display: flex;
+    align-items: center;
+}
+
+.fileName .icon {
+    font-size: 12px!important;
+    margin: 0!important;
+    margin-left: 10px!important;
+    cursor: pointer!important;
 }
 
 .uploadContainer .download {

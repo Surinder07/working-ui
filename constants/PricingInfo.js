@@ -1,10 +1,10 @@
-import bg from '../public/bg/bg';
+import { PricingBusinessBg, PricingTalentBg } from '../public/images';
 
 export const PricingInfo = {
     business: {
         title: 'Business Community Pricing',
         description: 'Manage your Business and find workforce full-time/hourly anytime anywhere. Our Platform allows you to effectively schedule eployees, track time across multiple locations, quickly find workforce for peak demands and communicae all in one place with premiun workfoce management tools.',
-        background: bg.PricingBusinessBg,
+        background: PricingBusinessBg,
         features: [
             'Employe Shift Scheduling',
             'Flexible Shift Duration',
@@ -38,7 +38,7 @@ export const PricingInfo = {
     talent: {
         title: 'Talent Community Pricing',
         description: 'Find great work you are passionate about and earn on your own terms anytime anywhere. Our platform allows you to build strong relationships in your community and effectively search for Projects, Full time and Part time contracting opportunities with both small and large businesses.',
-        background: bg.PricingTalentBg,
+        background: PricingTalentBg,
         features: [
             'Profile creation with flexible shift duration',
             'Automatically matches opportunities based on your profile',
