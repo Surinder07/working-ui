@@ -1,0 +1,62 @@
+.container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background: #FFFFFF;
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100vh;
+	min-width: 100vw;
+	z-index: 100;
+	padding-top: 20px;
+}
+
+.header {
+	font-family: 'Mulish';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 30px;
+	letter-spacing: 0.3px;
+	color: #252733;
+	width: 100%;
+	text-align: center;
+}
+
+.arrowBackIcon {
+	position: absolute;
+	position: absolute;
+	top: 20px;
+	left: 10px;
+	cursor: pointer;
+}
+
+.actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.editIcon {
+	color: #2996C3;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
+.deleteIcon {
+	color: red;
+	width: 20px;
+	height: 20px;
+
+}
+
+.contentContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	background: #FFFFFF;
+	border: 2px solid #BFBFBF;
+	padding: 20px;
+	margin-top: 20px;
+}

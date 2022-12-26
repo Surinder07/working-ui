@@ -105,6 +105,48 @@
     overflow: hidden;
 }
 
+.colspan2 {
+    grid-column: span 2;
+}
+
+.colspan1 {
+    grid-column: span 1;
+}
+
+.colspan1,
+.colspan2 {
+    margin: 0 18px;
+    margin-top: 10px;
+}
+
+.shiftDetails {
+    display: flex;
+    justify-content: space-around;
+    background: #FFFFFF;
+    border: 2px solid #BFBFBF;
+    margin-top: 10px;
+}
+
+.shiftDetails h4 {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #535255;
+}
+
+.shiftDetails p {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #535255;
+}
+
 @media only screen and (max-width: 480px) {
     .graph {
         grid-template-columns: 1fr;

@@ -63,16 +63,19 @@
     background-color: #3E4049;
 }
 
-.openNavRightContainer, .closeNavRightContainer {
+.openNavRightContainer,
+.closeNavRightContainer {
     position: relative;
 }
 
 .openNavRightContainer {
-    max-width: calc(100vw - 200px); /* 60 px for padding */
+    max-width: calc(100vw - 200px);
+    /* 60 px for padding */
 }
 
 .closeNavRightContainer {
-    max-width: calc(100vw - 70px); /* 60 px for padding */
+    max-width: calc(100vw - 70px);
+    /* 60 px for padding */
 }
 
 .header {
@@ -124,6 +127,8 @@
     padding: var(--navigation-height) 30px;
     background-color: #F7F8FC;
     min-height: 100%;
+    width: 100vw;
+    overflow-x: scroll;
 }
 
 .footer {
@@ -174,6 +179,11 @@
 @media only screen and (max-width: 480px) {
     .dashboardPage {
         grid-template-columns: 1fr;
+    }
+
+    .content {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .sideNav {

@@ -6,14 +6,14 @@ import DatePicker from './DatePicker';
 import { Toggle, ToggleWithValue } from './toggles';
 
 const EditableInput = (props) => {
-
     const setValue = (value) => {
-        props.setError && props.setError({
-            message: '',
-            show: 'false'
-        })
+        props.setError &&
+            props.setError({
+                message: "",
+                show: "false",
+            });
         props.setValue(value);
-    }
+    };
 
     return (
         <div className={`${EditableInputStyles.container} ${props.className}`} style={props.style}>
@@ -101,7 +101,7 @@ const EditableInput = (props) => {
                 <p className={EditableInputStyles.errorMessage}>{props.error.message}</p>
             }
         </div>
-    )
-}
+    );
+};
 
 export default EditableInput;

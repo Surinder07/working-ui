@@ -5,10 +5,13 @@
 }
 
 .container label {
-    font-weight: 500;
-    font-size: 12px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
     line-height: 18px;
-    color: #000000;
+    letter-spacing: 0.2px;
+    color: #535255;
     margin-bottom: 5px;
 }
 
