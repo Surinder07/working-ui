@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger } from "../components";
 import { ImagesInfo, SideNavInfo } from "../constants";
-import Images from "../public/Images";
+import { LogoWhite, FaviconWhite } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
@@ -52,7 +52,7 @@ const Dashboard = (props) => {
                     <div>
                         <div>
                             <div style={{ margin: "0 auto", width: "fit-content" }} className={DashboardLayout.logo}>
-                                <LinkedImage src={navOpen ? Images.LogoWhite : Images.FaviconWhite} width={navOpen ? 160 : 30} alt="Logo" link="/dashboard" />
+                                <LinkedImage src={navOpen ? LogoWhite : FaviconWhite} width={navOpen ? 160 : 30} alt="Logo" link="/dashboard" />
                             </div>
                             <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                             {props.screenType === 3 && (

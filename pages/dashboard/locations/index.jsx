@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal, DeleteModal } from "../../../components";
 import { locationAndRoleService } from "../../../services";
 import { PaginationDropdown } from "../../../components";
+import { fetchAndHandle, fetchAndHandlePage, getLocationListing } from "../../../helpers";
 
 const Locations = (props) => {
 
@@ -13,6 +14,8 @@ const Locations = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState({});
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: '',
         show: false
@@ -38,75 +41,25 @@ const Locations = (props) => {
     }, [reloadData])
 
     const fetchData = () => {
+        fetchAndHandlePage(() => locationAndRoleService.getAllLocations(pageNo, pageSize, filters, sort),
+            setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+            getLocationListing, props.user.role);
         props.setPageLoading(true);
-        locationAndRoleService.getAllLocations(pageNo, pageSize)
-            .then(res => {
-                if (res.error) {
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: res.message,
-                    })
-                } else {
-                    setData(res.data.map(loc => {
-                        return {
-                            internalId: loc.id,
-                            id: loc.waawId,
-                            locationName: loc.name,
-                            creationDate: loc.creationDate,
-                            timezone: loc.timezone,
-                            activeEmployees: loc.activeEmployees + '',
-                            inactiveEmployees: loc.inactiveEmployees + '',
-                            status: {
-                                text: loc.active ? 'ACTIVE' : 'DISABLED',
-                                displayType: 'bg',
-                                status: loc.active ? 'ok' : 'bad'
-                            }
-                        }
-                    }));
-                    setTotalEntries(res.totalEntries);
-                    setTotalPages(res.totalPages);
-                }
-                props.setPageLoading(false);
-            })
-    }
-
-    const handleResponse = (apiResponse, successMessage) => {
-        if (apiResponse.error) {
-            props.setToasterInfo({
-                error: true,
-                title: "Error!",
-                message: apiResponse.message,
-            })
-        } else {
-            props.setToasterInfo({
-                error: false,
-                title: "Success!",
-                message: successMessage,
-            })
-            setReloadData(true);
-        }
     }
 
     const deleteLocation = () => {
-        props.setPageLoading(true);
-        locationAndRoleService.removeLocation(confirmDeleteModal.id)
-            .then(res => {
-                handleResponse(res, "Location Deleted Successfully")
-            })
-        props.setPageLoading(false);
+        fetchAndHandle(() => locationAndRoleService.removeLocation(confirmDeleteModal.id),
+            "Location Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
+            props.setToasterInfo);
     }
 
     const actions = [
         {
             key: "activeToggle",
             action: (id) => {
-                props.setPageLoading(true);
-                locationAndRoleService.toggleActiveLocation(id)
-                    .then(res => {
-                        handleResponse(res, "Location updated Successfully")
-                    });
-                props.setPageLoading(false);
+                fetchAndHandle(() => locationAndRoleService.toggleActiveLocation(id),
+                    "Location updated Successfully", null, setReloadData, props.setPageLoading, null, null,
+                    props.setToasterInfo);
             },
         },
         {
@@ -122,7 +75,9 @@ const Locations = (props) => {
                 modal={confirmDeleteModal}
                 setModal={setConfirmDeleteModal}
                 onDelete={deleteLocation}
-            />
+            >
+                This will permanently delete this Location and all associated Roles and Employees
+            </DeleteModal>
             <LocationModal
                 showModal={showModal}
                 setShowModal={setShowModal}
@@ -150,7 +105,11 @@ const Locations = (props) => {
                     pageNo={pageNo}
                     setPageNo={setPageNo}
                     showSearch
+                    search={filters.searchKey}
+                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                     showFilter
+                    filters={filters}
+                    setFilters={setFilters}
                 />
             </DashboardCard>
         </>

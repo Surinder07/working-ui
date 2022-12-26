@@ -7,7 +7,7 @@ import { LoginRegisterLayout } from '../../styles/layouts';
 import { userService } from '../../services';
 import { ArrowRightAlt } from '@mui/icons-material';
 import { validateUsernameEmail, validatePassword, secureLocalStorage } from '../../helpers';
-import SocialIcons from '../../public/icons/socials/SocialIcons';
+import { GoogleButtonIcon, LinkedInButtonIcon, LoginBg } from '../../public/images';
 import { LoginRegistrationLayout } from '../../layouts';
 
 const Login = (props) => {
@@ -107,7 +107,7 @@ const Login = (props) => {
     return (
         <LoginRegistrationLayout
             pageTitle='Login'
-            background='/bg/login-bg.svg'
+            background={LoginBg.src}
             logoLeft
         >
             <legend>Welcome Back!</legend>
@@ -139,9 +139,7 @@ const Login = (props) => {
                 type='fullWidth'
                 disabled={loading}
                 onClick={handleLogin}
-                icon={{
-                    element: <ArrowRightAlt />
-                }}
+                icon={{ element: <ArrowRightAlt /> }}
                 style={{ marginTop: '20px' }}
             >
                 Login
@@ -158,8 +156,7 @@ const Login = (props) => {
                     disabled={loading}
                     // onClick={handleLogin}
                     icon={{
-                        src: SocialIcons.GoogleButtonIcon,
-                        height: 30,
+                        src: GoogleButtonIcon,
                         alt: 'Google'
                     }}
                     style={{ marginTop: '20px' }}
@@ -171,8 +168,7 @@ const Login = (props) => {
                     disabled={loading}
                     // onClick={handleLogin}
                     icon={{
-                        src: SocialIcons.LinkedInButtonIcon,
-                        height: 30,
+                        src: LinkedInButtonIcon,
                         alt: 'LinkedIn'
                     }}
                     style={{ marginTop: '20px' }}

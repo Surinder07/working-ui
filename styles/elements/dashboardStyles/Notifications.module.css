@@ -4,7 +4,7 @@
 }
 
 .bell {
-    font-size: 30px;
+    font-size: 30px!important;;
     color: #C5C7CD;
     cursor: pointer;
 }

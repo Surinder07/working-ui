@@ -52,7 +52,7 @@ const DashboardModal = (props) => {
                         <Button type="dashboard" onClick={() => handleClick(1)} disabled={props.loading} >
                             {props.buttonText}
                         </Button>
-                        <Button type="close" onClick={() => handleClick(2)} disabled={props.loading} >
+                        <Button type="close" onClick={() => handleClick(2)} >
                             Cancel
                         </Button>
                     </div>

@@ -31,8 +31,13 @@ const Options = (props) => {
                 }}>
                 {
                     props.options.map((opt, i) => (
-                        <p key={i} onClick={() => opt.action(props.actionId)}>
-                            {opt.key === 'activeToggle' ? (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate') : opt.key}
+                        <p key={i} onClick={() => opt.action(props.actionId, props.status)}>
+                            {
+                                opt.key === 'activeToggle' ?
+                                    (props.status === 'INVITED' ? 'Resend Invite' :
+                                        (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate')) :
+                                    opt.key
+                            }
                         </p>
                     ))
                 }

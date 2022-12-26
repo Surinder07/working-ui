@@ -1,7 +1,8 @@
 import { WaawHead, ComingSoonEl, HomeSection, Card, SubscribeBar } from '../components';
-import { business, talent } from '../constants/HomeSectionInfo';
+import { business, talent } from '../constants';
 import { HomeStyles, PageStyles } from '../styles/pages';
 import { useEffect } from 'react';
+import { joinClasses } from '../helpers';
 
 const Home = (props) => {
 
@@ -18,7 +19,7 @@ const Home = (props) => {
         <>
             <WaawHead />
             <div className={PageStyles.page}>
-                <div className={`${HomeStyles.introSection} ${PageStyles.pagePadding}`}>
+                <div className={joinClasses(HomeStyles.introSection, PageStyles.pagePadding)}>
                     <div className={HomeStyles.introContent}>
                         <h1 className={HomeStyles.introText}>The <span className={HomeStyles.colorBlue}>world's first</span> platform to inspire people and business
                             to <span className={HomeStyles.colorBlue}>grow</span> and <span className={HomeStyles.colorBlue}>thrive together</span></h1>
@@ -32,8 +33,8 @@ const Home = (props) => {
                     </div>
                     <div className={HomeStyles.introFiller}></div>
                 </div>
-                <HomeSection info={business} screenType={props.screenType} />
-                <HomeSection info={talent} screenType={props.screenType} />
+                <HomeSection info={business} />
+                <HomeSection info={talent} />
             </div>
         </>
     )
