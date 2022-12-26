@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal} from "../../../components";
-import {memberService} from "../../../services";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal, DeleteModal, PaginationDropdown } from "../../../components";
+import { memberService } from "../../../services";
+import { getEmployeeListing, fetchAndHandle, fetchAndHandlePage } from '../../../helpers';
 
 const Employees = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -12,6 +13,8 @@ const Employees = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState({});
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: '',
         show: false
@@ -30,84 +33,22 @@ const Employees = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, filters, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();
         setReloadData(false);
     }, [reloadData]);
 
-    const getStatus = (status) => {
-        if (status === "PAID_AND_ACTIVE") return {text: "ACTIVE", displayType: "bg", status: "ok"};
-        else if (status === "PROFILE_PENDING") return {text: "INCOMPLETE", displayType: "bg", status: "warn"};
-        else if (status === "DISABLED") return {text: "INACTIVE", displayType: "bg", status: "bad"};
-    };
-
     const fetchData = () => {
-        props.setPageLoading(true);
-        memberService.listAllUsers(pageNo, pageSize, null).then((res) => {
-            if (res.error) {
-                props.setToasterInfo({
-                    error: true,
-                    title: "Error!",
-                    message: res.message,
-                })
-            } else {
-                setData(
-                    res.data.map((user) => {
-                        return props.user.role === 'ADMIN' ? {
-                            internalId: user.id,
-                            id: user.waawId,
-                            employeeName: user.fullName,
-                            email: user.email,
-                            location: user.location,
-                            role: user.role,
-                            employeeType: user.fullTime ? "Full Time" : "Contractor",
-                            lastLogin: user.lastLogin,
-                            status: getStatus(user.status),
-                        } : {
-                            internalId: user.id,
-                            id: user.waawId,
-                            employeeName: user.fullName,
-                            email: user.email,
-                            role: user.role,
-                            employeeType: user.fullTime ? "Full Time" : "Contractor",
-                            lastLogin: user.lastLogin,
-                            status: getStatus(user.status),
-                        };
-                    })
-                );
-                setTotalEntries(res.totalEntries);
-                setTotalPages(res.totalPages);
-            }
-        });
-        props.setPageLoading(true);
+        fetchAndHandlePage(() => memberService.listAllUsers(pageNo, pageSize, filters),
+            setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+            getEmployeeListing, props.user.role);
     };
-
-    const handleResponse = (apiResponse, successMessage) => {
-        if (apiResponse.error) {
-            props.setToasterInfo({
-                error: true,
-                title: "Error!",
-                message: apiResponse.message,
-            })
-        } else {
-            props.setToasterInfo({
-                error: false,
-                title: "Success!",
-                message: successMessage,
-            })
-            setReloadData(true);
-        }
-    }
 
     const deleteUser = () => {
-        props.setPageLoading(true);
-        // locationAndRoleService.removeLocation(confirmDeleteModal.id)
-        //     .then(res => {
-        //         handleResponse(res, "Location Deleted Successfully")
-        //     })
-        props.setPageLoading(false);
+        fetchAndHandle(() => memberService.deleteMember(confirmDeleteModal.id), "User Deleted Successfully", null,
+            setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
     }
 
     const actions = [
@@ -116,25 +57,49 @@ const Employees = (props) => {
             action: (id) => router.push(`/dashboard/employees/details?id=${id}`),
         },
         {
-            key: "Deactivate",
-            action: () => console.log("Api call will be added here"),
+            key: "activeToggle",
+            action: (id, status) => {
+                if (status === 'INVITED') {
+                    fetchAndHandle(() => memberService.resendInvite(id), "Invite was successfully resent", null,
+                        setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
+                } else {
+                    fetchAndHandle(() => memberService.toggleActiveMember(id), "User updated Successfully", null,
+                        setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
+                }
+            },
         },
         {
             key: "Delete",
-            action: () => console.log("Api call will be added here"),
+            action: (id) => setConfirmDeleteModal({ id: id, show: true }),
         },
     ];
 
     return (
         <>
             <WaawNoIndexHead title="Employees" />
+            <DeleteModal
+                modal={confirmDeleteModal}
+                setModal={setConfirmDeleteModal}
+                onDelete={deleteUser}
+            >
+                This will permanently delete this User from your Organization
+            </DeleteModal>
+            <InviteUserModal
+                setShowModal={setShowModal}
+                showModal={showModal}
+                setToasterInfo={props.setToasterInfo}
+                setReloadData={setReloadData}
+                role={props.user.role}
+                setPageLoading={props.setPageLoading}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Employees</h1>
-                <Button type="plain" onClick={() => setShowModal(true)}>
-                    + Invite Users
-                </Button>
+                <div className={DashboardStyles.rightContainer}>
+                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                    <Button type='plain' onClick={() => setShowModal(true)}>+ Invite Users</Button>
+                </div>
             </div>
-            <DashboardCard style={{marginTop: "20px"}} className={DashboardStyles.employeeCard}>
+            <DashboardCard style={{ marginTop: "20px" }} className={DashboardStyles.employeeCard}>
                 <TabularInfo
                     title="Employee Sheet"
                     description="Tabular list Employee details."
@@ -147,10 +112,13 @@ const Employees = (props) => {
                     pageNo={pageNo}
                     setPageNo={setPageNo}
                     showSearch
+                    search={filters.searchKey}
+                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                     showFilter
+                    filters={filters}
+                    setFilters={setFilters}
                 />
             </DashboardCard>
-            <InviteUserModal setShowModal={setShowModal} showModal={showModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
         </>
     );
 };

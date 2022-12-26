@@ -1,56 +1,68 @@
 import Link from "next/link";
-import {Hamburger} from "../hamburgers";
+import { Hamburger } from "../hamburgers";
 import LinkedImage from "../LinkedImage";
-import {NavbarStyles} from "../../styles/elements";
-import {PageStyles} from "../../styles/pages";
-import {NavLinks, ImagesInfo} from "../../constants";
+import { NavbarStyles } from "../../styles/elements";
+import { PageStyles } from "../../styles/pages";
+import { NavLinks, logo } from "../../constants";
+import { joinClasses } from "../../helpers";
+import { useState } from "react";
 
 const Navbar = (props) => {
-    const getMenuLink = (key, color, text, link, extraClass) => {
+
+    const [openMenu, setOpenMenu] = useState(false);
+
+    const getMenuLink = (key, text, link, extraClass) => {
         return (
             <Link key={key} href={link}>
-                <li className={`${NavbarStyles.menuItem} ${extraClass}`} style={color !== "" ? {color: color} : {}}>
-                    {text}
+                <li className={joinClasses(NavbarStyles.menuItem, extraClass)} >
+                    <p>{text}</p>
                 </li>
             </Link>
         );
     };
 
     return (
-        <nav className={`${NavbarStyles.nav} ${PageStyles.pagePadding}`}>
-            {props.screenType === 3 && (
-                <div className={NavbarStyles.navEl}>
-                    <Hamburger setOpenMenu={props.setOpenMenu} openMenu={props.openMenu} />
-                </div>
-            )}
-            <div className={NavbarStyles.navEl}>
-                <LinkedImage link={ImagesInfo.logo.link} src={ImagesInfo.logo.src} alt={ImagesInfo.logo.alt} height={ImagesInfo.logo.headerHeight[props.screenType]} />
+        <nav className={joinClasses(NavbarStyles.nav, PageStyles.pagePadding)}>
+            <div className={joinClasses(NavbarStyles.navEl, NavbarStyles.showMobile)}>
+                <Hamburger setOpenMenu={setOpenMenu} openMenu={openMenu} />
             </div>
-            <div className={`${NavbarStyles.navEl} ${NavbarStyles.menu}`}>
-                <ul className={NavbarStyles.menuItems} style={props.screenType === 3 ? (props.openMenu ? {height: `${80 * NavLinks.length + 160}px`} : {height: 0, overflow: "hidden"}) : {}}>
+            <div className={NavbarStyles.navEl}>
+                <LinkedImage
+                    className={NavbarStyles.logo}
+                    link={logo.default.link}
+                    src={logo.default.src}
+                    alt={logo.default.alt}
+                    heightOrient
+                    keepQuality
+                />
+            </div>
+            <div className={joinClasses(NavbarStyles.navEl, NavbarStyles.menu, openMenu ? NavbarStyles.openMenu : NavbarStyles.closeMenu)}>
+                <LinkedImage
+                    className={joinClasses(NavbarStyles.logo, NavbarStyles.showMobile)}
+                    link={logo.white.link}
+                    src={logo.white.src}
+                    alt={logo.white.alt}
+                    heightOrient
+                    keepQuality
+                />
+                <ul className={NavbarStyles.menuItems} >
                     {NavLinks.map((nav, i) =>
                         nav.link ? (
-                            getMenuLink(`menu${i}`, props.pageInfo.activeMenu == nav.activeKey && props.screenType !== 3 ? "var(--button-blue-color)" : "inherit", nav.title, nav.link, "")
+                            getMenuLink(`menu${i}`, nav.title, nav.link, props.pageInfo.activeMenu == nav.activeKey && NavbarStyles.activeMenu)
                         ) : (
                             <li
                                 key={`menu${i}`}
-                                className={`${NavbarStyles.menuItem} ${NavbarStyles.expandableMenu}`}
-                                style={{
-                                    color: props.pageInfo.activeMenu === nav.activeKey && props.screenType !== 3 ? "var(--button-blue-color)" : "inherit",
-                                    paddingBottom: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height))` : "0",
-                                    height: props.screenType === 3 ? `calc(${nav.dropdown.length} * var(--navigation-height) + 80px)` : "auto",
-                                }}
+                                className={joinClasses(NavbarStyles.menuItem, NavbarStyles.expandableMenu, props.pageInfo.activeMenu === nav.activeKey && NavbarStyles.activeMenu)}
                             >
-                                {nav.title}
+                                <p>{nav.title}</p>
                                 {
-                                    <ul className={NavbarStyles.subMenu} style={props.screenType === 3 ? (props.openMenu ? {height: `120px`} : {height: 0, overflow: "hidden"}) : {}}>
+                                    <ul className={NavbarStyles.subMenu}>
                                         {nav.dropdown.map((drop, i) =>
                                             getMenuLink(
                                                 `sub-menu${i}`,
-                                                "",
                                                 drop.title,
                                                 drop.link,
-                                                props.pageInfo.activeSubMenu === drop.activeKey && props.screenType !== 3 ? NavbarStyles.menuItemActive : ""
+                                                props.pageInfo.activeSubMenu === drop.activeKey && NavbarStyles.menuItemActive
                                             )
                                         )}
                                     </ul>
@@ -60,12 +72,12 @@ const Navbar = (props) => {
                     )}
                 </ul>
             </div>
-            {props.screenType !== 3 && <div className={NavbarStyles.navEl}></div>}
-            <div className={`${NavbarStyles.navEnd} ${NavbarStyles.navEl}`}>
+            <div className={joinClasses(NavbarStyles.navEl, NavbarStyles.hideMobile)}></div>
+            <div className={joinClasses(NavbarStyles.navEnd, NavbarStyles.navEl)}>
                 <Link href={"/login"}>
                     <button className={NavbarStyles.button}>Log In</button>
                 </Link>
-                {props.screenType !== 3 && <p>English</p>}
+                <p className={NavbarStyles.hideMobile}>English</p>
             </div>
         </nav>
     );

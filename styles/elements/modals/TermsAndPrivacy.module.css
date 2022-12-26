@@ -3,15 +3,15 @@
     counter-reset: item;
 }
 
-.orderedListNumbered > .subListNumbered {
+.orderedListNumbered>.subListNumbered {
     display: table;
     counter-increment: item;
 }
 
-.orderedListNumbered > .subListNumbered:before {
+.orderedListNumbered>.subListNumbered:before {
     content: counters(item, ".") ". ";
     display: table-cell;
-    padding-right: 0.6em; 
+    padding-right: 0.6em;
     font-weight: 600;
 }
 
@@ -26,4 +26,22 @@
 
 .orderedListAlphabet li {
     padding-left: 10px;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .orderedListNumbered>.subListNumbered:before {
+        padding-right: 0.5em;
+    }
+
+    .orderedListAlphabet li {
+        padding-left: 5px;
+    }
+
+    .orderedListNumbered,
+    .orderedListAlphabet,
+    .subListNumbered {
+        padding-left: 10px;
+        margin: 0;
+    }
 }

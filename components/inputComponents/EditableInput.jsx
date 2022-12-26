@@ -1,12 +1,9 @@
 import { EditableInputStyles } from '../../styles/elements';
 import { CheckCircle, Cancel } from '@mui/icons-material';
-import InputBox from './InputBox';
-import ContactInput from './ContactInput';
-import TimeInput from './TimeInput';
-import DropDown from './DropDown';
-import Toggle from './Toggle';
+import { InputBox, ContactInput, TextArea, NumberInput } from './inputBoxes';
+import { TimeInput, DropDown, MultiSelectDropdown } from './dropdowns';
 import DatePicker from './DatePicker';
-import ToggleWithValue from './ToggleWithValue';
+import { Toggle, ToggleWithValue } from './toggles';
 
 const EditableInput = (props) => {
 
@@ -50,10 +47,10 @@ const EditableInput = (props) => {
                 )
             }
             {
-                props.type === 'dropdown' &&
+                props.type === 'dropdown' || props.type === 'typeAhead' &&
                 (
                     props.editOn ?
-                        <DropDown options={props.options} initialValue={props.initialValue} value={props.value} setValue={setValue} placeholder={props.placeholder} disabled={props.nonEditable} inputType={2} openUp={props.openUp} /> :
+                        <DropDown type={props.type} options={props.options} value={props.value} setValue={setValue} placeholder={props.placeholder} disabled={props.nonEditable} inputType={2} openUp={props.openUp} /> :
                         <p>{!props.initialValue || props.initialValue === '' ? '-' : props.initialValue}</p>
                 )
             }
@@ -78,6 +75,24 @@ const EditableInput = (props) => {
                 (
                     props.editOn ?
                         <DatePicker value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                        <p>{props.initialValue}</p>
+                )
+            }
+            {
+                props.type === 'multiselect' &&
+                <MultiSelectDropdown values={props.values} setValues={props.setValues} options={props.options} setShowError={props.setShowError} showError={props.showError}/>
+            }
+            {
+                props.type === 'textarea' && (
+                    props.editOn ?
+                        <TextArea value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                        <p>{props.initialValue}</p>
+                )
+            }
+            {
+                props.type === 'number' && (
+                    props.editOn ?
+                        <NumberInput value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
                         <p>{props.initialValue}</p>
                 )
             }

@@ -1,0 +1,44 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+}
+
+.inline {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radioContainer {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #2996C3;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.radioChecked {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #2996C3;
+}
+
+.container p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #535255;
+}
+
+.selected {
+    color: #2996C3 !important;
+}

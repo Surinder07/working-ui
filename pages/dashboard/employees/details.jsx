@@ -238,6 +238,7 @@ const preferences = {
 const Employees = (props) => {
 
     const router = useRouter();
+
     const [attendanceData, setAttendanceData] = useState(attendanceD)
     const [shiftData, setShiftData] = useState(shiftD)
     const [requestsData, setRequestsData] = useState(requestsD)
@@ -306,8 +307,25 @@ const Employees = (props) => {
 
     useEffect(() => {
         if (!router.isReady) return;
-        if (router.query.key) setUserId(router.query.id);
+        if (router.query.id) setUserId(router.query.id);
+        else handleWrongId('Please choose a valid employee first')
     }, [router.isReady, router.query]);
+
+    useEffect(() => {
+        if (userId !== '') {
+            props.setPageLoading(true);
+            props.setPageLoading(false);
+        }
+    }, [userId])
+
+    const handleWrongId = (message) => {
+        props.setToasterInfo({
+            error: true,
+            title: "Error!",
+            message: message,
+        })
+        router.push('/dashboard/employees')
+    }
 
     const getActions = (tableType) => {
         return {

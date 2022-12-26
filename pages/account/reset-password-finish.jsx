@@ -5,6 +5,7 @@ import { InputBox, PasswordPolicy, Button } from "../../components";
 import { FullPageWithImageLayout } from "../../layouts";
 import { FullPageLayout } from '../../styles/layouts';
 import { userService } from "../../services";
+import { ResetPasswordFinishBg, ResetPasswordFinishSuccessBg } from "../../public/images";
 
 const ResetPasswordFinish = (props) => {
 
@@ -95,10 +96,10 @@ const ResetPasswordFinish = (props) => {
     return (
         <FullPageWithImageLayout
             title='Reset Password'
-            background='/bg/reset-password-finish-bg.svg'
+            background={ResetPasswordFinishBg.src}
             showSuccessModal={resetSuccess}
             setShowSuccessModal={setResetSuccess}
-            successModalBg='/bg/password-reset-finish-success-bg.svg'
+            successModalBg={ResetPasswordFinishSuccessBg.src}
             successButtonText='Go to Login'
             successTitle='Password Updated Successfully!'
             successMessage='Your WAAW account  password has been updates successfully.'
@@ -128,7 +129,7 @@ const ResetPasswordFinish = (props) => {
                 setShowError={setConfirmPasswordError}
                 style={{ marginTop: 0 }}
             />
-             <div className={FullPageLayout.fakeDivforMobileView}></div>
+            <div className={FullPageLayout.fakeDivforMobileView}></div>
             <div className={FullPageLayout.errorAndButtonDiv}>
                 {submitError && <p className={FullPageLayout.errorText}>{submitErrorMessage}</p>}
                 <p>Return to <Link href="/login">Log in</Link></p>
