@@ -22,6 +22,10 @@ const getAllRoles = (pageNo, pageSize) => {
     return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocationRole, pageNo, pageSize));
 }
 
+const getRoleById = (id) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getLocationRole, { id }))
+}
+
 const addNewLocationRole = async (data) => {
     return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocationRole), data)
 }
@@ -42,6 +46,7 @@ export const locationAndRoleService = {
     saveLocation,
     getAllLocations,
     getAllRoles,
+    getRoleById,
     removeLocation,
     toggleActiveLocation,
     addNewLocationRole,

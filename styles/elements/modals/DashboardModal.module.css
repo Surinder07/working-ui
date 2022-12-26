@@ -44,7 +44,7 @@
     right: 50px;
     top: 40px;
     color: var(--footer-text-color);
-    font-size: 30px;
+    font-size: 30px!important;
     cursor: pointer;
 }
 
@@ -102,6 +102,7 @@
 }
 
 .uploadContainer {
+    position: relative;
     background-color: #DDDCDD;
     display: flex;
     flex-direction: column;
@@ -117,11 +118,12 @@
     color: #535255;
     text-decoration: underline;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .uploadContainer .icon {
     color: #999;
-    font-size: 54px;
+    font-size: 54px!important;
     margin: 8px;
 }
 
@@ -133,6 +135,20 @@
     color: #999999;
     margin: 0;
     margin-top: 1rem;
+}
+
+.fileName {
+    position: absolute;
+    top: 77px;
+    display: flex;
+    align-items: center;
+}
+
+.fileName .icon {
+    font-size: 12px!important;
+    margin: 0!important;
+    margin-left: 10px!important;
+    cursor: pointer!important;
 }
 
 .uploadContainer .download {

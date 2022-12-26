@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal, DeleteModal, PaginationDropdown } from "../../../components";
 import { locationAndRoleService } from "../../../services";
+import { fetchAndHandle, fetchAndHandlePage, getRoleListing } from "../../../helpers";
 
 const Roles = (props) => {
     const [updateModal, setUpdateModal] = useState(false);
@@ -11,6 +12,8 @@ const Roles = (props) => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState({});
     const [reloadData, setReloadData] = useState(false);
     const [editId, setEditId] = useState('');
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
@@ -30,7 +33,7 @@ const Roles = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, filters, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();
@@ -38,75 +41,15 @@ const Roles = (props) => {
     }, [reloadData])
 
     const fetchData = () => {
-        if (props.user) {
-            props.setPageLoading(true);
-            locationAndRoleService.getAllRoles(pageNo, pageSize)
-                .then(res => {
-                    if (res.error) {
-                        props.setToasterInfo({
-                            error: true,
-                            title: "Error!",
-                            message: res.message,
-                        })
-                    } else {
-                        setData(res.data.map(role => {
-                            return props.user.role === 'ADMIN' ? {
-                                internalId: role.id,
-                                id: role.waawId,
-                                roleName: role.name,
-                                location: role.location,
-                                creationDate: role.creationDate,
-                                createdBy: role.createdBy,
-                                status: {
-                                    text: role.active ? 'ACTIVE' : 'DISABLED',
-                                    displayType: 'bg',
-                                    status: role.active ? 'ok' : 'bad'
-                                }
-                            } : {
-                                internalId: role.id,
-                                id: role.waawId,
-                                roleName: role.name,
-                                creationDate: role.creationDate,
-                                createdBy: role.createdBy,
-                                status: {
-                                    text: role.active ? 'ACTIVE' : 'DISABLED',
-                                    displayType: 'bg',
-                                    status: role.active ? 'ok' : 'bad'
-                                }
-                            }
-                        }));
-                        setTotalEntries(res.totalEntries);
-                        setTotalPages(res.totalPages);
-                    }
-                    props.setPageLoading(false);
-                })
-        }
-    }
-
-    const handleResponse = (apiResponse, successMessage) => {
-        if (apiResponse.error) {
-            props.setToasterInfo({
-                error: true,
-                title: "Error!",
-                message: apiResponse.message,
-            })
-        } else {
-            props.setToasterInfo({
-                error: false,
-                title: "Success!",
-                message: successMessage,
-            })
-            setReloadData(true);
-        }
+        fetchAndHandlePage(() => locationAndRoleService.getAllRoles(pageNo, pageSize, filters, sort),
+            setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+            getRoleListing, props.user.role);
     }
 
     const deleteRole = () => {
-        props.setPageLoading(true);
-        locationAndRoleService.removeLocationRole(confirmDeleteModal.id)
-            .then(res => {
-                handleResponse(res, "Role Deleted Successfully")
-            })
-        props.setPageLoading(false);
+        fetchAndHandle(() => locationAndRoleService.removeLocationRole(confirmDeleteModal.id),
+            "Role Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
+            props.setToasterInfo);
     }
 
     const actions = [
@@ -122,12 +65,9 @@ const Roles = (props) => {
         {
             key: "activeToggle",
             action: (id) => {
-                props.setPageLoading(true);
-                locationAndRoleService.toggleActiveLocationRole(id)
-                    .then(res => {
-                        handleResponse(res, "Role updated Successfully")
-                    });
-                props.setPageLoading(false);
+                fetchAndHandle(() => locationAndRoleService.toggleActiveLocationRole(id),
+                    "Role updated Successfully", null, setReloadData, props.setPageLoading, null, null,
+                    props.setToasterInfo);
             },
         },
         {
@@ -144,7 +84,9 @@ const Roles = (props) => {
                 modal={confirmDeleteModal}
                 setModal={setConfirmDeleteModal}
                 onDelete={deleteRole}
-            />
+            >
+                This will permanently delete this Role and all associated Employees
+            </DeleteModal>
             <NewRoleModal
                 setShowModal={setShowModal}
                 showModal={showModal}
@@ -179,6 +121,12 @@ const Roles = (props) => {
                     totalPages={totalPages}
                     pageNo={pageNo}
                     setPageNo={setPageNo}
+                    showSearch
+                    search={filters.searchKey}
+                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                    showFilter
+                    filters={filters}
+                    setFilters={setFilters}
                 />
             </DashboardCard>
         </>

@@ -13,13 +13,15 @@ const apiEndpoints = {
         resetPasswordFinish: "/v1/unAuth/user/resetPassword/finish",
     },
     member: {
-        sendInvite: "/v1/member/invite/send",
-        resendInvite: "/v1/member/invite/resend",
-        sendInviteByUpload: "/v1/member/invite/upload",
-        getAllMembers: "/v1/member/getAll",
-        getMemberById: "/v1/member/getById",
-        updateMember: "/v1/member/update",
-        addEmployeePreferences: "/v1/member/addPreference",
+        sendInvite: '/v1/member/invite/send',
+        resendInvite: '/v1/member/invite/resend',
+        sendInviteByUpload: '/v1/member/invite/upload',
+        getAllMembers: '/v1/member/getAll',
+        getMemberById: '/v1/member/getById',
+        updateMember: '/v1/member/update',
+        deleteMember: '/v1/member/delete',
+        toggleActiveMember: '/v1/member/toggleActive',
+        addEmployeePreferences: '/v1/member/addPreference'
     },
     locationAndRole: {
         newLocation: "/v1/location/save",
@@ -49,8 +51,8 @@ const apiEndpoints = {
 const nextConfig = {
     reactStrictMode: true,
     distDir: "./build",
-    images: {unoptimized: true},
-    eslint: {ignoreDuringBuilds: true},
+    images: { unoptimized: true },
+    eslint: { ignoreDuringBuilds: true },
     publicRuntimeConfig: {
         apiUrl:
             process.env.NODE_ENV === "development"

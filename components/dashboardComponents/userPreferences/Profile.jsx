@@ -1,5 +1,5 @@
 import { UserPreferenceStyles } from '../../../styles/pages';
-import Images from '../../../public/Images';
+import { ProfilePlaceholderLarge } from '../../../public/images';
 import { CameraAlt } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import UserPreferenceCard from './UserPreferenceCard';
@@ -55,7 +55,7 @@ const Profile = (props) => {
             <div className={UserPreferenceStyles.picContainer}>
                 <div
                     className={UserPreferenceStyles.pic}
-                    style={{ backgroundImage: `url(${props.img ? props.img : Images.ProfilePlaceholderLarge.src})` }}
+                    style={{ backgroundImage: `url(${props.img ? props.img : ProfilePlaceholderLarge.src})` }}
                     onMouseEnter={() => setUploadVisible(true)}
                     onMouseLeave={() => setUploadVisible(false)}
                 >

@@ -1,6 +1,6 @@
 import { WaawHead, LinkedImage } from "../components";
 import { LoginRegisterLayout } from "../styles/layouts";
-import Images from "../public/Images";
+import { Logo } from "../public/images";
 
 const LoginRegistrationLayout = (props) => {
 
@@ -13,8 +13,8 @@ const LoginRegistrationLayout = (props) => {
                         <div className={LoginRegisterLayout.gridLeftContainer}>
                             {
                                 props.logoLeft &&
-                                <div style={{ marginBottom: '1.5rem' }}>
-                                    <LinkedImage src={Images.Logo} link='/' height={60} alt='Logo' />
+                                <div className={LoginRegisterLayout.logoLeftContainer} >
+                                    <LinkedImage className={LoginRegisterLayout.leftLogo} src={Logo} link='/' alt='Logo' heightOrient />
                                 </div>
                             }
                             {props.children}
@@ -22,7 +22,7 @@ const LoginRegistrationLayout = (props) => {
                         <div className={LoginRegisterLayout.gridRightContainer} style={{ backgroundImage: `url(${props.background})` }}>
                             {
                                 props.logoRight &&
-                                <LinkedImage className={LoginRegisterLayout.rightLogo} src={Images.Logo} height={70} link='/' alt='logo' />
+                                <LinkedImage className={LoginRegisterLayout.rightLogo} src={Logo} link='/' alt='logo' heightOrient />
                             }
                         </div>
                     </div>

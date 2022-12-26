@@ -1,64 +1,32 @@
-import { useState, useEffect } from "react";
+import { CommonStyles } from '../styles/elements';
+import { joinClasses } from '../helpers';
 import Link from "next/link";
 import Image from "next/image";
 
 const LinkedImage = (props) => {
 
-    const [imageSize, setImageSize] = useState({
-        width: 1,
-        height: 1
-    });
-
-    let imageStyle = {};
-
-    useEffect(() => {
-        let newWidth;
-        let newHeight;
-        const { height, width } = props.src;
-        if (typeof props.height == 'undefined' && typeof props.width == 'undefined') {
-            newWidth = width;
-            newHeight = height;
-        } else if (typeof props.height == 'undefined') {
-            newWidth = props.width;
-            newHeight = (props.width * height) / width;
-            imageStyle = { height: 'auto' };
-        } else if (typeof props.width == 'undefined') {
-            newWidth = (props.height * width) / height;
-            newHeight = props.height;
-            imageStyle = { width: 'auto' };
-        } else {
-            newWidth = props.width;
-            newHeight = props.height;
-        }
-        setImageSize({
-            width: newWidth,
-            height: newHeight
-        })
-    }, [props.width, props.height])
-
     const style = {
-        width: `${imageSize.width}px`,
-        height: `${imageSize.height}px`,
         cursor: props.link ? 'pointer' : 'default',
         ...props.style
     }
 
     return (
         <Link
+            className={props.className}
             href={props.link ? props.link : '#'}
             scroll={props.link ? true : false}
-            style={style}
-            onClick={props.onClick}
-            className={props.className}
             target={props.newTab ? '_blank' : '_self'}
+            style={{ width: 'unset' }}
         >
-            <Image
-                src={props.src}
-                width={imageSize.width}
-                height={imageSize.height}
-                alt={props.alt}
-                style={imageStyle}
-            />
+            <div className={joinClasses(props.className, CommonStyles.imageContainer)} style={style} >
+                <Image
+                    className={joinClasses(CommonStyles.image, props.heightOrient ? CommonStyles.imageHeight : CommonStyles.imageWidth)}
+                    src={props.src}
+                    alt={props.alt}
+                    quality={props.keepQuality ? 100 : 75}
+                    fill
+                />
+            </div>
         </Link>
     )
 }

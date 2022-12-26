@@ -6,6 +6,7 @@ import { userService } from '../../services';
 import { validateEmail, validatePassword } from '../../helpers';
 import { LoginRegistrationLayout } from '../../layouts';
 import { InputBox, PasswordPolicy, Button, SuccessModal, TermsAndPolicyModal } from '../../components';
+import { RegistrationBg } from '../../public/images';
 
 const Register = (props) => {
 
@@ -113,7 +114,7 @@ const Register = (props) => {
         <LoginRegistrationLayout
             pageTitle='Register'
             setActiveMenu={props.setActiveMenu}
-            background='/bg/registration-bg.svg'
+            background={RegistrationBg.src}
             logoLeft
         >
             {
@@ -155,6 +156,7 @@ const Register = (props) => {
                     setShowError={setPasswordError}
                     style={{ marginTop: 0 }}
                 />
+                <PasswordPolicy className={LoginRegisterStyles.showMobile} password={password} showError={passwordError} />
                 <InputBox
                     type='password'
                     name='confirmPassword'
@@ -167,21 +169,21 @@ const Register = (props) => {
                     style={{ marginTop: 0 }}
                 />
             </div>
-            <PasswordPolicy password={password} showError={passwordError} />
+            <PasswordPolicy className={LoginRegisterStyles.hideMobile} password={password} showError={passwordError} />
             <p style={{ position: 'relative', textAlign: 'left', margin: 0 }}>
                 Already have an account?? <Link href='/login'>Log In</Link>
                 {submitError && <p className={LoginRegisterLayout.errorText}>{submitErrorMessage}</p>}
             </p>
 
             <Button
-                type='default'
+                type='fullWidth'
                 disabled={loading}
                 onClick={handleRegister}
                 style={{ margin: '20px 0' }}
             >
                 Register
             </Button>
-            <p style={{ width: '80%', textAlign: 'left', marginBottom: 0 }}>By clicking Register, you agree to our <Link onClick={() => showModal('terms')} href='#'>Terms</Link> and acknowledge that you have read and accepted our <Link onClick={() => showModal('privacy')} href='#'>Privacy Poilcy</Link></p>
+            <p style={{ textAlign: 'left', marginBottom: 0 }}>By clicking Register, you agree to our <Link onClick={() => showModal('terms')} href='#'>Terms</Link> and acknowledge that you have read and accepted our <Link onClick={() => showModal('privacy')} href='#'>Privacy Poilcy</Link></p>
             {registrationSuccess &&
                 <SuccessModal
                     title='Registration Successfull!'

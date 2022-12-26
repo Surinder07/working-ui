@@ -7,6 +7,7 @@ import { userService, dropdownService } from '../../services';
 import { DaysOfWeek } from "../../constants";
 import { LoginRegistrationLayout } from "../../layouts";
 import { validateUsername } from "../../helpers";
+import { CompleteProfileBg } from "../../public/images";
 
 const CompleteProfile = (props) => {
 
@@ -136,7 +137,7 @@ const CompleteProfile = (props) => {
         <LoginRegistrationLayout
             pageTitle='Complete Profile'
             setActiveMenu={props.setActiveMenu}
-            background='/bg/complete-registration-bg.svg'
+            background={CompleteProfileBg.src}
             logoRight
         >
             <legend>COMPLETE <span style={{ color: '#000' }}>YOUR PROFILE</span></legend>

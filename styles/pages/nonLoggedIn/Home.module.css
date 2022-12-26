@@ -1,6 +1,6 @@
 .introSection {
     height: calc(100vh - var(--navigation-height));
-    background-image: url('/bg/homepage-bg.svg');
+    background-image: url('/images/bg/homepage-bg.svg');
     background-repeat: no-repeat;
     background-size: 50% auto;
     background-position: right center;

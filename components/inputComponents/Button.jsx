@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ButtonStyles } from '../../styles/elements/inputs';
+import { joinClasses } from '../../helpers';
 
 const Button = (props) => {
 
@@ -29,7 +30,7 @@ const Button = (props) => {
 
     return (
         <button
-            className={`${ButtonStyles.button} ${buttonClass} ${props.disabled && ButtonStyles.disabledButton} ${props.className}`}
+            className={joinClasses(ButtonStyles.button, buttonClass, props.disabled && ButtonStyles.disabledButton, props.className)}
             style={props.style}
             onClick={onClick}
         >
@@ -37,13 +38,12 @@ const Button = (props) => {
                 props.icon && (
                     props.icon.src ?
                         <Image
-                            className={`${ButtonStyles.icon} ${props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon}`}
+                            className={joinClasses(ButtonStyles.icon, props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon)}
                             src={props.icon.src}
                             alt={props.icon.alt}
-                            height={props.icon.height}
-                            style={{ width: 'auto' }}
+                            height={30}
                         />
-                        : <div style={{ display: 'flex', alignItems: 'center' }} className={`${ButtonStyles.icon} ${props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon}`}>
+                        : <div style={{ display: 'flex', alignItems: 'center' }} className={joinClasses(ButtonStyles.icon, props.type === 'social' ? ButtonStyles.socialIcon : ButtonStyles.defaultIcon)}>
                             {props.icon.element}
                         </div>
                 )

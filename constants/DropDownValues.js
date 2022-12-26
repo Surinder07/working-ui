@@ -1,4 +1,4 @@
-import { CountryIcons } from '../public/icons/countryIcons/CountryIcons';
+import { CountryIcons } from '../public/images/icons/countryIcons';
 import { dropdownService } from '../services';
 
 export const CountryCodes = [
