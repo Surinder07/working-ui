@@ -4,7 +4,7 @@ import {WaawNoIndexHead, EditableInput, MobileModal} from "../../components";
 
 const RoleModal = (props) => {
     const [creationDate, setCreationDate] = useState("");
-    const [inititialCreationDate, setInitialCreationDate] = useState("");
+    const [initialCreationDate, setInitialCreationDate] = useState("");
     const [editOn, setEditOn] = useState(true);
 
     return (
