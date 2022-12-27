@@ -10,7 +10,7 @@ const SearchBar = (props, ref) => {
 
     return (
         <div className={classNames(SearchBarStyles.container, props.className, props.darkTheme && SearchBarStyles.darkContainer)} style={props.style} ref={ref}>
-            <Search style={{ marginLeft: "5px" }} />
+            <Search style={{ marginLeft: "5px",fontSize: "24px !important"}} />
             <input placeholder={props.placeholder} value={props.value} onChange={(e) => props.setValue && props.setValue(e.target.value)} />
         </div>
     );

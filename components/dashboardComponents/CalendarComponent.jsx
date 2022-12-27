@@ -5,22 +5,13 @@ import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
 
-let events= [
-    {
+let events=  {
         id: 1,
         time:  '10th June',
         inTime: '09:30',
         outTime: '11:00',
         duration: '01 hours 30 minutes'    
-    },
-    {
-        id: 2,
-        time:  '10th June',
-        inTime: '09:30',
-        outTime: '11:00',
-        duration: '01 hours 30 minutes'
-    }   
-];
+    };
 
 const holidays = [
     {
@@ -249,33 +240,33 @@ const CalendarComponent = () => {
             </DashboardCard>
             <div className={CalendarStyles.holidaysAndEventsContainer}>
                               
-                    {events && events.map((event, i) => (
-                        <div  key={i} className={CalendarStyles.activeEventMain}>
-                            <h3>{event.time}</h3>
+                    {events && 
+                        <div className={CalendarStyles.activeEventMain}>
+                            <h3>{events.time}</h3>
                        <div className={CalendarStyles.activeEvent}>          
                           <div>
                             <p>Clock In</p>
                             <span>
                                 <Schedule style={{fontSize:"14px !important"}}/>
-                                <p>{event.inTime}</p>
+                                <p>{events.inTime}</p>
                             </span>
                           </div>
                           <div>
                           <p>Clock Out</p>
                             <span>
                             <Schedule style={{transform: "rotate(180deg)",fontSize:"14px !important"}}/>
-                            <p>{event.outTime}</p>
+                            <p>{events.outTime}</p>
                             </span>
                           </div>
                           <div>
                           <p>Duration</p>
                             <span>
-                                {event.duration}
+                                {events.duration}
                             </span>
                           </div>                      
                        </div>
                        </div>
-                    ))}              
+                    }              
               
             <div className={CalendarStyles.holidayContainer}>
                 <h4>Holidays</h4>
