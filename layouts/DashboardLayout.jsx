@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger } from "../components";
-import { ImagesInfo, SideNavInfo } from "../constants";
-import { LogoWhite, FaviconWhite } from "../public/images";
+import { footerIcons, SideNavInfo } from "../constants";
+import { LogoWhite, FaviconWhite, Favicon } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
@@ -51,8 +51,11 @@ const Dashboard = (props) => {
                 <div className={DashboardLayout.sideNav} ref={sideNavRef} style={sideNavStyle}>
                     <div>
                         <div>
-                            <div style={{ margin: "0 auto", width: "fit-content" }} className={DashboardLayout.logo}>
-                                <LinkedImage src={navOpen ? LogoWhite : FaviconWhite} width={navOpen ? 160 : 30} alt="Logo" link="/dashboard" />
+                            <div style={{ margin: "0 auto", width: "fit-content" }} className={DashboardLayout.logoContainer}>
+                                <LinkedImage
+                                    src={navOpen ? LogoWhite : FaviconWhite}
+                                    className={DashboardLayout.logo} alt="Logo" link="/dashboard"
+                                />
                             </div>
                             <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                             {props.screenType === 3 && (
@@ -118,11 +121,20 @@ const Dashboard = (props) => {
                 <div className={DashboardLayout.footer}>
                     <div className={DashboardLayout.leftContainer}>
                         <p style={{ marginRight: "20px" }}>&#169;{` ${new Date().getFullYear()} WAAW GLOBAL INC. All Rights Reserved`}</p>
-                        {ImagesInfo.footerIcons.socialIcons.map((icon, i) => (
-                            <LinkedImage key={`social_${i}`} style={{ marginRight: "10px" }} height={20} src={icon.src} alt={icon.alt} link={icon.link} />
-                        ))}
+                        {
+                            footerIcons.socialIcons.map((icon, i) => (
+                                <LinkedImage
+                                    className={DashboardLayout.footerIcons}
+                                    key={`social_${i}`}
+                                    heightOrient
+                                    src={icon.src}
+                                    alt={icon.alt}
+                                    link={icon.link}
+                                />
+                            ))
+                        }
                     </div>
-                    <LinkedImage src={Images.Favicon} height={25} alt="WAAW" />
+                    <LinkedImage className={DashboardLayout.footerLogo} src={Favicon} heightOrient alt="WAAW" />
                 </div>
             </div>
         </div>

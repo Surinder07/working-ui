@@ -61,7 +61,7 @@
 .gridDouble,
 .gridDoubleNarrow {
     display: grid;
-    row-gap: 20px;
+    row-gap: 15px;
 }
 
 .gridSingle {
@@ -90,15 +90,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;
-}
-
-.instruction {
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 16px;
-    color: #535255;
-    opacity: 0.75;
-    grid-column: span 2;
 }
 
 .uploadContainer {

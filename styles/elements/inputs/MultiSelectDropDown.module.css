@@ -9,7 +9,7 @@
 
 .multiSelectDisplay {
     display: grid;
-    grid-template-columns: 25px 0;
+    grid-template-columns: 25px auto;
 }
 
 .listContainer {
@@ -42,6 +42,7 @@
 
 .dropdownRelative input {
     font-weight: 400;
+    width: 100%;
     font-size: 12px;
     line-height: 18px;
     color: #000000;

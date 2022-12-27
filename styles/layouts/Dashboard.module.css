@@ -78,6 +78,14 @@
     /* 60 px for padding */
 }
 
+.openNavDashboard .logo {
+    width: 160px;
+}
+
+.closeNavDashboard .logo {
+    width: 30px;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -127,7 +135,6 @@
     padding: var(--navigation-height) 30px;
     background-color: #F7F8FC;
     min-height: 100%;
-    width: 100vw;
     overflow-x: scroll;
 }
 
@@ -176,6 +183,15 @@
     font-size: 24px;
 }
 
+.footerIcons {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.footerLogo {
+    height: 25px;
+}
+
 @media only screen and (max-width: 480px) {
     .dashboardPage {
         grid-template-columns: 1fr;
@@ -193,7 +209,7 @@
     }
 
 
-    .logo {
+    .logoContainer {
         margin-left: 25px !important;
     }
 

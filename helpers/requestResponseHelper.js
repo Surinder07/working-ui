@@ -96,10 +96,27 @@ export const getLocationListing = (data) => {
     });
 }
 
+export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
+    endDate, endTime, instantRelease, shiftName) => {
+    return {
+        type: formType === 'SINGLE SHIFT' ? 'SINGLE' : 'BATCH',
+        locationId, userIds : userIds === '' ? [] : userIds, shiftName, 
+        locationRoleIds: roleIds === '' ? [] : roleIds,
+        start: { date: startDate, time: formatTime(startTime) },
+        end: { date: endDate, time: formatTime(endTime) },
+        instantRelease
+    }
+}
+
+const formatTime = (time) => {
+    return time && time.hours ? time.hours.toString().padStart(2, "0") + ':' + time.minutes.toString().padStart(2, "0") : null;
+}
+
 /**
  * @param {*} value value from state to be checked
  * @param {*} name name of field to be checked
  * @param {*} errorFunction function to set Error Info
+ * @param {*} condition additional condition needs to be check or true
  * @return true if error
  * */
 export const validateForEmptyField = (value, name, errorFunction, condition) => {
@@ -109,13 +126,55 @@ export const validateForEmptyField = (value, name, errorFunction, condition) => 
             show: true
         })
         return true;
-    }
+    } else return false;
+}
+
+/**
+ * @param {*} value value from state to be checked
+ * @param {*} name name of field to be checked
+ * @param {*} errorFunction function to set Error Info
+ * @param {*} condition additional condition needs to be check or true
+ * @return true if error
+ */
+export const validateForEmptyArray = (value, name, errorFunction, condition) => {
+    if (value.length === 0 && condition) {
+        errorFunction({
+            message: `${name} is required`,
+            show: true
+        })
+        return true;
+    } else return false;
+}
+
+/**
+ * @param {*} value value from state to be checked
+ * @param {*} errorFunction function to set Error Info
+ * @param {*} condition additional condition needs to be check or true
+ * @return true if error
+ */
+ export const validateForTime = (value, errorFunction, condition) => {
+    if (((!value.hours && value.hours !== 0) || (!value.minutes && value.minutes !== 0)) && condition) {
+        errorFunction({
+            message: `Both Hours and minutes are required`,
+            show: true
+        })
+        return true;
+    } else return false;
+}
+
+export const combineBoolean = (...values) => {
+    let res = false;
+    values.map(value => {
+        res = res || value;
+    })
+    return res;
 }
 
 // Response -----------------
 
 /**
  * @param {*} fetchFunction function to be called to fetch data
+ * @param {*} requestBody request body to be sent
  * @param {*} successMessage Message to be shown in case of success
  * @param {*} loadingFunc setLoading function to be used to disable buttons
  * @param {*} reloadFunc reload function to be used to reload data on success
@@ -124,11 +183,11 @@ export const validateForEmptyField = (value, name, errorFunction, condition) => 
  * @param {*} showModal setShowModal function to hide the modal on success
  * @param {*} setToaster setToaster function to update info to be shown on success or error toaster
  */
-export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloadFunc,
+export const fetchAndHandle = (fetchFunction, requestBody, successMessage, loadingFunc, reloadFunc,
     pageLoaderFunc, onCancel, showModal, setToaster) => {
     pageLoaderFunc && pageLoaderFunc(true);
     loadingFunc && loadingFunc(true);
-    fetchFunction()
+    fetchFunction(requestBody)
         .then(res => {
             if (res.error) {
                 setToaster && setToaster({
@@ -151,8 +210,8 @@ export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloa
             }
         })
         .catch(() => {
-            pageLoaderFunc && pageLoaderFunc(true);
-            loadingFunc && loadingFunc(true);
+            pageLoaderFunc && pageLoaderFunc(false);
+            loadingFunc && loadingFunc(false);
         })
 }
 
@@ -184,7 +243,7 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
             }
             loaderFunction && loaderFunction(false);
         })
-        .catch(() => loaderFunction && loaderFunction(true));
+        .catch(() => loaderFunction && loaderFunction(false));
 }
 
 export const fetchAndHandleGet = (fetchFunction, setData) => {

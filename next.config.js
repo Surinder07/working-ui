@@ -34,6 +34,15 @@ const apiEndpoints = {
         updateLocationRole: "/v1/location/role/update",
         toggleActiveLocationRole: "/v1/location/role/toggleActive",
     },
+    shifts: {
+        createShift: '/v1/shifts/create',
+        updateShift: '/v1/shifts/update',
+        deleteShift: '/v1/shifts/delete',
+        assignShift: '/v1/shifts/assign',
+        releaseShift: '/v1/shifts/release',
+        getAllShifts: '/v1/shifts/getAll',
+        getAllShiftsUser: '/v1/shifts/user/getAll'
+    },
     dropdown: {
         getTimezones: "/v1/unAuth/dropdown/timezones",
         getLocations: "/v1/dropdown/locations",
@@ -54,10 +63,9 @@ const nextConfig = {
     images: { unoptimized: true },
     eslint: { ignoreDuringBuilds: true },
     publicRuntimeConfig: {
-        apiUrl:
-            process.env.NODE_ENV === "development"
-                ? "http://localhost:8080/api" // development api
-                : "https://api.waaw.ca/api", // production api
+        apiUrl: process.env.NODE_ENV === 'development'
+            ? 'http://localhost:8080/api' // development api
+            : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
         version: "1.0",
