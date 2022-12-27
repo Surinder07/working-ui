@@ -108,7 +108,7 @@ const NewRoleModal = (props) => {
                 {
                     props.role === 'ADMIN' &&
                     <EditableInput
-                        type="dropdown"
+                        type="typeAhead"
                         options={locations}
                         placeholder="Location"
                         label="Location"
@@ -122,7 +122,7 @@ const NewRoleModal = (props) => {
                     />
                 }
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Total hours per day (Maximum)"
                     value={maximumHours}
                     setValue={setMaximumHours}
@@ -130,7 +130,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Total hours per day (Minimum)"
                     value={minimumHours}
                     setValue={setMinimumHours}
@@ -138,7 +138,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Maximum consecutive work days"
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
@@ -146,7 +146,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Minimum gaps between shifts (hrs)"
                     value={gapsInShifts}
                     setValue={setGapsInShifts}

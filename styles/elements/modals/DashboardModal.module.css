@@ -92,15 +92,6 @@
     column-gap: 20px;
 }
 
-.instruction {
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 16px;
-    color: #535255;
-    opacity: 0.75;
-    grid-column: span 2;
-}
-
 .uploadContainer {
     position: relative;
     background-color: #DDDCDD;

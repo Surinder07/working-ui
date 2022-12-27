@@ -184,7 +184,7 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
             }
             loaderFunction && loaderFunction(false);
         })
-        .catch(() => loaderFunction && loaderFunction(true));
+        .catch(() => loaderFunction && loaderFunction(false));
 }
 
 export const fetchAndHandleGet = (fetchFunction, setData) => {

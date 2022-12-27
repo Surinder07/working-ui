@@ -62,7 +62,7 @@ const LocationModal = (props) => {
                 editOn
             />
             <EditableInput
-                type="dropdown"
+                type="typeAhead"
                 options={timezones}
                 value={timezone}
                 setValue={setTimezone}

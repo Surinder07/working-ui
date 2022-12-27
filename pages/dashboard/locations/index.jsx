@@ -44,7 +44,6 @@ const Locations = (props) => {
         fetchAndHandlePage(() => locationAndRoleService.getAllLocations(pageNo, pageSize, filters, sort),
             setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
             getLocationListing, props.user.role);
-        props.setPageLoading(true);
     }
 
     const deleteLocation = () => {

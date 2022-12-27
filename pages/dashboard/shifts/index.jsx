@@ -115,14 +115,14 @@ const Shifts = (props) => {
     }, []);
 
     const [showAddModal, setShowAddModal] = useState(false);
-    const [showFilterModal, setShowFilterModal] = useState(true);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [data, setData] = useState(shifts);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
-    const [showShiftModal, setShiftModal] = useState(true);
+    const [showShiftModal, setShiftModal] = useState(false);
 
     const actions = [
         {

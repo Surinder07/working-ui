@@ -170,7 +170,7 @@ const InviteUserModal = (props) => {
             {
                 props.role === 'ADMIN' &&
                 <EditableInput
-                    type="dropdown"
+                    type="typeAhead"
                     options={locations}
                     label="Location"
                     value={location}
@@ -184,7 +184,7 @@ const InviteUserModal = (props) => {
                 />
             }
             <EditableInput
-                type="dropdown"
+                type="typeAhead"
                 options={roles}
                 label="Role"
                 value={role}
