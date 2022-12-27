@@ -10,10 +10,28 @@
     align-items: center;
 }
 
+.holidaysAndEventsContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.eventsContainer {
+    background: #363740;
+    color: white;
+    padding: 10px 38px;
+    overflow-y: scroll;
+    height:30%;
+}
+.eventTimeDuration{
+    display: flex;
+
+}
+
 .holidayContainer {
     background: #F7F2E5;
     padding: 14px 38px;
     overflow-y: scroll;
+    height: 70%;
 }
 
 .dateNav h2 {
@@ -132,7 +150,10 @@
 .holidayList {
     list-style: none;
 }
-
+.eventList {
+    list-style: none;
+    margin-bottom: 0.5em;
+}
 .dateHoliday {
     font-weight: 500;
     font-size: 14px;

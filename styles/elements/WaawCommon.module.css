@@ -1,0 +1,28 @@
+.imageContainer>div {
+    position: unset !important;
+}
+
+.image {
+    object-fit: contain;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+}
+
+.imageHeight {
+    width: unset !important;
+}
+
+.imageWidth {
+    height: unset !important;
+}
+
+/* .imageContainer {
+    position: relative !important;
+}
+
+.image {
+    object-fit: contain;
+    max-height: 100% !important;
+    max-width: 100% !important;
+} */

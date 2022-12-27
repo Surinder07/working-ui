@@ -5,16 +5,19 @@
 }
 
 .container label {
-    font-weight: 500;
-    font-size: 12px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
     line-height: 18px;
-    color: #000000;
+    letter-spacing: 0.2px;
+    color: #535255;
     margin-bottom: 5px;
 }
 
 .container p {
     font-weight: 400;
-    font-size: 12px;
+    font-size: 12px!important;
     line-height: 18px;
     color: #999;
     padding: 7px 0;
@@ -25,4 +28,13 @@
     bottom: -25px;
     margin: 0;
     color: var(--error-message-color) !important;
+}
+
+.description {
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    color: #535255;
+    opacity: 0.75;
 }

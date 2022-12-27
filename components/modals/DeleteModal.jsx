@@ -30,8 +30,11 @@ const DeleteModal = (props) => {
                         <h1>{props.title}</h1>
                         <h1>Are you sure you want to delete this?</h1>
                         <div>
-                            {props.children}
-                            <p>This will be permanently deleted from your account</p>
+                            {
+                                props.children ?
+                                    <p>{props.children}</p> :
+                                    <p>This will be permanently deleted from your account</p>
+                            }
                         </div>
                         <div className={DashboardModalStyles.buttonContainer}>
                             <Button type="cancel" onClick={() => handleClick(2)}>

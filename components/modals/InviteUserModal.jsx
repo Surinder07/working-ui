@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
-import { CloudUpload } from "@mui/icons-material";
-import { dropdownService } from "../../services";
+import { CloudUpload, Close } from "@mui/icons-material";
+import { dropdownService, memberService } from "../../services";
 import { fetchWrapper } from "../../helpers";
+import { saveUserRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from '../../helpers';
 import Link from 'next/link';
 
 const InviteUserModal = (props) => {
@@ -13,6 +14,7 @@ const InviteUserModal = (props) => {
     // ------------ Dropdown values
     const [locations, setLocations] = useState([]);
     const [roles, setRoles] = useState([]);
+    const toggleOption = ['Permanent', 'Part Time']
     // ----------------------------
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -20,33 +22,16 @@ const InviteUserModal = (props) => {
     const [email, setEmail] = useState("");
     const [location, setLocation] = useState("");
     const [role, setRole] = useState("");
-    const [toggleValue, setToggleValue] = useState("Permanent");
-
-    const [errorFirstName, setErrorFirstName] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorLastName, setErrorLastName] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorEmployeeId, setErrorEmployeeId] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorEmail, setErrorEmail] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorLocation, setErrorLocation] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorRole, setErrorRole] = useState({
-        message: "",
-        show: false,
-    });
+    const [toggleValue, setToggleValue] = useState(toggleOption[0]);
+    const [file, setFile] = useState({});
     const [loading, setLoading] = useState(false);
+
+    const [errorFirstName, setErrorFirstName] = useState({});
+    const [errorLastName, setErrorLastName] = useState({});
+    const [errorEmail, setErrorEmail] = useState({});
+    const [errorLocation, setErrorLocation] = useState({});
+    const [errorRole, setErrorRole] = useState({});
+
     const onCancel = () => {
         setFirstName("");
         setLastName("");
@@ -55,139 +40,55 @@ const InviteUserModal = (props) => {
         setLocation("");
         setRole("");
         setRoles([]);
-        setToggleValue("Permanent");
-        setErrorFirstName({
-            message: "",
-            show: false
-        });
-        setErrorLastName({
-            message: "",
-            show: false
-        });
-        setErrorEmployeeId({
-            message: "",
-            show: false
-        });
-        setErrorEmail({
-            message: "",
-            show: false
-        });
-        setErrorLocation({
-            message: "",
-            show: false
-        });
-        setErrorRole({
-            message: "",
-            show: false
-        })
+        setFile({});
+        setToggleValue(toggleOption[0]);
+        setErrorFirstName({});
+        setErrorLastName({});
+        setErrorEmail({});
+        setErrorLocation({});
+        setErrorRole({})
     }
 
     useEffect(() => {
         if (props.role === 'ADMIN') {
-            dropdownService.getLocations()
-                .then(res => {
-                    if (!res.error) {
-                        setLocations(res);
-                    }
-                })
+            fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
         } else {
-            dropdownService.getRoles(null)
-                .then(res => {
-                    if (!res.error) {
-                        setRoles(res);
-                    }
-                });
+            fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
         }
     }, [])
 
     useEffect(() => {
-        if (location !== '') {
-            dropdownService.getRoles(location)
-                .then(res => {
-                    if (!res.error) {
-                        setRoles(res);
-                    }
-                });
+        if (location && location !== '') {
+            fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
     }, [location])
 
-    const validateForm = async () => {
-        let error = false;
-        if(firstName === '') {setErrorFirstName({
-            message: 'First Name is required',
-            show: true
-        })
-        error = true;
-        }
-        if(lastName === '') {setErrorLastName({
-            message: 'Last Name is required',
-            show: true
-        })
-        error = true;
-        }
-        if(email === '') {setErrorEmail({
-            message: 'Email is required',
-            show: true
-        })
-        error = true;
-        }
-        if(role === '') {setErrorRole({
-            message: 'Role is required',
-            show: true
-        })}
-     
-        return error
+    const isError = () => {
+        return validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
+            validateForEmptyField(lastName, 'Last Name', setErrorLastName, true) ||
+            validateForEmptyField(email, 'Email', setErrorEmail, true) ||
+            validateForEmptyField(role, 'Role', setErrorRole, true) ||
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN');
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'User invited successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+        if (file.name) {
+            fetchAndHandle(memberService.inviteByUpload({ file: file }), null, setLoading,
+                props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo);
+        } else if (!isError()) {
+            fetchAndHandle(memberService.sendInvite(saveUserRequestBody(firstName, lastName, role,
+                location, employeeId, email, toggleValue === 'Permanent')), 'Invite Sent Successfully',
+                setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo);
+        }
     }
 
     const handleFileChange = (e) => {
         if (e.target.files.length) {
-            handleUpload(e.target.files[0]);
-            /**
-            * @todo change image in user details
-            */
+            setFile(e.target.files[0]);
         }
     }
-
-    const handleUpload = async file => {
-        console.log('data received', file);
-        // const formData = new FormData();
-        // formData.append("image", image.raw);
-
-        // await fetch("YOUR_URL", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "multipart/form-data"
-        //     },
-        //     body: formData
-        // });
-    };
 
     return (
         <DashboardModal
@@ -204,7 +105,14 @@ const InviteUserModal = (props) => {
                 <div className={`${DashboardModalStyles.uploadContainer}`}>
                     <CloudUpload className={DashboardModalStyles.icon} />
                     <label htmlFor="upload">Select file to Import</label>
-                    <input type="file" id="upload" style={{ display: "none" }} onChange={handleFileChange} />
+                    <input type="file" id="upload" style={{ display: 'none' }} files={[file]} onChange={handleFileChange} />
+                    {
+                        file.name &&
+                        <p className={DashboardModalStyles.fileName}>
+                            {file.name}
+                            <Close className={DashboardModalStyles.icon} onClick={() => setFile({})} />
+                        </p>
+                    }
                     <p>Must be .xlsx or .csv file using our email template</p>
                     <p>
                         {`Download `}
@@ -245,9 +153,7 @@ const InviteUserModal = (props) => {
                 label="External Employee ID"
                 value={employeeId}
                 setValue={setEmployeeId}
-                initialValue={employeeId}
-                error={errorEmployeeId}
-                setError={setErrorEmployeeId}
+                initialValue={employeeId} s
                 editOn
             />
             <EditableInput
@@ -261,9 +167,10 @@ const InviteUserModal = (props) => {
                 required
                 editOn
             />
-            {props.role === 'ADMIN' &&
+            {
+                props.role === 'ADMIN' &&
                 <EditableInput
-                    type="dropdown"
+                    type="typeAhead"
                     options={locations}
                     label="Location"
                     value={location}
@@ -274,9 +181,10 @@ const InviteUserModal = (props) => {
                     placeholder='Select a Location'
                     required
                     editOn
-                />}
+                />
+            }
             <EditableInput
-                type="dropdown"
+                type="typeAhead"
                 options={roles}
                 label="Role"
                 value={role}
@@ -291,7 +199,7 @@ const InviteUserModal = (props) => {
             <EditableInput
                 className={DashboardModalStyles.singleColumn}
                 type="toggle2"
-                options={["Permanent", "Part Time"]}
+                options={toggleOption}
                 value={toggleValue}
                 setValue={setToggleValue}
                 initialValue={toggleValue}

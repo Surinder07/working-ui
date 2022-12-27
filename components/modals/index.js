@@ -11,6 +11,8 @@ import GenerateReportModal from "./GenerateReportModal";
 import EditRequestsModal from "./EditRequestModal";
 import CreateRequestModal from "./CreateRequestModal";
 import DeleteModal from "./DeleteModal";
+import ShiftDetailsModal from "./ShiftDetailsModal";
+import ShiftModal from "./ShiftModal";
 
 export {
     NewRoleModal,
@@ -25,8 +27,10 @@ export {
     GenerateReportModal,
     EditRequestsModal,
     CreateRequestModal,
-    DeleteModal
+    DeleteModal,
+    ShiftDetailsModal,
+    ShiftModal,
 };
 
 export * from "./base";
-export * from "./filterModals"
+export * from "./filterModals";

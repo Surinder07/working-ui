@@ -63,16 +63,27 @@
     background-color: #3E4049;
 }
 
-.openNavRightContainer, .closeNavRightContainer {
+.openNavRightContainer,
+.closeNavRightContainer {
     position: relative;
 }
 
 .openNavRightContainer {
-    max-width: calc(100vw - 200px); /* 60 px for padding */
+    max-width: calc(100vw - 200px);
+    /* 60 px for padding */
 }
 
 .closeNavRightContainer {
-    max-width: calc(100vw - 70px); /* 60 px for padding */
+    max-width: calc(100vw - 70px);
+    /* 60 px for padding */
+}
+
+.openNavDashboard .logo {
+    width: 160px;
+}
+
+.closeNavDashboard .logo {
+    width: 30px;
 }
 
 .header {
@@ -124,6 +135,7 @@
     padding: var(--navigation-height) 30px;
     background-color: #F7F8FC;
     min-height: 100%;
+    overflow-x: scroll;
 }
 
 .footer {
@@ -171,9 +183,23 @@
     font-size: 24px;
 }
 
+.footerIcons {
+    height: 20px;
+    margin-right: 10px;
+}
+
+.footerLogo {
+    height: 25px;
+}
+
 @media only screen and (max-width: 480px) {
     .dashboardPage {
         grid-template-columns: 1fr;
+    }
+
+    .content {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .sideNav {
@@ -183,7 +209,7 @@
     }
 
 
-    .logo {
+    .logoContainer {
         margin-left: 25px !important;
     }
 
@@ -235,7 +261,7 @@
         font-family: 'Mulish';
         font-style: normal;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 14px!important;;
         line-height: 20px;
         text-align: right;
         letter-spacing: 0.2px;

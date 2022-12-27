@@ -8,18 +8,19 @@ import { dropdownService } from "../../services";
 const NewShiftModal = (props) => {
     //------------- Dropdown values
     const [locations, setLocations] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [users, setUsers] = useState([]);
     //-----------------------------
     const [formType, setFormType] = useState("Single Shift");
     const [assignTo, setAssignTo] = useState("Users");
     const [releaseImmediately, setReleaseImmediately] = useState(false);
-    const [toggle, setToggle] = useState("a");
     const [startTime, setStartTime] = useState({});
     const [endTime, setEndTime] = useState({});
     const [startDateShift, setStartDateShift] = useState("");
     const [endDateShift, setEndDateShift] = useState("");
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState([]);
     const [location, setLocation] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState([]);
     const [shiftName, setShiftName] = useState("");
 
     const [errorStartDate, setErrorStartDate] = useState({
@@ -255,12 +256,13 @@ const NewShiftModal = (props) => {
             {
                 assignTo === "Users" ?
                     <EditableInput
-                        type="text"
-                        label="User"
+                        type="multiselect"
+                        label="Users"
                         className={DashboardModalStyles.singleColumn}
-                        value={user}
-                        setValue={setUser}
-                        initialValue={user}
+                        options={users}
+                        placeholder='Select All Users'
+                        values={user}
+                        setValues={setUser}
                         error={errorUser}
                         setError={setErrorUser}
                         required
@@ -270,7 +272,7 @@ const NewShiftModal = (props) => {
                         {
                             props.role === 'ADMIN' &&
                             <EditableInput
-                                type="dropdown"
+                                type="typeAhead"
                                 label="Location"
                                 options={["India", "Canada", "Mexico"]}
                                 placeholder="Location"
@@ -285,11 +287,11 @@ const NewShiftModal = (props) => {
                             />
                         }
                         <EditableInput
-                            type="text"
-                            label="Role"
+                            type="multiselect"
+                            label="Roles"
                             className={DashboardModalStyles.singleColumn}
-                            value={role}
-                            setValue={setRole}
+                            values={role}
+                            setValues={setRole}
                             initialValue={role}
                             error={errorRole}
                             setError={setErrorRole}
@@ -307,11 +309,9 @@ const NewShiftModal = (props) => {
                 initialValue={shiftName}
                 error={errorShiftName}
                 setError={setErrorShiftName}
+                description='Shift Name cannot be more than 30 Characters'
                 editOn
             />
-            <p className={DashboardModalStyles.instruction}>
-                Shift Name cannot be more than 30 Characters
-            </p>
             <Checkbox
                 label="Release Shift Immediately"
                 className={DashboardModalStyles.singleColumn}

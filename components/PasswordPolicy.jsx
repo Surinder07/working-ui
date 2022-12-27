@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { joinClasses } from "../helpers";
+import { LoginRegisterLayout } from "../styles/layouts";
 
 const PasswordPolicy = (props) => {
 
@@ -22,12 +24,6 @@ const PasswordPolicy = (props) => {
     }, [props.password])
 
     const style = {
-        fontWeight: 500,
-        fontSize: '11px',
-        lineHeight: '16px',
-        color: '#535255',
-        opacity: '0.75',
-        textAlign: 'left',
         marginBottom: props.noMargin ? 0 : '20px'
     }
 
@@ -41,7 +37,8 @@ const PasswordPolicy = (props) => {
     }
 
     return (
-        <p style={style}>Password should be atleast
+        <p className={joinClasses(props.className, LoginRegisterLayout.passwordPolicy)} style={style}>
+            Password should be atleast
             <span style={charLimit ? satisfiedStyle : props.showError ? errorStyle : {}}> 8 characters</span>, and should contain atleast
             <span style={uppercase ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Uppercase letter</span>,
             <span style={lowercase ? satisfiedStyle : props.showError ? errorStyle : {}}> 1 Lowercase letter</span>,

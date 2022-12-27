@@ -3,85 +3,40 @@ import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { dropdownService, locationAndRoleService } from "../../services";
+import { fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const LocationModal = (props) => {
-
-    const [timezones, setTimezones] = useState([]); // List to display
-
+    //------------- Dropdown values
+    const [timezones, setTimezones] = useState([]);
+    //-----------------------------
     const [location, setLocation] = useState('');
     const [timezone, setTimezone] = useState('');
-    const [errorLocation, setErrorLocation] = useState({
-        message: "",
-        show: false
-    });
-    const [errorTimezone, setErrorTimezone] = useState({
-        message: "",
-        show: false
-    });
+    const [errorLocation, setErrorLocation] = useState({});
+    const [errorTimezone, setErrorTimezone] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
         setLocation("")
         setTimezone("")
-        setErrorLocation({
-            message: "",
-            show: false
-        })
-        setErrorTimezone({
-            message: "",
-            show: false
-        })
+        setErrorLocation({})
+        setErrorTimezone({})
     }
 
     useEffect(() => {
-        dropdownService.getTimezones().then(res => setTimezones(res));
+        fetchAndHandleGet(dropdownService.getTimezones, setTimezones);
     }, [])
 
-    const validateForm = async () => {
-        let error = false;
-        if (location === '') {
-            setErrorLocation({
-                message: 'Name is required',
-                show: true
-            })
-            error = true;
-        }
-        if (timezone === '') {
-            setErrorTimezone({
-                message: 'Timezone is required',
-                show: true
-            })
-            error = true;
-        }
-        return error;
+    const isError = () => {
+        return validateForEmptyField(location, 'Name', setErrorLocation, true) ||
+         validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);
     }
 
     const saveData = () => {
-        validateForm()
-            .then(error => {
-                if (!error) {
-                    setLoading(true);
-                    locationAndRoleService.saveLocation(location, timezone)
-                        .then(res => {
-                            if (res.error) {
-                                props.setToasterInfo({
-                                    error: true,
-                                    title: 'Error!',
-                                    message: res.message
-                                });
-                            } else {
-                                props.setToasterInfo({
-                                    error: false,
-                                    title: 'Success!',
-                                    message: 'Location added successfully'
-                                });
-                                props.setReloadData(true);
-                                onCancel();
-                            }
-                            setLoading(false);
-                        });
-                }
-            })
+        if (!isError) {
+            fetchAndHandle(locationAndRoleService.saveLocation(location, timezone),
+                'Location added successfully', setLoading, props.setReloadData, props.setPageLoading, 
+                onCancel, props.setShowModal, props.setToasterInfo);
+        }
     }
 
     return (
@@ -107,7 +62,7 @@ const LocationModal = (props) => {
                 editOn
             />
             <EditableInput
-                type="dropdown"
+                type="typeAhead"
                 options={timezones}
                 value={timezone}
                 setValue={setTimezone}

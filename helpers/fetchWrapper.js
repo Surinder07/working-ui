@@ -27,7 +27,7 @@ const get = async (url) => {
         headers: authHeader(url)
     };
     const response = await fetch(url, requestOptions);
-    return handleResponse(response);
+    return handleResponse(response, url);
 }
 
 const post = async (url, body) => {
@@ -37,7 +37,7 @@ const post = async (url, body) => {
         credentials: 'include',
         body: JSON.stringify(body)
     };
-    return await fetch(url, requestOptions).then(response => handleResponse(response));
+    return await fetch(url, requestOptions).then(response => handleResponse(response, url));
 }
 
 const put = async (url, body) => {
@@ -48,7 +48,7 @@ const put = async (url, body) => {
         body: JSON.stringify(body)
     };
     const response = await fetch(url, requestOptions);
-    return handleResponse(response);
+    return handleResponse(response, url);
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
@@ -58,7 +58,7 @@ const _delete = async (url) => {
         headers: authHeader(url)
     };
     const response = await fetch(url, requestOptions);
-    return handleResponse(response);
+    return handleResponse(response, url);
 }
 
 const postForm = async (url, data) => {
@@ -68,13 +68,11 @@ const postForm = async (url, data) => {
     })
     const requestOptions = {
         method: "POST",
-        headers: {
-            "Content-Type": "multipart/form-data", ...authHeader(url)
-        },
-        body: FormData
+        headers: authHeader(url),
+        body: formData
     }
     const response = await fetch(url, requestOptions);
-    return handleResponse(response);
+    return handleResponse(response, url);
 }
 
 const authHeader = (url) => {
@@ -87,11 +85,13 @@ const authHeader = (url) => {
     }
 }
 
-const handleResponse = async (response) => {
+const handleResponse = async (response, url) => {
     return response.text().then((text) => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401) userService.logout();
+            if (response.status === 401 && !url.includes('login')) {
+                userService.logout();
+            }
             else if (response.status === 403 && data) {
                 console.log(data.waawErrorCode);
                 switch (data.waawErrorCode) {

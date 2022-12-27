@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import { dropdownService, locationAndRoleService } from "../../services";
+import { addRoleRequestBody, editRoleRequestBody, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values
@@ -16,14 +17,8 @@ const NewRoleModal = (props) => {
     const [gapsInShifts, setGapsInShifts] = useState(0);
     const [adminRights, setAdminRights] = useState(false);
 
-    const [errorRoleName, setErrorRoleName] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorLocation, setErrorLocation] = useState({
-        message: "",
-        show: false,
-    });
+    const [errorRoleName, setErrorRoleName] = useState({});
+    const [errorLocation, setErrorLocation] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
@@ -33,105 +28,57 @@ const NewRoleModal = (props) => {
         setMinimumHours("")
         setMaximumWorkDays("")
         setGapsInShifts("")
-        setErrorRoleName({
-            message: "",
-            show: false
-        })
-        setErrorLocation({
-            message: "",
-            show: false
-        })
+        setErrorRoleName({})
+        setErrorLocation({})
         setAdminRights(false);
     }
 
     useEffect(() => {
         if (props.showModal) {
+            setLoading(false);
             if (props.role === 'ADMIN') {
-                dropdownService.getLocations()
-                    .then(res => {
-                        if (!res.error) {
-                            setLocations(res);
-                        }
-                    })
+                fetchAndHandleGet(dropdownService.getLocations, setLocations)
             }
             if (props.update) {
-                props.setPageLoading(false);
+                locationAndRoleService.getRoleById(props.id)
+                    .then(res => {
+                        if (res.error) {
+                            props.setToasterInfo({
+                                error: true,
+                                title: 'Something went wrong!',
+                                message: `Couldn't fetch details for selected role`
+                            })
+                        } else {
+                            setRoleName(res.name);
+                            setLocation(res.locationId);
+                            setMaximumHours(res.totalHoursPerDayMax);
+                            setMinimumHours(res.totalHoursPerDayMin);
+                            setMaximumWorkDays(res.maxConsecutiveWorkDays);
+                            setGapsInShifts(res.minHoursBetweenShifts);
+                        }
+                        props.setPageLoading(false);
+                    })
             }
         }
     }, [props.showModal])
 
 
-    const validateForm = async () => {
-        let error = false;
-        if (!props.update && roleName === '') {
-            setErrorRoleName({
-                message: 'Name is required',
-                show: true
-            })
-            error = true;
-        }
-        if (props.role === 'ADMIN' && location === '') {
-            setErrorLocation({
-                message: 'Location is required',
-                show: true
-            })
-            error = true;
-        }
-        return error;
+    const isError = () => {
+        return validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN');
     }
 
     const saveData = () => {
-        validateForm()
-            .then(error => {
-                if (!error) {
-                    setLoading(true)
-                    if (props.update) {
-                        locationAndRoleService.editLocationRole({
-                            id: props.id,
-                            totalHoursPerDayMin: minimumHours,
-                            totalHoursPerDayMax: maximumHours,
-                            minHoursBetweenShifts: gapsInShifts,
-                            maxConsecutiveWorkDays: maximumWorkDays
-                        })
-                            .then(res => {
-                                handleResponse(res);
-                            })
-                    } else {
-                        locationAndRoleService.addNewLocationRole({
-                            locationId: location,
-                            name: roleName,
-                            totalHoursPerDayMin: minimumHours,
-                            totalHoursPerDayMax: maximumHours,
-                            minHoursBetweenShifts: gapsInShifts,
-                            maxConsecutiveWorkDays: maximumWorkDays,
-                            isAdmin: adminRights
-                        })
-                            .then(res => {
-                                handleResponse(res);
-                            })
-                    }
-                }
-            })
-    }
-
-    const handleResponse = (res) => {
-        if (res.error) {
-            props.setToasterInfo({
-                error: true,
-                title: 'Error!',
-                message: res.message
-            })
+        if (!isError()) {
+            fetchAndHandle(props.update ?
+                locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours,
+                    maximumHours, gapsInShifts, maximumWorkDays)) : locationAndRoleService
+                        .addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours,
+                            maximumHours, gapsInShifts, maximumWorkDays)),
+                props.update ? 'Role updated successfully' : 'Role added successfully',
+                setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo);
         }
-        else {
-            props.setToasterInfo({
-                error: false,
-                title: 'Success!',
-                message: props.update ? 'Role updated successfully' : 'Role added successfully'
-            });
-            props.setReloadData(true);
-            onCancel();
-        }
-        setLoading(false);
     }
 
     return (
@@ -161,7 +108,7 @@ const NewRoleModal = (props) => {
                 {
                     props.role === 'ADMIN' &&
                     <EditableInput
-                        type="dropdown"
+                        type="typeAhead"
                         options={locations}
                         placeholder="Location"
                         label="Location"
@@ -175,7 +122,7 @@ const NewRoleModal = (props) => {
                     />
                 }
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Total hours per day (Maximum)"
                     value={maximumHours}
                     setValue={setMaximumHours}
@@ -183,7 +130,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Total hours per day (Minimum)"
                     value={minimumHours}
                     setValue={setMinimumHours}
@@ -191,7 +138,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
+                    type="number"
                     label="Maximum consecutive work days"
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
@@ -199,14 +146,22 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 <EditableInput
-                    type="text"
-                    label="Minimum gaps between shifts"
+                    type="number"
+                    label="Minimum gaps between shifts (hrs)"
                     value={gapsInShifts}
                     setValue={setGapsInShifts}
                     initialValue={gapsInShifts}
                     editOn
                 />
-                {!props.update && <Checkbox isChecked={adminRights} setIsChecked={setAdminRights} label='Give Admin Rights' className={DashboardModalStyles.singleColumn} />}
+                {
+                    !props.update &&
+                    <Checkbox
+                        isChecked={adminRights}
+                        setIsChecked={setAdminRights}
+                        label='Give Admin Rights'
+                        className={DashboardModalStyles.singleColumn}
+                    />
+                }
             </DashboardModal>
         </div>
     );
