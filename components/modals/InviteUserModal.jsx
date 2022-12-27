@@ -58,6 +58,7 @@ const InviteUserModal = (props) => {
     }, [])
 
     useEffect(() => {
+        setRole("");
         if (location && location !== '') {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
@@ -73,12 +74,12 @@ const InviteUserModal = (props) => {
 
     const saveData = () => {
         if (file.name) {
-            fetchAndHandle(memberService.inviteByUpload({ file: file }), null, setLoading,
+            fetchAndHandle(memberService.inviteByUpload, { file: file }, null, setLoading,
                 props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
         } else if (!isError()) {
-            fetchAndHandle(memberService.sendInvite(saveUserRequestBody(firstName, lastName, role,
-                location, employeeId, email, toggleValue === 'Permanent')), 'Invite Sent Successfully',
+            fetchAndHandle(memberService.sendInvite, saveUserRequestBody(firstName, lastName, role,
+                location, employeeId, email, toggleValue === 'Permanent'), 'Invite Sent Successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
         }

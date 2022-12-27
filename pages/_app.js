@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
 import { WaawHead, TopLoader, LoadingScreen } from "../components";
-import { secureLocalStorage } from "../helpers";
+import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath } from "../helpers";
 import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
 import { Toaster } from "../components";
@@ -29,14 +29,6 @@ function MyApp({ Component, pageProps }) {
     });
     const [showToaster, setShowToaster] = useState(false);
 
-    const getActiveMenuFromPath = (path) => {
-        if (path.includes("why-waaw")) {
-            return "WHY_WAAW";
-        } else if (path.includes("pricing")) {
-            return "PRICING";
-        } else return "none";
-    };
-
     useEffect(() => {
         if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
             router.push("/dashboard");
@@ -55,7 +47,13 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            setPageInfo({ ...pageInfo, activeMenu: getActiveMenuFromPath(as) });
+            setPageInfo(
+                {
+                    ...pageInfo,
+                    activeMenu: getActiveMenuFromPath(as),
+                    pageView: getPageLayoutFromPath(as)
+                }
+            );
             return true;
         });
 
