@@ -3,7 +3,7 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const RequestsFilter = () => {
+const RequestsFilter = (props) => {
     const [initiationDateFrom, setInitiationDateFrom] = useState("");
     const [initiationDateTo, setInitiationDateTo] = useState("");
     const [requestType, setRequestType] = useState("");

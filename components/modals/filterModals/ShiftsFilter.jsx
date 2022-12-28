@@ -3,21 +3,28 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 const ShiftsFilter = (props) => {
+       //------------- Dropdown values
+       const [locations, setLocations] = useState([]);
+       //-----------------------------
     const [shiftFromDate, setShiftFromDate] = useState("");
     const [shiftToDate, setShiftToDate] = useState("");
     const [role, setRole] = useState("");
+    const [location, setLocation] = useState("");
     const [status, setStatus] = useState("");
 
     const [errorDate,setErrorDate] = useState({
         message: '',
         show: false
     });
+    const [errorLocation, setErrorLocation] = useState({});
     const [loading, setLoading] = useState(false);
     const onCancel = () => {
         setShiftFromDate("")
         setShiftToDate("")
         setRole("")
+        setLocation("")
         setStatus("")
+        setErrorLocation({})
         setErrorDate({
             message: '',
             show: false
@@ -100,12 +107,30 @@ const ShiftsFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Role"
+                    placeholder="Role"
                     value={role}
                     setValue={setRole}
                     options={["Admin", "Manager", "Employee"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
+                 {
+                    props.role === 'ADMIN' &&
+                    <EditableInput
+                        type="typeAhead"
+                        options={locations}
+                        placeholder="Location"
+                        label="Location"
+                        value={location}
+                        setValue={setLocation}
+                        initialValue={location}
+                        error={errorLocation}
+                        setError={setErrorLocation}
+                        className={DashboardModalStyles.singleColumn}
+                        required
+                        editOn
+                    />
+                }
                 <EditableInput
                     type="dropdown"
                     label="Status"

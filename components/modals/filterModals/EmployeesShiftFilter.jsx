@@ -3,11 +3,12 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const EmployeesShiftFilter = () => {
+const EmployeesShiftFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [workingHours, setWorkingHours] = useState("");
-    const [status, setStatus] = useState("");
+    const [shiftStatus, setShiftStatus] = useState("");
+    const [batchStatus, setBatchStatus] = useState("");
     const [errorDate,setErrorDate] = useState({
         message: '',
         show: false
@@ -17,6 +18,8 @@ const EmployeesShiftFilter = () => {
         setDateFrom("")
         setDateTo("")
         setWorkingHours("")
+        setShiftStatus("")
+        setBatchStatus("")
         setStatus("")
         setErrorDate({
             message: '',
@@ -58,7 +61,7 @@ const EmployeesShiftFilter = () => {
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
-                        message: 'User invited successfully'
+                        message: 'Filter applied successfully'
                     });
                     props.setReloadData(true)
                     onCancel()
@@ -109,9 +112,18 @@ const EmployeesShiftFilter = () => {
                 />
                 <EditableInput
                     type="dropdown"
-                    label="Status"
-                    value={status}
-                    setValue={setStatus}
+                    label="Shift Status"
+                    value={shiftStatus}
+                    setValue={setShiftStatus}
+                    options={["pending", "In process", "completed"]}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
+                <EditableInput
+                    type="dropdown"
+                    label="Batch Status"
+                    value={batchStatus}
+                    setValue={setBatchStatus}
                     options={["pending", "In process", "completed"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn

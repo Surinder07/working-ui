@@ -3,10 +3,11 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const RolesFilter = () => {
+const RolesFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [profileType, setProfileType] = useState("");
+    const [role, setRole] = useState("");
     const [status, setStatus] = useState("");
 
     const [errorDate,setErrorDate] = useState({
@@ -18,6 +19,7 @@ const RolesFilter = () => {
         setDateFrom("")
         setDateTo("")
         setProfileType("")
+        setRole("")
         setStatus("")
         setErrorDate({
             message: '',
@@ -100,12 +102,26 @@ const RolesFilter = () => {
                 <EditableInput
                     type="dropdown"
                     label="Profile Type"
+                    placeholder="Type"
                     value={profileType}
                     setValue={setProfileType}
                     options={["Admin", "Manager", "Employee"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
+                  {
+                    props.role === 'ADMIN' &&
+                    <EditableInput
+                    type="dropdown"
+                    label="Role"
+                    placeholder="Role"
+                    value={role}
+                    setValue={setRole}
+                    options={["Admin", "Manager", "Employee"]}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
+                }
                 <EditableInput
                     type="dropdown"
                     label="Status"
