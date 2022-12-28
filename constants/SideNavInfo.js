@@ -1,4 +1,4 @@
-import { Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, Badge, RequestPage, Receipt, Description, Notifications } from "@mui/icons-material";
+import { Dashboard, PeopleAlt, CalendarMonth, Schedule, Place, Badge, RequestPage, Receipt, Description, Notifications, TrackChanges } from "@mui/icons-material";
 
 export const SideNavInfo = {
     admin: [
@@ -15,7 +15,7 @@ export const SideNavInfo = {
             activeKey: "CALENDAR",
         },
         {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
+            icon: <TrackChanges style={{ fontSize: "16px" }} />,
             text: "Shifts",
             link: "/dashboard/shifts",
             activeKey: "SHIFTS",
@@ -77,7 +77,7 @@ export const SideNavInfo = {
             activeKey: "CALENDAR",
         },
         {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
+            icon: <TrackChanges style={{ fontSize: "16px" }} />,
             text: "Shifts",
             link: "/dashboard/shifts",
             activeKey: "SHIFTS",
@@ -112,6 +112,12 @@ export const SideNavInfo = {
             link: "/dashboard/reports",
             activeKey: "REPORTS",
         },
+        {
+            icon: <Schedule style={{ fontSize: "16px" }} />,
+            text: "Time Clock",
+            link: "/dashboard/time-clock",
+            activeKey: "TIMECLOCK",
+        }
     ],
     employee: [
         {
@@ -127,7 +133,7 @@ export const SideNavInfo = {
             activeKey: "CALENDAR",
         },
         {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
+            icon: <TrackChanges style={{ fontSize: "16px" }} />,
             text: "Shifts",
             link: "/dashboard/shifts",
             activeKey: "SHIFTS",
@@ -157,6 +163,12 @@ export const SideNavInfo = {
             link: "/dashboard/reports",
             activeKey: "REPORTS",
         },
+        {
+            icon: <Schedule style={{ fontSize: "16px" }} />,
+            text: "Time Clock",
+            link: "/dashboard/time-clock",
+            activeKey: "TIMECLOCK",
+        }
     ],
     superAdmin: [
         {
@@ -172,7 +184,7 @@ export const SideNavInfo = {
             activeKey: "CALENDAR",
         },
         {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
+            icon: <TrackChanges style={{ fontSize: "16px" }} />,
             text: "Shifts",
             link: "/dashboard/shifts",
             activeKey: "SHIFTS",

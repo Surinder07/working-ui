@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import {MobileModalStyles} from "../../styles/elements";
+import {MobileModalStyles} from "../../../styles/elements";
 import {ArrowBack, Edit, Delete} from "@mui/icons-material";
-import {WaawNoIndexHead, EditableInput} from "../../components";
-import {DashboardStyles} from "../../styles/pages";
+import {WaawNoIndexHead, EditableInput} from "../..";
+import {DashboardStyles} from "../../../styles/pages";
 
 const ShiftDetailsModal = (props) => {
     const [editOn, setEditOn] = useState(true);
@@ -36,10 +36,30 @@ const ShiftDetailsModal = (props) => {
                     </div>
                 </div>
                 <div className={MobileModalStyles.contentContainer}>
-                    <EditableInput type="text" editOn={editOn} label="Employee ID" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Employee Name" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Email Address" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Role" className={DashboardStyles.colspan2} />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Employee ID"
+                        className={DashboardStyles.colspan2}
+                    />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Employee Name"
+                        className={DashboardStyles.colspan2}
+                    />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Email Address"
+                        className={DashboardStyles.colspan2}
+                    />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Role"
+                        className={DashboardStyles.colspan2}
+                    />
                     <EditableInput
                         type="time"
                         label="Shift Start Time"
@@ -49,9 +69,27 @@ const ShiftDetailsModal = (props) => {
                         initialValue={initialStartTime}
                         editOn={editOn}
                     />
-                    <EditableInput type="time" label="Shift End Time" value={endTime} className={DashboardStyles.colspan1} setValue={setEndTime} initialValue={initialEndTime} editOn={editOn} />
-                    <EditableInput type="text" editOn={editOn} label="Status" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Comments" className={DashboardStyles.colspan2} />
+                    <EditableInput
+                        type="time"
+                        label="Shift End Time"
+                        value={endTime}
+                        className={DashboardStyles.colspan1}
+                        setValue={setEndTime}
+                        initialValue={initialEndTime}
+                        editOn={editOn}
+                    />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Status"
+                        className={DashboardStyles.colspan2}
+                    />
+                    <EditableInput
+                        type="text"
+                        editOn={editOn}
+                        label="Comments"
+                        className={DashboardStyles.colspan2}
+                    />
                 </div>
             </div>
         </>

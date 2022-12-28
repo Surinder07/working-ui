@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DashboardCard, TabularInfo, WaawNoIndexHead } from "../../../components";
+import { DashboardCard, NotificationFilter, TabularInfo, WaawNoIndexHead } from "../../../components";
 import { DashboardStyles } from "../../../styles/pages";
 
 const notifications = [
@@ -41,7 +41,7 @@ const actions = {
 }
 
 const Notifications = (props) => {
-
+    const [showFilterModal,setShowFilterModal] =useState(false)
     const [data, setData] = useState(notifications);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -61,6 +61,7 @@ const Notifications = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Notifications' />
+            <NotificationFilter showModal={showFilterModal} setShowModal={setShowFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Notifications</h1>
                 <p style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3', margin: 0 }}>
@@ -81,6 +82,7 @@ const Notifications = (props) => {
                     setPageNo={setPageNo}
                     showSearch
                     showFilter
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         </>

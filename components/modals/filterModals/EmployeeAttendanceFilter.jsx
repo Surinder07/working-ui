@@ -3,7 +3,7 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const EmployeeAttendanceFilter = () => {
+const EmployeeAttendanceFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [entryType, setEntryType] = useState("");
@@ -55,7 +55,7 @@ const EmployeeAttendanceFilter = () => {
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
-                        message: 'User invited successfully'
+                        message: 'Filter applied successfully'
                     });
                     props.setReloadData(true)
                     onCancel()

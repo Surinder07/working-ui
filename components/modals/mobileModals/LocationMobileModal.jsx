@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../styles/pages";
-import {WaawNoIndexHead, EditableInput, MobileModal} from "../../components";
+import {DashboardStyles} from "../../../styles/pages";
+import {WaawNoIndexHead, EditableInput, MobileModal} from "../..";
 
 const RequestModal = (props) => {
     const [creationDate, setCreationDate] = useState("");

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter } from "../../../components";
 import RequestsModal from "../../../components/modals/EditRequestModal";
 
 const requests = [
@@ -98,6 +98,7 @@ const Requests = (props) => {
 
     const [editId, setEditId] = useState("");
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showFilterModal,setShowFilterModal] = useState(false)
     const [data, setData] = useState(requests);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -137,6 +138,7 @@ const Requests = (props) => {
         <>
             <WaawNoIndexHead title={"Requests"} />
             <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
+            <RequestsFilter showModal={showFilterModal} setShowModal={setShowFilterModal}  id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
                 {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Invite Users</Button>)}
@@ -155,6 +157,7 @@ const Requests = (props) => {
                     setPageNo={setPageNo}
                     showSearch
                     showFilter
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         </>

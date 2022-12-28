@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal, DeleteModal, PaginationDropdown } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal, DeleteModal, PaginationDropdown, EmployeeFilter } from "../../../components";
 import { memberService } from "../../../services";
 import { getEmployeeListing, fetchAndHandle, fetchAndHandlePage } from '../../../helpers';
 
 const Employees = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [showFilterModal,setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -92,6 +93,7 @@ const Employees = (props) => {
                 role={props.user.role}
                 setPageLoading={props.setPageLoading}
             />
+            <EmployeeFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Employees</h1>
                 <div className={DashboardStyles.rightContainer}>
@@ -117,6 +119,7 @@ const Employees = (props) => {
                     showFilter
                     filters={filters}
                     setFilters={setFilters}
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         </>

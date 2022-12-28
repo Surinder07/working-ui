@@ -15,17 +15,35 @@
     flex-direction: column;
     gap: 15px;
 }
-.eventsContainer {
+
+.activeEventMain {
+    display: none;
     background: #363740;
     color: white;
-    padding: 10px 38px;
-    overflow-y: scroll;
-    height:30%;
+    padding:0 5px;
 }
-.eventTimeDuration{
-    display: flex;
 
+.activeEvent{
+    display: flex;
+    justify-content: space-around;
 }
+.activeEvent > div{
+    font-size: 14px;
+}
+.activeEvent> div:first-child {
+ color: #90D9D3;
+}
+.activeEvent> div:nth-child(2) {
+    color: #FBDB6D;
+   }
+.activeEvent > div > span {
+    display: flex;  
+}
+.activeEvent > div > span > p{
+    margin-top: 2px;
+    margin-left: 4px;
+}
+
 
 .holidayContainer {
     background: #F7F2E5;
@@ -42,7 +60,7 @@
 }
 
 .arrowIcon {
-    font-size: 60px;
+    font-size: 60px !important;
     color: #000000;
     cursor: pointer;
 }
@@ -150,10 +168,7 @@
 .holidayList {
     list-style: none;
 }
-.eventList {
-    list-style: none;
-    margin-bottom: 0.5em;
-}
+
 .dateHoliday {
     font-weight: 500;
     font-size: 14px;
@@ -193,5 +208,8 @@
     .gridContainer {
         grid-template-columns: 1fr;
         grid-row-gap: 20px;
+    }
+    .activeEventMain{
+        display:block;
     }
 }

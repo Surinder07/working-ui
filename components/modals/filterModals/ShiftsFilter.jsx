@@ -3,21 +3,29 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 const ShiftsFilter = (props) => {
+       //------------- Dropdown values
+       const [locations, setLocations] = useState([]);
+       //-----------------------------
     const [shiftFromDate, setShiftFromDate] = useState("");
     const [shiftToDate, setShiftToDate] = useState("");
     const [role, setRole] = useState("");
-    const [status, setStatus] = useState("");
-
+    const [location, setLocation] = useState("");
+    const [shiftStatus, setShiftStatus] = useState("");
+    const [batchStatus, setBatchStatus] = useState("");
     const [errorDate,setErrorDate] = useState({
         message: '',
         show: false
     });
+    const [errorLocation, setErrorLocation] = useState({});
     const [loading, setLoading] = useState(false);
     const onCancel = () => {
         setShiftFromDate("")
         setShiftToDate("")
         setRole("")
-        setStatus("")
+        setLocation("")
+        setShiftStatus("")
+        setBatchStatus("")
+        setErrorLocation({})
         setErrorDate({
             message: '',
             show: false
@@ -100,18 +108,46 @@ const ShiftsFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Role"
+                    placeholder="Role"
                     value={role}
                     setValue={setRole}
                     options={["Admin", "Manager", "Employee"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
+                 {
+                    props.role === 'ADMIN' &&
+                    <EditableInput
+                        type="typeAhead"
+                        options={locations}
+                        placeholder="Location"
+                        label="Location"
+                        value={location}
+                        setValue={setLocation}
+                        initialValue={location}
+                        error={errorLocation}
+                        setError={setErrorLocation}
+                        className={DashboardModalStyles.singleColumn}
+                        required
+                        editOn
+                    />
+                }
+                  <EditableInput
+                    type="dropdown"
+                    label="Shift Status"
+                    placeholder="Shift Status"
+                    value={shiftStatus}
+                    setValue={setShiftStatus}
+                    options={["pending", "In process", "completed"]}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
                 <EditableInput
                     type="dropdown"
-                    label="Status"
-                    placeholder=" Status"
-                    value={status}
-                    setValue={setStatus}
+                    label="Batch Status"
+                    placeholder="Batch Status"
+                    value={batchStatus}
+                    setValue={setBatchStatus}
                     options={["pending", "In process", "completed"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn

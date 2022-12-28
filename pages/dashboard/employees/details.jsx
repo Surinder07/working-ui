@@ -13,6 +13,8 @@ import {
     EditShiftModal,
     EditRequestsModal,
     EmployeePreference,
+    EmployeesShiftFilter,
+    EmployeeAttendanceFilter,
 } from "../../../components";
 
 const requestsD = [
@@ -238,7 +240,8 @@ const preferences = {
 const Employees = (props) => {
 
     const router = useRouter();
-
+    const [showEmployeeShiftFilterModal,setShowEmployeeShiftFilterModal] = useState(false)
+    const [showEmployeeAttendanceFilterModal,setShowEmployeeAttendanceFilterModal] = useState(false)
     const [attendanceData, setAttendanceData] = useState(attendanceD)
     const [shiftData, setShiftData] = useState(shiftD)
     const [requestsData, setRequestsData] = useState(requestsD)
@@ -346,6 +349,7 @@ const Employees = (props) => {
             }
         }
     }
+ 
 
     const handleExpansion = (clickedMenu) => {
         if (clickedMenu === expandedMenu) {
@@ -355,7 +359,7 @@ const Employees = (props) => {
         }
     };
 
-    const getExpandableData = (title, data, actions) => {
+    const getExpandableData = (title, data, actions, setShowFilterModal) => {
         return (
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
@@ -366,6 +370,7 @@ const Employees = (props) => {
                     expandable
                     actions={actions}
                     pagination
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         );
@@ -395,6 +400,8 @@ const Employees = (props) => {
                 role={props.user.role}
                 id={editId}
             />
+            <EmployeeAttendanceFilter showModal={showEmployeeAttendanceFilterModal} setShowModal={setShowEmployeeAttendanceFilterModal}  setToasterInfo={props.setToasterInfo} role={props.user.role} />
+            <EmployeesShiftFilter showModal={showEmployeeShiftFilterModal} setShowModal={setShowEmployeeShiftFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>
                     <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
@@ -440,9 +447,9 @@ const Employees = (props) => {
                 expanded={expandedMenu === 'preferences'}
                 toggleExpansion={() => handleExpansion('preferences')}
             />
-            {getExpandableData("Shifts", shiftData, getActions('shift'))}
-            {getExpandableData("Requests", requestsData, getActions('request'))}
-            {getExpandableData("Attendance", attendanceData, getActions('attendance'))}
+            {getExpandableData("Shifts", shiftData, getActions('shift'),setShowEmployeeShiftFilterModal)}
+            {getExpandableData("Requests", requestsData, getActions('request'),"")}
+            {getExpandableData("Attendance", attendanceData, getActions('attendance'),setShowEmployeeAttendanceFilterModal)}
         </>
     );
 };

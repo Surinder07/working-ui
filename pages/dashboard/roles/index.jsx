@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal, DeleteModal, PaginationDropdown } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal, DeleteModal, PaginationDropdown, RolesFilter } from "../../../components";
 import { locationAndRoleService } from "../../../services";
 import { fetchAndHandle, fetchAndHandlePage, getRoleListing } from "../../../helpers";
 
 const Roles = (props) => {
     const [updateModal, setUpdateModal] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showFilterModal,setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -97,6 +98,7 @@ const Roles = (props) => {
                 id={editId}
                 setPageLoading={props.setPageLoading}
             />
+            <RolesFilter showModal={showFilterModal} setShowModal={setShowFilterModal} role={props.user.role} setReloadData={setReloadData}  setToasterInfo={props.setToasterInfo}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Roles</h1>
                 <div className={DashboardStyles.rightContainer}>
@@ -127,6 +129,7 @@ const Roles = (props) => {
                     showFilter
                     filters={filters}
                     setFilters={setFilters}
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         </>

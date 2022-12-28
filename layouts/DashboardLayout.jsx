@@ -4,7 +4,7 @@ import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburg
 import { footerIcons, SideNavInfo } from "../constants";
 import { LogoWhite, FaviconWhite, Favicon } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
-import { Logout, Settings } from "@mui/icons-material";
+import { Logout, Settings, PlayArrow, Stop  } from "@mui/icons-material";
 import { userService } from "../services";
 
 const Dashboard = (props) => {
@@ -16,7 +16,7 @@ const Dashboard = (props) => {
     const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState('...');
     const [sideNav, setSideNav] = useState([]);
-
+    const [play,setPlay] = useState(false)
     const handleNavigation = useCallback(
         (e) => {
             const window = e.currentTarget;
@@ -104,6 +104,19 @@ const Dashboard = (props) => {
             <div className={`${navOpen ? DashboardLayout.openNavRightContainer : DashboardLayout.closeNavRightContainer}`}>
                 <div className={DashboardLayout.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
+                    {props.screenType !== 3 && <div className={DashboardLayout.clockDashboardMain}>
+                            <div>
+                             <p>Clock In</p>
+                             <p style={{color: '#2996C3'}}>10:00</p>
+                            </div>
+                            <div>
+                            <p>Clock Out</p>
+                             <p style={{color: '#2996C3'}}>05:00</p>
+                            </div>
+                            <div>
+                           { !play? <PlayArrow className={DashboardLayout.playAndPauseIcon} onClick={()=> setPlay(true)}/> : <Stop className={DashboardLayout.playAndPauseIcon} onClick={()=> setPlay(false)} />}
+                            </div>
+                            </div>}
                     <div className={DashboardLayout.headerRight}>
                         {props.screenType !== 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />}
                         <div className={DashboardLayout.helpIcon}>?</div>
