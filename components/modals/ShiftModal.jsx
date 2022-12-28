@@ -1,4 +1,4 @@
-import { WaawNoIndexHead, MobileModal } from "../../../components";
+import {WaawNoIndexHead, MobileModal} from "../../components";
 
 const ShiftsModal = (props) => {
     const shiftData = {

@@ -1,22 +1,20 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, EditableInput, MobileModal} from "../..";
+import { WaawNoIndexHead, MobileModal } from "../../components";
 
 const EmployeeModal = (props) => {
-    const [editOn, setEditOn] = useState(true);
+    const employeeData = {
+        employeeId: 259999,
+        employeeName: "Name of Employee",
+        email: "abcdefghijk@gmail.com",
+        contactDetail: "95621475861",
+        role: "Role Name",
+        location: "Location",
+        status: "Status",
+    };
 
     return (
         <>
-            <WaawNoIndexHead title="Employee" />
-            <MobileModal header="Employee" edit delete setEditOn={setEditOn}>
-                <EditableInput type="text" editOn={editOn} label="Employee ID" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Employee Name" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Email Address" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Contact Detail" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Role" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Location" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Status" className={DashboardStyles.colspan2} />
-            </MobileModal>
+            <WaawNoIndexHead title="Employees" />
+            <MobileModal header="Employees" data={employeeData}></MobileModal>
         </>
     );
 };
