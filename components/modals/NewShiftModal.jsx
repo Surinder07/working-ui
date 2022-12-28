@@ -3,179 +3,94 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import Tabs from "../dashboardComponents/Tabs";
-import { dropdownService } from "../../services";
+import { dropdownService, shiftsService } from "../../services";
+import { combineBoolean, fetchAndHandle, fetchAndHandleGet, newShiftRequestBody, validateForEmptyArray, validateForEmptyField, validateForTime } from "../../helpers";
 
 const NewShiftModal = (props) => {
     //------------- Dropdown values
     const [locations, setLocations] = useState([]);
     const [roles, setRoles] = useState([]);
     const [users, setUsers] = useState([]);
+    const shiftType = ["Single Shift", "Batch"];
+    const assignType = ["Users", "Roles"];
     //-----------------------------
-    const [formType, setFormType] = useState("Single Shift");
-    const [assignTo, setAssignTo] = useState("Users");
+    const [formType, setFormType] = useState(shiftType[0]);
+    const [assignTo, setAssignTo] = useState(assignType[0]);
     const [releaseImmediately, setReleaseImmediately] = useState(false);
     const [startTime, setStartTime] = useState({});
     const [endTime, setEndTime] = useState({});
-    const [startDateShift, setStartDateShift] = useState("");
-    const [endDateShift, setEndDateShift] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [user, setUser] = useState([]);
     const [location, setLocation] = useState("");
     const [role, setRole] = useState([]);
     const [shiftName, setShiftName] = useState("");
 
-    const [errorStartDate, setErrorStartDate] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorEndDate, setErrorEndDate] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorStartTime, setErrorStartTime] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorEndTime, setErrorEndTime] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorUser, setErrorUser] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorLocation, setErrorLocation] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorRole, setErrorRole] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorShiftName, setErrorShiftName] = useState({
-        message: "",
-        show: false,
-    });
+    const [errorStartDate, setErrorStartDate] = useState({});
+    const [errorEndDate, setErrorEndDate] = useState({});
+    const [errorStartTime, setErrorStartTime] = useState({});
+    const [errorEndTime, setErrorEndTime] = useState({});
+    const [errorUser, setErrorUser] = useState({});
+    const [errorLocation, setErrorLocation] = useState({});
+    const [errorRole, setErrorRole] = useState({});
+    const [errorShiftName, setErrorShiftName] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
         setStartTime({})
         setEndTime({})
-        setStartDateShift("")
-        setEndDateShift("")
+        setStartDate("")
+        setEndDate("")
         setUser("")
         setLocation("")
         setRole("")
         setShiftName("")
-        setErrorStartTime({
-            message: "",
-            show: false
-        })
-        setErrorEndTime({
-            message: "",
-            show: false
-        })
-        setErrorStartDate({
-            message: "",
-            show: false
-        })
-        setErrorEndDate({
-            message: "",
-            show: false
-        })
-        setErrorUser({
-            message: "",
-            show: false
-        })
-        setErrorLocation({
-            message: "",
-            show: false
-        })
-        setErrorRole({
-            message: "",
-            show: false
-        })
-        setErrorShiftName({
-            message: "",
-            show: false
-        })
+        setErrorStartTime({})
+        setErrorEndTime({})
+        setErrorStartDate({})
+        setErrorEndDate({})
+        setErrorUser({})
+        setErrorLocation({})
+        setErrorRole({})
+        setErrorShiftName({})
     }
 
     useEffect(() => {
-        if (props.role === 'ADMIN') {
-            dropdownService.getLocations()
-                .then(res => {
-                    if (!res.error) {
-                        setLocations(res);
-                    }
-                })
-        }
-    }, [])
+        if (props.showModal)
+            if (props.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            } else {
+                fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+            }
+        fetchAndHandleGet(() => dropdownService.getUsers(), setUsers);
+    }, [props.showModal])
 
-    const validateForm = async () => {
-        let error = false;
-        if (startDateShift === '') {
-            setErrorStartDate({
-                message: 'Start Date required',
-                show: true,
-            })
-            error = true;
+    useEffect(() => {
+        setRole("");
+        if (location && location !== '') {
+            fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
-        if (endDateShift === '') {
-            setErrorEndDate({
-                message: 'End Date required',
-                show: true,
-            })
-            error = true;
-        }
-        if (props.role === 'ADMIN' && location === '') {
-            setErrorLocation({
-                message: 'Location is required',
-                show: true
-            })
-            error = true
-        }
-        if (role === '') {
-            setErrorRole({
-                message: 'Role is required',
-                show: true
-            })
-            error = true
-        }
-        if (user === '') {
-            setErrorUser({
-                message: 'User is required',
-                show: true
-            })
-            error = true
-        }
-        return error
+    }, [location])
+
+    const isError = () => {
+        return combineBoolean(validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
+            validateForEmptyField(endDate, 'End Date', setErrorEndDate, true),
+            validateForTime(startTime, setErrorStartTime, formType === 'Single Shift'),
+            validateForTime(endTime, setErrorEndTime, formType === 'Single Shift'),
+            validateForEmptyField(location, 'Location', setErrorLocation,
+                (props.role === 'ADMIN' && formType === 'Single Shift' && assignTo === 'Roles')),
+            validateForEmptyArray(role, "Role", setErrorRole, formType === 'Single Shift' && assignTo === 'Roles'),
+            validateForEmptyArray(user, "User", setErrorUser, assignTo === 'Users'));
     }
 
     const saveData = () => {
-        validateForm()
-            .then(error => {
-                if (!error) {
-
-                    setLoading(true)
-                    if (error == true) {
-                        props.setToasterInfo({
-                            error: true,
-                            title: 'Error!',
-                            message: res.message
-                        })
-                    }
-                    else {
-                        props.setToasterInfo({
-                            error: false,
-                            title: 'Success!',
-                            message: 'User invited successfully'
-                        });
-                        props.setReloadData(true)
-                        onCancel()
-                    }
-                    setLoading(false)
-                }
-            })
+        console.log(isError());
+        if (!isError()) {
+            fetchAndHandle(shiftsService.newShift, newShiftRequestBody(formType, location, role, user,
+                startDate, startTime, endDate, endTime, releaseImmediately, shiftName), 
+                null, setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo);
+        }
     }
 
     return (
@@ -191,16 +106,16 @@ const NewShiftModal = (props) => {
         >
             <Tabs
                 className={DashboardModalStyles.singleColumn}
-                options={["Single Shift", "Batches"]}
+                options={shiftType}
                 selected={formType}
                 setSelected={setFormType}
                 size="big"
             />
             <EditableInput
                 type="date"
-                value={startDateShift}
-                setValue={setStartDateShift}
-                initialValue={startDateShift}
+                value={startDate}
+                setValue={setStartDate}
+                initialValue={startDate}
                 label="Start Date"
                 error={errorStartDate}
                 setError={setErrorStartDate}
@@ -209,9 +124,9 @@ const NewShiftModal = (props) => {
             />
             <EditableInput
                 type="date"
-                value={endDateShift}
-                setValue={setEndDateShift}
-                initialValue={endDateShift}
+                value={endDate}
+                setValue={setEndDate}
+                initialValue={endDate}
                 label="End Date"
                 error={errorEndDate}
                 setError={setErrorEndDate}
@@ -247,7 +162,7 @@ const NewShiftModal = (props) => {
             }
             <Tabs
                 className={DashboardModalStyles.singleColumn}
-                options={["Users", "Locations"]}
+                options={assignType}
                 selected={assignTo}
                 setSelected={setAssignTo}
                 size="small"
@@ -265,6 +180,7 @@ const NewShiftModal = (props) => {
                         setValues={setUser}
                         error={errorUser}
                         setError={setErrorUser}
+                        description='Select multiple users to assign shift to'
                         required
                         editOn
                     /> :
@@ -274,7 +190,7 @@ const NewShiftModal = (props) => {
                             <EditableInput
                                 type="typeAhead"
                                 label="Location"
-                                options={["India", "Canada", "Mexico"]}
+                                options={locations}
                                 placeholder="Location"
                                 className={DashboardModalStyles.singleColumn}
                                 value={location}
@@ -282,7 +198,8 @@ const NewShiftModal = (props) => {
                                 initialValue={location}
                                 error={errorLocation}
                                 setError={setErrorLocation}
-                                required
+                                required={formType === 'Single Shift'}
+                                description={formType === 'Batch' ? 'Leave Location empty to create shift for all locations' : ''}
                                 editOn
                             />
                         }
@@ -290,12 +207,15 @@ const NewShiftModal = (props) => {
                             type="multiselect"
                             label="Roles"
                             className={DashboardModalStyles.singleColumn}
+                            options={roles}
+                            placeholder='Select a location to show roles'
                             values={role}
                             setValues={setRole}
                             initialValue={role}
                             error={errorRole}
                             setError={setErrorRole}
-                            required
+                            required={formType === 'Single Shift'}
+                            description={formType === 'Batch' ? 'Leave Role empty to create shift for all roles under given location' : ''}
                             editOn
                         />
                     </>

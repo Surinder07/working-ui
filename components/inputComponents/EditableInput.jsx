@@ -83,7 +83,7 @@ const EditableInput = (props) => {
                 }
                 {
                     props.type === 'multiselect' &&
-                    <MultiSelectDropdown values={props.values} setValues={props.setValues} options={props.options} setShowError={props.setShowError} showError={props.showError} />
+                    <MultiSelectDropdown values={props.values} setValues={props.setValues} placeholder={props.placeholder} options={props.options} setShowError={props.setShowError} showError={props.showError} />
                 }
                 {
                     props.type === 'textarea' && (
@@ -100,12 +100,12 @@ const EditableInput = (props) => {
                     )
                 }
                 {
-                    props.error && props.error.show &&
+                    (props.error && props.error.show) &&
                     <p className={EditableInputStyles.errorMessage}>{props.error.message}</p>
                 }
             </div>
             {
-                props.description &&
+                (props.description && props.description !== '') &&
                 <p className={EditableInputStyles.description}>
                     {props.description}
                 </p>

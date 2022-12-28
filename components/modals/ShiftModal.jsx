@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../styles/pages";
-import {WaawNoIndexHead, EditableInput, MobileModal} from "../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../styles/pages";
+import { WaawNoIndexHead, EditableInput, MobileModal } from "../../components";
 
 const ShiftsModal = (props) => {
     const [startDate, setStartDate] = useState("");

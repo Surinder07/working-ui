@@ -2,7 +2,7 @@ import { fetchWrapper } from '../helpers';
 
 const endpoints = process.env.endpoints.locationAndRole;
 
-const saveLocation = (name, timezone) => {
+const saveLocation = ({ name, timezone }) => {
     return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocation), { name, timezone });
 }
 

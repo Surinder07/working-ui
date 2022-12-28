@@ -14,7 +14,7 @@ const Navbar = (props) => {
     const getMenuLink = (key, text, link, extraClass) => {
         return (
             <Link key={key} href={link}>
-                <li className={joinClasses(NavbarStyles.menuItem, extraClass)} >
+                <li className={joinClasses(NavbarStyles.menuItem, extraClass)} onClick={() => setOpenMenu(false)}>
                     <p>{text}</p>
                 </li>
             </Link>

@@ -61,7 +61,7 @@
 .gridDouble,
 .gridDoubleNarrow {
     display: grid;
-    row-gap: 20px;
+    row-gap: 15px;
 }
 
 .gridSingle {

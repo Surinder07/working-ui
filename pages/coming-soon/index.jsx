@@ -1,6 +1,6 @@
 import { WaawHead, LinkedImage } from "../../components";
 import { ComingSoonStyles } from '../../styles/pages';
-import Images from "../../public/Images";
+import { LogoInverted } from "../../public/images";
 import { useEffect } from 'react';
 
 const ComingSoon = (props) => {
@@ -21,7 +21,7 @@ const ComingSoon = (props) => {
                 <div className={ComingSoonStyles.logoContainer}>
                     <LinkedImage
                         link='/'
-                        src={Images.LogoInverted}
+                        src={LogoInverted}
                         alt='Logo(link to home)'
                         height={80}
                         onClick={() => {

@@ -28,13 +28,13 @@ const LocationModal = (props) => {
 
     const isError = () => {
         return validateForEmptyField(location, 'Name', setErrorLocation, true) ||
-         validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);
+            validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);
     }
 
     const saveData = () => {
-        if (!isError) {
-            fetchAndHandle(locationAndRoleService.saveLocation(location, timezone),
-                'Location added successfully', setLoading, props.setReloadData, props.setPageLoading, 
+        if (!isError()) {
+            fetchAndHandle(locationAndRoleService.saveLocation, { name: location, timezone },
+                'Location added successfully', setLoading, props.setReloadData, props.setPageLoading,
                 onCancel, props.setShowModal, props.setToasterInfo);
         }
     }
