@@ -1,35 +1,22 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../styles/pages";
-import {WaawNoIndexHead, EditableInput, MobileModal} from "../../components";
+import {WaawNoIndexHead, MobileModal} from "../../components";
 
-const RequestModal = (props) => {
-    const [creationDate, setCreationDate] = useState("");
-    const [initialCreationDate, setInitialCreationDate] = useState("");
-
-    const [editOn, setEditOn] = useState(true);
+const LocationMobileModal = (props) => {
+    const locationData = {
+        locationId: 259999,
+        locationName: "Name of Location",
+        creationDate: "DD/MM/YYYY",
+        timezon: "EST",
+        noOfAcitveEmployees: "1000",
+        noOfInactiveEmployees: "50",
+        status: "Status",
+    };
 
     return (
         <>
-            <WaawNoIndexHead title="Requests" />
-            <MobileModal header="Requests" edit delete setEditOn={setEditOn}>
-                <EditableInput type="text" editOn={editOn} label="Location ID" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Location Name" className={DashboardStyles.colspan2} />
-                <EditableInput
-                    type="date"
-                    label="Creation date"
-                    value={creationDate}
-                    className={DashboardStyles.colspan2}
-                    setValue={setCreationDate}
-                    initialValue={initialCreationDate}
-                    editOn={editOn}
-                />
-                <EditableInput type="text" editOn={editOn} label="Time zone" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Number of active employees" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Number of inactive employees" className={DashboardStyles.colspan2} />
-                <EditableInput type="text" editOn={editOn} label="Status" className={DashboardStyles.colspan2} />
-            </MobileModal>
+            <WaawNoIndexHead title="Locations" />
+            <MobileModal header="Locations" data={locationData}></MobileModal>
         </>
     );
 };
 
-export default RequestModal;
+export default LocationMobileModal;

@@ -5,11 +5,15 @@ import {WaawNoIndexHead, EditableInput} from "../../components";
 import {DashboardStyles} from "../../styles/pages";
 
 const ShiftDetailsModal = (props) => {
-    const [editOn, setEditOn] = useState(true);
-    const [startTime, setStartTime] = useState("");
-    const [initialStartTime, setInitialStartTime] = useState("");
-    const [endTime, setEndTime] = useState("");
-    const [initialEndTime, setInitialEndTime] = useState("");
+    const shiftData = {
+        requestId: 259999,
+        requestType: "Name of Shift",
+        initiationDate: "DD/MM/YYYY",
+        initiatedBy: "Name",
+        assignedTo: "Name",
+        location: "Location",
+        status: "Status",
+    };
 
     return (
         <>
@@ -36,22 +40,17 @@ const ShiftDetailsModal = (props) => {
                     </div>
                 </div>
                 <div className={MobileModalStyles.contentContainer}>
-                    <EditableInput type="text" editOn={editOn} label="Employee ID" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Employee Name" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Email Address" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Role" className={DashboardStyles.colspan2} />
-                    <EditableInput
-                        type="time"
-                        label="Shift Start Time"
-                        value={startTime}
-                        className={DashboardStyles.colspan1}
-                        setValue={setStartTime}
-                        initialValue={initialStartTime}
-                        editOn={editOn}
-                    />
-                    <EditableInput type="time" label="Shift End Time" value={endTime} className={DashboardStyles.colspan1} setValue={setEndTime} initialValue={initialEndTime} editOn={editOn} />
-                    <EditableInput type="text" editOn={editOn} label="Status" className={DashboardStyles.colspan2} />
-                    <EditableInput type="text" editOn={editOn} label="Comments" className={DashboardStyles.colspan2} />
+                    {Object.entries(shiftbData).map((info, key) => {
+                        let name = info[0].replace(/([A-Z])/g, " $1").trim();
+                        name = name.charAt(0).toUpperCase() + name.split(1);
+                        let value = info[1];
+                        return (
+                            <>
+                                <div className={MobileModalStyles.key}>{name}</div>
+                                <div className={MobileModalStyles.value}>{value}</div>
+                            </>
+                        );
+                    })}
                 </div>
             </div>
         </>
