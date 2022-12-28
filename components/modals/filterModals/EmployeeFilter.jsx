@@ -23,6 +23,11 @@ const EmployeeFilter = (props) => {
         setStatus("")
 
     }
+    
+    const validateForm =async () => {
+        let error = false
+        return error
+    }
 
     const saveData = () => {
         validateForm()

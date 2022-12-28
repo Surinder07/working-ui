@@ -74,7 +74,7 @@ const TabularInfo = (props) => {
                     }
                     {
                         props.showFilter && ((props.expandable && props.expanded) || !props.expandable) &&
-                        <div ref={filterRef} className={TabularInfoStyles.filter}>
+                        <div ref={filterRef} className={TabularInfoStyles.filter} onClick={() => props.setShowFilterModal(true)}>
                             <FilterAlt />
                             <p>Filter</p>
                         </div>

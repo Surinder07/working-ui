@@ -125,6 +125,7 @@ const RolesFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Status"
+                    placeholder="Status"
                     value={status}
                     setValue={setStatus}
                     options={["pending", "In process", "completed"]}

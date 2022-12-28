@@ -192,10 +192,9 @@ const Reports = (props) => {
                     {
                     props.user.role === "MANAGER" || props.user.role === "ADMIN" && 
                             <>
-                                <Button type="plain" style={{ marginRight: "15px" }}>
-                                    + Generate Payroll
+                                <Button type="plain" style={{ marginRight: "15px" }} onClick={() => setShowModal(true)}>
+                                    + Generate Report Modal
                                 </Button>
-                                <Button type="plain">+ Generate Attendance</Button>
                             </>
                         }
                 </div>
@@ -203,7 +202,7 @@ const Reports = (props) => {
             {getExpandableData("Payroll", payrollData, getActions("shift"))}
             {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
             {getExpandableData("Location Holidays", requestsData, getActions("request"))}
-            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
+            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}  setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
         </>
     );
 };

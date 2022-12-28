@@ -7,8 +7,7 @@ const EmployeesShiftFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [workingHours, setWorkingHours] = useState("");
-    const [shiftStatus, setShiftStatus] = useState("");
-    const [batchStatus, setBatchStatus] = useState("");
+    const [status, setStatus] = useState("");
     const [errorDate,setErrorDate] = useState({
         message: '',
         show: false
@@ -18,8 +17,7 @@ const EmployeesShiftFilter = (props) => {
         setDateFrom("")
         setDateTo("")
         setWorkingHours("")
-        setShiftStatus("")
-        setBatchStatus("")
+        setStatus("")
         setStatus("")
         setErrorDate({
             message: '',
@@ -112,18 +110,9 @@ const EmployeesShiftFilter = (props) => {
                 />
                 <EditableInput
                     type="dropdown"
-                    label="Shift Status"
-                    value={shiftStatus}
-                    setValue={setShiftStatus}
-                    options={["pending", "In process", "completed"]}
-                    className={DashboardModalStyles.singleColumn}
-                    editOn
-                />
-                <EditableInput
-                    type="dropdown"
-                    label="Batch Status"
-                    value={batchStatus}
-                    setValue={setBatchStatus}
+                    label="Status"
+                    value={status}
+                    setValue={setStatus}
                     options={["pending", "In process", "completed"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn

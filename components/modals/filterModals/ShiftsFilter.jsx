@@ -10,8 +10,8 @@ const ShiftsFilter = (props) => {
     const [shiftToDate, setShiftToDate] = useState("");
     const [role, setRole] = useState("");
     const [location, setLocation] = useState("");
-    const [status, setStatus] = useState("");
-
+    const [shiftStatus, setShiftStatus] = useState("");
+    const [batchStatus, setBatchStatus] = useState("");
     const [errorDate,setErrorDate] = useState({
         message: '',
         show: false
@@ -23,7 +23,8 @@ const ShiftsFilter = (props) => {
         setShiftToDate("")
         setRole("")
         setLocation("")
-        setStatus("")
+        setShiftStatus("")
+        setBatchStatus("")
         setErrorLocation({})
         setErrorDate({
             message: '',
@@ -131,12 +132,22 @@ const ShiftsFilter = (props) => {
                         editOn
                     />
                 }
+                  <EditableInput
+                    type="dropdown"
+                    label="Shift Status"
+                    placeholder="Shift Status"
+                    value={shiftStatus}
+                    setValue={setShiftStatus}
+                    options={["pending", "In process", "completed"]}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
                 <EditableInput
                     type="dropdown"
-                    label="Status"
-                    placeholder=" Status"
-                    value={status}
-                    setValue={setStatus}
+                    label="Batch Status"
+                    placeholder="Batch Status"
+                    value={batchStatus}
+                    setValue={setBatchStatus}
                     options={["pending", "In process", "completed"]}
                     className={DashboardModalStyles.singleColumn}
                     editOn
