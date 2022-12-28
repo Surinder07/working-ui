@@ -1,8 +1,7 @@
-import {useEffect, useState} from "react";
-import {MobileModalStyles} from "../../styles/elements";
-import {ArrowBack, Edit, Delete} from "@mui/icons-material";
-import {WaawNoIndexHead, EditableInput} from "../../components";
-import {DashboardStyles} from "../../styles/pages";
+import { MobileModalStyles } from "../../../styles/elements";
+import { ArrowBack, Edit, Delete } from "@mui/icons-material";
+import { WaawNoIndexHead, EditableInput } from "../..";
+import { DashboardStyles } from "../../../styles/pages";
 
 const ShiftDetailsModal = (props) => {
     const shiftData = {

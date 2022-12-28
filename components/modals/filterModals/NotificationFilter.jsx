@@ -3,7 +3,7 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const NotificationFilter = () => {
+const NotificationFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [type, setType] = useState("");
@@ -101,6 +101,7 @@ const NotificationFilter = () => {
                 <EditableInput
                     type="dropdown"
                     label="Type"
+                    placeholder="Type"
                     value={type}
                     setValue={setType}
                     options={["Admin", "Manager", "Employee"]}
@@ -110,6 +111,7 @@ const NotificationFilter = () => {
                 <EditableInput
                     type="dropdown"
                     label="Status"
+                    placeholder="Status"
                     value={status}
                     setValue={setStatus}
                     options={["pending", "In process", "completed"]}

@@ -3,7 +3,7 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const EmployeesShiftFilter = () => {
+const EmployeesShiftFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [workingHours, setWorkingHours] = useState("");
@@ -17,6 +17,7 @@ const EmployeesShiftFilter = () => {
         setDateFrom("")
         setDateTo("")
         setWorkingHours("")
+        setStatus("")
         setStatus("")
         setErrorDate({
             message: '',
@@ -58,7 +59,7 @@ const EmployeesShiftFilter = () => {
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
-                        message: 'User invited successfully'
+                        message: 'Filter applied successfully'
                     });
                     props.setReloadData(true)
                     onCancel()

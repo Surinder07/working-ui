@@ -3,7 +3,7 @@ import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
 
-const RequestsFilter = () => {
+const RequestsFilter = (props) => {
     const [initiationDateFrom, setInitiationDateFrom] = useState("");
     const [initiationDateTo, setInitiationDateTo] = useState("");
     const [requestType, setRequestType] = useState("");
@@ -99,6 +99,7 @@ const RequestsFilter = () => {
                 <EditableInput
                     type="dropdown"
                     label="Request Type"
+                    placeholder="Request Type"
                     value={requestType}
                     setValue={setRequestType}
                     options={["Admin", "Manager", "Employee"]}
@@ -108,6 +109,7 @@ const RequestsFilter = () => {
                 <EditableInput
                     type="dropdown"
                     label="Status"
+                    placeholder="Status"
                     value={status}
                     setValue={setStatus}
                     options={["pending", "In process", "completed"]}

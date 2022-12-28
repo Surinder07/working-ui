@@ -1,41 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from "date-fns";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { ArrowLeft, ArrowRight, Schedule} from "@mui/icons-material";
 import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
 
-let events= [
-    {
+let events=  {
         id: 1,
-        startDatetime: "2022-11-11T13:00",
-        endDatetime: "2022-11-11T14:30",
-        name: "Waaw meeting",
-      
-    },
-    {
-        id: 2,
-        startDatetime: "2022-11-11T13:00",
-         endDatetime: "2022-11-11T14:30",
-        name: "Pragra meeting",
-   
-    },
-    {
-        id: 3,
-        startDatetime: "2022-11-11T13:00",
-         endDatetime: "2022-11-11T14:30",
-        name: "Client meeting",
-
-    },
-    {
-        id: 4,
-        startDatetime: "2022-11-11T13:00",
-         endDatetime: "2022-11-11T14:30",
-        name: "Investors meeting",
-    
-    }
-    
-];
+        time:  '10th June',
+        inTime: '09:30',
+        outTime: '11:00',
+        duration: '01 hours 30 minutes'    
+    };
 
 const holidays = [
     {
@@ -111,7 +87,6 @@ const CalendarComponent = () => {
         })
     );
     const [days, setDays] = useState(referenceDays);
-    const [eventArr,setEventArr] = useState([])
     const dayRef = useRef();
 
     const previousMonth = () => {
@@ -198,19 +173,6 @@ const CalendarComponent = () => {
             setDayHeight(dayRef.current.clientWidth);
         }
     }, [dayRef.current]);
-// for event data ////
-    useEffect(() => {
-        let newArr = []
-        let newdate = {}
-        events.map((item)=>(
-            newdate.inTime = item.startDatetime.slice(11),
-            newdate.outTime = item.endDatetime.slice(11),
-            newdate.name = item.name,
-            newArr.push(newdate)
-           
-      ))
-      setEventArr(newArr)
-    },[referenceDays])
 
     return (
         <div className={CalendarStyles.gridContainer}>
@@ -277,18 +239,35 @@ const CalendarComponent = () => {
                 </div>
             </DashboardCard>
             <div className={CalendarStyles.holidaysAndEventsContainer}>
-                <div className={CalendarStyles.eventsContainer}>
-                    <h4>Events</h4>                
-                    {eventArr && eventArr.map((event, i) => (
-                       <div key={i} >
-                        <p>{event.name}</p>
-                         <div className={CalendarStyles.eventTimeDuration}>  
-                         <span>In Time: {event.inTime}</span>
-                         <span>Out Time: {event.outTime}</span>
-                         </div>
+                              
+                    {events && 
+                        <div className={CalendarStyles.activeEventMain}>
+                            <h3>{events.time}</h3>
+                       <div className={CalendarStyles.activeEvent}>          
+                          <div>
+                            <p>Clock In</p>
+                            <span>
+                                <Schedule style={{fontSize:"14px !important"}}/>
+                                <p>{events.inTime}</p>
+                            </span>
+                          </div>
+                          <div>
+                          <p>Clock Out</p>
+                            <span>
+                            <Schedule style={{transform: "rotate(180deg)",fontSize:"14px !important"}}/>
+                            <p>{events.outTime}</p>
+                            </span>
+                          </div>
+                          <div>
+                          <p>Duration</p>
+                            <span>
+                                {events.duration}
+                            </span>
+                          </div>                      
                        </div>
-                    ))}              
-                </div>
+                       </div>
+                    }              
+              
             <div className={CalendarStyles.holidayContainer}>
                 <h4>Holidays</h4>
                 <ul className={CalendarStyles.holidayList}>

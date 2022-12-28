@@ -163,7 +163,13 @@ const Shifts = (props) => {
                 role={props.user.role}
                 setPageLoading={props.setPageLoading}
             />
-            <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
+            <ShiftsFilter
+                setShowModal={setShowFilterModal}
+                showModal={showFilterModal}
+                setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
+                setReloadData={setReloadData}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
                 <div className={DashboardStyles.rightContainer}>
@@ -198,6 +204,7 @@ const Shifts = (props) => {
                     showFilter
                     filters={filters}
                     setFilters={setFilters}
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
             {showShiftModal && <ShiftModal />}
