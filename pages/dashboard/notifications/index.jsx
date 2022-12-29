@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { DashboardCard, DeleteModal, PaginationDropdown, TabularInfo, WaawNoIndexHead } from "../../../components";
+import { DashboardCard, DeleteModal, NotificationFilter, PaginationDropdown, TabularInfo, WaawNoIndexHead } from "../../../components";
 import { fetchAndHandle, fetchAndHandlePage, getNotificationListing } from "../../../helpers";
 import { notificationService } from "../../../services/notification.service";
 import { DashboardStyles } from "../../../styles/pages";
 
 const Notifications = (props) => {
     const [showFilterModal, setShowFilterModal] = useState(false)
-    const [data, setData] = useState(notifications);
+    const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
