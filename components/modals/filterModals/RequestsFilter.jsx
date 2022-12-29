@@ -14,7 +14,7 @@ const RequestsFilter = (props) => {
         show: false
     });
     const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setInitiationDateFrom("")
         setInitiationDateTo("")
         setRequestType("")
@@ -22,6 +22,7 @@ const RequestsFilter = (props) => {
             message: '',
             show: false
         })
+        props.setData({})
     }
     const validateForm = async () => {
         let error = false;
@@ -44,26 +45,23 @@ const RequestsFilter = (props) => {
         validateForm()
         .then(error => {
             if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
                         message: 'Request filtered successfully'
                     });
+                    let data = {
+                        fromDate: initiationDateFrom,
+                        toDate: initiationDateTo,
+                        requestType: requestType,
+                        status:status 
+                    }
+                    props.setData(JSON.stringify(data))
                     props.setReloadData(true)
-                    onCancel()
+                    clearAllFilter()
                 }
                 setLoading(false)
-            }
+            
         })
     }
     return (
@@ -75,7 +73,7 @@ const RequestsFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
+                clearAllFilter={clearAllFilter}
                 loading={loading}
             >
                 <EditableInput

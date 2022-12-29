@@ -18,7 +18,7 @@ const ShiftsFilter = (props) => {
     });
     const [errorLocation, setErrorLocation] = useState({});
     const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setShiftFromDate("")
         setShiftToDate("")
         setRole("")
@@ -30,6 +30,7 @@ const ShiftsFilter = (props) => {
             message: '',
             show: false
         })
+        props.setData({})
     }
     const validateForm = async () => {
         let error = false;
@@ -52,26 +53,25 @@ const ShiftsFilter = (props) => {
         validateForm()
         .then(error => {
             if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
                         message: 'Shift filtered successfully'
                     });
+                    let data = {
+                        fromDate: shiftFromDate,
+                        toDate: shiftToDate,
+                        role: role,
+                        location: location,
+                        shiftStatus: shiftStatus,
+                        batchStatus: batchStatus, 
+                    }
+                    props.setData(JSON.stringify(data))
                     props.setReloadData(true)
-                    onCancel()
+                    clearAllFilter()
                 }
                 setLoading(false)
-            }
+            
         })
     }
 
@@ -84,7 +84,7 @@ const ShiftsFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
+                clearAllFilter={clearAllFilter}
                 loading={loading}
             >
                 <EditableInput

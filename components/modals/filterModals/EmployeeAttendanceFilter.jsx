@@ -12,7 +12,7 @@ const EmployeeAttendanceFilter = (props) => {
         show: false
     });
     const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setEntryType("")
@@ -20,6 +20,7 @@ const EmployeeAttendanceFilter = (props) => {
             message: '',
             show: false
         })
+        props.setData({})
     }
     const validateForm = async () => {
         let error = false;
@@ -42,26 +43,22 @@ const EmployeeAttendanceFilter = (props) => {
         validateForm()
         .then(error => {
             if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
                     props.setToasterInfo({
                         error: false,
                         title: 'Success!',
                         message: 'Filter applied successfully'
                     });
+                    let data = {
+                        fromDate: dateFrom,
+                        toDate: dateTo,
+                        entryType: entryType
+                    }
+                    props.setData(JSON.stringify(data))
                     props.setReloadData(true)
-                    onCancel()
+                    clearAllFilter()
                 }
                 setLoading(false)
-            }
+            
         })
     }
 
@@ -74,7 +71,7 @@ const EmployeeAttendanceFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
+                clearAllFilter={clearAllFilter}
                 loading={loading}
             >
                 <EditableInput
