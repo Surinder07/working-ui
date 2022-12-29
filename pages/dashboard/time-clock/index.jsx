@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock } from "../../../components";
 
 const timesheet = [
     {
@@ -44,12 +44,13 @@ const timeClock = (props) => {
             activeMenu: "TIMECLOCK",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(["MANAGER", "EMPLOYEE"]);
     }, []);
 
     const actions = [
         {
             key: "Add TimeSheet",
-            action : () => console.log("Add TimeSheet will be added")
+            action: () => console.log("Add TimeSheet will be added")
         },
         {
             key: "Edit",
@@ -67,8 +68,10 @@ const timeClock = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Time Clock</h1>
             </div>
-
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
+                <Clock />
+            </DashboardCard>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     title="Time Sheet"
                     description="Tabular list of all Time Sheet."
@@ -80,7 +83,6 @@ const timeClock = (props) => {
                     totalPages={totalPages}
                     pageNo={pageNo}
                     setPageNo={setPageNo}
-                    showSearch
                     showFilter
                 />
             </DashboardCard>

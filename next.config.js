@@ -43,6 +43,12 @@ const apiEndpoints = {
         getAllShifts: '/v1/shifts/getAll',
         getAllShiftsUser: '/v1/shifts/user/getAll'
     },
+    notification: {
+        getAllNotification: '/v1/notifications/getAll',
+        markNotificationAsRead: '/v1/notifications/markAsRead',
+        markAllNotificationAsRead: '/v1/notifications/markAllAsRead',
+        deleteNotification: '/v1/notifications/delete'
+    },
     dropdown: {
         getTimezones: "/v1/unAuth/dropdown/timezones",
         getLocations: "/v1/dropdown/locations",
@@ -55,6 +61,23 @@ const apiEndpoints = {
     resources: {
         fileTemplate: "/v1/unAuth/resource/downloadFile",
     },
+    timesheet: {
+        startTimer: '/v1/timesheet/timer/start',
+        stopTimer: '/v1/timesheet/timer/stop',
+        getTimer: '/v1/timesheet/timer/get',
+        getAll: '/v1/timesheet/get',
+        add: '/v1/timesheet/add',
+        edit: '/v1/timesheet/edit',
+        delete: '/v1/timesheet/delete'
+    },
+    organization: {
+        updateOrganizationPreferences: '/v1/organization/update',
+        getHolidays: '/v1/organization/holiday/getAll',
+        addHolidaysExcel: '/v1/organization/holiday/upload',
+        addHoliday: '/v1/organization/holiday/add',
+        editHoliday: '/v1/organization/holiday/edit',
+        deleteHoliday: '/v1/organization/holiday/delete'
+    }
 };
 
 const nextConfig = {

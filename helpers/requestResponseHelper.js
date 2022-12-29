@@ -96,11 +96,30 @@ export const getLocationListing = (data) => {
     });
 }
 
+export const getNotificationListing = (data) => {
+    return data.map(notification => {
+        return {
+            internalId: notification.id,
+            title: notification.title,
+            type: notification.type,
+            date: notification.createdTime,
+            status: {
+                text: notification.isRead ? 'Read' : 'Unread',
+                status: notification.isRead ? 'ok' : 'warn',
+                displayType: 'color'
+            },
+            subData: [{
+                summary: notification.description
+            }]
+        }
+    })
+}
+
 export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
     endDate, endTime, instantRelease, shiftName) => {
     return {
         type: formType === 'SINGLE SHIFT' ? 'SINGLE' : 'BATCH',
-        locationId, userIds : userIds === '' ? [] : userIds, shiftName, 
+        locationId, userIds: userIds === '' ? [] : userIds, shiftName,
         locationRoleIds: roleIds === '' ? [] : roleIds,
         start: { date: startDate, time: formatTime(startTime) },
         end: { date: endDate, time: formatTime(endTime) },
@@ -152,7 +171,7 @@ export const validateForEmptyArray = (value, name, errorFunction, condition) => 
  * @param {*} condition additional condition needs to be check or true
  * @return true if error
  */
- export const validateForTime = (value, errorFunction, condition) => {
+export const validateForTime = (value, errorFunction, condition) => {
     if (((!value.hours && value.hours !== 0) || (!value.minutes && value.minutes !== 0)) && condition) {
         errorFunction({
             message: `Both Hours and minutes are required`,
@@ -174,7 +193,6 @@ export const combineBoolean = (...values) => {
 
 /**
  * @param {*} fetchFunction function to be called to fetch data
- * @param {*} requestBody request body to be sent
  * @param {*} successMessage Message to be shown in case of success
  * @param {*} loadingFunc setLoading function to be used to disable buttons
  * @param {*} reloadFunc reload function to be used to reload data on success
@@ -182,12 +200,13 @@ export const combineBoolean = (...values) => {
  * @param {*} onCancel onCancel function to clear all state values to clear form
  * @param {*} showModal setShowModal function to hide the modal on success
  * @param {*} setToaster setToaster function to update info to be shown on success or error toaster
+ * @param {*} successFunc func to run on success
  */
-export const fetchAndHandle = (fetchFunction, requestBody, successMessage, loadingFunc, reloadFunc,
-    pageLoaderFunc, onCancel, showModal, setToaster) => {
+export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloadFunc,
+    pageLoaderFunc, onCancel, showModal, setToaster, successFunc) => {
     pageLoaderFunc && pageLoaderFunc(true);
     loadingFunc && loadingFunc(true);
-    fetchFunction(requestBody)
+    fetchFunction()
         .then(res => {
             if (res.error) {
                 setToaster && setToaster({
@@ -205,7 +224,8 @@ export const fetchAndHandle = (fetchFunction, requestBody, successMessage, loadi
                 })
                 onCancel && onCancel();
                 loadingFunc && loadingFunc(false);
-                reloadFunc && reloadFunc(true);
+                reloadFunc ? reloadFunc(true) : (pageLoaderFunc && pageLoaderFunc(false));
+                successFunc && successFunc();
                 showModal && showModal(false);
             }
         })

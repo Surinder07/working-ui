@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../styles/pages";
-import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead, DashboardCharts } from "../../components";
+import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead } from "../../components";
 import { pieConfig, areaConfig } from "../../constants";
 import { Pie, Line } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
@@ -47,6 +47,7 @@ const Dashboard = (props) => {
             activeMenu: "DASHBOARD",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
     }, []);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ const Dashboard = (props) => {
                             showFilter: props.user.role !== 'ADMIN',
                             showSearch: props.user.role !== 'ADMIN'
                         })
-                        setInvoiceTrends(dashboardService.getInvoicesTrends(res.invoiceTrends));
+                        setInvoiceTrends(res.invoiceTrends ? dashboardService.getInvoicesTrends(res.invoiceTrends) : {});
                         setEmployeeTrends(dashboardService.getEmployeeTrends(res.employeeTrends, props.user.role === 'ADMIN'));
                     }
                 })

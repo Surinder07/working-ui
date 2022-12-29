@@ -30,7 +30,7 @@ const login = async (login, password, rememberMe, setToken, setUser) => {
 const logout = async () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
-    Router.push('/');
+    Router.push('/login');
 }
 
 const registerUser = async (email, password, contractor) => {

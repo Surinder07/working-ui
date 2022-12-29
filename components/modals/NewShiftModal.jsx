@@ -66,7 +66,7 @@ const NewShiftModal = (props) => {
     }, [props.showModal])
 
     useEffect(() => {
-        setRole("");
+        setRole([]);
         if (location && location !== '') {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
