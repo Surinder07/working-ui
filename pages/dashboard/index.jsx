@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../styles/pages";
 import { InfoTileBanner, DashboardCard, WaawNoIndexHead, DashboardTabular } from "../../components";
 import { pieConfig, areaConfig } from "../../constants";
-import { Pie, Line } from "react-chartjs-2";
-import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
+// import { Pie, Line } from "react-chartjs-2";
+// import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
 import { dashboardService } from "../../services";
 
 const shifts = [
@@ -57,7 +57,7 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         if (Object.keys(data).length > 0 && props.user.role) {
-            Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
+            // Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
             setLineGraphData(dashboardService.getInvoicesTrends(data.invoiceTrends));
             setPieGraphData(dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role));
         }
@@ -79,7 +79,7 @@ const Dashboard = (props) => {
                     gridTemplateColumns: "3fr 2fr",
                 }}
             >
-                {
+                {/* {
                     lineGraphData ?
                         <div style={{ height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Line
@@ -104,7 +104,7 @@ const Dashboard = (props) => {
                             }
                         </div> :
                         <p>Loading...</p>
-                }
+                } */}
             </DashboardCard>
         </>
     );
