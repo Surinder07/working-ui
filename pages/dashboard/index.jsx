@@ -37,8 +37,8 @@ const shifts = [
 const Dashboard = (props) => {
 
     const [tileData, setTileData] = useState({});
-    const [invoiceTrends, setInvoiceTrends] = useState({ noData: true });
-    const [employeeTrends, setEmployeeTrends] = useState({ noData: true });
+    const [invoiceTrends, setInvoiceTrends] = useState({});
+    const [employeeTrends, setEmployeeTrends] = useState({});
 
     useEffect(() => {
         props.setPageInfo({
@@ -73,7 +73,7 @@ const Dashboard = (props) => {
             </div>
             <InfoTileBanner data={tileData} role={props.user.role} />
             <DashboardTabular role={props.user.role} />
-            <DashboardCard
+            {/* <DashboardCard
                 className={DashboardStyles.graph}
                 style={{
                     marginTop: "20px",
@@ -97,7 +97,7 @@ const Dashboard = (props) => {
                         </div> :
                         <p>Loading...</p>
                 }
-            </DashboardCard>
+            </DashboardCard> */}
         </>
     );
 };
