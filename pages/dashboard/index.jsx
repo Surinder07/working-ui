@@ -54,16 +54,24 @@ const Dashboard = (props) => {
                 if (res.error) {
                     console.log(res.messgae);
                 } else {
-                    setData(res);
-                    setTileInfo(res.tilesInfo);
+                    try {
+                        setData(res);
+                        setTileInfo(res.tilesInfo);
+                    } catch (err) {
+                        console.log('1st effect', err);
+                    }
                 }
             });
     }, []);
 
     useEffect(() => {
-        if (Object.keys(data).length > 0 && props.user.role) {
-            setLineGraphData(dashboardService.getInvoicesTrends(data.invoiceTrends));
-            setPieGraphData(dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role));
+        try {
+            if (Object.keys(data).length > 0 && props.user.role) {
+                setLineGraphData(dashboardService.getInvoicesTrends(data.invoiceTrends));
+                setPieGraphData(dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role));
+            }
+        } catch (err) {
+            console.log('2nd effect', err);
         }
     }, [data])
 
