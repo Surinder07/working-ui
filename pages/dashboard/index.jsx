@@ -67,8 +67,10 @@ const Dashboard = (props) => {
     useEffect(() => {
         try {
             if (Object.keys(data).length > 0 && props.user.role) {
-                setLineGraphData(dashboardService.getInvoicesTrends(data.invoiceTrends));
-                setPieGraphData(dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role));
+                dashboardService.getInvoicesTrends(data.invoiceTrends)
+                    .then(res => setLineGraphData(res));
+                dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)
+                    .then(res => setPieGraphData(res));
             }
         } catch (err) {
             console.log('2nd effect', err);

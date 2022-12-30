@@ -7,7 +7,7 @@ const getData = async () => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData));
 }
 
-const getInvoicesTrends = (data) => {
+const getInvoicesTrends = async (data) => {
     const currentYearData = data.currentYear ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
@@ -62,14 +62,12 @@ const getBlueBgList = (length) => {
     return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
 };
 
-const getEmployeeTrends = (data, role) => {
+const getEmployeeTrends = async (data, role) => {
     let empData = data;
     return {
         noData: (data.filter(emp => emp.employees !== 0).length) === 0,
         labels: empData.filter(emp => emp.employees !== 0)
             .map(emp => {
-                console.log(emp);
-                console.log(role);
                 return role === 'ADMIN' ? emp.location : emp.role
             }),
         datasets: [
