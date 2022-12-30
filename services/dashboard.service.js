@@ -20,7 +20,7 @@ const getInvoicesTrends = async (data) => {
         }) : [];
 
     return {
-        noData: currentYearData.length === 0 && previousYearData.length === 0,
+        noData: (data.currentYear.length === 0 && data.previousYear.length === 0),
         labels: months,
         datasets: [
             {

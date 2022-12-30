@@ -54,26 +54,24 @@ const Dashboard = (props) => {
                 if (res.error) {
                     console.log(res.messgae);
                 } else {
-                    try {
-                        setData(res);
-                        setTileInfo(res.tilesInfo);
-                    } catch (err) {
-                        console.log('1st effect', err);
-                    }
+                    setData(res);
                 }
             });
     }, []);
 
     useEffect(() => {
-        try {
-            if (Object.keys(data).length > 0 && props.user.role) {
-                dashboardService.getInvoicesTrends(data.invoiceTrends)
-                    .then(res => setLineGraphData(res));
-                dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)
-                    .then(res => setPieGraphData(res));
+        if (Object.keys(data).length > 0 && props.user.role) {
+            try {
+                setTileInfo(data.tilesInfo);
+            } catch (err) {
+                console.log('2nd effect', err);
             }
-        } catch (err) {
-            console.log('2nd effect', err);
+            dashboardService.getInvoicesTrends(data.invoiceTrends)
+                .then(res => setLineGraphData(res))
+                .catch(err => console.log("invoice trends error: ", err));
+            dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)
+                .then(res => setPieGraphData(res))
+                .catch(err => console.log("emp trends error: ", err));
         }
     }, [data])
 
