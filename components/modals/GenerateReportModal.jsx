@@ -4,6 +4,7 @@ import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { dropdownService } from "../../services";
+import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 
 
 const GenerateReportsModal = (props) => {
@@ -37,10 +38,7 @@ const GenerateReportsModal = (props) => {
         setPayloadError({})
         setAttendanceError({})
         setLocationHolidayError({})
-        setLocationError({
-            message: "",
-            show: false
-        })
+        setLocationError({})
     }
 
     useEffect(() => {
@@ -54,38 +52,32 @@ const GenerateReportsModal = (props) => {
         }
     }, [])
 
-    const validateForm = async () => {
-        let error = false;
-
-        return error
+    const isError = () => {
+        return validateForEmptyField(location, 'Location', setLocationError, props.role === 'ADMIN')
     }
 
     const saveData = () => {
-        validateForm()
-            .then(error => {
-                if (!error) {
-
-                    setLoading(true)
-                    if (error == true) {
-                        props.setToasterInfo({
-                            error: true,
-                            title: 'Error!',
-                            message: res.message
-                        })
+                if (!isError()) {
+                    fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+                    // setLoading(true)
+                    //     props.setToasterInfo({
+                    //         error: true,
+                    //         title: 'Error!',
+                    //         message: res.message
+                    //     })
+                    // }
+                    // else {
+                    //     props.setToasterInfo({
+                    //         error: false,
+                    //         title: 'Success!',
+                    //         message: 'Report Generated successfully'
+                    //     });
+                    //     props.setReloadData(true)
+                    //     onCancel()
+                    // setLoading(false)
                     }
-                    else {
-                        props.setToasterInfo({
-                            error: false,
-                            title: 'Success!',
-                            message: 'Report Generated successfully'
-                        });
-                        props.setReloadData(true)
-                        onCancel()
-                    }
-                    setLoading(false)
                 }
-            })
-    }
+            
 
     return (
         <DashboardModal
@@ -98,8 +90,8 @@ const GenerateReportsModal = (props) => {
             onCancel={onCancel}
             loading={loading}
         >
-            <EditableInput type="date" value={fromValue} setValue={setFromValue} initialValue={initialFromValue} label="From" editOn />
-            <EditableInput type="date" value={tillValue} setValue={setTillValue} initialValue={initialTillValue} label="Till" editOn />
+            <EditableInput type="date" value={fromValue} setValue={setFromValue} initialValue={fromValue} label="From" editOn />
+            <EditableInput type="date" value={tillValue} setValue={setTillValue} initialValue={tillValue} label="Till" editOn />
             <EditableInput 
             type="dropdown"
             options={["India", "Canada", "Germany"]}

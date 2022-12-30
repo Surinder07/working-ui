@@ -17,8 +17,7 @@ const ShiftsFilter = (props) => {
         show: false
     });
     const [errorLocation, setErrorLocation] = useState({});
-    const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setShiftFromDate("")
         setShiftToDate("")
         setRole("")
@@ -26,53 +25,28 @@ const ShiftsFilter = (props) => {
         setShiftStatus("")
         setBatchStatus("")
         setErrorLocation({})
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
+        props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(shiftFromDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(shiftToDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(shiftFromDate, 'Date', setErrorDate, true) ||
+               validateForEmptyField(shiftToDate, 'Date', setErrorDate, true) ||
+               validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
+        if (!isError()) {
+                    let data = {
+                        fromDate: shiftFromDate,
+                        toDate: shiftToDate,
+                        role: role,
+                        location: location,
+                        shiftStatus: shiftStatus,
+                        batchStatus: batchStatus, 
+                    }
+                    props.setData(data)
+                    clearAllFilter()
                 }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Shift filtered successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
     }
 
     return (
@@ -84,8 +58,7 @@ const ShiftsFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
-                loading={loading}
+                clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"

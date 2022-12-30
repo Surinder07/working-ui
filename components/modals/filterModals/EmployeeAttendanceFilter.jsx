@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const EmployeeAttendanceFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
@@ -11,8 +12,7 @@ const EmployeeAttendanceFilter = (props) => {
         message: '',
         show: false
     });
-    const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setEntryType("")
@@ -20,49 +20,23 @@ const EmployeeAttendanceFilter = (props) => {
             message: '',
             show: false
         })
+        props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(dateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(dateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
+        validateForEmptyField(dateTo, 'Date', setErrorDate, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Filter applied successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+        if (!isError()) {
+                    let data = {
+                        fromDate: dateFrom,
+                        toDate: dateTo,
+                        entryType: entryType
+                    }
+                    props.setData(data)
+                    clearAllFilter()
+                }            
     }
 
     return (
@@ -74,8 +48,7 @@ const EmployeeAttendanceFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
-                loading={loading}
+                clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"
@@ -98,6 +71,7 @@ const EmployeeAttendanceFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Entry Type"
+                    placeholder="Entry Type"
                     value={entryType}
                     setValue={setEntryType}
                     options={["Day", "Night"]}

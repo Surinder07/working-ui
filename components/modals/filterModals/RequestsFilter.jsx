@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const RequestsFilter = (props) => {
     const [initiationDateFrom, setInitiationDateFrom] = useState("");
@@ -13,58 +14,29 @@ const RequestsFilter = (props) => {
         message: '',
         show: false
     });
-    const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setInitiationDateFrom("")
         setInitiationDateTo("")
         setRequestType("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
+        props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(initiationDateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(setInitiationDateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(initiationDateFrom, 'Date', setErrorDate, true) ||
+        validateForEmptyField(setInitiationDateTo, 'Date', setErrorDate, true) 
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
+        if (!isError()) {
+                    let data = {
+                        fromDate: initiationDateFrom,
+                        toDate: initiationDateTo,
+                        requestType: requestType,
+                        status:status 
+                    }
+                    props.setData(data)
+                    clearAllFilter()
                 }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Request filtered successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
     }
     return (
         <div>
@@ -75,8 +47,7 @@ const RequestsFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
-                loading={loading}
+                clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"

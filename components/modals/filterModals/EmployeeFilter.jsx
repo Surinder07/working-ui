@@ -13,47 +13,31 @@ const EmployeeFilter = (props) => {
     const [status, setStatus] = useState("");
 
     const [errorLocation, setErrorLocation] = useState({});
-    const [loading, setLoading] = useState(false);
 
-    const onCancel = () => {
+    const clearAllFilter = () => {
         setEmployeeType("")
         setRole("")
         setLocation("")
         setErrorLocation({})
         setStatus("")
-
+        props.setData({})
     }
     
-    const validateForm =async () => {
-        let error = false
-        return error
+    const isError = () => {
+        return false
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Filtered applied successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+        if (!isError()) {
+                    let data = {
+                        employeeType: employeeType,
+                        role: role,
+                        location: location,
+                        status:status 
+                    }
+                    props.setData(data)
+                    clearAllFilter()
+                }                  
     }
     
     return (
@@ -65,8 +49,7 @@ const EmployeeFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
-                loading={loading}
+                clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="dropdown"

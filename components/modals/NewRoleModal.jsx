@@ -3,7 +3,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import { dropdownService, locationAndRoleService } from "../../services";
-import { addRoleRequestBody, editRoleRequestBody, fetchAndHandleGet, validateForEmptyField, fetchAndHandle } from "../../helpers";
+import { addRoleRequestBody, editRoleRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values

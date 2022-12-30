@@ -3,6 +3,7 @@ import {useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
+import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 
 const EditTimesheetModal = (props) => {
     const [inDate, setInDate] = useState("");
@@ -16,18 +17,9 @@ const EditTimesheetModal = (props) => {
     const [initialInTime,setInitialInTime] = useState("");
     const [initialOutTime,setInitialOutTime] = useState("");
     const [initialComment,setInitialComment] = useState("");
-    const [inTimeError, setInTimeError] = useState({
-        message: "",
-        show: false,
-    });
-    const [outTimeError, setOutTimeError] = useState({
-        message: "",
-        show: false,
-    });
-    const [commentError, setCommentError] = useState({
-        message: "",
-        show: false,
-    });
+    const [inTimeError, setInTimeError] = useState({});
+    const [outTimeError, setOutTimeError] = useState({});
+    const [commentError, setCommentError] = useState({});
     const [loading, setLoading] = useState(false);
     const onCancel = () => {
         setInDate("")
@@ -49,42 +41,31 @@ const EditTimesheetModal = (props) => {
         })
     }
 
-    const validateForm = async () => {
-        let error = false;
-        if(comment === '') {setCommentError({
-            message: 'comment is required',
-            show: true
-        })
-        error = true
-    }
-        return error
+    const isError =  () => {
+       return validateForEmptyField(comment, 'comment', setCommentError, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'User invited successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
+        if (!isError()) {
+            fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+                // setLoading(true)
+                // if(error == true){
+                //     props.setToasterInfo({
+                //         error: true,
+                //         title: 'Error!',
+                //         message: res.message
+                //     })
+                // }
+                // else{
+                //     props.setToasterInfo({
+                //         error: false,
+                //         title: 'Success!',
+                //         message: 'TimeSheet edited successfully'
+                //     });
+                //     props.setReloadData(true)
+                //     onCancel()
+                // setLoading(false)
             }
-        })
     }
 
     return (
@@ -104,7 +85,7 @@ const EditTimesheetModal = (props) => {
                     label="In Date"
                     value={inDate}
                     setValue={setInDate}
-                    initialValue={initialInDate}
+                    initialValue={inDate}
                     editOn
                 />
                 <EditableInput
@@ -112,7 +93,7 @@ const EditTimesheetModal = (props) => {
                     label="Out Date"
                     value={outDate}
                     setValue={setOutDate}
-                    initialValue={initialOutDate}
+                    initialValue={outDate}
                     editOn
                 />
                 <EditableInput
@@ -120,7 +101,7 @@ const EditTimesheetModal = (props) => {
                     label="In Time"
                     value={inTime}
                     setValue={setInTime}
-                    initialValue={initialInTime}
+                    initialValue={inTime}
                     error={inTimeError}
                     setError={setInTimeError}
                     editOn
@@ -130,7 +111,7 @@ const EditTimesheetModal = (props) => {
                     label="Out Time"
                     value={outTime}
                     setValue={setOutTime}
-                    initialValue={initialOutTime}
+                    initialValue={outTime}
                     error={outTimeError}
                     setError={setOutTimeError}
                     editOn
@@ -141,7 +122,7 @@ const EditTimesheetModal = (props) => {
                     className={DashboardModalStyles.singleColumn}
                     value={comment}
                     setValue={setComment}
-                    initialValue={initialComment}
+                    initialValue={comment}
                     error={commentError}
                     setError={setCommentError}
                     required
