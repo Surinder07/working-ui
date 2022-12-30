@@ -3,8 +3,16 @@ import { fetchWrapper } from '../helpers';
 const endpoints = process.env.endpoints.dashboard;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const getData = async () => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData));
+const getData = async (role) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
+        .then(res => {
+            const data = {
+                ...res,
+                invoiceTrends: getInvoicesTrends(res.invoiceTrends),
+                employeeTrends: getEmployeeTrends(res.employeeTrends, role)
+            }
+            return data;
+        });
 }
 
 const getInvoicesTrends = (data) => {
@@ -20,7 +28,7 @@ const getInvoicesTrends = (data) => {
         }) : [];
 
     return {
-        noData: currentYearData.length === 0 && previousYearData.length === 0,
+        noData: (data.currentYear.length === 0 && data.previousYear.length === 0),
         labels: months,
         datasets: [
             {
@@ -63,16 +71,17 @@ const getBlueBgList = (length) => {
 };
 
 const getEmployeeTrends = (data, role) => {
-    let empData = data;
     return {
         noData: (data.filter(emp => emp.employees !== 0).length) === 0,
-        labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => role === 'ADMIN' ? emp.location : emp.role),
+        labels: data.filter(emp => emp.employees !== 0)
+            .map(emp => {
+                return role === 'ADMIN' ? emp.location : emp.role
+            }),
         datasets: [
             {
                 label: "Active Employees",
-                data: empData.map(emp => emp.employees),
-                backgroundColor: getBlueBgList(empData.length),
+                data: data.map(emp => emp.employees),
+                backgroundColor: getBlueBgList(data.length),
                 hoverOffset: 4,
             },
         ]

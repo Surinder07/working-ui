@@ -33,7 +33,7 @@ const LocationModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(locationAndRoleService.saveLocation, { name: location, timezone },
+            fetchAndHandle(() => locationAndRoleService.saveLocation({ name: location, timezone }),
                 'Location added successfully', setLoading, props.setReloadData, props.setPageLoading,
                 onCancel, props.setShowModal, props.setToasterInfo);
         }

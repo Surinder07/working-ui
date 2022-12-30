@@ -4,8 +4,8 @@ import { InfoTileBanner, DashboardCard, WaawNoIndexHead, DashboardTabular } from
 import { pieConfig, areaConfig } from "../../constants";
 import { Pie, Line } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
-Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 import { dashboardService } from "../../services";
+Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 
 const shifts = [
     {
@@ -36,7 +36,9 @@ const shifts = [
 
 const Dashboard = (props) => {
 
-    const [data, setdata] = useState({});
+    const [tileInfo, setTileInfo] = useState();
+    const [lineGraphData, setLineGraphData] = useState();
+    const [pieGraphData, setPieGraphData] = useState();
 
     useEffect(() => {
         props.setPageInfo({
@@ -46,9 +48,37 @@ const Dashboard = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
-        dashboardService.getData()
-            .then(res => setdata(res));
     }, []);
+
+    useEffect(() => {
+        if (props.user.role) {
+            dashboardService.getData(props.user.role)
+                .then(res => {
+                    console.log(res);
+                    try {
+                        console.log('setting tile info');
+                        setTileInfo(res.tilesInfo);
+                        console.log('tile info set');
+                    } catch (err) {
+                        console.log('tileInfo error: "', err);
+                    }
+                    try {
+                        console.log('setting invoice');
+                        setLineGraphData(res.invoiceTrends)
+                        console.log('invoice set');
+                    } catch (err) {
+                        console.log('invoice trends error: "', err);
+                    }
+                    try {
+                        console.log('setting pie chart');
+                        setPieGraphData(res.employeeTrends)
+                        console.log('pie chart set');
+                    } catch (err) {
+                        console.log('employee trends error: "', err);
+                    }
+                });
+        }
+    }, [props.user])
 
     return (
         <>
@@ -56,7 +86,7 @@ const Dashboard = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Overview and Analytics</h1>
             </div>
-            <InfoTileBanner data={data.tilesInfo} role={props.user.role} />
+            <InfoTileBanner data={tileInfo} role={props.user.role} />
             <DashboardTabular role={props.user.role} />
             <DashboardCard
                 className={DashboardStyles.graph}
@@ -67,26 +97,26 @@ const Dashboard = (props) => {
                 }}
             >
                 {
-                    data.invoiceTrends ?
-                        <div style={{ height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    lineGraphData ?
+                        <div style={{ position: 'relative', height: "100%", minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Line
-                                data={dashboardService.getInvoicesTrends(data.invoiceTrends)}
+                                data={lineGraphData}
                                 options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                             {
-                                dashboardService.getInvoicesTrends(data.invoiceTrends).noData &&
+                                lineGraphData.noData &&
                                 <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
                             }
                         </div> :
                         <p>Loading...</p>
                 }
                 {
-                    data.employeeTrends ?
-                        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    pieGraphData ?
+                        <div style={{ position: 'relative', minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Pie
-                                data={dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)}
+                                data={pieGraphData}
                                 options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
                             {
-                                dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role).noData &&
+                                pieGraphData.noData &&
                                 <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
                             }
                         </div> :
