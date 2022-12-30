@@ -49,7 +49,6 @@ const Dashboard = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
-        console.log('running service');
         dashboardService.getData()
             .then(res => {
                 if (res.error) {
@@ -75,7 +74,7 @@ const Dashboard = (props) => {
                             setPieGraphData(data)
                             console.log('pie chart set');
                         })
-                        .catch(err => console.log("emp trends error: ", err));
+                        .catch(err => console.log("employee trends error: ", err));
                 }
             });
     }, []);

@@ -3,7 +3,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import { dropdownService, locationAndRoleService } from "../../services";
-import { addRoleRequestBody, editRoleRequestBody, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
+import { addRoleRequestBody, editRoleRequestBody, fetchAndHandleGet, validateForEmptyField, fetchAndHandle } from "../../helpers";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values
@@ -71,10 +71,8 @@ const NewRoleModal = (props) => {
     const saveData = () => {
         if (!isError()) {
             fetchAndHandle(props.update ?
-                locationAndRoleService.editLocationRole : locationAndRoleService.addNewLocationRole,
-                props.update ?
-                    editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays) :
-                    addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays),
+                () => locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)) 
+                : () => locationAndRoleService.addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)),
                 props.update ? 'Role updated successfully' : 'Role added successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);

@@ -17,12 +17,13 @@ const InfoTileBanner = (props) => {
                                 {DashboardInfoTiles[tile].timeframe && <h3>{DashboardInfoTiles[tile].timeframe}</h3>}
                             </div>
                             {
-                                (props.data && props.role) &&
-                                (
-                                    (typeof props.data[tile] === 'string' && props.data[tile].includes('/')) ?
-                                        <h1 className={DashboardStyles.compareValue}>{props.data[tile] ? props.data[tile] : '-/-'}</h1> :
-                                        <h1 className={DashboardStyles.normalValue}>{props.data[tile] ? props.data[tile] : '-'}</h1>
-                                )
+                                (props.data && props.role) ?
+                                    (
+                                        (typeof props.data[tile] === 'string' && props.data[tile].includes('/')) ?
+                                            <h1 className={DashboardStyles.compareValue}>{props.data[tile]}</h1> :
+                                            <h1 className={DashboardStyles.normalValue}>{props.data[tile]}</h1>
+                                    ) : <h1 className={DashboardStyles.normalValue}>{'-'}</h1>
+
                             }
                         </DashboardCard>
                     </Link>
