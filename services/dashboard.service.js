@@ -1,25 +1,25 @@
 import { fetchWrapper } from '../helpers';
 
 const endpoints = process.env.endpoints.dashboard;
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const getData = () => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
 }
 
-const getInvoicesTrends = (data) => {
-    const currentYearData = months
+const setInvoicesTrends = async (data, setData) => {
+    const currentYearData = data.currentYear ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
             return data.currentYear[month]
-        })
-    const previousYearData = months
+        }) : [];
+    const previousYearData = data.previousYear ? months
         .filter(month => Object.keys(data.previousYear).includes(month))
         .map(month => {
             return data.previousYear[month]
-        })
+        }) : [];
 
-    return {
+    const response = {
         noData: currentYearData.length === 0 && previousYearData.length === 0,
         labels: months,
         datasets: [
@@ -47,6 +47,7 @@ const getInvoicesTrends = (data) => {
             },
         ],
     };
+    setData(response);
 }
 
 const getBlueBgList = (length) => {
@@ -62,12 +63,12 @@ const getBlueBgList = (length) => {
     return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
 };
 
-const getEmployeeTrends = (data, isAdmin) => {
+const setEmployeeTrends = async (data, role, setData) => {
     let empData = data;
-    return {
-        noData: data.filter(emp => emp.employees !== 0).length === 0,
+    const response = {
+        noData: (data.filter(emp => emp.employees !== 0).length) === 0,
         labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => isAdmin ? emp.location : emp.role),
+            .map(emp => role === 'ADMIN' ? emp.location : emp.role),
         datasets: [
             {
                 label: "Active Employees",
@@ -77,15 +78,11 @@ const getEmployeeTrends = (data, isAdmin) => {
             },
         ]
     }
-}
-
-const getInvoices = (invoices) => {
-    return invoices.data;
+    setData(response);
 }
 
 export const dashboardService = {
     getData,
-    getInvoicesTrends,
-    getEmployeeTrends,
-    getInvoices
+    setInvoicesTrends,
+    setEmployeeTrends
 }
