@@ -3,8 +3,8 @@ import { fetchWrapper } from '../helpers';
 const endpoints = process.env.endpoints.dashboard;
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const getData = () => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
+const getData = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData));
 }
 
 const setInvoicesTrends = async (data, setData) => {
