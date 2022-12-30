@@ -36,7 +36,6 @@ const shifts = [
 
 const Dashboard = (props) => {
 
-    const [data, setData] = useState({});
     const [tileInfo, setTileInfo] = useState();
     const [lineGraphData, setLineGraphData] = useState();
     const [pieGraphData, setPieGraphData] = useState();
@@ -49,35 +48,37 @@ const Dashboard = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
-        dashboardService.getData()
-            .then(res => {
-                if (res.error) {
-                    console.log(res.messgae);
-                } else {
+    }, []);
+
+    useEffect(() => {
+        if (props.user.role) {
+            dashboardService.getData(props.user.role)
+                .then(res => {
+                    console.log(res);
                     try {
                         console.log('setting tile info');
                         setTileInfo(res.tilesInfo);
                         console.log('tile info set');
                     } catch (err) {
-                        console.log('tileInfo', err);
+                        console.log('tileInfo error: "', err);
                     }
-                    dashboardService.getInvoicesTrends(res.invoiceTrends)
-                        .then(data => {
-                            console.log('setting invoice');
-                            setLineGraphData(data)
-                            console.log('invoice set');
-                        })
-                        .catch(err => console.log("invoice trends error: ", err));
-                    dashboardService.getEmployeeTrends(res.employeeTrends, props.user.role)
-                        .then(data => {
-                            console.log('setting pie chart');
-                            setPieGraphData(data)
-                            console.log('pie chart set');
-                        })
-                        .catch(err => console.log("employee trends error: ", err));
-                }
-            });
-    }, []);
+                    try {
+                        console.log('setting invoice');
+                        setLineGraphData(res.invoiceTrends)
+                        console.log('invoice set');
+                    } catch (err) {
+                        console.log('invoice trends error: "', err);
+                    }
+                    try {
+                        console.log('setting pie chart');
+                        setPieGraphData(res.employeeTrends)
+                        console.log('pie chart set');
+                    } catch (err) {
+                        console.log('employee trends error: "', err);
+                    }
+                });
+        }
+    }, [props.user])
 
     return (
         <>
@@ -102,7 +103,7 @@ const Dashboard = (props) => {
                                 data={lineGraphData}
                                 options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                             {
-                                dashboardService.getInvoicesTrends(data.invoiceTrends).noData &&
+                                lineGraphData.noData &&
                                 <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
                             }
                         </div> :
@@ -115,7 +116,7 @@ const Dashboard = (props) => {
                                 data={pieGraphData}
                                 options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
                             {
-                                dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role).noData &&
+                                pieGraphData.noData &&
                                 <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
                             }
                         </div> :
