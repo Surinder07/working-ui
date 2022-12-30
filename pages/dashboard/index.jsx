@@ -36,9 +36,7 @@ const shifts = [
 
 const Dashboard = (props) => {
 
-    const [tileData, setTileData] = useState({});
-    const [invoiceTrends, setInvoiceTrends] = useState({});
-    const [employeeTrends, setEmployeeTrends] = useState({});
+    const [data, setdata] = useState({});
 
     useEffect(() => {
         props.setPageInfo({
@@ -48,22 +46,9 @@ const Dashboard = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
+        dashboardService.getData()
+            .then(res => setdata(res));
     }, []);
-
-    useEffect(() => {
-        if (props.user.role) {
-            dashboardService.getData()
-                .then(res => {
-                    if (res.error) {
-                        console.log(res.message);
-                    } else {
-                        setTileData(res.tilesInfo);
-                        dashboardService.setInvoicesTrends(res.invoiceTrends, setInvoiceTrends);
-                        dashboardService.setEmployeeTrends(res.employeeTrends, props.user.role, setEmployeeTrends);
-                    }
-                })
-        }
-    }, [props.user])
 
     return (
         <>
@@ -71,9 +56,9 @@ const Dashboard = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Overview and Analytics</h1>
             </div>
-            <InfoTileBanner data={tileData} role={props.user.role} />
+            <InfoTileBanner data={data.tilesInfo} role={props.user.role} />
             <DashboardTabular role={props.user.role} />
-            {/* <DashboardCard
+            <DashboardCard
                 className={DashboardStyles.graph}
                 style={{
                     marginTop: "20px",
@@ -82,22 +67,32 @@ const Dashboard = (props) => {
                 }}
             >
                 {
-                    invoiceTrends.labels ?
+                    data.invoiceTrends ?
                         <div style={{ height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Line data={invoiceTrends} options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
-                            {invoiceTrends.noData && <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>}
+                            <Line
+                                data={dashboardService.getInvoicesTrends(data.invoiceTrends)}
+                                options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
+                            {
+                                dashboardService.getInvoicesTrends(data.invoiceTrends).noData &&
+                                <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                            }
                         </div> :
                         <p>Loading...</p>
                 }
                 {
-                    employeeTrends.labels ?
+                    data.employeeTrends ?
                         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Pie data={employeeTrends} options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
-                            {employeeTrends.noData && <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>}
+                            <Pie
+                                data={dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)}
+                                options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
+                            {
+                                dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role).noData &&
+                                <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                            }
                         </div> :
                         <p>Loading...</p>
                 }
-            </DashboardCard> */}
+            </DashboardCard>
         </>
     );
 };

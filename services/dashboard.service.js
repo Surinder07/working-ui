@@ -7,7 +7,7 @@ const getData = async () => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData));
 }
 
-const setInvoicesTrends = async (data, setData) => {
+const getInvoicesTrends = (data) => {
     const currentYearData = data.currentYear ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
@@ -19,7 +19,7 @@ const setInvoicesTrends = async (data, setData) => {
             return data.previousYear[month]
         }) : [];
 
-    const response = {
+    return {
         noData: currentYearData.length === 0 && previousYearData.length === 0,
         labels: months,
         datasets: [
@@ -47,7 +47,6 @@ const setInvoicesTrends = async (data, setData) => {
             },
         ],
     };
-    setData(response);
 }
 
 const getBlueBgList = (length) => {
@@ -63,9 +62,9 @@ const getBlueBgList = (length) => {
     return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
 };
 
-const setEmployeeTrends = async (data, role, setData) => {
+const getEmployeeTrends = (data, role) => {
     let empData = data;
-    const response = {
+    return {
         noData: (data.filter(emp => emp.employees !== 0).length) === 0,
         labels: empData.filter(emp => emp.employees !== 0)
             .map(emp => role === 'ADMIN' ? emp.location : emp.role),
@@ -78,11 +77,10 @@ const setEmployeeTrends = async (data, role, setData) => {
             },
         ]
     }
-    setData(response);
 }
 
 export const dashboardService = {
     getData,
-    setInvoicesTrends,
-    setEmployeeTrends
+    getInvoicesTrends,
+    getEmployeeTrends
 }
