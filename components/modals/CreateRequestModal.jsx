@@ -1,8 +1,8 @@
 import React from "react";
-import {useState} from "react";
-import {EditableInput} from "../inputComponents";
-import {DashboardModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
+import { useState } from "react";
+import { EditableInput } from "../inputComponents";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
 import Tabs from "../dashboardComponents/Tabs";
 
 const CreateRequestModal = (props) => {
@@ -21,16 +21,16 @@ const CreateRequestModal = (props) => {
     const [startTime, setStartTime] = useState("");
     const [duration, setDuration] = useState("");
     const [description, setDescription] = useState("");
-     // initial states
-     const [initialRequestTypeValue,setInitialRequestTypeValue] = useState("");
-     const [initialTitle,setInitialTitle] = useState("");
-     const [initialFromDate,setInitialFromDate] = useState("");
-     const [initialTillDate,setInitialTillDate] = useState("");
-     const [initialTypeOfLeave,setInitialTypeOfLeave] = useState("");
-     const [initialOverTimeDate,setInitialOverTimeDate] = useState("");
-     const [initialStartTime,setInitialStartTime] = useState("");
-     const [initialDuration,setInitialDuration] = useState("");
-     const [initialDescription,setInitialDescription] = useState("");
+    // initial states
+    const [initialRequestTypeValue, setInitialRequestTypeValue] = useState("");
+    const [initialTitle, setInitialTitle] = useState("");
+    const [initialFromDate, setInitialFromDate] = useState("");
+    const [initialTillDate, setInitialTillDate] = useState("");
+    const [initialTypeOfLeave, setInitialTypeOfLeave] = useState("");
+    const [initialOverTimeDate, setInitialOverTimeDate] = useState("");
+    const [initialStartTime, setInitialStartTime] = useState("");
+    const [initialDuration, setInitialDuration] = useState("");
+    const [initialDescription, setInitialDescription] = useState("");
 
 
 
@@ -38,7 +38,7 @@ const CreateRequestModal = (props) => {
         message: "",
         show: false,
     });
-    const [errorDate,setErrorDate] = useState({
+    const [errorDate, setErrorDate] = useState({
         message: "",
         show: false,
     })
@@ -70,10 +70,10 @@ const CreateRequestModal = (props) => {
         message: "",
         show: false,
     });
-    
+
     const [loading, setLoading] = useState(false);
 
-    const onCancel = ()=> {
+    const onCancel = () => {
         setRequestTypeValue("")
         setTitle("")
         setFromDate("")
@@ -85,87 +85,90 @@ const CreateRequestModal = (props) => {
         setDescription("")
         setErrorRequestTypeValue({
             message: "",
-            show:false
+            show: false
         })
         setErrorTitle({
             message: "",
-            show:false
+            show: false
         })
         setErrorDate({
             message: "",
-            show:false
+            show: false
         })
         setErrorOverTimeDate({
             message: "",
-            show:false
+            show: false
         })
         setErrorTypeOfLeave({
             message: "",
-            show:false
+            show: false
         })
         setErrorStartTime({
             message: "",
-            show:false
+            show: false
         })
         setErrorDuration({
             message: "",
-            show:false
+            show: false
         })
         setErrorDescription({
             message: "",
-            show:false
+            show: false
         })
     }
 
     const validateForm = async () => {
         let error = false;
-        if(fromDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-      }
-      if(toDate === '') {setErrorDate({
-        message: 'Date is required',
-        show: true
-      })
-      error = true;
-    }
-     if(overTimeDate === '') {setErrorOverTimeDate({
-        message: 'Date is required',
-        show: true
-     })
-     error = true;
-    }
-    return error
+        if (fromDate === '') {
+            setErrorDate({
+                message: 'Date is required',
+                show: true
+            })
+            error = true;
+        }
+        if (toDate === '') {
+            setErrorDate({
+                message: 'Date is required',
+                show: true
+            })
+            error = true;
+        }
+        if (overTimeDate === '') {
+            setErrorOverTimeDate({
+                message: 'Date is required',
+                show: true
+            })
+            error = true;
+        }
+        return error
     }
 
 
     const saveData = () => {
         validateForm()
-        .then(error => {
-            if(!error) {
+            .then(error => {
+                if (!error) {
 
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
+                    setLoading(true)
+                    if (error == true) {
+                        props.setToasterInfo({
+                            error: true,
+                            title: 'Error!',
+                            message: res.message
+                        })
+                    }
+                    else {
+                        props.setToasterInfo({
+                            error: false,
+                            title: 'Success!',
+                            message: 'Request created successfully'
+                        });
+                        props.setReloadData(true)
+                        onCancel()
+                    }
+                    setLoading(false)
                 }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Request created successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+            })
     }
 
     return (

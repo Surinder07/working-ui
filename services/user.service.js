@@ -19,12 +19,17 @@ const login = async (login, password, rememberMe, setToken, setUser) => {
         })
         .then((res) => {
             return res.error ? res : getUser().then(res => {
-                secureLocalStorage.saveData(USER_KEY, JSON.stringify(res));
-                setUser(res);
+                const user = {
+                    firstName: res.firstName,
+                    lastName: res.lastName,
+                    status: res.status,
+                    role: res.role
+                }
+                secureLocalStorage.saveData(USER_KEY, JSON.stringify(user));
+                setUser(user);
                 return res;
             })
-        }
-        );
+        });
 }
 
 const logout = async () => {

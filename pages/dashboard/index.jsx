@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../styles/pages";
-import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead } from "../../components";
+import { InfoTileBanner, TabularInfo, DashboardCard, WaawNoIndexHead, DashboardTabular } from "../../components";
 import { pieConfig, areaConfig } from "../../constants";
 import { Pie, Line } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
+Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 import { dashboardService } from "../../services";
 
 const shifts = [
@@ -35,7 +36,6 @@ const shifts = [
 
 const Dashboard = (props) => {
 
-    const [tabularData, setTabularData] = useState({});
     const [tileData, setTileData] = useState({});
     const [invoiceTrends, setInvoiceTrends] = useState({ noData: true });
     const [employeeTrends, setEmployeeTrends] = useState({ noData: true });
@@ -58,21 +58,12 @@ const Dashboard = (props) => {
                         console.log(res.message);
                     } else {
                         setTileData(res.tilesInfo);
-                        setTabularData({
-                            title: props.user.role === "ADMIN" ? "Payment History" : "Schedule shift for today",
-                            description: props.user.role === "ADMIN" ? "Tabular list of payment history." : "Tabular list of all shifts assigned for today",
-                            data: props.user.role === "ADMIN" ? dashboardService.getInvoices(res.invoices) : shifts,
-                            showFilter: props.user.role !== 'ADMIN',
-                            showSearch: props.user.role !== 'ADMIN'
-                        })
                         setInvoiceTrends(res.invoiceTrends ? dashboardService.getInvoicesTrends(res.invoiceTrends) : {});
-                        setEmployeeTrends(dashboardService.getEmployeeTrends(res.employeeTrends, props.user.role === 'ADMIN'));
+                        setEmployeeTrends(res.employeeTrends ? dashboardService.getEmployeeTrends(res.employeeTrends, props.user.role === 'ADMIN') : {});
                     }
                 })
         }
     }, [props.user])
-
-    Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 
     return (
         <>
@@ -81,14 +72,7 @@ const Dashboard = (props) => {
                 <h1>Overview and Analytics</h1>
             </div>
             <InfoTileBanner data={tileData} role={props.user.role} />
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title={tabularData.title}
-                    description={tabularData.description}
-                    data={tabularData.data}
-                    showFilter={tabularData.showFilter}
-                    showSearch={tabularData.showSearch} />
-            </DashboardCard>
+            <DashboardTabular role={props.user.role} />
             <DashboardCard
                 className={DashboardStyles.graph}
                 style={{
