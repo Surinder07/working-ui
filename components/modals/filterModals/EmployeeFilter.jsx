@@ -13,7 +13,6 @@ const EmployeeFilter = (props) => {
     const [status, setStatus] = useState("");
 
     const [errorLocation, setErrorLocation] = useState({});
-    const [loading, setLoading] = useState(false);
 
     const clearAllFilter = () => {
         setEmployeeType("")
@@ -24,32 +23,21 @@ const EmployeeFilter = (props) => {
         props.setData({})
     }
     
-    const validateForm =async () => {
-        let error = false
-        return error
+    const isError = () => {
+        return false
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Filter applied successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         employeeType: employeeType,
                         role: role,
                         location: location,
                         status:status 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
-                }
-                setLoading(false)          
-        })
+                }                  
     }
     
     return (
@@ -62,7 +50,6 @@ const EmployeeFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="dropdown"

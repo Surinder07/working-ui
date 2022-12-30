@@ -17,7 +17,6 @@ const ShiftsFilter = (props) => {
         show: false
     });
     const [errorLocation, setErrorLocation] = useState({});
-    const [loading, setLoading] = useState(false);
     const clearAllFilter = () => {
         setShiftFromDate("")
         setShiftToDate("")
@@ -26,38 +25,17 @@ const ShiftsFilter = (props) => {
         setShiftStatus("")
         setBatchStatus("")
         setErrorLocation({})
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
         props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(shiftFromDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(shiftToDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(shiftFromDate, 'Date', setErrorDate, true) ||
+               validateForEmptyField(shiftToDate, 'Date', setErrorDate, true) ||
+               validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Shift filtered successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         fromDate: shiftFromDate,
                         toDate: shiftToDate,
@@ -66,13 +44,9 @@ const ShiftsFilter = (props) => {
                         shiftStatus: shiftStatus,
                         batchStatus: batchStatus, 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
                 }
-                setLoading(false)
-            
-        })
     }
 
     return (
@@ -85,7 +59,6 @@ const ShiftsFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="date"

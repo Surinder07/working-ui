@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const RequestsFilter = (props) => {
     const [initiationDateFrom, setInitiationDateFrom] = useState("");
@@ -13,56 +14,29 @@ const RequestsFilter = (props) => {
         message: '',
         show: false
     });
-    const [loading, setLoading] = useState(false);
     const clearAllFilter = () => {
         setInitiationDateFrom("")
         setInitiationDateTo("")
         setRequestType("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
         props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(initiationDateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(setInitiationDateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(initiationDateFrom, 'Date', setErrorDate, true) ||
+        validateForEmptyField(setInitiationDateTo, 'Date', setErrorDate, true) 
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Request filtered successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         fromDate: initiationDateFrom,
                         toDate: initiationDateTo,
                         requestType: requestType,
                         status:status 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
                 }
-                setLoading(false)
-            
-        })
     }
     return (
         <div>
@@ -74,7 +48,6 @@ const RequestsFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="date"

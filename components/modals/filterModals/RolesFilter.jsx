@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const RolesFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
@@ -10,49 +11,23 @@ const RolesFilter = (props) => {
     const [role, setRole] = useState("");
     const [status, setStatus] = useState("");
 
-    const [errorDate,setErrorDate] = useState({
-        message: '',
-        show: false
-    });
-    const [loading, setLoading] = useState(false);
+    const [errorDate,setErrorDate] = useState({});
     const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setProfileType("")
         setRole("")
         setStatus("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
         props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(dateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(dateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
+               validateForEmptyField(dateTo, 'Date', setErrorDate, true) 
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Role filtered successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         fromDate: dateFrom,
                         toDate: dateTo,
@@ -60,12 +35,9 @@ const RolesFilter = (props) => {
                         role: role,
                         status: status 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
                 }
-                setLoading(false)
-        })
     }
     return (
         <div>
@@ -77,7 +49,6 @@ const RolesFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="date"

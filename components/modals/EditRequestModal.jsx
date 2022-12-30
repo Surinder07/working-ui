@@ -1,5 +1,6 @@
 import React from "react";
 import {useState} from "react";
+import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 
@@ -21,50 +22,37 @@ const EditRequestsModal = (props) => {
     const onCancel = ()=> {
         setValue("")
         setComment("")
-    
-        setCommentError({
-            message: "",
-            show:false
-        })
+        setCommentError({})
     
     }
 
-    const validateForm = async () => {
-        let error = false;
-        if(comment === '') {setCommentError({
-            message: 'comment is required',
-            show: true
-        })
-        error = true
-    }
-        return error
+    const isError = () => {
+        return validateForEmptyField(comment, 'comment', setCommentError, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'User invited successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
+        if (!isError()) {
+            fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+            //     setLoading(true)
+            //     if(error == true){
+            //         props.setToasterInfo({
+            //             error: true,
+            //             title: 'Error!',
+            //             message: res.message
+            //         })
+            //     }
+            //     else{
+            //         props.setToasterInfo({
+            //             error: false,
+            //             title: 'Success!',
+            //             message: 'User invited successfully'
+            //         });
+            //         props.setReloadData(true)
+            //         onCancel()
+            //     }
+            //     setLoading(false)
+            // })
+        }
     }
 
     return (
@@ -78,15 +66,15 @@ const EditRequestsModal = (props) => {
             onCancel={onCancel}
             loading={loading}
         >
-            <EditableInput type="radio" label="Approve" value={value} setValue={setValue} initialValue={initialValue} editOn />
-            <EditableInput type="radio" label="Reject" value={value} setValue={setValue} initialValue={initialValue} editOn />
-            <EditableInput type="radio" label="Refer back to employee" value={value} setValue={setValue} initialValue={initialValue} editOn />
+            <EditableInput type="radio" label="Approve" value={value} setValue={setValue} initialValue={value} editOn />
+            <EditableInput type="radio" label="Reject" value={value} setValue={setValue} initialValue={value} editOn />
+            <EditableInput type="radio" label="Refer back to employee" value={value} setValue={setValue} initialValue={value} editOn />
             <EditableInput
                 type="text"
                 label="Comment"
                 value={comment}
                 setValue={setComment}
-                initialValue={initialComment}
+                initialValue={comment}
                 error={commentError}
                 setError={setCommentError}
                 required

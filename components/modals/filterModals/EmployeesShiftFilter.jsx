@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const EmployeesShiftFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
@@ -12,59 +13,32 @@ const EmployeesShiftFilter = (props) => {
         message: '',
         show: false
     });
-    const [loading, setLoading] = useState(false);
     const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setWorkingHours("")
         setStatus("")
         setStatus("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
         props.setData({})
     }
 
-    const validateForm = async () => {
-        let error = false;
-        if(dateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(dateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError = () => {
+        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
+        validateForEmptyField(dateTo, 'Date', setErrorDate, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Filter applied successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         fromDate: dateFrom,
                         toDate: dateTo,
                         workingHours: workingHours,
                         status:status 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
                 }
-                setLoading(false)
-            
-        })
     }
 
     return (
@@ -77,7 +51,6 @@ const EmployeesShiftFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="date"
@@ -100,6 +73,7 @@ const EmployeesShiftFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Working Hours"
+                    placeholder="Working Hours"
                     value={workingHours}
                     setValue={setWorkingHours}
                     options={["8 Hours"]}
@@ -109,6 +83,7 @@ const EmployeesShiftFilter = (props) => {
                 <EditableInput
                     type="dropdown"
                     label="Status"
+                    placeholder="Status"
                     value={status}
                     setValue={setStatus}
                     options={["pending", "In process", "completed"]}

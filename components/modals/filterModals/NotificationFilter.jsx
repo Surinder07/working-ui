@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const NotificationFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
@@ -13,58 +14,31 @@ const NotificationFilter = (props) => {
         message: '',
         show: false
     });
-    const [loading, setLoading] = useState(false);
     const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setType("")
         setStatus("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
         props.setData({})
     }
 
-    const validateForm = async () => {
-        let error = false;
-        if(dateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        if(dateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    const isError =  () => {
+        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
+        validateForEmptyField(dateTo, 'Date', setErrorDate, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Notification filtered successfully'
-                    });
+        if (!isError()) {
                     let data = {
                         fromDate: dateFrom,
                         toDate: dateTo,
                         type: type,
                         status:status 
                     }
-                    props.setData(JSON.stringify(data))
-                    props.setReloadData(true)
+                    props.setData(data)
                     clearAllFilter()
                 }
-                setLoading(false)
-            
-        })
     }
     return (
         <div>
@@ -76,7 +50,6 @@ const NotificationFilter = (props) => {
                 type="twoColNarrow"
                 onClick={saveData}
                 clearAllFilter={clearAllFilter}
-                loading={loading}
             >
                 <EditableInput
                     type="date"
