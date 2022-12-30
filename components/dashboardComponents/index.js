@@ -8,8 +8,21 @@ import ProfileImage from "./ProfileImage";
 import TabularInfo from "./TabularInfo";
 import EmployeePreference from "./EmployeePreference";
 import PaginationDropdown from "./PaginationDropdown";
+import Clock from './Clock';
 
-export {CalendarComponent, DashboardCard, InfoTileBanner, NotificationBell, Options, Pagination, ProfileImage, TabularInfo, EmployeePreference, PaginationDropdown};
+export {
+    CalendarComponent,
+    DashboardCard,
+    InfoTileBanner,
+    NotificationBell,
+    Options,
+    Pagination,
+    ProfileImage,
+    TabularInfo,
+    EmployeePreference,
+    PaginationDropdown,
+    Clock
+};
 
 export * from "./userPreferences";
 export * from "./table";

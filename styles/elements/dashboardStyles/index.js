@@ -7,6 +7,7 @@ import TabularInfoStyles from './TabularInfo.module.css';
 import CalendarStyles from './Calendar.module.css'
 import TabsStyles from './Tabs.module.css';
 import CellStyles from './Cell.module.css';
+import ClockStyles from './Clock.module.css';
 
 export {
     NotificationsStyles,
@@ -17,5 +18,6 @@ export {
     TabularInfoStyles,
     CalendarStyles,
     TabsStyles,
-    CellStyles
+    CellStyles,
+    ClockStyles
 }

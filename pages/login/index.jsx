@@ -97,7 +97,7 @@ const Login = (props) => {
                                 })
                             } else {
                                 setLoading(false);
-                                router.push('/dashboard');
+                                router.push('/dashboard/locations');
                             }
                         });
                 }

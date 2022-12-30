@@ -56,3 +56,8 @@ a {
 input {
     min-width: 40px;
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}

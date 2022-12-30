@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown} from "../../../components";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
 
 const shifts = [
     {
@@ -124,7 +124,7 @@ const Shifts = (props) => {
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
-    const [showShiftModal, setShiftModal] = useState(true);
+    const [showShiftModal, setShiftModal] = useState(false);
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: "",
         show: false,
@@ -151,7 +151,7 @@ const Shifts = (props) => {
             <DeleteModal
                 modal={confirmDeleteModal}
                 setModal={setConfirmDeleteModal}
-                // onDelete={deleteRole}
+            // onDelete={deleteRole}
             >
                 This will permanently delete this Shift
             </DeleteModal>
@@ -186,7 +186,7 @@ const Shifts = (props) => {
                     )}
                 </div>
             </div>
-            <DashboardCard style={{marginTop: "20px"}}>
+            <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     title="Shifts"
                     description="Tabular list of all Shifts."
@@ -200,7 +200,7 @@ const Shifts = (props) => {
                     setPageNo={setPageNo}
                     showSearch
                     search={filters.searchKey}
-                    setSearch={(val) => setFilters({...filters, searchKey: val})}
+                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                     showFilter
                     filters={filters}
                     setFilters={setFilters}
