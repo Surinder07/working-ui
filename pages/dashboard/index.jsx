@@ -49,12 +49,14 @@ const Dashboard = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
+        console.log('running service');
         dashboardService.getData()
             .then(res => {
                 if (res.error) {
                     console.log(res.messgae);
                 } else {
                     setData(res);
+                    console.log('data set');
                 }
             });
     }, []);
@@ -62,15 +64,25 @@ const Dashboard = (props) => {
     useEffect(() => {
         if (Object.keys(data).length > 0 && props.user.role) {
             try {
+                console.log('setting tile info');
                 setTileInfo(data.tilesInfo);
+                console.log('tile info set');
             } catch (err) {
-                console.log('2nd effect', err);
+                console.log('tileInfo', err);
             }
             dashboardService.getInvoicesTrends(data.invoiceTrends)
-                .then(res => setLineGraphData(res))
+                .then(res => {
+                    console.log('setting invoice');
+                    setLineGraphData(res)
+                    console.log('invoice set');
+                })
                 .catch(err => console.log("invoice trends error: ", err));
             dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)
-                .then(res => setPieGraphData(res))
+                .then(res => {
+                    console.log('setting pie chart');
+                    setPieGraphData(res)
+                    console.log('pie chart set');
+                })
                 .catch(err => console.log("emp trends error: ", err));
         }
     }, [data])
@@ -93,7 +105,7 @@ const Dashboard = (props) => {
             >
                 {
                     lineGraphData ?
-                        <div style={{ height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{ position: 'relative', height: "100%", minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Line
                                 data={lineGraphData}
                                 options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
@@ -106,7 +118,7 @@ const Dashboard = (props) => {
                 }
                 {
                     pieGraphData ?
-                        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{ position: 'relative', minHeight: '350px',  display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Pie
                                 data={pieGraphData}
                                 options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
