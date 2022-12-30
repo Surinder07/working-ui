@@ -49,7 +49,7 @@ const getInvoicesTrends = async (data) => {
     };
 }
 
-const getBlueBgList = (length) => {
+const getBlueBgList = async (length) => {
     var result = [],
         left = 0.1,
         right = 1,
@@ -63,22 +63,24 @@ const getBlueBgList = (length) => {
 };
 
 const getEmployeeTrends = async (data, role) => {
-    let empData = data;
-    return {
-        noData: (data.filter(emp => emp.employees !== 0).length) === 0,
-        labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => {
-                return role === 'ADMIN' ? emp.location : emp.role
-            }),
-        datasets: [
-            {
-                label: "Active Employees",
-                data: empData.map(emp => emp.employees),
-                backgroundColor: getBlueBgList(empData.length),
-                hoverOffset: 4,
-            },
-        ]
-    }
+    return getBlueBgList(data.length)
+        .then(colorList => {
+            return {
+                noData: (data.filter(emp => emp.employees !== 0).length) === 0,
+                labels: data.filter(emp => emp.employees !== 0)
+                    .map(emp => {
+                        return role === 'ADMIN' ? emp.location : emp.role
+                    }),
+                datasets: [
+                    {
+                        label: "Active Employees",
+                        data: data.map(emp => emp.employees),
+                        backgroundColor: colorList,
+                        hoverOffset: 4,
+                    },
+                ]
+            }
+        })
 }
 
 export const dashboardService = {
