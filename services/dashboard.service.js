@@ -1,23 +1,23 @@
 import { fetchWrapper } from '../helpers';
 
 const endpoints = process.env.endpoints.dashboard;
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const getData = () => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
+const getData = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData));
 }
 
 const getInvoicesTrends = (data) => {
-    const currentYearData = months
+    const currentYearData = data.currentYear ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
             return data.currentYear[month]
-        })
-    const previousYearData = months
+        }) : [];
+    const previousYearData = data.previousYear ? months
         .filter(month => Object.keys(data.previousYear).includes(month))
         .map(month => {
             return data.previousYear[month]
-        })
+        }) : [];
 
     return {
         noData: currentYearData.length === 0 && previousYearData.length === 0,
@@ -62,12 +62,12 @@ const getBlueBgList = (length) => {
     return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
 };
 
-const getEmployeeTrends = (data, isAdmin) => {
+const getEmployeeTrends = (data, role) => {
     let empData = data;
     return {
-        noData: data.filter(emp => emp.employees !== 0).length === 0,
+        noData: (data.filter(emp => emp.employees !== 0).length) === 0,
         labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => isAdmin ? emp.location : emp.role),
+            .map(emp => role === 'ADMIN' ? emp.location : emp.role),
         datasets: [
             {
                 label: "Active Employees",
@@ -79,13 +79,8 @@ const getEmployeeTrends = (data, isAdmin) => {
     }
 }
 
-const getInvoices = (invoices) => {
-    return invoices.data;
-}
-
 export const dashboardService = {
     getData,
     getInvoicesTrends,
-    getEmployeeTrends,
-    getInvoices
+    getEmployeeTrends
 }

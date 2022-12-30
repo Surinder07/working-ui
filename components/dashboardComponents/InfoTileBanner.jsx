@@ -6,7 +6,7 @@ import DashboardCard from './DashboardCard';
 const InfoTileBanner = (props) => {
 
     return (
-        props.role &&
+        (props.role && props.data) &&
         <div className={DashboardStyles.infoTileContainer}>
             {
                 DashboardTileMap[props.role.toLowerCase()].map((tile, i) => (
