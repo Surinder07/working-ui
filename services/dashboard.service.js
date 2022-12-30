@@ -67,7 +67,11 @@ const getEmployeeTrends = (data, role) => {
     return {
         noData: (data.filter(emp => emp.employees !== 0).length) === 0,
         labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => role === 'ADMIN' ? emp.location : emp.role),
+            .map(emp => {
+                console.log(emp);
+                console.log(role);
+                return role === 'ADMIN' ? emp.location : emp.role
+            }),
         datasets: [
             {
                 label: "Active Employees",

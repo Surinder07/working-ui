@@ -4,7 +4,6 @@ import { InfoTileBanner, DashboardCard, WaawNoIndexHead, DashboardTabular } from
 import { pieConfig, areaConfig } from "../../constants";
 import { Pie, Line } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle } from "chart.js";
-Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 import { dashboardService } from "../../services";
 
 const shifts = [
@@ -36,7 +35,10 @@ const shifts = [
 
 const Dashboard = (props) => {
 
-    const [data, setdata] = useState({});
+    const [data, setData] = useState({});
+    const [tileInfo, setTileInfo] = useState();
+    const [lineGraphData, setLineGraphData] = useState();
+    const [pieGraphData, setPieGraphData] = useState();
 
     useEffect(() => {
         props.setPageInfo({
@@ -47,8 +49,19 @@ const Dashboard = (props) => {
         });
         props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
         dashboardService.getData()
-            .then(res => setdata(res));
+            .then(res => {
+                setData(res);
+                setTileInfo(res.tilesInfo);
+            });
     }, []);
+
+    useEffect(() => {
+        if (Object.keys(data).length > 0 && props.user.role) {
+            Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
+            setLineGraphData(dashboardService.getInvoicesTrends(data.invoiceTrends));
+            setPieGraphData(dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role));
+        }
+    }, [data])
 
     return (
         <>
@@ -56,7 +69,7 @@ const Dashboard = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Overview and Analytics</h1>
             </div>
-            <InfoTileBanner data={data.tilesInfo} role={props.user.role} />
+            <InfoTileBanner data={tileInfo} role={props.user.role} />
             <DashboardTabular role={props.user.role} />
             <DashboardCard
                 className={DashboardStyles.graph}
@@ -67,10 +80,10 @@ const Dashboard = (props) => {
                 }}
             >
                 {
-                    data.invoiceTrends ?
+                    lineGraphData ?
                         <div style={{ height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Line
-                                data={dashboardService.getInvoicesTrends(data.invoiceTrends)}
+                                data={lineGraphData}
                                 options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
                             {
                                 dashboardService.getInvoicesTrends(data.invoiceTrends).noData &&
@@ -80,10 +93,10 @@ const Dashboard = (props) => {
                         <p>Loading...</p>
                 }
                 {
-                    data.employeeTrends ?
+                    pieGraphData ?
                         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Pie
-                                data={dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role)}
+                                data={pieGraphData}
                                 options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
                             {
                                 dashboardService.getEmployeeTrends(data.employeeTrends, props.user.role).noData &&
