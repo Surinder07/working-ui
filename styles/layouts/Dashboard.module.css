@@ -43,17 +43,17 @@
 }
 
 .menuItem {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
     cursor: pointer;
-    letter-spacing: 0.2px;
-    height: 56px;
-    color: #A4A6B3;
+    height: 48px;
     display: flex;
     align-items: center;
     padding: 0 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #A4A6B3;
 }
 
 .menuItem:hover,
@@ -192,25 +192,29 @@
     height: 25px;
 }
 
-.clockDashboardMain{
+.clockDashboardMain {
     position: relative;
     display: flex;
     justify-content: space-around;
     width: 20%;
     font-size: 14px !important;
 }
+
 .clockDashboardMain :last-child {
     margin-top: 5px;
 }
+
 .clockDashboardMain p {
     margin: 0px;
     margin-top: 4px;
 }
+
 .playAndPauseIcon {
     font-size: 28px !important;
     color: #535255;
     cursor: pointer;
 }
+
 @media only screen and (max-width: 480px) {
     .dashboardPage {
         grid-template-columns: 1fr;
@@ -280,7 +284,8 @@
         font-family: 'Mulish';
         font-style: normal;
         font-weight: 600;
-        font-size: 14px!important;;
+        font-size: 14px !important;
+        ;
         line-height: 20px;
         text-align: right;
         letter-spacing: 0.2px;

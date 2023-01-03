@@ -1,4 +1,4 @@
-import { WaawNoIndexHead, MobileModal } from "../../components";
+import {WaawNoIndexHead, MobileModal} from "../../../components";
 
 const LocationMobileModal = (props) => {
     const locationData = {

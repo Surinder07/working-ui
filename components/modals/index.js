@@ -25,9 +25,9 @@ export {
     GenerateReportModal,
     EditRequestsModal,
     CreateRequestModal,
-    DeleteModal
+    DeleteModal,
 };
 
 export * from "./base";
 export * from "./filterModals";
-export * from "./mobileModals"
+export * from "./mobileModals";

@@ -1,11 +1,11 @@
 import {useRef, useEffect, useState, useCallback} from "react";
 import Link from "next/link";
-import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger } from "../components";
-import { footerIcons, SideNavInfo } from "../constants";
-import { LogoWhite, FaviconWhite, Favicon, Logo } from "../public/images";
-import { DashboardLayout } from "../styles/layouts";
-import { Logout, Settings, PlayArrow, Stop  } from "@mui/icons-material";
-import { userService } from "../services";
+import {ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger} from "../components";
+import {footerIcons, SideNavInfo} from "../constants";
+import {LogoWhite, FaviconWhite, Favicon, Logo} from "../public/images";
+import {DashboardLayout} from "../styles/layouts";
+import {Logout, Settings, PlayArrow, Stop} from "@mui/icons-material";
+import {userService} from "../services";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
@@ -15,7 +15,7 @@ const Dashboard = (props) => {
     const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState("...");
     const [sideNav, setSideNav] = useState([]);
-    const [play,setPlay] = useState(false)
+    const [play, setPlay] = useState(false);
     const handleNavigation = useCallback(
         (e) => {
             const window = e.currentTarget;
@@ -76,7 +76,11 @@ const Dashboard = (props) => {
                                             style={navOpen ? {} : {margin: "auto", width: "100%"}}
                                         >
                                             {info.icon}
-                                            {navOpen && <p style={{marginLeft: "10px"}}>{info.text}</p>}
+                                            {navOpen && (
+                                                <p className={DashboardLayout.itemTitle} style={{marginLeft: "25px"}}>
+                                                    {info.text}
+                                                </p>
+                                            )}
                                         </div>
                                     </Link>
                                 ))
@@ -103,19 +107,25 @@ const Dashboard = (props) => {
             <div className={`${navOpen ? DashboardLayout.openNavRightContainer : DashboardLayout.closeNavRightContainer}`}>
                 <div className={DashboardLayout.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
-                    {props.screenType !== 3 && <div className={DashboardLayout.clockDashboardMain}>
+                    {props.screenType !== 3 && (
+                        <div className={DashboardLayout.clockDashboardMain}>
                             <div>
-                             <p>Clock In</p>
-                             <p style={{color: '#2996C3'}}>10:00</p>
+                                <p>Clock In</p>
+                                <p style={{color: "#2996C3"}}>10:00</p>
                             </div>
                             <div>
-                            <p>Clock Out</p>
-                             <p style={{color: '#2996C3'}}>05:00</p>
+                                <p>Clock Out</p>
+                                <p style={{color: "#2996C3"}}>05:00</p>
                             </div>
                             <div>
-                           { !play? <PlayArrow className={DashboardLayout.playAndPauseIcon} onClick={()=> setPlay(true)}/> : <Stop className={DashboardLayout.playAndPauseIcon} onClick={()=> setPlay(false)} />}
+                                {!play ? (
+                                    <PlayArrow className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(true)} />
+                                ) : (
+                                    <Stop className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(false)} />
+                                )}
                             </div>
-                            </div>}
+                        </div>
+                    )}
                     <div className={DashboardLayout.headerRight}>
                         {props.screenType !== 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />}
                         <div className={DashboardLayout.helpIcon}>?</div>

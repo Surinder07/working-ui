@@ -124,7 +124,7 @@ const Shifts = (props) => {
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
-    const [showShiftModal, setShiftModal] = useState(true);
+    const [showShiftModal, setShiftModal] = useState(false);
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: "",
         show: false,
@@ -163,13 +163,7 @@ const Shifts = (props) => {
                 role={props.user.role}
                 setPageLoading={props.setPageLoading}
             />
-            <ShiftsFilter
-                setShowModal={setShowFilterModal}
-                showModal={showFilterModal}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                setReloadData={setReloadData}
-            />
+            <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData} />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Shifts</h1>
                 <div className={DashboardStyles.rightContainer}>
