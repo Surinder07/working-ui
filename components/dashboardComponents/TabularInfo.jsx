@@ -81,7 +81,7 @@ const TabularInfo = (props) => {
                     }
                 </div>
             </div>
-            <div
+            <div className={TabularInfoStyles.tabularMapped}
                 style={
                     props.expandable && {
                         height: props.expanded ? tableHeight : 0,
