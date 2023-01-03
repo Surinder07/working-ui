@@ -55,3 +55,5 @@ export const PayrollFrequency = dropdownService.stringToDropdownObj([
     'Half Month',
     'Monthly'
 ])
+
+export const ReportType = dropdownService.stringToDropdownObj(['payroll','attendance','holidays'])

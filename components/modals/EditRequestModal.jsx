@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {useState} from "react";
 import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 import {EditableInput} from "../inputComponents";
@@ -25,6 +25,13 @@ const EditRequestsModal = (props) => {
         setCommentError({})
     
     }
+
+    useEffect(()=> {
+        props.setData && props.setData({
+            requestvalue:value,
+            comment
+        })
+    },[])
 
     const isError = () => {
         return validateForEmptyField(comment, 'comment', setCommentError, true)

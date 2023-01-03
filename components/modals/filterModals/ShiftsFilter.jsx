@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
@@ -28,6 +28,19 @@ const ShiftsFilter = (props) => {
         setErrorDate({})
         props.setData({})
     }
+
+    
+    useEffect(() => {
+        props.setData && props.setData({
+            fromDate: shiftFromDate,
+            toDate: shiftToDate,
+            role,
+            location,
+            shiftStatus,
+            batchStatus,
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(shiftFromDate, 'Date', setErrorDate, true) ||
                validateForEmptyField(shiftToDate, 'Date', setErrorDate, true) ||

@@ -64,6 +64,18 @@ const InviteUserModal = (props) => {
         }
     }, [location])
 
+    useEffect(()=> {
+        props.setData && props.setData({
+            firstName,
+            lastName,
+            employeeId,
+            email,
+            location,
+            role,
+            toggleValue
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
             validateForEmptyField(lastName, 'Last Name', setErrorLastName, true) ||

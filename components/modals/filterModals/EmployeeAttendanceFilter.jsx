@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
@@ -22,6 +22,15 @@ const EmployeeAttendanceFilter = (props) => {
         })
         props.setData({})
     }
+
+    useEffect(() => {
+        props.setData && props.setData({
+            fromDate: dateFrom,
+            toDate: dateTo,
+            entryType
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
         validateForEmptyField(dateTo, 'Date', setErrorDate, true)

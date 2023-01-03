@@ -1,11 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
 import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 
 const EditShiftModal = (props) => {
-    const [value, setValue] = useState("");
+    const [date, setDate] = useState("");
     const [comment, setComment] = useState("");
     const [inTime, setInTime] = useState("");
     const [outTime, setOutTime] = useState("");
@@ -29,7 +29,7 @@ const EditShiftModal = (props) => {
     const [loading, setLoading] = useState(false);
 
     const onCancel = () =>{
-        setValue("")
+        setDate("")
         setInTime("")
         setOutTime("")
         setComment("")
@@ -46,6 +46,15 @@ const EditShiftModal = (props) => {
             show: false
         })
     }
+
+    useEffect(()=> {
+      props.setData && props.setData({
+        date,
+        comment,
+        inTime,
+        outTime
+      })
+    },[])
 
     const isError = () => {
         return validateForEmptyField(comment, 'comment', setCommentError, true)
@@ -90,8 +99,8 @@ const EditShiftModal = (props) => {
             <EditableInput
                 type="date"
                 label="Date"
-                value={value}
-                setValue={setValue}
+                value={date}
+                setValue={setDate}
                 initialValue={value}
                 className={DashboardModalStyles.singleColumn}
                 editOn
