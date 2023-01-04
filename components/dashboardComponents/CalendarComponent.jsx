@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef} from "react";
-import {add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday} from "date-fns";
+import {add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday} from "date-fns";
 import {ArrowLeft, ArrowRight, Schedule, AvTimer} from "@mui/icons-material";
 import {CalendarStyles} from "../../styles/elements";
 import {DaysOfWeekShort} from "../../constants";
@@ -89,6 +89,8 @@ const CalendarComponent = () => {
     );
     const [days, setDays] = useState(referenceDays);
 
+    let [selectedDay, setSelectedDay] = useState(today);
+
     const previousMonth = () => {
         let firstDayNextMonth = add(firstDayCurrentMonth, {months: -1});
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
@@ -125,7 +127,11 @@ const CalendarComponent = () => {
         if (format(firstDayNextMonth, "yyyy") <= format(firstDayCurrentMonth, "yyyy")) {
             setDisableNext(false);
         } else {
-            setDisableNext(true);
+            if (format(firstDayNextMonth, "yyyy") <= format(today, "yyyy")) {
+                setDisableNext(false);
+            } else {
+                setDisableNext(true);
+            }
         }
     }, [currentMonth]);
 
@@ -189,9 +195,13 @@ const CalendarComponent = () => {
                             {days.map((day, i) => (
                                 <div
                                     key={`day_${i}`}
+                                    onClick={() => {
+                                        setSelectedDay(day);
+                                    }}
                                     className={classNames(
                                         CalendarStyles.dateContainer,
                                         CalendarStyles.dateInMonths,
+                                        isEqual(day.date, selectedDay.date) && !isToday(day.date) && CalendarStyles.selectedDate,
                                         day.publicHoliday && CalendarStyles.publicHoliday,
                                         day.organizationHoliday && CalendarStyles.organizationHoliday
                                     )}
@@ -200,8 +210,11 @@ const CalendarComponent = () => {
                                         dateTime={format(day.date, "yyyy-MM-dd")}
                                         className={classNames(
                                             CalendarStyles.dateValue,
+                                            isEqual(day.date, selectedDay.date) && isToday(day.date) && CalendarStyles.todayDate,
+                                            isEqual(day.date, selectedDay.date) && !isToday(day.date) && CalendarStyles.selectedDate,
                                             isToday(day.date) && CalendarStyles.todayDate,
                                             !isToday(day.date) && isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notTodayDate,
+                                            isEqual(day.date, selectedDay.date) && !isToday(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.selectedDate,
                                             !isToday(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notActiveMonth
                                         )}
                                     >
