@@ -15,7 +15,7 @@ const Dashboard = (props) => {
     const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState("...");
     const [sideNav, setSideNav] = useState([]);
-    const [play, setPlay] = useState(false)
+    const [play, setPlay] = useState(false);
     const handleNavigation = useCallback(
         (e) => {
             const window = e.currentTarget;

@@ -3,6 +3,7 @@
     height: 100%;
     grid-template-columns: auto 300px;
     column-gap: 20px;
+    position: relative;
 }
 
 .dateNav {
@@ -10,7 +11,7 @@
     align-items: center;
 }
 
-.holidaysAndEventsContainer{
+.holidaysAndEventsContainer {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -20,26 +21,23 @@
     display: none;
     background: #363740;
     color: white;
-    padding:0 5px;
+    padding: 0 5px;
 }
 
-.activeEvent{
+.activeEvent {
     display: flex;
     justify-content: space-around;
 }
-.activeEvent > div{
+
+.activeEvent>div {
     font-size: 14px;
 }
-.activeEvent> div:first-child {
- color: #90D9D3;
+
+.activeEvent>div>span {
+    display: flex;
 }
-.activeEvent> div:nth-child(2) {
-    color: #FBDB6D;
-   }
-.activeEvent > div > span {
-    display: flex;  
-}
-.activeEvent > div > span > p{
+
+.activeEvent>div>span>p {
     margin-top: 2px;
     margin-left: 4px;
 }
@@ -204,12 +202,101 @@
     margin: 0;
 }
 
+.clockIcon {
+    position: fixed;
+    box-shadow: 1px 0px 6px 1px rgb(54 55 64 / 30%);
+    border-radius: 36px;
+    width: 50px;
+    bottom: 81px;
+    height: 50px;
+    right: 18px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.date {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #FFFFFF;
+    border-bottom: 1px solid white;
+    text-align: center;
+    width: 81px;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.activeClockContainer {
+    background: #363740;
+    border: 1px solid #BFBFBF;
+}
+
+.inactiveClockContainer {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.activeClock {
+    color: #FFFFFF;
+}
+
+.inactiveClock {
+    color: #000000;
+}
+
+.subTitle {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #FFFFFF;
+    opacity: 0.75;
+}
+
+.closeIcon {
+    position: absolute;
+    right: 20px;
+    top: 17px;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+}
+
+.modalBackdrop {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: #88888880;
+    padding: 50px;
+}
+
 @media only screen and (max-width: 480px) {
     .gridContainer {
         grid-template-columns: 1fr;
         grid-row-gap: 20px;
     }
-    .activeEventMain{
-        display:block;
+
+    .activeEventMain {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        position: absolute;
+        width: 100%;
+        left: -2px;
+        top: 100px;
     }
 }

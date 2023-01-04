@@ -1,17 +1,18 @@
-import { useEffect, useState, useRef } from "react";
-import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from "date-fns";
-import { ArrowLeft, ArrowRight, Schedule} from "@mui/icons-material";
-import { CalendarStyles } from "../../styles/elements";
-import { DaysOfWeekShort } from "../../constants";
+import {useEffect, useState, useRef} from "react";
+import {add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday} from "date-fns";
+import {ArrowLeft, ArrowRight, Schedule, AvTimer} from "@mui/icons-material";
+import {CalendarStyles} from "../../styles/elements";
+import {DaysOfWeekShort} from "../../constants";
 import DashboardCard from "./DashboardCard";
+import {ClockModal} from "../../components";
 
-let events=  {
-        id: 1,
-        time:  '10th June',
-        inTime: '09:30',
-        outTime: '11:00',
-        duration: '01 hours 30 minutes'    
-    };
+let events = {
+    id: 1,
+    time: "10th June",
+    inTime: "09:30",
+    outTime: "11:00",
+    duration: "01 hours 30 minutes",
+};
 
 const holidays = [
     {
@@ -77,26 +78,27 @@ const CalendarComponent = () => {
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [disableNext, setDisableNext] = useState(false);
+    const [displayClockModal, setDisplayClockModal] = useState(false);
     const [dayHeight, setDayHeight] = useState(0);
     const [referenceDays, setReferenceDays] = useState(
         eachDayOfInterval({
             start: startOfWeek(firstDayCurrentMonth),
             end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
         }).map((date) => {
-            return { date: date };
+            return {date: date};
         })
     );
     const [days, setDays] = useState(referenceDays);
     const dayRef = useRef();
 
     const previousMonth = () => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+        let firstDayNextMonth = add(firstDayCurrentMonth, {months: -1});
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
         updateDays(format(firstDayNextMonth, "MMM-yyyy"));
     };
 
     const nextMonth = () => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+        let firstDayNextMonth = add(firstDayCurrentMonth, {months: 1});
         if (!disableNext) {
             setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
             updateDays(format(firstDayNextMonth, "MMM-yyyy"));
@@ -111,7 +113,7 @@ const CalendarComponent = () => {
                 start: startOfWeek(firstDay),
                 end: endOfWeek(endOfMonth(firstDay)),
             }).map((date) => {
-                return { date: date };
+                return {date: date};
             })
         );
     };
@@ -121,7 +123,7 @@ const CalendarComponent = () => {
     };
 
     useEffect(() => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+        let firstDayNextMonth = add(firstDayCurrentMonth, {months: 1});
         if (format(firstDayNextMonth, "yyyy") <= format(firstDayCurrentMonth, "yyyy")) {
             setDisableNext(false);
         } else {
@@ -152,8 +154,8 @@ const CalendarComponent = () => {
                 return {
                     ...day,
                     worked: workedDaysList,
-                    publicHoliday: holidays.filter(holiday => holiday.type === "public").some(holiday => (isSameDay(parseISO(holiday.startDatetime), day.date))),
-                    organizationHoliday: holidays.filter(holiday => holiday.type === "org").some(holiday => (isSameDay(parseISO(holiday.startDatetime), day.date)))
+                    publicHoliday: holidays.filter((holiday) => holiday.type === "public").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
+                    organizationHoliday: holidays.filter((holiday) => holiday.type === "org").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
                 };
             }
             return day;
@@ -161,8 +163,8 @@ const CalendarComponent = () => {
         newDaysObj = newDaysObj.map((day) => {
             return {
                 ...day,
-                publicHoliday: holidays.filter(holiday => holiday.type === "public").some(holiday => (isSameDay(parseISO(holiday.startDatetime), day.date))),
-                organizationHoliday: holidays.filter(holiday => holiday.type === "org").some(holiday => (isSameDay(parseISO(holiday.startDatetime), day.date)))
+                publicHoliday: holidays.filter((holiday) => holiday.type === "public").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
+                organizationHoliday: holidays.filter((holiday) => holiday.type === "org").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
             };
         });
         setDays(newDaysObj);
@@ -196,7 +198,7 @@ const CalendarComponent = () => {
                                 <div
                                     key={`day_${i}`}
                                     ref={dayRef}
-                                    style={{ height: `${dayHeight}px` }}
+                                    style={{height: `${dayHeight}px`}}
                                     className={classNames(
                                         CalendarStyles.dateContainer,
                                         CalendarStyles.dateInMonths,
@@ -239,46 +241,26 @@ const CalendarComponent = () => {
                 </div>
             </DashboardCard>
             <div className={CalendarStyles.holidaysAndEventsContainer}>
-                              
-                    {events && 
-                        <div className={CalendarStyles.activeEventMain}>
-                            <h3>{events.time}</h3>
-                       <div className={CalendarStyles.activeEvent}>          
-                          <div>
-                            <p>Clock In</p>
-                            <span>
-                                <Schedule style={{fontSize:"14px !important"}}/>
-                                <p>{events.inTime}</p>
-                            </span>
-                          </div>
-                          <div>
-                          <p>Clock Out</p>
-                            <span>
-                            <Schedule style={{transform: "rotate(180deg)",fontSize:"14px !important"}}/>
-                            <p>{events.outTime}</p>
-                            </span>
-                          </div>
-                          <div>
-                          <p>Duration</p>
-                            <span>
-                                {events.duration}
-                            </span>
-                          </div>                      
-                       </div>
-                       </div>
-                    }              
-              
-            <div className={CalendarStyles.holidayContainer}>
-                <h4>Holidays</h4>
-                <ul className={CalendarStyles.holidayList}>
-                    {holidays.map((holiday, i) => (
-                        <li className={CalendarStyles.dateHoliday}>
-                            {holiday.name}: {holiday.startDatetime}
-                        </li>
-                    ))}
-                </ul>
+                <div className={CalendarStyles.holidayContainer}>
+                    <h4>Holidays</h4>
+                    <ul className={CalendarStyles.holidayList}>
+                        {holidays.map((holiday, i) => (
+                            <li className={CalendarStyles.dateHoliday}>
+                                {holiday.name}: {holiday.startDatetime}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
+            <div
+                className={classNames(CalendarStyles.clockIcon, displayClockModal ? CalendarStyles.activeClockContainer : CalendarStyles.inactiveClockContainer)}
+                onClick={() => {
+                    setDisplayClockModal(true);
+                }}
+            >
+                <AvTimer style={{width: "34px", height: "34px"}} className={classNames(displayClockModal ? CalendarStyles.activeClock : CalendarStyles.inactiveClock)} />
             </div>
+            <div>{displayClockModal && <ClockModal closeClockModal={() => setDisplayClockModal(false)} />}</div>
         </div>
     );
 };
