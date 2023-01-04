@@ -79,7 +79,6 @@ const CalendarComponent = () => {
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [disableNext, setDisableNext] = useState(false);
     const [displayClockModal, setDisplayClockModal] = useState(false);
-    const [dayHeight, setDayHeight] = useState(0);
     const [referenceDays, setReferenceDays] = useState(
         eachDayOfInterval({
             start: startOfWeek(firstDayCurrentMonth),
@@ -89,7 +88,6 @@ const CalendarComponent = () => {
         })
     );
     const [days, setDays] = useState(referenceDays);
-    const dayRef = useRef();
 
     const previousMonth = () => {
         let firstDayNextMonth = add(firstDayCurrentMonth, {months: -1});
@@ -170,12 +168,6 @@ const CalendarComponent = () => {
         setDays(newDaysObj);
     }, [referenceDays]);
 
-    useEffect(() => {
-        if (dayRef.current) {
-            setDayHeight(dayRef.current.clientWidth);
-        }
-    }, [dayRef.current]);
-
     return (
         <div className={CalendarStyles.gridContainer}>
             <DashboardCard>
@@ -197,8 +189,6 @@ const CalendarComponent = () => {
                             {days.map((day, i) => (
                                 <div
                                     key={`day_${i}`}
-                                    ref={dayRef}
-                                    style={{height: `${dayHeight}px`}}
                                     className={classNames(
                                         CalendarStyles.dateContainer,
                                         CalendarStyles.dateInMonths,
