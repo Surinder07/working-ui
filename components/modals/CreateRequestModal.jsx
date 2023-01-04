@@ -1,8 +1,8 @@
-import React from "react";
-import {useState} from "react";
-import {EditableInput} from "../inputComponents";
-import {DashboardModal} from "./base";
-import {DashboardModalStyles} from "../../styles/elements";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { EditableInput } from "../inputComponents";
+import { DashboardModal } from "./base";
+import { DashboardModalStyles } from "../../styles/elements";
 import Tabs from "../dashboardComponents/Tabs";
 
 const CreateRequestModal = (props) => {
@@ -21,16 +21,16 @@ const CreateRequestModal = (props) => {
     const [startTime, setStartTime] = useState("");
     const [duration, setDuration] = useState("");
     const [description, setDescription] = useState("");
-     // initial states
-     const [initialRequestTypeValue,setInitialRequestTypeValue] = useState("");
-     const [initialTitle,setInitialTitle] = useState("");
-     const [initialFromDate,setInitialFromDate] = useState("");
-     const [initialTillDate,setInitialTillDate] = useState("");
-     const [initialTypeOfLeave,setInitialTypeOfLeave] = useState("");
-     const [initialOverTimeDate,setInitialOverTimeDate] = useState("");
-     const [initialStartTime,setInitialStartTime] = useState("");
-     const [initialDuration,setInitialDuration] = useState("");
-     const [initialDescription,setInitialDescription] = useState("");
+    // initial states
+    const [initialRequestTypeValue, setInitialRequestTypeValue] = useState("");
+    const [initialTitle, setInitialTitle] = useState("");
+    const [initialFromDate, setInitialFromDate] = useState("");
+    const [initialTillDate, setInitialTillDate] = useState("");
+    const [initialTypeOfLeave, setInitialTypeOfLeave] = useState("");
+    const [initialOverTimeDate, setInitialOverTimeDate] = useState("");
+    const [initialStartTime, setInitialStartTime] = useState("");
+    const [initialDuration, setInitialDuration] = useState("");
+    const [initialDescription, setInitialDescription] = useState("");
 
 
 
@@ -38,7 +38,7 @@ const CreateRequestModal = (props) => {
         message: "",
         show: false,
     });
-    const [errorDate,setErrorDate] = useState({
+    const [errorDate, setErrorDate] = useState({
         message: "",
         show: false,
     })
@@ -70,10 +70,10 @@ const CreateRequestModal = (props) => {
         message: "",
         show: false,
     });
-    
+
     const [loading, setLoading] = useState(false);
 
-    const onCancel = ()=> {
+    const onCancel = () => {
         setRequestTypeValue("")
         setTitle("")
         setFromDate("")
@@ -85,87 +85,82 @@ const CreateRequestModal = (props) => {
         setDescription("")
         setErrorRequestTypeValue({
             message: "",
-            show:false
+            show: false
         })
         setErrorTitle({
             message: "",
-            show:false
+            show: false
         })
         setErrorDate({
             message: "",
-            show:false
+            show: false
         })
         setErrorOverTimeDate({
             message: "",
-            show:false
+            show: false
         })
         setErrorTypeOfLeave({
             message: "",
-            show:false
+            show: false
         })
         setErrorStartTime({
             message: "",
-            show:false
+            show: false
         })
         setErrorDuration({
             message: "",
-            show:false
+            show: false
         })
         setErrorDescription({
             message: "",
-            show:false
+            show: false
         })
     }
+    
+    useEffect(()=> {
+        props.setData && props.setData({
+            requestTypeValue,
+            title,
+            fromDate,
+            tillDate,
+            typeOfLeave,
+            overTimeDate,
+            startTime,
+            duration,
+            description,
+        })
+    },[])
 
-    const validateForm = async () => {
-        let error = false;
-        if(fromDate === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-      }
-      if(toDate === '') {setErrorDate({
-        message: 'Date is required',
-        show: true
-      })
-      error = true;
-    }
-     if(overTimeDate === '') {setErrorOverTimeDate({
-        message: 'Date is required',
-        show: true
-     })
-     error = true;
-    }
-    return error
+    const isError = () => {
+        return validateForEmptyField(fromDate, 'From', setErrorDate, true) ||
+               validateForEmptyField(tillDate, 'To', setErrorDate, true) ||
+               validateForEmptyField(overTimeDate, 'Date', setErrorOverTimeDate, true)
     }
 
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Request created successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
+        if (!isError()) {
+            fetchAndHandle()
+                // setLoading(true)
+                // if(error == true){
+                //     props.setToasterInfo({
+                //         error: true,
+                //         title: 'Error!',
+                //         message: res.message
+                //     })
+                // }
+                // else{
+                //     props.setToasterInfo({
+                //         error: false,
+                //         title: 'Success!',
+                //         message: 'Request created successfully'
+                //     });
+                //     props.setReloadData(true)
+                //     onCancel()
+                // }
+                // setLoading(false)
             }
-        })
+        
     }
 
     return (
@@ -188,7 +183,7 @@ const CreateRequestModal = (props) => {
                 ]}
                 value={requestTypeValue}
                 setValue={setRequestTypeValue}
-                initialValue={initialRequestTypeValue}
+                initialValue={requestTypeValue}
                 label="Request Type"
                 className={DashboardModalStyles.singleColumn}
                 error={errorRequestTypeValue}
@@ -202,7 +197,7 @@ const CreateRequestModal = (props) => {
                         label="Title"
                         value={title}
                         setValue={setTitle}
-                        initialValue={initialTitle}
+                        initialValue={title}
                         className={DashboardModalStyles.singleColumn}
                         error={errorTitle}
                         setError={setErrorTitle}
@@ -225,7 +220,7 @@ const CreateRequestModal = (props) => {
                                 label="From"
                                 value={fromDate}
                                 setValue={setFromDate}
-                                initialValue={initialFromDate}
+                                initialValue={fromDate}
                                 error={errorDate}
                                 setError={setErrorDate}
                                 required
@@ -235,7 +230,7 @@ const CreateRequestModal = (props) => {
                                 type="date"
                                 value={tillDate}
                                 setValue={setTillDate}
-                                initialValue={initialTillDate}
+                                initialValue={tillDate}
                                 error={errorDate}
                                 setError={setErrorDate}
                                 label="Till"
@@ -252,7 +247,7 @@ const CreateRequestModal = (props) => {
                         label="Type of Leave"
                         value={typeOfLeave}
                         setValue={setTypeOfLeave}
-                        initialValue={initialTypeOfLeave}
+                        initialValue={typeOfLeave}
                         className={DashboardModalStyles.singleColumn}
                         error={errorTypeOfLeave}
                         setError={setErrorTypeOfLeave}
@@ -266,7 +261,7 @@ const CreateRequestModal = (props) => {
                         label="Date"
                         value={overTimeDate}
                         setValue={setOverTimeDate}
-                        initialValue={initialOverTimeDate}
+                        initialValue={overTimeDate}
                         error={errorOverTimeDate}
                         setError={setErrorOverTimeDate}
                         className={DashboardModalStyles.singleColumn}
@@ -278,7 +273,7 @@ const CreateRequestModal = (props) => {
                         label="Start Time"
                         value={startTime}
                         setValue={setStartTime}
-                        initialValue={initialStartTime}
+                        initialValue={startTime}
                         error={errorStartTime}
                         setError={setErrorStartTime}
                         editOn
@@ -288,7 +283,7 @@ const CreateRequestModal = (props) => {
                         label="Duration"
                         value={duration}
                         setValue={setDuration}
-                        initialValue={initialDuration}
+                        initialValue={duration}
                         error={errorDuration}
                         setError={setErrorDuration}
                         editOn
@@ -301,7 +296,7 @@ const CreateRequestModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={description}
                 setValue={setDescription}
-                initialValue={initialDescription}
+                initialValue={description}
                 error={errorDescription}
                 setError={setErrorDescription}
                 editOn

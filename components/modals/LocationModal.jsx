@@ -26,6 +26,13 @@ const LocationModal = (props) => {
         fetchAndHandleGet(dropdownService.getTimezones, setTimezones);
     }, [])
 
+    useEffect(()=>{
+        props.setData && props.setData({
+            location,
+            timezone
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(location, 'Name', setErrorLocation, true) ||
             validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);
@@ -33,7 +40,7 @@ const LocationModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(locationAndRoleService.saveLocation, { name: location, timezone },
+            fetchAndHandle(() => locationAndRoleService.saveLocation({ name: location, timezone }),
                 'Location added successfully', setLoading, props.setReloadData, props.setPageLoading,
                 onCancel, props.setShowModal, props.setToasterInfo);
         }

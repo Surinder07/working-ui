@@ -64,6 +64,18 @@ const InviteUserModal = (props) => {
         }
     }, [location])
 
+    useEffect(()=> {
+        props.setData && props.setData({
+            firstName,
+            lastName,
+            employeeId,
+            email,
+            location,
+            role,
+            toggleValue
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
             validateForEmptyField(lastName, 'Last Name', setErrorLastName, true) ||
@@ -74,12 +86,12 @@ const InviteUserModal = (props) => {
 
     const saveData = () => {
         if (file.name) {
-            fetchAndHandle(memberService.inviteByUpload, { file: file }, null, setLoading,
+            fetchAndHandle(() => memberService.inviteByUpload({ file: file }), null, setLoading,
                 props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
         } else if (!isError()) {
-            fetchAndHandle(memberService.sendInvite, saveUserRequestBody(firstName, lastName, role,
-                location, employeeId, email, toggleValue === 'Permanent'), 'Invite Sent Successfully',
+            fetchAndHandle(() => memberService.sendInvite(saveUserRequestBody(firstName, lastName, role,
+                location, employeeId, email, toggleValue === 'Permanent')), 'Invite Sent Successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
         }

@@ -32,10 +32,10 @@ const InputBox = (props) => {
     const switchPasswordVisibility = () => {
         if (type === 'password') {
             setType('text');
-            setVisibilityIcon(<VisibilityOff />);
+            setVisibilityIcon(<VisibilityOff style={{ fontSize: '14px' }} />);
         } else {
             setType('password');
-            setVisibilityIcon(<Visibility />);
+            setVisibilityIcon(<Visibility style={{ fontSize: '14px' }} />);
         }
     }
 

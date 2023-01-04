@@ -110,6 +110,7 @@
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 18px !important;
 }
 
 .mapIcon {

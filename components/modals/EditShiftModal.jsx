@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
 import {DashboardModalStyles} from "../../styles/elements";
+import { fetchAndHandle, validateForEmptyField } from "../../helpers";
 
 const EditShiftModal = (props) => {
-    const [value, setValue] = useState("");
+    const [date, setDate] = useState("");
     const [comment, setComment] = useState("");
     const [inTime, setInTime] = useState("");
     const [outTime, setOutTime] = useState("");
@@ -28,7 +29,7 @@ const EditShiftModal = (props) => {
     const [loading, setLoading] = useState(false);
 
     const onCancel = () =>{
-        setValue("")
+        setDate("")
         setInTime("")
         setOutTime("")
         setComment("")
@@ -46,42 +47,42 @@ const EditShiftModal = (props) => {
         })
     }
 
-    const validateForm = async () => {
-        let error = false;
-        if(comment === '') {setCommentError({
-            message: 'comment is required',
-            show: true
-        })
-        error = true
-    }
-        return error
+    useEffect(()=> {
+      props.setData && props.setData({
+        date,
+        comment,
+        inTime,
+        outTime
+      })
+    },[])
+
+    const isError = () => {
+        return validateForEmptyField(comment, 'comment', setCommentError, true)
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
-                }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'User invited successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
+        if (!isError()) {
+            fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+                // setLoading(true)
+                // if(error == true){
+                //     props.setToasterInfo({
+                //         error: true,
+                //         title: 'Error!',
+                //         message: res.message
+                //     })
+                // }
+                // else{
+                //     props.setToasterInfo({
+                //         error: false,
+                //         title: 'Success!',
+                //         message: 'User invited successfully'
+                //     });
+                //     props.setReloadData(true)
+                //     onCancel()
+                // }
+                // setLoading(false)
+                // })
             }
-        })
     }
 
     return (
@@ -98,9 +99,9 @@ const EditShiftModal = (props) => {
             <EditableInput
                 type="date"
                 label="Date"
-                value={value}
-                setValue={setValue}
-                initialValue={initialDate}
+                value={date}
+                setValue={setDate}
+                initialValue={value}
                 className={DashboardModalStyles.singleColumn}
                 editOn
             />
@@ -109,7 +110,7 @@ const EditShiftModal = (props) => {
                 label="In Time"
                 value={inTime}
                 setValue={setInTime}
-                initialValue={initialInTime}
+                initialValue={inTime}
                 error={inTimeError}
                 setError={setInTimeError}
                 editOn
@@ -119,7 +120,7 @@ const EditShiftModal = (props) => {
                 label="Out Time"
                 value={outTime}
                 setValue={setOutTime}
-                initialValue={initialOutTime}
+                initialValue={outTime}
                 error={outTimeError}
                 setError={setOutTimeError}
                 editOn
@@ -130,7 +131,7 @@ const EditShiftModal = (props) => {
                 className={DashboardModalStyles.singleColumn}
                 value={comment}
                 setValue={setComment}
-                initialValue={initialComment}
+                initialValue={comment}
                 error={commentError}
                 setError={setCommentError}
                 required

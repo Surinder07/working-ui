@@ -39,11 +39,13 @@
     transform: translateY(-50%);
     color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
+    font-size: 18px !important;
 }
 
 .arrowIcon {
     color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
+    font-size: 18px !important;
 }
 
 .icon:hover,

@@ -66,11 +66,24 @@ const NewShiftModal = (props) => {
     }, [props.showModal])
 
     useEffect(() => {
-        setRole("");
+        setRole([]);
         if (location && location !== '') {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
     }, [location])
+
+    useEffect(()=> {
+       props.setData && props.setData({
+        startTime,
+        endTime,
+        startDate,
+        endDate,
+        user,
+        location,
+        role,
+        shiftName
+       })
+    },[])
 
     const isError = () => {
         return combineBoolean(validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),

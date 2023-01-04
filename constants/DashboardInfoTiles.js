@@ -1,7 +1,9 @@
-import { Holiday, ActiveEmployees, ActiveLocation, PendingRequests } from '../public/images';
+import { Holiday, ActiveEmployees, ActiveLocation, PendingRequests, Roles, Shifts, Time } from '../public/images';
 
-export const AdminTileMap = {
+export const DashboardTileMap = {
     admin: ['holidayCurrentWeek', 'activeEmployees', 'activeLocations', 'pendingRequests'],
+    manager: ['holidayCurrentWeek', 'activeEmployees', 'onlineEmployees', 'pendingRequests'],
+    employee: ['holidayCurrentWeek', 'hoursWorkedByWeek', 'nextShift', 'pendingRequests'],
 }
 
 export const DashboardInfoTiles = {
@@ -12,7 +14,7 @@ export const DashboardInfoTiles = {
         href: '/dashboard/calendar'
     },
     activeEmployees: {
-        title: 'Acitve Employees',
+        title: 'Active Employees',
         timeframe: 'Current Week',
         icon: ActiveEmployees,
         href: '/dashboard/employees'
@@ -29,23 +31,19 @@ export const DashboardInfoTiles = {
         href: '/dashboard/requests'
     },
     onlineEmployees: {
-        title: 'Pending Requests',
-        icon: PendingRequests,
-        href: '/dashboard/requests'
-    },
-    hoursThisWeek: {
-        title: 'Pending Requests',
-        icon: PendingRequests,
-        href: '/dashboard/requests'
+        title: 'Employees Online',
+        icon: ActiveEmployees,
+        href: '/dashboard/shifts'
     },
     hoursWorkedByWeek: {
-        title: 'Pending Requests',
-        icon: PendingRequests,
-        href: '/dashboard/requests'
+        title: 'Hours Worked',
+        timeframe: 'Current Week',
+        icon: Time,
+        href: '/dashboard/time-clock'
     },
     nextShift: {
-        title: 'Pending Requests',
-        icon: PendingRequests,
-        href: '/dashboard/requests'
+        title: 'Upcoming Shift',
+        icon: Shifts,
+        href: '/dashboard/shifts'
     }
 };

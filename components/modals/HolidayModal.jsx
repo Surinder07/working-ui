@@ -3,12 +3,17 @@ import { DashboardModalStyles } from "../../styles/elements";
 import { CloudUpload } from "@mui/icons-material";
 import { fetchWrapper } from "../../helpers";
 import Link from 'next/link';
+import { useState } from "react";
 
 const HolidayModal = (props) => {
 
     const fileEndpoint = process.env.endpoints.resources.fileTemplate;
+    const [file, setFile] = useState({});
+    const [loading, setLoading] = useState(false);
+    const onCancel = () => {
+      setFile({})
+    }
 
-    
     const handleFileChange = (e) => {
         if (e.target.files.length) {
             handleUpload(e.target.files[0]);
@@ -17,9 +22,22 @@ const HolidayModal = (props) => {
             */
         }
     }
-
+    // const isError = () => {
+    //     return file.length > 0;
+    // }
     const handleUpload = async file => {
         console.log('data received', file);
+        if (file.name) {
+            fetchAndHandle(() => memberService.inviteByUpload({ file: file }), null, setLoading,
+                props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo);
+        }
+        //  else if (!isError()) {
+        //     fetchAndHandle(() => memberService.sendInvite(saveUserRequestBody(firstName, lastName, role,
+        //         location, employeeId, email, toggleValue === 'Permanent')), 'Invite Sent Successfully',
+        //         setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+        //         props.setToasterInfo);
+        // }
         // const formData = new FormData();
         // formData.append("image", image.raw);
 
@@ -40,6 +58,9 @@ const HolidayModal = (props) => {
             buttonText="Submit"
             title="Upload Holiday"
             type="twoColWide"
+            onClick={handleUpload}
+            onCancel={onCancel}
+            loading={loading}
         >
             <div className={`${DashboardModalStyles.singleColumn} ${DashboardModalStyles.uploadContainer}`}>
                 <CloudUpload className={DashboardModalStyles.icon} />

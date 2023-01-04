@@ -38,7 +38,7 @@ const Login = (props) => {
                         localStorage.removeItem(userService.USER_KEY);
                     } else {
                         props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-                        router.push('/dashboard');
+                        router.push('/dashboard/calendar');
                     }
                 })
         }
@@ -89,6 +89,7 @@ const Login = (props) => {
                         .then((res) => {
                             if (res.wait) return;
                             if (res.error) {
+                                setLoading(false);
                                 props.setPageLoading(false);
                                 props.setToasterInfo({
                                     error: true,
@@ -96,7 +97,6 @@ const Login = (props) => {
                                     message: res.message,
                                 })
                             } else {
-                                setLoading(false);
                                 router.push('/dashboard');
                             }
                         });

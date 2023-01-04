@@ -77,6 +77,12 @@ export const SideNavInfo = {
             activeKey: "CALENDAR",
         },
         {
+            icon: <Schedule style={{ fontSize: "16px" }} />,
+            text: "Time Clock",
+            link: "/dashboard/time-clock",
+            activeKey: "TIMECLOCK",
+        },
+        {
             icon: <TrackChanges style={{ fontSize: "16px" }} />,
             text: "Shifts",
             link: "/dashboard/shifts",
@@ -111,12 +117,6 @@ export const SideNavInfo = {
             text: "Reports",
             link: "/dashboard/reports",
             activeKey: "REPORTS",
-        },
-        {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
-            text: "Time Clock",
-            link: "/dashboard/time-clock",
-            activeKey: "TIMECLOCK",
         }
     ],
     employee: [
@@ -131,6 +131,12 @@ export const SideNavInfo = {
             text: "Calendar",
             link: "/dashboard/calendar",
             activeKey: "CALENDAR",
+        },
+        {
+            icon: <Schedule style={{ fontSize: "16px" }} />,
+            text: "Time Clock",
+            link: "/dashboard/time-clock",
+            activeKey: "TIMECLOCK",
         },
         {
             icon: <TrackChanges style={{ fontSize: "16px" }} />,
@@ -162,12 +168,6 @@ export const SideNavInfo = {
             text: "Reports",
             link: "/dashboard/reports",
             activeKey: "REPORTS",
-        },
-        {
-            icon: <Schedule style={{ fontSize: "16px" }} />,
-            text: "Time Clock",
-            link: "/dashboard/time-clock",
-            activeKey: "TIMECLOCK",
         }
     ],
     superAdmin: [

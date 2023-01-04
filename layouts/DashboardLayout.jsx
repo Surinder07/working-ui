@@ -1,11 +1,11 @@
-import {useRef, useEffect, useState, useCallback} from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import {ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger} from "../components";
-import {footerIcons, SideNavInfo} from "../constants";
-import {LogoWhite, FaviconWhite, Favicon, Logo} from "../public/images";
-import {DashboardLayout} from "../styles/layouts";
-import {Logout, Settings, PlayArrow, Stop} from "@mui/icons-material";
-import {userService} from "../services";
+import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger } from "../components";
+import { footerIcons, SideNavInfo } from "../constants";
+import { LogoWhite, FaviconWhite, Favicon, Logo } from "../public/images";
+import { DashboardLayout } from "../styles/layouts";
+import { Logout, Settings, PlayArrow, Stop } from "@mui/icons-material";
+import { userService } from "../services";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
@@ -22,7 +22,7 @@ const Dashboard = (props) => {
             if (sideNavRef.current.clientHeight > window.scrollY + window.innerHeight) {
                 setSideNavStyle({});
             } else if (y < window.scrollY && sideNavRef.current.clientHeight < window.scrollY + window.innerHeight) {
-                setSideNavStyle({position: "fixed", bottom: 0});
+                setSideNavStyle({ position: "fixed", bottom: 0 });
             }
             setY(window.scrollY);
         },
@@ -46,11 +46,11 @@ const Dashboard = (props) => {
 
     return (
         <div className={`${DashboardLayout.dashboardPage} ${navOpen ? DashboardLayout.openNavDashboard : DashboardLayout.closeNavDashboard}`}>
-            <div style={{position: "relative", width: "inherit"}}>
+            <div style={{ position: "relative", width: "inherit" }}>
                 <div className={DashboardLayout.sideNav} ref={sideNavRef} style={sideNavStyle}>
                     <div>
                         <div>
-                            <div style={{margin: "0 auto", width: "fit-content"}} className={DashboardLayout.logoContainer}>
+                            <div style={{ margin: "0 auto", width: "fit-content" }} className={DashboardLayout.logoContainer}>
                                 <LinkedImage src={navOpen ? LogoWhite : FaviconWhite} className={DashboardLayout.logo} alt="Logo" link="/dashboard" />
                             </div>
                             <p className={DashboardLayout.version}>Version: {process.env.version}</p>
@@ -67,20 +67,16 @@ const Dashboard = (props) => {
                                 </div>
                             )}
                         </div>
-                        <div style={{marginTop: "20px"}}>
+                        <div style={{ marginTop: "20px" }}>
                             {props.user.role ? (
                                 sideNav.map((info, key) => (
                                     <Link href={info.link} key={key}>
                                         <div
                                             className={`${DashboardLayout.menuItem} ${info.activeKey === props.pageInfo.activeMenu ? DashboardLayout.activeMenuItem : ""}`}
-                                            style={navOpen ? {} : {margin: "auto", width: "100%"}}
+                                            style={navOpen ? {} : { margin: "auto", width: "100%" }}
                                         >
                                             {info.icon}
-                                            {navOpen && (
-                                                <p className={DashboardLayout.itemTitle} style={{marginLeft: "25px"}}>
-                                                    {info.text}
-                                                </p>
-                                            )}
+                                            {navOpen && <p style={{ marginLeft: "10px" }}>{info.text}</p>}
                                         </div>
                                     </Link>
                                 ))
@@ -89,17 +85,17 @@ const Dashboard = (props) => {
                             )}
                         </div>
                     </div>
-                    <div style={{height: "80px"}}></div>
+                    <div style={{ height: "80px" }}></div>
                     <div>
                         <Link href="/dashboard/settings">
                             <div className={`${DashboardLayout.menuItem} ${props.pageInfo.activeMenu === "SETTINGS" ? DashboardLayout.activeMenuItem : ""}`}>
-                                <Settings style={{fontSize: "16px"}} />
-                                {navOpen && <p style={{marginLeft: "10px"}}>Settings</p>}
+                                <Settings style={{ fontSize: "16px" }} />
+                                {navOpen && <p style={{ marginLeft: "10px" }}>Settings</p>}
                             </div>
                         </Link>
                         <div className={`${DashboardLayout.menuItem}`} onClick={() => userService.logout()}>
-                            <Logout style={{fontSize: "16px"}} />
-                            {navOpen && <p style={{marginLeft: "10px"}}>Logout</p>}
+                            <Logout style={{ fontSize: "16px" }} />
+                            {navOpen && <p style={{ marginLeft: "10px" }}>Logout</p>}
                         </div>
                     </div>
                 </div>
@@ -107,25 +103,22 @@ const Dashboard = (props) => {
             <div className={`${navOpen ? DashboardLayout.openNavRightContainer : DashboardLayout.closeNavRightContainer}`}>
                 <div className={DashboardLayout.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
-                    {props.screenType !== 3 && (
+                    {
+                        (props.screenType !== 3 && props.user.role !== 'ADMIN') &&
                         <div className={DashboardLayout.clockDashboardMain}>
                             <div>
                                 <p>Clock In</p>
-                                <p style={{color: "#2996C3"}}>10:00</p>
+                                <p style={{ color: '#2996C3' }}>10:00</p>
                             </div>
                             <div>
                                 <p>Clock Out</p>
-                                <p style={{color: "#2996C3"}}>05:00</p>
+                                <p style={{ color: '#2996C3' }}>05:00</p>
                             </div>
                             <div>
-                                {!play ? (
-                                    <PlayArrow className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(true)} />
-                                ) : (
-                                    <Stop className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(false)} />
-                                )}
+                                {!play ? <PlayArrow className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(true)} /> : <Stop className={DashboardLayout.playAndPauseIcon} onClick={() => setPlay(false)} />}
                             </div>
                         </div>
-                    )}
+                    }
                     <div className={DashboardLayout.headerRight}>
                         {props.screenType !== 3 && <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" search />}
                         <div className={DashboardLayout.helpIcon}>?</div>
@@ -134,7 +127,7 @@ const Dashboard = (props) => {
                         {props.screenType !== 3 && <ProfileImage size={"small"} header />}
                     </div>
                     {props.screenType === 3 && (
-                        <div style={{width: "fit-content"}}>
+                        <div style={{ width: "fit-content" }}>
                             <LinkedImage src={Logo} width={160} alt="Logo" link="/dashboard" />
                         </div>
                     )}
@@ -142,7 +135,7 @@ const Dashboard = (props) => {
                 <div className={DashboardLayout.content}>{props.children}</div>
                 <div className={DashboardLayout.footer}>
                     <div className={DashboardLayout.leftContainer}>
-                        <p style={{marginRight: "20px"}}>&#169;{` ${new Date().getFullYear()} WAAW GLOBAL INC. All Rights Reserved`}</p>
+                        <p style={{ marginRight: "20px" }}>&#169;{` ${new Date().getFullYear()} WAAW GLOBAL INC. All Rights Reserved`}</p>
                         {footerIcons.socialIcons.map((icon, i) => (
                             <LinkedImage className={DashboardLayout.footerIcons} key={`social_${i}`} heightOrient src={icon.src} alt={icon.alt} link={icon.link} />
                         ))}

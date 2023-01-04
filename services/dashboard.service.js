@@ -1,26 +1,34 @@
 import { fetchWrapper } from '../helpers';
 
 const endpoints = process.env.endpoints.dashboard;
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const getData = () => {
+const getData = async (role) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
+        .then(res => {
+            const data = {
+                ...res,
+                invoiceTrends: getInvoicesTrends(res.invoiceTrends),
+                employeeTrends: getEmployeeTrends(res.employeeTrends, role)
+            }
+            return data;
+        });
 }
 
 const getInvoicesTrends = (data) => {
-    const currentYearData = months
+    const currentYearData = data.currentYear ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
             return data.currentYear[month]
-        })
-    const previousYearData = months
+        }) : [];
+    const previousYearData = data.previousYear ? months
         .filter(month => Object.keys(data.previousYear).includes(month))
         .map(month => {
             return data.previousYear[month]
-        })
+        }) : [];
 
     return {
-        noData: currentYearData.length === 0 && previousYearData.length === 0,
+        noData: (data.currentYear.length === 0 && data.previousYear.length === 0),
         labels: months,
         datasets: [
             {
@@ -62,30 +70,26 @@ const getBlueBgList = (length) => {
     return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
 };
 
-const getEmployeeTrends = (data, isAdmin) => {
-    let empData = data;
+const getEmployeeTrends = (data, role) => {
     return {
-        noData: data.filter(emp => emp.employees !== 0).length === 0,
-        labels: empData.filter(emp => emp.employees !== 0)
-            .map(emp => isAdmin ? emp.location : emp.role),
+        noData: (data.filter(emp => emp.employees !== 0).length) === 0,
+        labels: data.filter(emp => emp.employees !== 0)
+            .map(emp => {
+                return role === 'ADMIN' ? emp.location : emp.role
+            }),
         datasets: [
             {
                 label: "Active Employees",
-                data: empData.map(emp => emp.employees),
-                backgroundColor: getBlueBgList(empData.length),
+                data: data.map(emp => emp.employees),
+                backgroundColor: getBlueBgList(data.length),
                 hoverOffset: 4,
             },
         ]
     }
 }
 
-const getInvoices = (invoices) => {
-    return invoices.data;
-}
-
 export const dashboardService = {
     getData,
     getInvoicesTrends,
-    getEmployeeTrends,
-    getInvoices
+    getEmployeeTrends
 }

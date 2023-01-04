@@ -32,8 +32,8 @@ const FilterModal = (props) => {
         if (action === 1) {
             props.onClick();
         } else {
-            props.onCancel();
-            props.setShowModal(false);
+            props.clearAllFilter();
+            // props.setShowModal(false);
         }
         document.body.style.overflow = "unset";
         props.setShowModal(false);

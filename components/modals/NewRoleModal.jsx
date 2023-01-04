@@ -3,7 +3,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import { dropdownService, locationAndRoleService } from "../../services";
-import { addRoleRequestBody, editRoleRequestBody, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
+import { addRoleRequestBody, editRoleRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values
@@ -62,6 +62,18 @@ const NewRoleModal = (props) => {
         }
     }, [props.showModal])
 
+    useEffect(()=> {
+        props.setData && props.setData({
+            roleName,
+            location,
+            maximumHours,
+            minimumHours,
+            maximumWorkDays,
+            gapsInShifts,
+            adminRights
+        })
+    },[])
+
 
     const isError = () => {
         return validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||
@@ -71,10 +83,8 @@ const NewRoleModal = (props) => {
     const saveData = () => {
         if (!isError()) {
             fetchAndHandle(props.update ?
-                locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours,
-                    maximumHours, gapsInShifts, maximumWorkDays)) : locationAndRoleService
-                        .addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours,
-                            maximumHours, gapsInShifts, maximumWorkDays)),
+                () => locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)) 
+                : () => locationAndRoleService.addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)),
                 props.update ? 'Role updated successfully' : 'Role added successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
@@ -154,7 +164,7 @@ const NewRoleModal = (props) => {
                     editOn
                 />
                 {
-                    !props.update &&
+                    (!props.update && props.role === 'ADMIN') &&
                     <Checkbox
                         isChecked={adminRights}
                         setIsChecked={setAdminRights}

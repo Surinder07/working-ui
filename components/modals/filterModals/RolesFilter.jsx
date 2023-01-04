@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
+import { validateForEmptyField } from "../../../helpers";
 
 const RolesFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
@@ -10,64 +11,44 @@ const RolesFilter = (props) => {
     const [role, setRole] = useState("");
     const [status, setStatus] = useState("");
 
-    const [errorDate,setErrorDate] = useState({
-        message: '',
-        show: false
-    });
-    const [loading, setLoading] = useState(false);
-    const onCancel = () => {
+    const [errorDate,setErrorDate] = useState({});
+    const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
         setProfileType("")
         setRole("")
         setStatus("")
-        setErrorDate({
-            message: '',
-            show: false
-        })
+        setErrorDate({})
+        props.setData({})
     }
-    const validateForm = async () => {
-        let error = false;
-        if(dateFrom === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
+
+    useEffect(() => {
+        props.setData && props.setData({
+            fromDate: dateFrom,
+            toDate: dateTo,
+            profileType,
+            role,
+            status 
         })
-        error = true;
-        }
-        if(dateTo === '') {setErrorDate({
-            message: 'Date is required',
-            show: true
-        })
-        error = true;
-        }
-        return error
+    },[])
+
+    const isError = () => {
+        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
+               validateForEmptyField(dateTo, 'Date', setErrorDate, true) 
     }
 
     const saveData = () => {
-        validateForm()
-        .then(error => {
-            if(!error) {
-
-                setLoading(true)
-                if(error == true){
-                    props.setToasterInfo({
-                        error: true,
-                        title: 'Error!',
-                        message: res.message
-                    })
+        if (!isError()) {
+                    let data = {
+                        fromDate: dateFrom,
+                        toDate: dateTo,
+                        profileType: profileType,
+                        role: role,
+                        status: status 
+                    }
+                    props.setData(data)
+                    clearAllFilter()
                 }
-                else{
-                    props.setToasterInfo({
-                        error: false,
-                        title: 'Success!',
-                        message: 'Role filtered successfully'
-                    });
-                    props.setReloadData(true)
-                    onCancel()
-                }
-                setLoading(false)
-            }
-        })
     }
     return (
         <div>
@@ -78,8 +59,7 @@ const RolesFilter = (props) => {
                 title="Filter Options"
                 type="twoColNarrow"
                 onClick={saveData}
-                onCancel={onCancel}
-                loading={loading}
+                clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"
