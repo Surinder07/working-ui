@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter, CreateRequestModal } from "../../../components";
 import RequestsModal from "../../../components/modals/EditRequestModal";
 
 const requests = [
@@ -137,11 +137,12 @@ const Requests = (props) => {
     return (
         <>
             <WaawNoIndexHead title={"Requests"} />
+            {/* <CreateRequestModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/> */}
             <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
             <RequestsFilter showModal={showFilterModal} setShowModal={setShowFilterModal}  id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
-                {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Invite Users</Button>)}
+                {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Create Request</Button>)}
             </div>
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
