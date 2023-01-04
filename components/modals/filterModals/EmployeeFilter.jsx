@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
@@ -22,6 +22,15 @@ const EmployeeFilter = (props) => {
         setStatus("")
         props.setData({})
     }
+
+    useEffect(() => {
+        props.setData && props.setData({
+            employeeType,
+            role,
+            location,
+            status 
+        })
+    },[])
     
     const isError = () => {
         return false

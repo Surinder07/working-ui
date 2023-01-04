@@ -21,7 +21,7 @@
 }
 
 .listIcon {
-    font-size: 18px;
+    font-size: 18px !important;
 }
 
 .listMarker {
@@ -149,12 +149,14 @@
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 18px !important;
 }
 
 .mapIcon {
     width: 30px;
     height: 30px;
     margin-right: 15px;
+    font-size: 18px !important;
 }
 
 .timeContainer {

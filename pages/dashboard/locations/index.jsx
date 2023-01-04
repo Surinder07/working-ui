@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal, DeleteModal } from "../../../components";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, LocationModal, DeleteModal, LocationFilter } from "../../../components";
 import { locationAndRoleService } from "../../../services";
 import { PaginationDropdown } from "../../../components";
 import { fetchAndHandle, fetchAndHandlePage, getLocationListing } from "../../../helpers";
@@ -8,6 +8,7 @@ import { fetchAndHandle, fetchAndHandlePage, getLocationListing } from "../../..
 const Locations = (props) => {
 
     const [showModal, setShowModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -84,6 +85,13 @@ const Locations = (props) => {
                 setReloadData={setReloadData}
                 role={props.user.role}
             />
+            <LocationFilter 
+             setShowModal={setShowFilterModal}
+             showModal={showFilterModal}
+             setToasterInfo={props.setToasterInfo}
+             role={props.user.role}
+             setReloadData={setReloadData}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Locations</h1>
                 <div className={DashboardStyles.rightContainer}>
@@ -109,6 +117,7 @@ const Locations = (props) => {
                     showFilter
                     filters={filters}
                     setFilters={setFilters}
+                    setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
         </>

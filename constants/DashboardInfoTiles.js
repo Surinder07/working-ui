@@ -14,7 +14,7 @@ export const DashboardInfoTiles = {
         href: '/dashboard/calendar'
     },
     activeEmployees: {
-        title: 'Acitve Employees',
+        title: 'Active Employees',
         timeframe: 'Current Week',
         icon: ActiveEmployees,
         href: '/dashboard/employees'
@@ -31,7 +31,7 @@ export const DashboardInfoTiles = {
         href: '/dashboard/requests'
     },
     onlineEmployees: {
-        title: 'Emloyees Online',
+        title: 'Employees Online',
         icon: ActiveEmployees,
         href: '/dashboard/shifts'
     },
@@ -42,7 +42,7 @@ export const DashboardInfoTiles = {
         href: '/dashboard/time-clock'
     },
     nextShift: {
-        title: 'Upcomin Shift',
+        title: 'Upcoming Shift',
         icon: Shifts,
         href: '/dashboard/shifts'
     }

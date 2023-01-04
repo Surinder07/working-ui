@@ -62,6 +62,18 @@ const NewRoleModal = (props) => {
         }
     }, [props.showModal])
 
+    useEffect(()=> {
+        props.setData && props.setData({
+            roleName,
+            location,
+            maximumHours,
+            minimumHours,
+            maximumWorkDays,
+            gapsInShifts,
+            adminRights
+        })
+    },[])
+
 
     const isError = () => {
         return validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||

@@ -172,7 +172,7 @@
 
 .helpIcon {
     margin-left: 15px;
-    width: 27px;
+    width: 27px !important;
     height: 27px;
     display: flex;
     justify-content: center;
@@ -215,10 +215,15 @@
     .dashboardPage {
         grid-template-columns: 1fr;
     }
-
+    .header {
+        box-shadow: none;
+        background-color: white;
+    }
     .content {
+        background-color: white;
         padding-left: 15px;
         padding-right: 15px;
+        min-width: 100%;
     }
 
     .sideNav {
@@ -238,6 +243,10 @@
         text-align: left;
     }
 
+    .closeNavRightContainer {
+        max-width: 100vw;
+        /* 60 px for padding */
+    }
     .openNavDashboard .sideNav {
         width: 100%;
     }

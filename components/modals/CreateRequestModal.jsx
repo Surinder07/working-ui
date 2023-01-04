@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
@@ -116,11 +116,24 @@ const CreateRequestModal = (props) => {
             show: false
         })
     }
-
+    
+    useEffect(()=> {
+        props.setData && props.setData({
+            requestTypeValue,
+            title,
+            fromDate,
+            tillDate,
+            typeOfLeave,
+            overTimeDate,
+            startTime,
+            duration,
+            description,
+        })
+    },[])
 
     const isError = () => {
         return validateForEmptyField(fromDate, 'From', setErrorDate, true) ||
-               validateForEmptyField(toDate, 'To', setErrorDate, true) ||
+               validateForEmptyField(tillDate, 'To', setErrorDate, true) ||
                validateForEmptyField(overTimeDate, 'Date', setErrorOverTimeDate, true)
     }
 

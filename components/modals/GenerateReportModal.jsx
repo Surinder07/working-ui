@@ -5,6 +5,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { dropdownService } from "../../services";
 import { fetchAndHandle, validateForEmptyField } from "../../helpers";
+import { ReportType } from "../../constants";
 
 
 const GenerateReportsModal = (props) => {
@@ -12,32 +13,31 @@ const GenerateReportsModal = (props) => {
     const [fromValue, setFromValue] = useState("");
     const [tillValue, setTillValue] = useState("")
     const [location, setLocation] = useState("")
-    const [payload,setPayload] = useState("")
-    const [attendance,setAttendance] = useState("")
-    const [locationHoliday,setLocationHoliday] = useState("")
+    const [reportType, setReportType] = useState("")
 
-    const [initialFromValue, setInitialFromValue] = useState("")
-    const [initialTillValue, setInitialTillValue] = useState("")
-    const [initialLocation, setInitialLocation] = useState("")
 
     const [locationError, setLocationError] = useState({
         message: "",
         show: false
     })
-    const [payloadError,setPayloadError] = useState({})
-    const [attendanceError, setAttendanceError] = useState({})
-    const [locationHolidayError, setLocationHolidayError] = useState({})
+    const [reportTypeError,setReportTypeError] = useState({})
+
     const [loading, setLoading] = useState({});
+
+    useEffect(() => {
+        props.setData&& props.setData({
+            fromDate:fromValue,
+            tillDate:tillValue,
+            location:location,
+            reportType:reportType
+         })
+       },[])
+
     const onCancel = () => {
         setFromValue("")
         setTillValue("")
         setLocation("")
-        setPayload("")
-        setAttendance("")
-        setLocationHoliday("")
-        setPayloadError({})
-        setAttendanceError({})
-        setLocationHolidayError({})
+        setReportTypeError({})
         setLocationError({})
     }
 
@@ -51,6 +51,15 @@ const GenerateReportsModal = (props) => {
                 })
         }
     }, [])
+
+    useEffect(() => {
+        props.setData && props.setData({
+            fromDate: fromValue,
+            tillDate: tillValue,
+            location,
+            reportType
+        })
+    },[])
 
     const isError = () => {
         return validateForEmptyField(location, 'Location', setLocationError, props.role === 'ADMIN')
@@ -92,45 +101,6 @@ const GenerateReportsModal = (props) => {
         >
             <EditableInput type="date" value={fromValue} setValue={setFromValue} initialValue={fromValue} label="From" editOn />
             <EditableInput type="date" value={tillValue} setValue={setTillValue} initialValue={tillValue} label="Till" editOn />
-            <EditableInput 
-            type="dropdown"
-            options={["India", "Canada", "Germany"]}
-            label="Payload"
-            placeholder="Payload"
-            className={DashboardModalStyles.singleColumn}
-            value={payload}
-            setValue={setPayload}
-            initialValue={payload}
-            error={payloadError}
-            setError={setPayloadError}
-            editOn
-            />
-              <EditableInput 
-            type="dropdown"
-            options={["India", "Canada", "Germany"]}
-            label="Attendance"
-            placeholder="Attendance"
-            className={DashboardModalStyles.singleColumn}
-            value={attendance}
-            setValue={setAttendance}
-            initialValue={attendance}
-            error={attendanceError}
-            setError={setAttendanceError}
-            editOn
-            />
-             <EditableInput 
-            type="dropdown"
-            options={["India", "Canada", "Germany"]}
-            label="Holiday"
-            placeholder="Holiday"
-            className={DashboardModalStyles.singleColumn}
-            value={locationHoliday}
-            setValue={setLocationHoliday}
-            initialValue={locationHoliday}
-            error={locationHolidayError}
-            setError={setLocationHolidayError}
-            editOn
-            />
             {props.role === 'ADMIN' &&
                 <EditableInput
                     type="dropdown"
@@ -146,6 +116,20 @@ const GenerateReportsModal = (props) => {
                     editOn
                 />
             }
+             <EditableInput 
+            type="dropdown"
+            options={ReportType}
+            label="Report Type"
+            placeholder="Report Type"
+            className={DashboardModalStyles.singleColumn}
+            value={reportType}
+            setValue={setReportType}
+            initialValue={reportType}
+            error={reportTypeError}
+            setError={setReportTypeError}
+            editOn
+            />
+            
         </DashboardModal>
     );
 };

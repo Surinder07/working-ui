@@ -26,6 +26,13 @@ const LocationModal = (props) => {
         fetchAndHandleGet(dropdownService.getTimezones, setTimezones);
     }, [])
 
+    useEffect(()=>{
+        props.setData && props.setData({
+            location,
+            timezone
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(location, 'Name', setErrorLocation, true) ||
             validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);

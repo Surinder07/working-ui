@@ -72,6 +72,19 @@ const NewShiftModal = (props) => {
         }
     }, [location])
 
+    useEffect(()=> {
+       props.setData && props.setData({
+        startTime,
+        endTime,
+        startDate,
+        endDate,
+        user,
+        location,
+        role,
+        shiftName
+       })
+    },[])
+
     const isError = () => {
         return combineBoolean(validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
             validateForEmptyField(endDate, 'End Date', setErrorEndDate, true),

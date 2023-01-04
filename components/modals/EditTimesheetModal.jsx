@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {useState} from "react";
 import {EditableInput} from "../inputComponents";
 import {DashboardModal} from "./base";
@@ -40,6 +40,16 @@ const EditTimesheetModal = (props) => {
             show: false
         })
     }
+
+    useEffect(() => {
+        props.setData && props.setData({
+            inDate,
+            outDate,
+            inTime,
+            outTime,
+            comment
+        })
+    },[])
 
     const isError =  () => {
        return validateForEmptyField(comment, 'comment', setCommentError, true)

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FilterModal} from "../base";
 import {DashboardModalStyles} from "../../../styles/elements";
 import {EditableInput} from "../../inputComponents";
@@ -21,6 +21,16 @@ const RequestsFilter = (props) => {
         setErrorDate({})
         props.setData({})
     }
+
+    useEffect(()=> {
+        props.setData && props.setData({
+            fromDate: initiationDateFrom,
+            toDate: initiationDateTo,
+            requestType,
+            status 
+        })
+    },[])
+
     const isError = () => {
         return validateForEmptyField(initiationDateFrom, 'Date', setErrorDate, true) ||
         validateForEmptyField(setInitiationDateTo, 'Date', setErrorDate, true) 
