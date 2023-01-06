@@ -12,7 +12,7 @@ const Calender = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "CALENDAR",
             activeSubMenu: "none",

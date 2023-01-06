@@ -36,7 +36,6 @@ export const getEmployeeListing = (data, auth) => {
             status: getStatus(user.status)
         };
     })
-
 }
 
 export const editRoleRequestBody = (id, totalHoursPerDayMin, totalHoursPerDayMax, minHoursBetweenShifts, maxConsecutiveWorkDays) => {
@@ -115,6 +114,103 @@ export const getNotificationListing = (data) => {
     })
 }
 
+export const getShiftsListing = (data) => {
+    const getShiftStatusColor = (status) => {
+        if (status === 'FAILED') return 'bad';
+        else if (status === 'CONFLICT' || status === 'CREATING') return 'warn';
+        else return 'ok';
+    }
+
+    const mapSubData = (subData) => {
+        return {
+            internalId: subData.id,
+            // employeeId: subData.employeeId,
+            employeeName: subData.employeeName,
+            employeeEmail: subData.employeeEmail,
+            location: subData.locationName,
+            role: subData.locationRoleName,
+            inTime: subData.start.date + " " + subData.start.time,
+            outTime: subData.end.date + " " + subData.end.time,
+            comments: subData.notes,
+            status: {
+                text: subData.shiftStatus,
+                status: getShiftStatusColor(subData.shiftStatus),
+                displayType: 'bg'
+            }
+        }
+    }
+    return data.map(batch => {
+        return {
+            internalId: batch.id,
+            shiftId: batch.waawId,
+            shiftName: batch.name ? batch.name : '-',
+            startDate: batch.startDate,
+            endDate: batch.endDate,
+            creationDate: batch.creationDate,
+            status: {
+                text: batch.status,
+                status: getShiftStatusColor(batch.status),
+                displayType: 'bg'
+            },
+            subData: batch.shifts ? batch.shifts.map(shift => mapSubData(shift)) : []
+        }
+    })
+}
+
+export const getSingleShiftsListing = (data) => {
+    return data.map(shift => {
+        return {
+            internalId: shift.id,
+            id: shift.batchId,
+            shiftName: shift.name,
+            inTime: shift.start.date + " " + shift.start.time,
+            outTime: shift.end.date + " " + shift.end.time,
+            comments: shift.notes
+        }
+    })
+}
+
+export const getRequestsListing = (data) => {
+    const getHistoryList = (history) => {
+        console.log('history', history)
+        return history.map(hist => {
+            return {
+                title: hist.title,
+                description: hist.description,
+                date: hist.date,
+                status: hist.status === 'DENIED' ? 'bad' : (hist.status === 'ACCEPTED' ? 'ok' :
+                    (hist.status === 'NEW' ? 'warn' : 'basic'))
+            }
+        })
+    }
+
+    const getRequestType = (type, subType) => {
+        if (type === 'INFORMATION_UPDATE') return 'Information Update';
+        else if (type === 'OVERTIME') return 'Overtime';
+        else if (subType === 'VACATION_LEAVE_FULL_DAY' || subType === 'VACATION_LEAVE_HALF_DAY') {
+            return 'Timeoff (Vacation)';
+        } else return 'Timeoff (Sick)';
+    }
+
+    return data.map(request => {
+        return {
+            internalId: request.id,
+            id: request.waawId,
+            requestType: getRequestType(request.type, request.subType),
+            initiationDate: request.createdDate,
+            location: request.location,
+            initiatedBy: request.raisedBy,
+            assignedTo: request.assignedTo,
+            status: {
+                text: request.status,
+                displayType: 'bg',
+                status: request.status === 'DENIED' ? 'bad' : (request.status === 'ACCEPTED' ? 'ok' : 'warn')
+            },
+            history: getHistoryList(request.history)
+        }
+    })
+}
+
 export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
     endDate, endTime, instantRelease, shiftName) => {
     return {
@@ -125,6 +221,30 @@ export const newShiftRequestBody = (formType, locationId, roleIds, userIds, star
         end: { date: endDate, time: formatTime(endTime) },
         instantRelease
     }
+}
+
+export const newRequestRequestBody = (requestType, timeOffFormType, fromDate, tillDate, typeOfLeave,
+    startTime, duration, description) => {
+    const getSubtype = () => {
+        if (timeOffFormType === 'Full Day' && typeOfLeave === 'Vacation') return 'VACATION_LEAVE_FULL_DAY';
+        else if (typeOfLeave === 'Vacation') return 'VACATION_LEAVE_HALF_DAY';
+        else if (timeOffFormType === 'Half Day' && typeOfLeave === 'Sick Leeave') return 'SICK_LEAVE_HALF_DAY';
+        else return 'SICK_LEAVE_FULL_DAY';
+    }
+    let req = {
+        type: requestType === 'Overtime' ? 'OVERTIME' : (requestType === 'Timeoff' ? 'TIME_OFF' : 'INFORMATION_UPDATE'),
+        start: fromDate === '' ? null : {
+            date: fromDate,
+            time: startTime === '' ? null : formatTime(startTime)
+        },
+        endDate: tillDate,
+        duration: duration,
+        description: description
+    }
+    if (requestType === 'Timeoff') {
+        req = { ...req, subType: getSubtype() }
+    }
+    return req;
 }
 
 const formatTime = (time) => {
@@ -175,6 +295,16 @@ export const validateForTime = (value, errorFunction, condition) => {
     if (((!value.hours && value.hours !== 0) || (!value.minutes && value.minutes !== 0)) && condition) {
         errorFunction({
             message: `Both Hours and minutes are required`,
+            show: true
+        })
+        return true;
+    } else return false;
+}
+
+export const validateForNumberNotZero = (value, name, errorFunction, condition) => {
+    if (value === 0 && condition) {
+        errorFunction({
+            message: `${name} cannot be 0`,
             show: true
         })
         return true;

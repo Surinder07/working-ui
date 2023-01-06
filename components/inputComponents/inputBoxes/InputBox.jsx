@@ -6,7 +6,7 @@ import { joinClasses } from '../../../helpers';
 const InputBox = (props) => {
 
     const [type, setType] = useState(props.type);
-    const [visibilityIcon, setVisibilityIcon] = useState(<Visibility style={{ fontSize: '14px' }} />);
+    const [visibilityIcon, setVisibilityIcon] = useState(<Visibility style={{ fontSize: '18px' }} />);
 
     useEffect(() => {
         if (props.type === 'user' || props.type === 'org' || props.type === 'email') {
@@ -17,13 +17,13 @@ const InputBox = (props) => {
     const getIcon = () => {
         switch (props.type.toLowerCase()) {
             case 'email':
-                return <Email style={{ fontSize: '14px' }} />
+                return <Email style={{ fontSize: '18px' }} />
             case 'password':
-                return <Key style={{ fontSize: '14px' }} />
+                return <Key style={{ fontSize: '18px' }} />
             case 'user':
-                return <Person style={{ fontSize: '14px' }} />
+                return <Person style={{ fontSize: '18px' }} />
             case 'org':
-                return <CorporateFare style={{ fontSize: '14px' }} />
+                return <CorporateFare style={{ fontSize: '18px' }} />
             default:
                 return <></>
         }
@@ -32,16 +32,20 @@ const InputBox = (props) => {
     const switchPasswordVisibility = () => {
         if (type === 'password') {
             setType('text');
-            setVisibilityIcon(<VisibilityOff style={{ fontSize: '14px' }} />);
+            setVisibilityIcon(<VisibilityOff style={{ fontSize: '18px' }} />);
         } else {
             setType('password');
-            setVisibilityIcon(<Visibility style={{ fontSize: '14px' }} />);
+            setVisibilityIcon(<Visibility style={{ fontSize: '18px' }} />);
         }
     }
 
     return (
-        <div className={joinClasses(props.inputType === 2 ? InputBoxStyles.inputBox2 : InputBoxStyles.inputBox ,props.className,
-        props.showError ? InputBoxStyles.inputBoxError : props.inputType === 2 ? InputBoxStyles.inputBox2Default : InputBoxStyles.inputBoxDefault)}
+        <div className={joinClasses(
+            props.inputType === 2 ? InputBoxStyles.inputBox2 : InputBoxStyles.inputBox, props.className,
+            props.showError ? InputBoxStyles.inputBoxError : props.inputType === 2 ?
+                InputBoxStyles.inputBox2Default : InputBoxStyles.inputBoxDefault,
+            props.disabled && InputBoxStyles.inputBoxDisabled
+        )}
             style={props.style}>
             {props.inputType !== 2 && <div className={InputBoxStyles.inputIconContainer}>{getIcon()}</div>}
             <input
@@ -55,7 +59,7 @@ const InputBox = (props) => {
                     props.setValue(e.target.value);
                     props.setShowError && props.setShowError(false);
                 }}
-                autoComplete="one-time-code" />
+                autoComplete={props.allowAutoFill ? "off" : "one-time-code"} />
             {
                 props.type.toLowerCase() === 'password' &&
                 <div className={InputBoxStyles.inputIconContainer} style={{ cursor: 'pointer' }} onClick={switchPasswordVisibility}>

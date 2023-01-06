@@ -3,7 +3,7 @@ import { fetchWrapper } from '../helpers';
 const endpoints = process.env.endpoints.member;
 
 const listAllUsers = async (pageNo, pageSize, filters, sort) => {
-    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getAllMembers, pageNo, pageSize, {...filters, ...sort}));
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getAllMembers, pageNo, pageSize, { ...filters, ...sort }));
 }
 
 const sendInvite = async (data) => {
@@ -18,8 +18,8 @@ const inviteByUpload = async (data) => {
     return fetchWrapper.postForm(fetchWrapper.getApiUrl(endpoints.sendInviteByUpload), data);
 }
 
-const getMemberById = async (id) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getMemberById), { id });
+const getMemberById = async (userId) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getMemberById, { userId }));
 }
 
 const updateMember = async (data) => {

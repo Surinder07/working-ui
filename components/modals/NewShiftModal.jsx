@@ -97,10 +97,9 @@ const NewShiftModal = (props) => {
     }
 
     const saveData = () => {
-        console.log(isError());
         if (!isError()) {
-            fetchAndHandle(shiftsService.newShift, newShiftRequestBody(formType, location, role, user,
-                startDate, startTime, endDate, endTime, releaseImmediately, shiftName), 
+            fetchAndHandle(() => shiftsService.newShift(newShiftRequestBody(formType, location, role, user,
+                startDate, startTime, endDate, endTime, releaseImmediately, shiftName)),
                 null, setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
         }

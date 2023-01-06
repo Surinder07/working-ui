@@ -90,13 +90,16 @@ const DropDown = (props) => {
                 {
                     options.length > 0 ?
                         options.map((option, i) => (
-                            <p key={i} onClick={() => {
-                                props.setValue(option.value);
-                                setInputValue(option.display)
-                                setDisplayValue(option.display);
-                                props.setShowError && props.setShowError(false);
-                                setOpen(!open)
-                            }}
+                            <p
+                                key={i}
+                                className={joinClasses(option.value === props.value) && DropdownStyles.optionSelected}
+                                onClick={() => {
+                                    props.setValue(option.value);
+                                    setInputValue(option.display)
+                                    setDisplayValue(option.display);
+                                    props.setShowError && props.setShowError(false);
+                                    setOpen(!open)
+                                }}
                             >{option.display}</p>
                         )) :
                         <p>No data to show</p>

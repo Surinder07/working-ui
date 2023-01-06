@@ -4,7 +4,7 @@ import { DashboardModalStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { CloudUpload, Close } from "@mui/icons-material";
 import { dropdownService, memberService } from "../../services";
-import { fetchWrapper } from "../../helpers";
+import { combineBoolean, fetchWrapper } from "../../helpers";
 import { saveUserRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from '../../helpers';
 import Link from 'next/link';
 
@@ -64,7 +64,7 @@ const InviteUserModal = (props) => {
         }
     }, [location])
 
-    useEffect(()=> {
+    useEffect(() => {
         props.setData && props.setData({
             firstName,
             lastName,
@@ -74,14 +74,16 @@ const InviteUserModal = (props) => {
             role,
             toggleValue
         })
-    },[])
+    }, [])
 
     const isError = () => {
-        return validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
+        return combineBoolean(
+            validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
             validateForEmptyField(lastName, 'Last Name', setErrorLastName, true) ||
             validateForEmptyField(email, 'Email', setErrorEmail, true) ||
             validateForEmptyField(role, 'Role', setErrorRole, true) ||
-            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN');
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
+        );
     }
 
     const saveData = () => {

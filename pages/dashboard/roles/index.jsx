@@ -24,12 +24,12 @@ const Roles = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "ROLES",
             activeSubMenu: "none",
         });
-        props.setAllowedRoles(['ADMIN', 'MANAGER'])
+        props.setAllowedRoles(['ADMIN', 'MANAGER']);
     }, []);
 
     useEffect(() => {

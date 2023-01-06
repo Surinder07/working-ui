@@ -1,126 +1,32 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
-
-const shifts = [
-    {
-        shiftId: "6476475",
-        shiftName: "One time register",
-        startDate: "01/12/2022",
-        endDate: "30/12/2022",
-        locationName: "India",
-        creationDate: "01/29/2022",
-        status: "Status",
-        subData: [
-            {
-                employeeId: "229965",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "India",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: {
-                    text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
-                    displayType: "comment",
-                },
-            },
-            {
-                employeeId: "229966",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "India",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: {
-                    text: "dtrstrstr dydytdyr stetrd  yfiugoip ougft drsetsrdyf tuygiuhoiuyftsd fygug yftrstdtf guiyutdy rfyguigtd yrsgguitrtyd  fhcgvhgytry dfcgvhjgy ",
-                    displayType: "comment",
-                },
-            },
-        ],
-    },
-    {
-        shiftId: "6476476",
-        shiftName: "One time register",
-        startDate: "-",
-        endDate: "-",
-        locationName: "Canada",
-        creationDate: "01/29/2022",
-        status: "Status",
-        subData: [
-            {
-                employeeId: "229967",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "Canada",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: "N/A",
-            },
-            {
-                employeeId: "229968",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "Canada",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: "N/A",
-            },
-        ],
-    },
-    {
-        shiftId: "6476477",
-        shiftName: "Test",
-        startDate: "01/01/2023",
-        endDate: "30/01/2023",
-        locationName: "India",
-        creationDate: "01/29/2022",
-        status: "Status",
-        subData: [
-            {
-                employeeId: "229969",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "India",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: "N/A",
-            },
-            {
-                employeeId: "229970",
-                employeeName: "Name",
-                emailAddress: "email@gmail.com",
-                locationName: "India",
-                shiftInTime: "10:00 AM",
-                shiftOutTime: "05:00 PM",
-                status: "N/A",
-                comments: "N/A",
-            },
-        ],
-    },
-];
+import { fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses } from "../../../helpers";
+import { shiftsService } from "../../../services";
 
 const Shifts = (props) => {
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "SHIFTS",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(["EMPLOYEE", "MANAGER", "ADMIN"]);
     }, []);
 
+    const [activeTable, setActiveTable] = useState('emp');
     const [showAddModal, setShowAddModal] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false);
-    const [data, setData] = useState(shifts);
+    const [data, setData] = useState();
+    const [myShiftData, setMyShiftData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
+    const [pageNoMyShift, setPageNoMyShift] = useState(1);
+    const [totalPagesMyShift, setTotalPagesMyShift] = useState(1);
+    const [totalEntriesMyShift, setTotalEntriesMyShift] = useState(0);
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
@@ -129,6 +35,34 @@ const Shifts = (props) => {
         id: "",
         show: false,
     });
+
+    useEffect(() => {
+        if (props.user.role && props.user.role === 'ADMIN') {
+            setActiveTable('emp')
+        }
+    }, [props.user])
+
+    useEffect(() => {
+        fetchData();
+    }, [pageNo, pageSize, filters, sort]);
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData])
+
+    const fetchData = () => {
+        if (props.user.role === 'ADMIN' || props.user.role === 'MANAGER') {
+            fetchAndHandlePage(() => shiftsService.getAll(pageNo, pageSize, filters, sort),
+                setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+                getShiftsListing, props.user.role);
+        }
+        if (props.user.role === 'EMPLOYEE' || props.user.role === 'MANAGER') {
+            fetchAndHandlePage(() => shiftsService.getByUser(pageNoMyShift, pageSize, filters, sort),
+                setMyShiftData, setTotalEntriesMyShift, setTotalPagesMyShift, props.setPageLoading, 
+                props.setToasterInfo, getSingleShiftsListing, props.user.role);
+        }
+    }
 
     const actions = [
         {
@@ -171,36 +105,76 @@ const Shifts = (props) => {
                     {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
                         <Button
                             type="plain"
-                            onClick={() => {
-                                setShowAddModal(true);
-                            }}
+                            onClick={() => setShowAddModal(true)}
                         >
                             + Create new Shifts
                         </Button>
                     )}
                 </div>
             </div>
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title="Shifts"
-                    description="Tabular list of all Shifts."
-                    data={data}
-                    actions={actions}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    search={filters.searchKey}
-                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                    showFilter
-                    filters={filters}
-                    setFilters={setFilters}
-                    setShowFilterModal={setShowFilterModal}
-                />
-            </DashboardCard>
+            {
+                (props.user.role && props.user.role === 'MANAGER') &&
+                <div className={DashboardStyles.tableChoices}>
+                    <p
+                        onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
+                        className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
+                        My Shifts
+                    </p>
+                    <p
+                        onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
+                        className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
+                        Employee Shifts
+                    </p>
+                </div>
+            }
+            {
+                activeTable !== 'my' &&
+                <DashboardCard >
+                    <TabularInfo
+                        title="Shifts"
+                        description="Tabular list of all Employee Shifts."
+                        data={data}
+                        actions={actions}
+                        pagination
+                        totalEntries={totalEntries}
+                        pageSize={pageSize}
+                        totalPages={totalPages}
+                        pageNo={pageNo}
+                        setPageNo={setPageNo}
+                        showSearch
+                        search={filters.searchKey}
+                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                        showFilter
+                        filters={filters}
+                        setFilters={setFilters}
+                        setShowFilterModal={setShowFilterModal}
+                    />
+                </DashboardCard>
+            }
+            {
+                activeTable === 'my' &&
+                <DashboardCard >
+                    <TabularInfo
+                        title="Shifts"
+                        description="Tabular list of my Shifts."
+                        data={myShiftData}
+                        actions={actions}
+                        pagination
+                        totalEntries={totalEntriesMyShift}
+                        pageSize={pageSize}
+                        totalPages={totalPagesMyShift}
+                        pageNo={pageNoMyShift}
+                        setPageNo={setPageNoMyShift}
+                        showSearch
+                        search={filters.searchKey}
+                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                        showFilter
+                        filters={filters}
+                        setFilters={setFilters}
+                        setShowFilterModal={setShowFilterModal}
+                    />
+                </DashboardCard>
+            }
             {showShiftModal && <ShiftModal />}
         </>
     );

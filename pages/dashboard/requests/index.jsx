@@ -1,166 +1,182 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter, CreateRequestModal } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter, CreateRequestModal, PaginationDropdown } from "../../../components";
 import RequestsModal from "../../../components/modals/EditRequestModal";
-
-const requests = [
-    {
-        requestId: "6476475",
-        requestType: "request",
-        initiationDate: "01/01/2023",
-        location: "Canada",
-        initiatedBy: "Rahul",
-        assignedTo: "Rajiv",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'basic'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'ok'
-            }
-        ]
-    },
-    {
-        requestId: "6476476",
-        requestType: "request",
-        initiationDate: "01/02/2023",
-        location: "India",
-        initiatedBy: "Arpit",
-        assignedTo: "Sandeep",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            }
-        ]
-    },
-    {
-        requestId: "6476477",
-        requestType: "request",
-        initiationDate: "03/01/2023",
-        location: "USA",
-        initiatedBy: "Albert",
-        assignedTo: "Edward",
-        status: {
-            text: "OPEN",
-            displayType: 'bg',
-            status: 'ok'
-        },
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            }
-        ]
-    },
-    {
-        requestId: "6476478",
-        requestType: "request",
-        initiationDate: "02/02/2023",
-        location: "Mexico",
-        initiatedBy: "Ethan",
-        assignedTo: "Ishac",
-        status: {
-            text: "CLOSED",
-            displayType: 'bg',
-            status: 'warn'
-        },
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            }
-        ]
-    },
-];
+import { fetchAndHandlePage, getRequestsListing, joinClasses } from "../../../helpers";
+import { requestService } from "../../../services";
 
 const Requests = (props) => {
 
+    const [activeTable, setActiveTable] = useState('emp');
     const [editId, setEditId] = useState("");
+    const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [showFilterModal,setShowFilterModal] = useState(false)
-    const [data, setData] = useState(requests);
+    const [showFilterModal, setShowFilterModal] = useState(false)
+    const [data, setData] = useState();
+    const [myData, setMyData] = useState();
     const [pageNo, setPageNo] = useState(1);
+    const [pageNoMyData, setPageNoMyData] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalPagesMyData, setTotalPagesMyData] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
+    const [totalEntriesMyData, setTotalEntriesMyData] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [filters, setFilters] = useState({});
+    const [sort, setSort] = useState({});
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "REQUESTS",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles['ADMIN', 'MANAGER', 'EMPLOYEE']
     }, []);
+
+    useEffect(() => {
+        if (props.user.role && props.user.role === 'ADMIN') {
+            setActiveTable('emp')
+        }
+    }, [props.user])
+
+    useEffect(() => {
+        fetchData();
+    }, [pageNo, pageSize]);
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData])
+
+    const fetchData = () => {
+        if (props.user.role === 'ADMIN' || props.user.role === 'MANAGER') {
+            fetchAndHandlePage(() => requestService.getAll(pageNo, pageSize, filters, sort),
+                setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+                getRequestsListing, props.user.role);
+        }
+        if (props.user.role === 'EMPLOYEE' || props.user.role === 'MANAGER') {
+            fetchAndHandlePage(() => requestService.getAllForUser(pageNo, pageSize, filters, sort),
+                setMyData, setTotalEntriesMyData, setTotalPagesMyData, props.setPageLoading, props.setToasterInfo,
+                getRequestsListing, props.user.role);
+        }
+    }
 
     const actions = [
         {
-            key: "View",
-            action: (id) => console.log(`/dashboard/requests/?id=${id}`),
-        },
-        {
-            key: "Edit",
-            action: (id) => {
-                setEditId(id);
-                setShowEditModal(true);
-            },
-        },
-        {
-            key: "Delete",
-            action: () => console.log("Api call will be added here"),
-        },
+            key: "Respond",
+            action: (id, status) => {
+                if (status !== 'ACCEPTED' || status !== 'DENIED') {
+                    setEditId(id);
+                    setShowEditModal(true);
+                }
+            }
+        }
     ];
 
 
     return (
         <>
             <WaawNoIndexHead title={"Requests"} />
-            {/* <CreateRequestModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/> */}
-            <RequestsModal showModal={showEditModal} setShowModal={setShowEditModal} id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role}/>
-            <RequestsFilter showModal={showFilterModal} setShowModal={setShowFilterModal}  id={editId}  setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
+            <CreateRequestModal
+                showModal={showAddModal}
+                setShowModal={setShowAddModal}
+                id={editId}
+                setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
+                setReloadData={setReloadData}
+                setPageLoading={props.setPageLoading}
+            />
+            <RequestsModal
+                showModal={showEditModal}
+                setShowModal={setShowEditModal}
+                id={editId}
+                setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
+                tabularType={activeTable}
+            />
+            <RequestsFilter
+                showModal={showFilterModal}
+                setShowModal={setShowFilterModal}
+                id={editId}
+                setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
+                setReloadData={setReloadData}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Requests</h1>
-                {props.user.role === "MANAGER" || (props.user.role === "ADMIN" && <Button type="plain">+ Create Request</Button>)}
+                <div className={DashboardStyles.rightContainer}>
+                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace={props.user.role !== 'ADMIN'} />
+                    {
+                        props.user.role !== "ADMIN" &&
+                        <Button
+                            onClick={() => setShowAddModal(true)}
+                            type="plain"
+                        >+ Create Request</Button>
+                    }
+                </div>
             </div>
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title="Request Details"
-                    description="Tabular representation of all the requests"
-                    data={data}
-                    actions={actions}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    showFilter
-                    setShowFilterModal={setShowFilterModal}
-                />
-            </DashboardCard>
+            {
+                (props.user.role && props.user.role === 'MANAGER') &&
+                <div className={DashboardStyles.tableChoices}>
+                    <p
+                        onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
+                        className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
+                        My Requests
+                    </p>
+                    <p
+                        onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
+                        className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
+                        Employee Requests
+                    </p>
+                </div>
+            }
+            {
+                activeTable !== 'my' &&
+                <DashboardCard >
+                    <TabularInfo
+                        title="Request Details"
+                        description="Tabular representation of all employee requests"
+                        data={data}
+                        actions={actions}
+                        pagination
+                        totalEntries={totalEntries}
+                        pageSize={pageSize}
+                        totalPages={totalPages}
+                        pageNo={pageNo}
+                        setPageNo={setPageNo}
+                        showSearch
+                        // search={filters.searchKey}
+                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                        showFilter
+                        // filters={filters}
+                        // setFilters={setFilters}
+                        setShowFilterModal={setShowFilterModal}
+                    />
+                </DashboardCard>
+            }
+            {
+                activeTable === 'my' &&
+                <DashboardCard >
+                    <TabularInfo
+                        title="Request Details"
+                        description="Tabular representation of all my requests"
+                        data={myData}
+                        actions={actions}
+                        pagination
+                        totalEntries={totalEntriesMyData}
+                        pageSize={pageSize}
+                        totalPages={totalPagesMyData}
+                        pageNo={pageNoMyData}
+                        setPageNo={setPageNoMyData}
+                        showFilter
+                        // filters={filters}
+                        // setFilters={setFilters}
+                        setShowFilterModal={setShowFilterModal}
+                    />
+                </DashboardCard>
+            }
         </>
     );
 };

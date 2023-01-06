@@ -31,7 +31,9 @@ const TabularInfo = (props) => {
 
     const toggleExpansion = (e) => {
         if (props.expandable && (searchRef.current || filterRef.current || editRef.current)) {
-            if ((searchRef.current && searchRef.current.contains(e.target)) || (filterRef.current && filterRef.current.contains(e.target)) || (editRef.current && editRef.current.contains(e.target))) {
+            if ((searchRef.current && searchRef.current.contains(e.target)) ||
+                (filterRef.current && filterRef.current.contains(e.target)) ||
+                (editRef.current && editRef.current.contains(e.target))) {
                 return;
             } else props.toggleExpansion();
         } else if (props.expandable) props.toggleExpansion();
@@ -39,19 +41,22 @@ const TabularInfo = (props) => {
 
     return (
         <div className={TabularInfoStyles.tableContainer}>
-            <div className={TabularInfoStyles.header} style={props.expandable && { cursor: "pointer" }} onClick={toggleExpansion}>
-                <div style={{ paddingLeft: props.expandable ? "40px" : "0" }}>
+            <div className={TabularInfoStyles.header} style={props.expandable ? { cursor: "pointer" } : { cursor: 'default' }} onClick={toggleExpansion}>
+                <div style={props.expandable ? { paddingLeft: "40px" } : { paddingLeft: "0" }}>
                     {props.expandable && (props.expanded ? <ExpandLess className={TabularInfoStyles.dropDownIcon} /> : <ExpandMore className={TabularInfoStyles.dropDownIcon} />)}
                     {props.title && <h2>{props.title}</h2>}
-                    {props.description && <h4>{props.description}</h4>}
+                    {((!props.expandable || (props.expandable && props.expanded)) && props.description) && <h4>{props.description}</h4>}
                     {props.isEditable && props.expanded && (
                         <div className={TabularInfoStyles.editOption} ref={editRef}>
                             {props.editOn ? (
                                 <>
-                                    <p style={{ color: "#CC5252" }} onClick={() => props.setEditOn(false)}>
+                                    <p style={{ color: "#CC5252" }} onClick={() => {
+                                        props.onCancel && props.onCancel();
+                                        props.setEditOn(false);
+                                    }}>
                                         Cancel
                                     </p>
-                                    <p style={{ color: "#2996C3" }}>Save</p>
+                                    <p style={{ color: "#2996C3" }} onClick={() => { props.onSave && props.onSave() }}>Save</p>
                                 </>
                             ) : (
                                 <p style={{ color: "#2996C3" }} onClick={() => props.setEditOn(true)}>
@@ -63,7 +68,7 @@ const TabularInfo = (props) => {
                 </div>
                 <div className={TabularInfoStyles.searchFilterContainer}>
                     {
-                        props.showSearch && ((props.expandable && props.expanded) || !props.expandable) &&
+                        (props.showSearch && ((props.expandable && props.expanded) || !props.expandable)) &&
                         <SearchBar
                             value={props.search}
                             setValue={props.setSearch}
@@ -73,8 +78,8 @@ const TabularInfo = (props) => {
                         />
                     }
                     {
-                        props.showFilter && ((props.expandable && props.expanded) || !props.expandable) &&
-                        <div ref={filterRef} className={TabularInfoStyles.filter} onClick={() => props.setShowFilterModal(true)}>
+                        (props.showFilter && ((props.expandable && props.expanded) || !props.expandable)) &&
+                        <div ref={filterRef} className={TabularInfoStyles.filter} onClick={() => props.setShowFilterModal && props.setShowFilterModal(true)}>
                             <FilterAlt />
                             <p>Filter</p>
                         </div>
@@ -83,12 +88,12 @@ const TabularInfo = (props) => {
             </div>
             <div className={TabularInfoStyles.tabularMapped}
                 style={
-                    props.expandable && {
+                    props.expandable ? {
                         height: props.expanded ? tableHeight : 0,
                         transition: "0.2s all ease",
                         overflow: "hidden",
                         marginTop: props.expanded && "20px",
-                    }
+                    } : {}
                 }
             >
                 {props.data ? (
@@ -105,6 +110,7 @@ const TabularInfo = (props) => {
                                     totalPages={props.totalPages}
                                     pageNo={props.pageNo}
                                     setPageNo={props.setPageNo}
+                                    onExpand={props.onExpand}
                                 />
                             )}
                         </>
@@ -115,7 +121,7 @@ const TabularInfo = (props) => {
                     <p className={TabularInfoStyles.loadingText}>Loading...</p>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

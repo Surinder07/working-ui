@@ -3,7 +3,7 @@ import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import { dropdownService, locationAndRoleService } from "../../services";
-import { addRoleRequestBody, editRoleRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
+import { addRoleRequestBody, combineBoolean, editRoleRequestBody, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const NewRoleModal = (props) => {
     //------------- Dropdown values
@@ -62,7 +62,7 @@ const NewRoleModal = (props) => {
         }
     }, [props.showModal])
 
-    useEffect(()=> {
+    useEffect(() => {
         props.setData && props.setData({
             roleName,
             location,
@@ -72,18 +72,20 @@ const NewRoleModal = (props) => {
             gapsInShifts,
             adminRights
         })
-    },[])
+    }, [])
 
 
     const isError = () => {
-        return validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||
-            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN');
+        return combineBoolean(
+            validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
+        );
     }
 
     const saveData = () => {
         if (!isError()) {
             fetchAndHandle(props.update ?
-                () => locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)) 
+                () => locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays))
                 : () => locationAndRoleService.addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)),
                 props.update ? 'Role updated successfully' : 'Role added successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,

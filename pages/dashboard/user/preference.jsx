@@ -6,11 +6,12 @@ import { ProfileTabs, getProfileElement } from "../../../constants";
 const UserPreference = (props) => {
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "none",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(["EMPLOYEE", "MANAGER", "ADMIN"]);
     }, []);
 
     const [tabsToShow, setTabsToShow] = useState([]);

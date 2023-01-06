@@ -3,7 +3,7 @@ import { joinClasses } from "../../helpers";
 
 const Hamburger = (props) => {
     return (
-        <div className={HamburgerStyles.hamburgerContainer}>
+        <div className={joinClasses(HamburgerStyles.hamburgerContainer, props.className)}>
             <input type="checkbox" name="hamburger" id="hamburger" checked={props.openMenu}
                 onChange={(e) => props.setOpenMenu(e.target.checked)} />
             <div className={HamburgerStyles.hamburgerLines}>

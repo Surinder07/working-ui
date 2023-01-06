@@ -19,14 +19,8 @@ const login = async (login, password, rememberMe, setToken, setUser) => {
         })
         .then((res) => {
             return res.error ? res : getUser().then(res => {
-                const user = {
-                    firstName: res.firstName,
-                    lastName: res.lastName,
-                    status: res.status,
-                    role: res.role
-                }
-                secureLocalStorage.saveData(USER_KEY, JSON.stringify(user));
-                setUser(user);
+                secureLocalStorage.saveData(USER_KEY, JSON.stringify(res));
+                setUser(res);
                 return res;
             })
         });

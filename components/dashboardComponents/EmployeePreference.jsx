@@ -4,6 +4,8 @@ import TabularInfo from "./TabularInfo";
 import { TableStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { currencies } from "../../constants";
+import { memberService } from "../../services";
+import { fetchAndHandle } from "../../helpers";
 
 const EmployeePreference = (props) => {
 
@@ -16,12 +18,12 @@ const EmployeePreference = (props) => {
             days: day,
             working: startTime !== null,
             startTime: {
-                hours: startTime ? startTime.split(':')[0] : null,
-                minutes: startTime ? startTime.split(':')[1] : null
+                hours: startTime ? startTime.split(':')[0] : '-',
+                minutes: startTime ? startTime.split(':')[1] : '-'
             },
             endTime: {
-                hours: endTime ? endTime.split(':')[0] : null,
-                minutes: endTime ? endTime.split(':')[1] : null
+                hours: endTime ? endTime.split(':')[0] : '-',
+                minutes: endTime ? endTime.split(':')[1] : '-'
             }
         }
     }
@@ -33,10 +35,6 @@ const EmployeePreference = (props) => {
             </div>
         )
     }
-
-    useEffect(() => {
-        console.log(preferences)
-    }, [preferences])
 
     const updatePreference = (value, type, index) => {
         const newObj = preferences.rowsData.map((preference, i) => {
@@ -54,6 +52,14 @@ const EmployeePreference = (props) => {
             }
         });
         setPreferences({ ...preferences, rowsData: newObj })
+    }
+
+    const onCancel = () => {
+        setPreferences(initialPreferences);
+    }
+
+    const onSave = () => {
+        fetchAndHandle(() => memberService.addEmployeePreferences())
     }
 
     useEffect(() => {
@@ -84,6 +90,8 @@ const EmployeePreference = (props) => {
                 isEditable
                 editOn={editOn}
                 setEditOn={setEditOn}
+                onSave={onSave}
+                onCancel={onCancel}
             >
                 {
                     preferences.rowsData ?

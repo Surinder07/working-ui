@@ -62,7 +62,7 @@ const EditShiftModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+            // fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
                 // setLoading(true)
                 // if(error == true){
                 //     props.setToasterInfo({
@@ -101,7 +101,7 @@ const EditShiftModal = (props) => {
                 label="Date"
                 value={date}
                 setValue={setDate}
-                initialValue={value}
+                initialValue={initialDate}
                 className={DashboardModalStyles.singleColumn}
                 editOn
             />

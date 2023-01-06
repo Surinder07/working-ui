@@ -72,6 +72,10 @@
     height: 100%;
 }
 
+.selected2 {
+    min-width: 21px;
+}
+
 .options {
     position: absolute;
     background-color: #FFF;
@@ -100,8 +104,8 @@
     align-items: center;
 }
 
+.optionSelected,
 .options p:hover {
-    filter: brightness(90%);
     background-color: rgb(241, 241, 241);
 }
 

@@ -21,7 +21,7 @@ const Notifications = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "NOTIFICATIONS",
             activeSubMenu: "none",

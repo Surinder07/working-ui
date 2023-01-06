@@ -5,10 +5,64 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .subContainer {
     overflow: hidden;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.dropDown {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+}
+
+.dropOpen {
+    height: 165px;
+}
+
+.dropClose {
+    height: 0;
+    overflow: hidden;
+}
+
+.option {
+    min-width: fit-content;
+    padding: 1rem;
+    border: 1px solid #BFBFBF;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.2px;
+    color: #999;
+    height: 55px;
+}
+
+.middleOption {
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.option:hover {
+    background: #2996C3;
+    color: #FBF9F9;
+}
+
+.dropIcon {
+    font-size: 20px;
+}
+
+.option p {
+    display: inline;
+    white-space: nowrap;
+    margin: 0;
+    margin-left: 10px;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from '../../../styles/pages';
-import { WaawNoIndexHead, DashboardCard, TabularInfo } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, ComingSoonEl } from "../../../components";
 
 const invoices = [
     {
@@ -43,11 +43,12 @@ const PaymentHistory = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: 'dashboard',
             activeMenu: 'PAYMENT',
             activeSubMenu: 'none'
-        })
+        });
+        props.setAllowedRoles(['ADMIN'])
     }, []);
 
     const actions = [
@@ -71,7 +72,10 @@ const PaymentHistory = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Payment History</h1>
             </div>
-            <DashboardCard style={{ marginTop: '20px' }}>
+            <div style={{ width: '100%', minHeight: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ComingSoonEl />
+            </div>
+            {/* <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
                     title='Payment History'
                     description='Tabular list of all payments with status.'
@@ -84,7 +88,7 @@ const PaymentHistory = (props) => {
                     pageNo={pageNo}
                     setPageNo={setPageNo}
                 />
-            </DashboardCard>
+            </DashboardCard> */}
         </>
     )
 

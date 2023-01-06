@@ -24,7 +24,7 @@ const Employees = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",

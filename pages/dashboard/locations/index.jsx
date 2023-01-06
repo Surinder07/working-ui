@@ -24,7 +24,7 @@ const Locations = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "LOCATIONS",
             activeSubMenu: "none",

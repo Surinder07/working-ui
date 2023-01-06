@@ -2,7 +2,21 @@ import { DatePickerStyles } from '../../styles/elements';
 import { CalendarMonth } from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from "date-fns";
+import {
+    add,
+    eachDayOfInterval,
+    startOfWeek,
+    endOfMonth,
+    endOfWeek,
+    format,
+    isSameDay,
+    isSameMonth,
+    isToday,
+    parse,
+    parseISO,
+    startOfToday,
+    differenceInDays
+} from "date-fns";
 
 const DatePicker = (props) => {
 
@@ -39,6 +53,16 @@ const DatePicker = (props) => {
     const closeStyle = {
         height: 0,
         border: 'none'
+    }
+
+    const addDays = (date, days) => {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    const isTodayOrPast = (date) => {
+        return differenceInDays(date, today) <= 0;
     }
 
     const previousMonth = () => {
@@ -89,11 +113,14 @@ const DatePicker = (props) => {
     }
 
     const handleValueChange = (date) => {
+        if (props.blockPast && isTodayOrPast(parseISO(date))) {
+            return;
+        }
         if (isSameMonth(parseISO(date), firstDayCurrentMonth)) props.setValue(date);
     }
 
     useEffect(() => {
-        props.setValue(format(today, "yyyy-MM-dd"))
+        props.setValue(format((props.blockPast ? addDays(today, 1) : today), "yyyy-MM-dd"))
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -124,7 +151,7 @@ const DatePicker = (props) => {
 
     return (
         <div ref={ref} className={`${DatePickerStyles.container} ${props.error ? DatePickerStyles.error : DatePickerStyles.default}`}>
-            <input type='text' placeholder='yyyy-MM-dd' value={props.value} disabled onFocus={() => setOpen(true)}/>
+            <input type='text' placeholder='yyyy-MM-dd' value={props.value} disabled onFocus={() => setOpen(true)} />
             <CalendarMonth className={DatePickerStyles.icon} onClick={onClick} />
             <div className={`${DatePickerStyles.calendar}`}
                 style={{ ...openDown ? openedDownStyle : openedUpStyle, ...open ? openStyle : closeStyle }}>
@@ -152,7 +179,7 @@ const DatePicker = (props) => {
                         dates.map((date, i) => (
                             <p key={`date_${i}`} className={`
                                 ${DatePickerStyles.dates}
-                                ${!date.today && !date.currentMonth && DatePickerStyles.notActiveMonth}
+                                ${((!date.today && !date.currentMonth) || (props.blockPast && isTodayOrPast(date.date))) && DatePickerStyles.notActiveMonth}
                                 ${date.selected && DatePickerStyles.selectedDate}
                                 ${date.today && DatePickerStyles.todayDate}
                             `}

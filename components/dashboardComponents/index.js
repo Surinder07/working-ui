@@ -10,6 +10,7 @@ import EmployeePreference from "./EmployeePreference";
 import PaginationDropdown from "./PaginationDropdown";
 import Clock from './Clock';
 import DashboardTabular from "./DashboardTabular";
+import FloatingClock from './FloatingClock';
 
 export {
     CalendarComponent,
@@ -23,7 +24,8 @@ export {
     EmployeePreference,
     PaginationDropdown,
     Clock,
-    DashboardTabular
+    DashboardTabular,
+    FloatingClock
 };
 
 export * from "./userPreferences";

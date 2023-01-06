@@ -1,10 +1,9 @@
-import {useEffect, useState, useRef} from "react";
-import {add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday} from "date-fns";
-import {ArrowLeft, ArrowRight, Schedule, AvTimer} from "@mui/icons-material";
-import {CalendarStyles} from "../../styles/elements";
-import {DaysOfWeekShort} from "../../constants";
+import { useEffect, useState } from "react";
+import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday } from "date-fns";
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { CalendarStyles } from "../../styles/elements";
+import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
-import {ClockModal} from "../../components";
 
 let events = {
     id: 1,
@@ -55,8 +54,8 @@ const holidays = [
 const workingDays = [
     {
         id: 1,
-        startDatetime: "2022-12-05T13:00",
-        endDatetime: "2022-12-05T14:30",
+        startDatetime: "2023-01-05T13:00",
+        endDatetime: "2023-01-05T14:30",
     },
     {
         id: 2,
@@ -78,27 +77,25 @@ const CalendarComponent = () => {
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [disableNext, setDisableNext] = useState(false);
-    const [displayClockModal, setDisplayClockModal] = useState(false);
     const [referenceDays, setReferenceDays] = useState(
         eachDayOfInterval({
             start: startOfWeek(firstDayCurrentMonth),
             end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
         }).map((date) => {
-            return {date: date};
+            return { date: date };
         })
     );
     const [days, setDays] = useState(referenceDays);
-
-    let [selectedDay, setSelectedDay] = useState(today);
+    const [selectedDay, setSelectedDay] = useState(today);
 
     const previousMonth = () => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, {months: -1});
+        let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
         updateDays(format(firstDayNextMonth, "MMM-yyyy"));
     };
 
     const nextMonth = () => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, {months: 1});
+        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
         if (!disableNext) {
             setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
             updateDays(format(firstDayNextMonth, "MMM-yyyy"));
@@ -113,7 +110,7 @@ const CalendarComponent = () => {
                 start: startOfWeek(firstDay),
                 end: endOfWeek(endOfMonth(firstDay)),
             }).map((date) => {
-                return {date: date};
+                return { date: date };
             })
         );
     };
@@ -123,7 +120,11 @@ const CalendarComponent = () => {
     };
 
     useEffect(() => {
-        let firstDayNextMonth = add(firstDayCurrentMonth, {months: 1});
+        setSelectedDay(today);
+    }, [])
+
+    useEffect(() => {
+        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
         if (format(firstDayNextMonth, "yyyy") <= format(firstDayCurrentMonth, "yyyy")) {
             setDisableNext(false);
         } else {
@@ -196,12 +197,12 @@ const CalendarComponent = () => {
                                 <div
                                     key={`day_${i}`}
                                     onClick={() => {
-                                        setSelectedDay(day);
+                                        if (isSameMonth(day.date, firstDayCurrentMonth)) setSelectedDay(day.date);
                                     }}
                                     className={classNames(
                                         CalendarStyles.dateContainer,
                                         CalendarStyles.dateInMonths,
-                                        isEqual(day.date, selectedDay.date) && !isToday(day.date) && CalendarStyles.selectedDate,
+                                        isEqual(day.date, selectedDay) && CalendarStyles.selectedDate,
                                         day.publicHoliday && CalendarStyles.publicHoliday,
                                         day.organizationHoliday && CalendarStyles.organizationHoliday
                                     )}
@@ -210,11 +211,8 @@ const CalendarComponent = () => {
                                         dateTime={format(day.date, "yyyy-MM-dd")}
                                         className={classNames(
                                             CalendarStyles.dateValue,
-                                            isEqual(day.date, selectedDay.date) && isToday(day.date) && CalendarStyles.todayDate,
-                                            isEqual(day.date, selectedDay.date) && !isToday(day.date) && CalendarStyles.selectedDate,
                                             isToday(day.date) && CalendarStyles.todayDate,
                                             !isToday(day.date) && isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notTodayDate,
-                                            isEqual(day.date, selectedDay.date) && !isToday(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.selectedDate,
                                             !isToday(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notActiveMonth
                                         )}
                                     >
@@ -235,11 +233,15 @@ const CalendarComponent = () => {
                 <div className={CalendarStyles.events}>
                     <div className={CalendarStyles.event}>
                         <div className={`${CalendarStyles.eventBullet} ${CalendarStyles.publicHoliday}`}></div>
-                        <p>Holidays</p>
+                        <p>Public Holidays</p>
                     </div>
                     <div className={CalendarStyles.event}>
                         <div className={`${CalendarStyles.eventBullet} ${CalendarStyles.organizationHoliday}`}></div>
                         <p>Organization Holidays</p>
+                    </div>
+                    <div className={CalendarStyles.event}>
+                        <div className={`${CalendarStyles.eventBullet} ${CalendarStyles.selectedDate}`}></div>
+                        <p>Selected Day</p>
                     </div>
                 </div>
             </DashboardCard>
@@ -255,15 +257,6 @@ const CalendarComponent = () => {
                     </ul>
                 </div>
             </div>
-            <div
-                className={classNames(CalendarStyles.clockIcon, displayClockModal ? CalendarStyles.activeClockContainer : CalendarStyles.inactiveClockContainer)}
-                onClick={() => {
-                    setDisplayClockModal(true);
-                }}
-            >
-                <AvTimer style={{width: "34px", height: "34px"}} className={classNames(displayClockModal ? CalendarStyles.activeClock : CalendarStyles.inactiveClock)} />
-            </div>
-            <div>{displayClockModal && <ClockModal closeClockModal={() => setDisplayClockModal(false)} />}</div>
         </div>
     );
 };

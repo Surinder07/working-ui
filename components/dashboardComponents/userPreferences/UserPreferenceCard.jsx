@@ -5,7 +5,7 @@ const UserPreferenceCard = (props) => {
 
     const handleCancel = () => {
         props.setEditOn(false);
-        handleCancel && props.handleCancel();
+        props.handleCancel && props.handleCancel();
     }
 
     const handleSave = () => {

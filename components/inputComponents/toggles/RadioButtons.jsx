@@ -1,3 +1,4 @@
+import { joinClasses } from "../../../helpers";
 import { RadioStyles } from "../../../styles/elements"
 
 const RadioButtons = (props) => {
@@ -9,7 +10,7 @@ const RadioButtons = (props) => {
                         <div className={RadioStyles.radioContainer}>
                             {props.value === opt && <div className={RadioStyles.radioChecked}></div>}
                         </div>
-                        <p className={props.value === opt && RadioStyles.selected}>{opt}</p>
+                        <p className={joinClasses(props.value === opt && RadioStyles.selected)}>{opt}</p>
                     </div>
                 ))
             }

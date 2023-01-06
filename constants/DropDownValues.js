@@ -1,4 +1,4 @@
-import { CountryIcons } from '../public/images/icons/countryIcons';
+import { AmericaIcon, CanadaIcon } from '../public/images';
 import { dropdownService } from '../services';
 
 export const CountryCodes = [
@@ -7,14 +7,14 @@ export const CountryCodes = [
         display: 'Canada(+1)',
         value: '+1',
         selectDisplay: '+1',
-        icon: CountryIcons.Canada
+        icon: CanadaIcon
     },
     {
         country: 'US',
         display: 'America(+1)',
         value: '+1',
         selectDisplay: '+1',
-        icon: CountryIcons.America
+        icon: AmericaIcon
     }
 ];
 
@@ -40,12 +40,12 @@ export const DaysOfWeekShort = [
 
 export const hours = Array.from(Array(24).keys())
     .map(str => {
-        return { display: str, value: str }
+        return { display: str.toString().padStart(2, '0'), value: str.toString().padStart(2, '0') }
     });
 
 export const minutes = Array.from(Array(60).keys())
     .map(str => {
-        return { display: str, value: str }
+        return { display: str.toString().padStart(2, '0'), value: str.toString().padStart(2, '0') }
     });
 
 export const currencies = dropdownService.stringToDropdownObj(['CAD', 'USD']);
@@ -56,4 +56,24 @@ export const PayrollFrequency = dropdownService.stringToDropdownObj([
     'Monthly'
 ])
 
-export const ReportType = dropdownService.stringToDropdownObj(['payroll','attendance','holidays'])
+export const ReportType = dropdownService.stringToDropdownObj([
+    'Payroll',
+    'Attendance',
+    'Holidays'
+]);
+
+export const employeeTypeValues = dropdownService.stringToDropdownObj([
+    'Full Time',
+    'Part Time'
+]);
+
+export const RequestTypeValues = dropdownService.stringToDropdownObj([
+    'Personal Information Update',
+    'Timeoff',
+    'Overtime'
+])
+
+export const LeaveTypeValues = dropdownService.stringToDropdownObj([
+    'Vacation',
+    'Sick Leave'
+])

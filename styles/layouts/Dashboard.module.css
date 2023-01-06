@@ -1,13 +1,16 @@
 .dashboardPage {
     display: grid;
-    grid-template-columns: 200px auto;
     font-family: Mulish;
     transition: all 0.2s ease;
     overflow-x: hidden;
 }
 
+.showMobile {
+    display: none;
+}
+
 .openNavDashboard {
-    grid-template-columns: 200px auto;
+    grid-template-columns: 170px auto;
 }
 
 .closeNavDashboard {
@@ -15,14 +18,24 @@
 }
 
 .openNavDashboard .sideNav {
-    width: 200px;
+    width: 170px;
 }
 
 .closeNavDashboard .sideNav {
     width: 70px;
 }
 
+.logoContainer {
+    width: fit-content;
+    margin: auto;
+}
+
+.logo {
+    height: 45px;
+}
+
 .sideNav {
+    position: relative;
     width: 100%;
     background-color: #363740;
     min-height: 100vh;
@@ -31,6 +44,10 @@
     flex-direction: column;
     justify-content: space-between;
     transition: all 0.1s ease-in-out;
+}
+
+.sideNavHamburger {
+    display: none;
 }
 
 .version {
@@ -44,7 +61,7 @@
 
 .menuItem {
     cursor: pointer;
-    height: 48px;
+    height: 38px;
     display: flex;
     align-items: center;
     padding: 0 20px;
@@ -54,6 +71,11 @@
     line-height: 18px;
     letter-spacing: 0.2px;
     color: #A4A6B3;
+}
+
+.menuItem p {
+    margin: 0;
+    margin-left: 10px;
 }
 
 .menuItem:hover,
@@ -66,24 +88,15 @@
 .openNavRightContainer,
 .closeNavRightContainer {
     position: relative;
+    min-height: 100vh;
 }
 
 .openNavRightContainer {
-    max-width: calc(100vw - 200px);
-    /* 60 px for padding */
+    max-width: calc(100vw - 170px);
 }
 
 .closeNavRightContainer {
     max-width: calc(100vw - 70px);
-    /* 60 px for padding */
-}
-
-.openNavDashboard .logo {
-    width: 160px;
-}
-
-.closeNavDashboard .logo {
-    width: 30px;
 }
 
 .header {
@@ -100,7 +113,7 @@
 }
 
 .openNavDashboard .header {
-    max-width: calc(100% - 200px);
+    max-width: calc(100% - 170px);
 }
 
 .closeNavDashboard .header {
@@ -127,15 +140,27 @@
     margin-left: 15px;
 }
 
-.searchBar {
+.header .searchBar {
     width: 40vw;
+}
+
+.sideNav .searchBar {
+    display: none;
+}
+
+.profileContainer {
+    display: none;
+}
+
+.mobileLogo {
+    display: none;
 }
 
 .content {
     padding: var(--navigation-height) 30px;
     background-color: #F7F8FC;
     min-height: 100%;
-    overflow-x: scroll;
+    overflow-x: hidden;
 }
 
 .footer {
@@ -146,12 +171,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 35px;
+    padding: 7px 35px;
     background-color: white;
 }
 
 .openNavDashboard .footer {
-    max-width: calc(100% - 200px);
+    max-width: calc(100% - 170px);
 }
 
 .closeNavDashboard .footer {
@@ -163,11 +188,19 @@
     align-items: center;
 }
 
+.footer .leftContainer .iconsContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
 .footer p {
     color: #535255;
     font-size: 10px;
     line-height: 15px;
     letter-spacing: 0.1px;
+    margin: 0;
+    margin-left: 20px;
 }
 
 .helpIcon {
@@ -181,48 +214,29 @@
     border-radius: 50%;
     color: #C5C7CD;
     font-size: 24px !important;
+    user-select: none;
 }
 
 .footerIcons {
-    height: 20px !important;
-    margin-right: 10px;
+    height: 15px !important;
+    margin-right: 5px;
 }
 
 .footerLogo {
     height: 25px;
 }
 
-.clockDashboardMain {
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    width: 20%;
-    font-size: 14px !important;
-}
-
-.clockDashboardMain :last-child {
-    margin-top: 5px;
-}
-
-.clockDashboardMain p {
-    margin: 0px;
-    margin-top: 4px;
-}
-
-.playAndPauseIcon {
-    font-size: 28px !important;
-    color: #535255;
-    cursor: pointer;
-}
-
 @media only screen and (max-width: 480px) {
+
     .dashboardPage {
         grid-template-columns: 1fr;
     }
+
     .header {
         box-shadow: none;
         background-color: white;
     }
+
     .content {
         background-color: white;
         padding-left: 15px;
@@ -236,7 +250,6 @@
         overflow-x: hidden;
     }
 
-
     .logoContainer {
         margin-left: 25px !important;
     }
@@ -249,8 +262,8 @@
 
     .closeNavRightContainer {
         max-width: 100vw;
-        /* 60 px for padding */
     }
+
     .openNavDashboard .sideNav {
         width: 100%;
     }
@@ -275,7 +288,8 @@
         max-width: 100%;
     }
 
-    .sideNavHam {
+    .sideNavHamburger {
+        display: block;
         position: absolute;
         top: 9px;
         right: 60px;
@@ -285,7 +299,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        width: 80%;
+        margin-left: 5%;
+        margin-bottom: 10px;
         background-color: #F7F8FC;
     }
 
@@ -294,7 +310,6 @@
         font-style: normal;
         font-weight: 600;
         font-size: 14px !important;
-        ;
         line-height: 20px;
         text-align: right;
         letter-spacing: 0.2px;
@@ -302,8 +317,56 @@
         margin-right: 20px;
     }
 
-    .searchBar {
+    .header .searchBar {
+        display: none;
+    }
+
+    .header .profilePicture {
+        display: none;
+    }
+
+    .userName {
+        display: none;
+    }
+
+    .sideNav .searchBar {
+        display: grid;
         width: 80%;
         margin: 29px 20px;
     }
+
+    .mobileLogo {
+        display: block;
+    }
+
+    .footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+        padding: 7px 35px;
+        background-color: white;
+    }
+
+    .footer .leftContainer {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+    }
+
+    .footer .leftContainer .p {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer .leftContainer .iconsContainer {
+        margin: auto;
+    }
+
+    .footerLogo {
+        margin: auto;
+    }
+
 }

@@ -3,7 +3,7 @@ import { CheckCircle, Cancel } from '@mui/icons-material';
 import { InputBox, ContactInput, TextArea, NumberInput } from './inputBoxes';
 import { TimeInput, DropDown, MultiSelectDropdown } from './dropdowns';
 import DatePicker from './DatePicker';
-import { Toggle, ToggleWithValue } from './toggles';
+import { RadioButtons, Toggle, ToggleWithValue } from './toggles';
 
 const EditableInput = (props) => {
     const setValue = (value) => {
@@ -77,7 +77,7 @@ const EditableInput = (props) => {
                     props.type === 'date' &&
                     (
                         props.editOn ?
-                            <DatePicker value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <DatePicker value={props.value} setValue={setValue} disabled={props.nonEditable} blockPast={props.blockPast} /> :
                             <p>{props.initialValue}</p>
                     )
                 }
@@ -95,7 +95,14 @@ const EditableInput = (props) => {
                 {
                     props.type === 'number' && (
                         props.editOn ?
-                            <NumberInput value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <NumberInput value={props.value} setValue={setValue} disabled={props.nonEditable} placeholder={props.placeholder} /> :
+                            <p>{props.initialValue}</p>
+                    )
+                }
+                {
+                    props.type === 'radio' && (
+                        props.editOn ?
+                            <RadioButtons options={props.options} value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
                             <p>{props.initialValue}</p>
                     )
                 }

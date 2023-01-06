@@ -120,6 +120,7 @@ const Login = (props) => {
                 errorMessage={emailMessage}
                 showError={emailError}
                 setShowError={setEmailError}
+                allowAutoFill
             />
             <InputBox
                 type='password'
@@ -130,6 +131,7 @@ const Login = (props) => {
                 errorMessage={passwordMessage}
                 showError={passwordError}
                 setShowError={setPasswordError}
+                allowAutoFill
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
                 <Checkbox isChecked={rememberMe} setIsChecked={setRememberMe} label={'Remember Me'} />

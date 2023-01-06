@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal } from "../../../components";
+import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal, PaginationDropdown } from "../../../components";
 
 const requestsD = [
     {
@@ -91,6 +91,7 @@ const Reports = (props) => {
     const [expandedMenu, setExpandedMenu] = useState("none");
 
     const [showModal, setShowModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [requestsData, setRequestsData] = useState(requestsD);
     const [attendanceData, setAttendanceData] = useState(attendanceD);
     const [payrollData, setPayrollData] = useState(payrollD);
@@ -118,11 +119,12 @@ const Reports = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "REPORTS",
             activeSubMenu: "none",
         });
+        props.setAllowedRoles(['ADMIN', 'MANAGER'])
     }, []);
 
     useEffect(() => {
@@ -160,15 +162,16 @@ const Reports = (props) => {
 
 
 
-    const getExpandableData = (title, data, actions) => {
+    const getExpandableData = (title, description, data, actions) => {
         return (
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     data={data}
                     title={title}
+                    description={description}
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
-                    expandable
+                    expandable={props.user.role === 'ADMIN'}
                     actions={actions}
                     pagination
                     totalEntries={totalEntries[title]}
@@ -177,6 +180,7 @@ const Reports = (props) => {
                     pageNo={pageNo[title]}
                     setPageNo={(no) => setPageNo({ ...pageNo, title: no })}
                     showSearch
+                    setShowFilterModal={setShowFilterModal}
                     showFilter
                 />
             </DashboardCard>
@@ -186,23 +190,32 @@ const Reports = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Reports" />
+            <GenerateReportModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                setToasterInfo={props.setToasterInfo}
+                role={props.user.role}
+                setReloadData={setReloadData}
+            />
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Reports</h1>
-                <div>
+                <div className={DashboardStyles.rightContainer}>
+                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
                     {
-                    props.user.role === "MANAGER" || props.user.role === "ADMIN" && 
-                            <>
-                                <Button type="plain" style={{ marginRight: "15px" }} onClick={() => setShowModal(true)}>
-                                    + Generate Report Modal
-                                </Button>
-                            </>
-                        }
+                        (props.user.role === "MANAGER" || props.user.role === "ADMIN") &&
+                        <>
+                            <Button
+                                type="plain"
+                                onClick={() => setShowModal(true)}>
+                                + Generate New Report
+                            </Button>
+                        </>
+                    }
                 </div>
             </div>
-            {getExpandableData("Payroll", payrollData, getActions("shift"))}
-            {getExpandableData("Attendance", attendanceData, getActions("attendance"))}
-            {getExpandableData("Location Holidays", requestsData, getActions("request"))}
-            <GenerateReportModal showModal={showModal} setShowModal={setShowModal}  setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData}/>
+            {(props.user.role === 'ADMIN') && getExpandableData("Payroll", "Tabular list of existing Payroll Reports", payrollData, getActions("shift"))}
+            {getExpandableData("Attendance", "Tabular list of existing Attendance Reports", attendanceData, getActions("attendance"))}
+            {(props.user.role === 'ADMIN') && getExpandableData("Location Holidays", "Tabular list of existing Location Holiday Reports", requestsData, getActions("request"))}
         </>
     );
 };

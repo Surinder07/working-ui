@@ -144,13 +144,6 @@ export const SideNavInfo = {
             link: "/dashboard/shifts",
             activeKey: "SHIFTS",
         },
-
-        {
-            icon: <PeopleAlt style={{ fontSize: "16px" }} />,
-            text: "Employees",
-            link: "/dashboard/employees",
-            activeKey: "EMPLOYEES",
-        },
         {
             icon: <RequestPage style={{ fontSize: "16px" }} />,
             text: "Requests",
@@ -162,12 +155,6 @@ export const SideNavInfo = {
             text: "Notifications",
             link: "/dashboard/notifications",
             activeKey: "NOTIFICATIONS",
-        },
-        {
-            icon: <Description style={{ fontSize: "16px" }} />,
-            text: "Reports",
-            link: "/dashboard/reports",
-            activeKey: "REPORTS",
         }
     ],
     superAdmin: [

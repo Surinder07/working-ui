@@ -58,7 +58,11 @@ const Table = (props, ref) => {
                             {expanded === i + 1 ? (
                                 <RemoveCircleOutline className={TableStyles.expandIcons} onClick={() => setExpanded(0)} />
                             ) : (
-                                <AddCircleOutline className={TableStyles.expandIcons} onClick={() => setExpanded(i + 1)} />
+                                <AddCircleOutline className={TableStyles.expandIcons}
+                                    onClick={() => {
+                                        setExpanded(i + 1);
+                                        props.onExpand && props.onExpand(row["internalId"], row["status"].text)
+                                    }} />
                             )}
                         </div>
                     }

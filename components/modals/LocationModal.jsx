@@ -3,7 +3,7 @@ import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { dropdownService, locationAndRoleService } from "../../services";
-import { fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
+import { combineBoolean, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 
 const LocationModal = (props) => {
     //------------- Dropdown values
@@ -26,16 +26,18 @@ const LocationModal = (props) => {
         fetchAndHandleGet(dropdownService.getTimezones, setTimezones);
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         props.setData && props.setData({
             location,
             timezone
         })
-    },[])
+    }, [])
 
     const isError = () => {
-        return validateForEmptyField(location, 'Name', setErrorLocation, true) ||
-            validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true);
+        return combineBoolean(
+            validateForEmptyField(location, 'Name', setErrorLocation, true) ||
+            validateForEmptyField(timezone, 'Timezone', setErrorTimezone, true)
+        );
     }
 
     const saveData = () => {

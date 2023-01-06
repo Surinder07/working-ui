@@ -42,6 +42,10 @@
     color: var(--error-message-color);
 }
 
+.inputBoxDisabled {
+    background-color: #e4e4e4;
+}
+
 .inputBox input,
 .inputBoxWithDropdown input,
 .inputBoxWithButton input {
@@ -83,7 +87,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
-    color: #000000;
+    color: #BFBFBF;
 }
 
 .inputBox .inputIconContainer,

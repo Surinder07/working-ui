@@ -1,37 +1,23 @@
 import React, { useEffect } from "react";
-import {useState} from "react";
+import { useState } from "react";
 import { fetchAndHandle, validateForEmptyField } from "../../helpers";
-import {EditableInput} from "../inputComponents";
-import {DashboardModal} from "./base";
+import { EditableInput } from "../inputComponents";
+import { DashboardModal } from "./base";
 
 const EditRequestsModal = (props) => {
-    const [value, setValue] = useState("");
+
+    const responseOptions = ['Approve', 'Reject', 'Refer Back'];
+
+    const [choice, setChoice] = useState(responseOptions[0]);
     const [comment, setComment] = useState("");
-    //initial value 
-    const [initialValue,setInitialValue] = useState("");
-    const [initialComment,setInitialComment] = useState("");
-    const [commentError, setCommentError] = useState({
-        message: "",
-        show: false,
-    });
-    // const [radioError, setRadioError] = useState({
-    //     errorMessage: "",
-    //     showError: false,
-    // });
+    const [commentError, setCommentError] = useState({});
     const [loading, setLoading] = useState(false);
-    const onCancel = ()=> {
-        setValue("")
+
+    const onCancel = () => {
+        setChoice("")
         setComment("")
         setCommentError({})
-    
     }
-
-    useEffect(()=> {
-        props.setData && props.setData({
-            requestvalue:value,
-            comment
-        })
-    },[])
 
     const isError = () => {
         return validateForEmptyField(comment, 'comment', setCommentError, true)
@@ -39,7 +25,7 @@ const EditRequestsModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(setLoading,props.setReloadData,props.setPageLoading,onCancel,props.setShowModal,props.setToasterInfo)
+            fetchAndHandle(setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal, props.setToasterInfo)
             //     setLoading(true)
             //     if(error == true){
             //         props.setToasterInfo({
@@ -67,17 +53,25 @@ const EditRequestsModal = (props) => {
             showModal={props.showModal}
             setShowModal={props.setShowModal}
             buttonText="Submit"
-            title="Edit Request"
+            title="Respond to Request"
             type="singleCol"
             onClick={saveData}
             onCancel={onCancel}
             loading={loading}
         >
-            <EditableInput type="radio" label="Approve" value={value} setValue={setValue} initialValue={value} editOn />
-            <EditableInput type="radio" label="Reject" value={value} setValue={setValue} initialValue={value} editOn />
-            <EditableInput type="radio" label="Refer back to employee" value={value} setValue={setValue} initialValue={value} editOn />
+            {
+                props.tabularType === 'emp' &&
+                <EditableInput
+                    type="radio"
+                    label="Response"
+                    options={responseOptions}
+                    value={choice}
+                    setValue={setChoice}
+                    editOn
+                />
+            }
             <EditableInput
-                type="text"
+                type="textarea"
                 label="Comment"
                 value={comment}
                 setValue={setComment}

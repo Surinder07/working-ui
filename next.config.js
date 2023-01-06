@@ -43,6 +43,12 @@ const apiEndpoints = {
         getAllShifts: '/v1/shifts/getAll',
         getAllShiftsUser: '/v1/shifts/user/getAll'
     },
+    requests: {
+        newRequest: '/v1/requests/new',
+        updateRequest: '/v1/requests/update',
+        getAll: '/v1/requests/getAll',
+        getMyRequests: '/v1/requests/getByUser'
+    },
     notification: {
         getAllNotification: '/v1/notifications/getAll',
         markNotificationAsRead: '/v1/notifications/markAsRead',
@@ -65,7 +71,7 @@ const apiEndpoints = {
         startTimer: '/v1/timesheet/timer/start',
         stopTimer: '/v1/timesheet/timer/stop',
         getTimer: '/v1/timesheet/timer/get',
-        getAll: '/v1/timesheet/get',
+        getAll: '/v1/timesheet/getForUser',
         add: '/v1/timesheet/add',
         edit: '/v1/timesheet/edit',
         delete: '/v1/timesheet/delete'
@@ -91,7 +97,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.0",
+        version: "1.0.1",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

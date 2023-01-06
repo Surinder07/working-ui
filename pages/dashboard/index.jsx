@@ -42,7 +42,7 @@ const Dashboard = (props) => {
 
     useEffect(() => {
         props.setPageInfo({
-            authenticationRequired: false,
+            authenticationRequired: true,
             pageView: "dashboard",
             activeMenu: "DASHBOARD",
             activeSubMenu: "none",
@@ -54,25 +54,18 @@ const Dashboard = (props) => {
         if (props.user.role) {
             dashboardService.getData(props.user.role)
                 .then(res => {
-                    console.log(res);
                     try {
-                        console.log('setting tile info');
                         setTileInfo(res.tilesInfo);
-                        console.log('tile info set');
                     } catch (err) {
                         console.log('tileInfo error: "', err);
                     }
                     try {
-                        console.log('setting invoice');
                         setLineGraphData(res.invoiceTrends)
-                        console.log('invoice set');
                     } catch (err) {
                         console.log('invoice trends error: "', err);
                     }
                     try {
-                        console.log('setting pie chart');
                         setPieGraphData(res.employeeTrends)
-                        console.log('pie chart set');
                     } catch (err) {
                         console.log('employee trends error: "', err);
                     }

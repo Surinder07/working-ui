@@ -4,163 +4,67 @@ import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import Tabs from "../dashboardComponents/Tabs";
+import { LeaveTypeValues, RequestTypeValues } from "../../constants";
+import { combineBoolean, fetchAndHandle, newRequestRequestBody, validateForEmptyField, validateForNumberNotZero, validateForTime } from "../../helpers";
+import { requestService } from "../../services";
 
 const CreateRequestModal = (props) => {
-    const [formType, setFormType] = useState("Full Day");
-    const [options, setOptions] = useState("Overtime Request"); //"Personal Information Update" "Time of Request","Overtime Request"
-    const [requestTypeValue, setRequestTypeValue] = useState("");
-    //Personal Information Update"
-    const [title, setTitle] = useState("");
 
-    // Time of Requests
+    const [requestType, setRequestType] = useState(RequestTypeValues[0].display);
+    const [timeOffFormType, setTimeOffFormType] = useState("Full Day");
     const [fromDate, setFromDate] = useState("");
     const [tillDate, setTillDate] = useState("");
     const [typeOfLeave, setTypeOfLeave] = useState("");
-    //Overtime Requests
-    const [overTimeDate, setOverTimeDate] = useState("");
     const [startTime, setStartTime] = useState("");
-    const [duration, setDuration] = useState("");
+    const [duration, setDuration] = useState(0);
     const [description, setDescription] = useState("");
-    // initial states
-    const [initialRequestTypeValue, setInitialRequestTypeValue] = useState("");
-    const [initialTitle, setInitialTitle] = useState("");
-    const [initialFromDate, setInitialFromDate] = useState("");
-    const [initialTillDate, setInitialTillDate] = useState("");
-    const [initialTypeOfLeave, setInitialTypeOfLeave] = useState("");
-    const [initialOverTimeDate, setInitialOverTimeDate] = useState("");
-    const [initialStartTime, setInitialStartTime] = useState("");
-    const [initialDuration, setInitialDuration] = useState("");
-    const [initialDescription, setInitialDescription] = useState("");
 
-
-
-    const [errorRequestTypeValue, setErrorRequestTypeValue] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorDate, setErrorDate] = useState({
-        message: "",
-        show: false,
-    })
-    //Personal Information Update"
-    const [errorTitle, setErrorTitle] = useState({
-        message: "",
-        show: false,
-    });
-
-    // Time of Requests
-    const [errorTypeOfLeave, setErrorTypeOfLeave] = useState({
-        message: "",
-        show: false,
-    });
-    //Overtime Requests
-    const [errorStartTime, setErrorStartTime] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorOverTimeDate, setErrorOverTimeDate] = useState({
-        message: "",
-        show: false,
-    })
-    const [errorDuration, setErrorDuration] = useState({
-        message: "",
-        show: false,
-    });
-    const [errorDescription, setErrorDescription] = useState({
-        message: "",
-        show: false,
-    });
+    const [errorDate, setErrorDate] = useState({});
+    const [errorTypeOfLeave, setErrorTypeOfLeave] = useState({});
+    const [errorStartTime, setErrorStartTime] = useState({});
+    const [errorDuration, setErrorDuration] = useState({});
+    const [errorDescription, setErrorDescription] = useState({});
 
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        setRequestType(RequestTypeValues[0].display);
+    }, [])
+
     const onCancel = () => {
-        setRequestTypeValue("")
-        setTitle("")
+        setRequestType("")
         setFromDate("")
         setTillDate("")
         setTypeOfLeave("")
-        setOverTimeDate("")
         setStartTime("")
         setDuration("")
         setDescription("")
-        setErrorRequestTypeValue({
-            message: "",
-            show: false
-        })
-        setErrorTitle({
-            message: "",
-            show: false
-        })
-        setErrorDate({
-            message: "",
-            show: false
-        })
-        setErrorOverTimeDate({
-            message: "",
-            show: false
-        })
-        setErrorTypeOfLeave({
-            message: "",
-            show: false
-        })
-        setErrorStartTime({
-            message: "",
-            show: false
-        })
-        setErrorDuration({
-            message: "",
-            show: false
-        })
-        setErrorDescription({
-            message: "",
-            show: false
-        })
+        setErrorDate({})
+        setErrorTypeOfLeave({})
+        setErrorStartTime({})
+        setErrorDuration({})
+        setErrorDescription({})
     }
-    
-    useEffect(()=> {
-        props.setData && props.setData({
-            requestTypeValue,
-            title,
-            fromDate,
-            tillDate,
-            typeOfLeave,
-            overTimeDate,
-            startTime,
-            duration,
-            description,
-        })
-    },[])
 
     const isError = () => {
-        return validateForEmptyField(fromDate, 'From', setErrorDate, true) ||
-               validateForEmptyField(tillDate, 'To', setErrorDate, true) ||
-               validateForEmptyField(overTimeDate, 'Date', setErrorOverTimeDate, true)
+        return combineBoolean(
+            validateForEmptyField(fromDate, 'From or To', setErrorDate, (requestType === 'Timeoff' || requestType === 'Overtime')),
+            validateForEmptyField(tillDate, 'From or To', setErrorDate, (requestType === 'Timeoff' && timeOffFormType === 'Full Day')),
+            validateForTime(startTime, setErrorStartTime, ((requestType === 'Timeoff' && timeOffFormType === 'Half Day') || requestType === 'Overtime')),
+            validateForNumberNotZero(duration, 'Duration', setErrorDuration, ((requestType === 'Timeoff' && timeOffFormType === 'Half Day') || requestType === 'Overtime')),
+            validateForEmptyField(description, 'Description', setErrorDescription, true),
+            validateForEmptyField(typeOfLeave, 'Type of leave', setErrorTypeOfLeave, requestType === 'Timeoff')
+        );
     }
 
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle()
-                // setLoading(true)
-                // if(error == true){
-                //     props.setToasterInfo({
-                //         error: true,
-                //         title: 'Error!',
-                //         message: res.message
-                //     })
-                // }
-                // else{
-                //     props.setToasterInfo({
-                //         error: false,
-                //         title: 'Success!',
-                //         message: 'Request created successfully'
-                //     });
-                //     props.setReloadData(true)
-                //     onCancel()
-                // }
-                // setLoading(false)
-            }
-        
+            fetchAndHandle(() => requestService.addNew(newRequestRequestBody(requestType, timeOffFormType,
+                fromDate, tillDate, typeOfLeave, startTime, duration, description)),
+                'Request added successfully', setLoading, props.setReloadData, props.setPageLoading,
+                onCancel, props.setShowModal, props.setToasterInfo);
+        }
     }
 
     return (
@@ -176,53 +80,38 @@ const CreateRequestModal = (props) => {
         >
             <EditableInput
                 type="dropdown"
-                options={[
-                    "Personal Information Update",
-                    "Time of Request",
-                    "Overtime Request",
-                ]}
-                value={requestTypeValue}
-                setValue={setRequestTypeValue}
-                initialValue={requestTypeValue}
+                options={RequestTypeValues}
+                placeholder='Select Request Type'
+                value={requestType}
+                setValue={setRequestType}
                 label="Request Type"
                 className={DashboardModalStyles.singleColumn}
-                error={errorRequestTypeValue}
-                setError={setErrorRequestTypeValue}
                 editOn
             />
-            {options === "Personal Information Update" ? (
+            {
+                (requestType === 'Timeoff' || requestType === 'Overtime') &&
                 <>
-                    <EditableInput
-                        type="text"
-                        label="Title"
-                        value={title}
-                        setValue={setTitle}
-                        initialValue={title}
-                        className={DashboardModalStyles.singleColumn}
-                        error={errorTitle}
-                        setError={setErrorTitle}
-                        editOn
-                    />
-                </>
-            ) : options === "Time of Request" ? (
-                <>
-                    <Tabs
-                        className={DashboardModalStyles.singleColumn}
-                        options={["Full Day", "Half Day"]}
-                        selected={formType}
-                        setSelected={setFormType}
-                        size="big"
-                    />
-                    {formType === "Full Day" ? (
+                    {
+                        requestType === 'Timeoff' &&
+                        <Tabs
+                            className={DashboardModalStyles.singleColumn}
+                            options={["Full Day", "Half Day"]}
+                            selected={timeOffFormType}
+                            setSelected={setTimeOffFormType}
+                            size="small"
+                        />
+                    }
+                    {
+                        (requestType === 'Timeoff' && timeOffFormType === 'Full Day') &&
                         <>
                             <EditableInput
                                 type="date"
                                 label="From"
                                 value={fromDate}
                                 setValue={setFromDate}
-                                initialValue={fromDate}
                                 error={errorDate}
                                 setError={setErrorDate}
+                                blockPast
                                 required
                                 editOn
                             />
@@ -230,75 +119,80 @@ const CreateRequestModal = (props) => {
                                 type="date"
                                 value={tillDate}
                                 setValue={setTillDate}
-                                initialValue={tillDate}
                                 error={errorDate}
                                 setError={setErrorDate}
                                 label="Till"
+                                blockPast
                                 required
                                 editOn
                             />
                         </>
-                    ) : (
-                        <></>
-                    )}
-                    <EditableInput
-                        type="dropdown"
-                        options={["India", "Canada", "Germany"]}
-                        label="Type of Leave"
-                        value={typeOfLeave}
-                        setValue={setTypeOfLeave}
-                        initialValue={typeOfLeave}
-                        className={DashboardModalStyles.singleColumn}
-                        error={errorTypeOfLeave}
-                        setError={setErrorTypeOfLeave}
-                        editOn
-                    />
+                    }
+                    {
+                        ((requestType === 'Timeoff' && timeOffFormType === 'Half Day') || requestType === 'Overtime') &&
+                        <>
+                            <EditableInput
+                                type="date"
+                                label="Date"
+                                value={fromDate}
+                                setValue={setFromDate}
+                                error={errorDate}
+                                setError={setErrorDate}
+                                className={DashboardModalStyles.singleColumn}
+                                required
+                                editOn
+                            />
+                            <EditableInput
+                                type="time"
+                                label="Start Time"
+                                value={startTime}
+                                setValue={setStartTime}
+                                error={errorStartTime}
+                                setError={setErrorStartTime}
+                                required
+                                editOn
+                            />
+                            <EditableInput
+                                type="number"
+                                label="Duration (In Hrs)"
+                                placeholder='Duration in hours'
+                                value={duration}
+                                setValue={setDuration}
+                                error={errorDuration}
+                                setError={setErrorDuration}
+                                required
+                                editOn
+                            />
+                        </>
+                    }
+                    {
+                        requestType === 'Timeoff' &&
+                        <EditableInput
+                            type="dropdown"
+                            options={LeaveTypeValues}
+                            label="Type of Leave"
+                            value={typeOfLeave}
+                            placeholder='Select a leave type'
+                            setValue={setTypeOfLeave}
+                            initialValue={typeOfLeave}
+                            className={DashboardModalStyles.singleColumn}
+                            error={errorTypeOfLeave}
+                            setError={setErrorTypeOfLeave}
+                            required
+                            editOn
+                        />
+                    }
                 </>
-            ) : (
-                <>
-                    <EditableInput
-                        type="date"
-                        label="Date"
-                        value={overTimeDate}
-                        setValue={setOverTimeDate}
-                        initialValue={overTimeDate}
-                        error={errorOverTimeDate}
-                        setError={setErrorOverTimeDate}
-                        className={DashboardModalStyles.singleColumn}
-                        required
-                        editOn
-                    />
-                    <EditableInput
-                        type="time"
-                        label="Start Time"
-                        value={startTime}
-                        setValue={setStartTime}
-                        initialValue={startTime}
-                        error={errorStartTime}
-                        setError={setErrorStartTime}
-                        editOn
-                    />
-                    <EditableInput
-                        type="text"
-                        label="Duration"
-                        value={duration}
-                        setValue={setDuration}
-                        initialValue={duration}
-                        error={errorDuration}
-                        setError={setErrorDuration}
-                        editOn
-                    />
-                </>
-            )}
+            }
             <EditableInput
-                type="text"
+                type="textarea"
                 label="Description"
                 className={DashboardModalStyles.singleColumn}
                 value={description}
                 setValue={setDescription}
-                initialValue={description}
                 error={errorDescription}
                 setError={setErrorDescription}
+                required
                 editOn
             />
         </DashboardModal>

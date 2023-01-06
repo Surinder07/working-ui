@@ -27,6 +27,8 @@ const SubTable = (props) => {
         switch (type) {
             case 'ok':
                 return '#2996C3';
+            case 'warn':
+                return '#E4BE3D';
             case 'basic':
                 return '#535255';
             case 'bad':
