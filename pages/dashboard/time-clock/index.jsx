@@ -38,8 +38,8 @@ const timeClock = (props) => {
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
-    const [start, setStart] = useState("hh:mm");
-    const [startDate, setStartDate] = useState("hh:mm");
+    const [start, setStart] = useState("--:--");
+    const [startDate, setStartDate] = useState(new Date());
     const [duration, setDuration] = useState("00:00:00");
     const [playing, setPlaying] = useState(false);
     const [disableTimer, setDisableTimer] = useState(false);
@@ -102,19 +102,24 @@ const timeClock = (props) => {
                     })
                 }
                 else {
-                    if (res === null) return;
-                    setStart(res.startTime)
-                    const date = new Date(Date.parse(res.startTimestamp));
-                    setStartDate(date);
-                    if (res.endDate == null) {
-                        setPlaying(true);
+                    console.log(res)
+                    if (!res) {
+                        setPlaying(false);
+                        setDisableTimer(false)
                     } else {
-                        var newDate = new Date(new Date(Date.parse(res.endTimestamp)) - date);
-                        var hour = newDate.getUTCHours().toString().padStart(2, '0');
-                        var min = newDate.getUTCMinutes().toString().padStart(2, '0');
-                        var sec = newDate.getUTCSeconds().toString().padStart(2, '0');
-                        setDuration(`${hour}:${min}:${sec}`);
-                        setDisableTimer(true);
+                        setStart(res.startTime)
+                        const date = new Date(Date.parse(res.startTimestamp));
+                        setStartDate(date);
+                        if (res.endDate == null) {
+                            setPlaying(true);
+                        } else {
+                            var newDate = new Date(new Date(Date.parse(res.endTimestamp)) - date);
+                            var hour = newDate.getUTCHours().toString().padStart(2, '0');
+                            var min = newDate.getUTCMinutes().toString().padStart(2, '0');
+                            var sec = newDate.getUTCSeconds().toString().padStart(2, '0');
+                            setDuration(`${hour}:${min}:${sec}`);
+                            setDisableTimer(true);
+                        }
                     }
                 }
             })

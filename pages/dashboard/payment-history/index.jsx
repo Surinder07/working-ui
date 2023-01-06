@@ -34,7 +34,7 @@ const invoices = [
 
 const PaymentHistory = (props) => {
 
-    const [data, setData] = useState(invoices);
+    const [data, setData] = useState([]);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
@@ -72,10 +72,7 @@ const PaymentHistory = (props) => {
             <div className={DashboardStyles.dashboardTitles}>
                 <h1>Payment History</h1>
             </div>
-            <div style={{ width: '100%', minHeight: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <ComingSoonEl />
-            </div>
-            {/* <DashboardCard style={{ marginTop: '20px' }}>
+            <DashboardCard style={{ marginTop: '20px' }}>
                 <TabularInfo
                     title='Payment History'
                     description='Tabular list of all payments with status.'
@@ -88,7 +85,7 @@ const PaymentHistory = (props) => {
                     pageNo={pageNo}
                     setPageNo={setPageNo}
                 />
-            </DashboardCard> */}
+            </DashboardCard>
         </>
     )
 

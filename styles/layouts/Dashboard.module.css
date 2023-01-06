@@ -10,7 +10,7 @@
 }
 
 .openNavDashboard {
-    grid-template-columns: 170px auto;
+    grid-template-columns: 180px auto;
 }
 
 .closeNavDashboard {
@@ -18,7 +18,7 @@
 }
 
 .openNavDashboard .sideNav {
-    width: 170px;
+    width: 180px;
 }
 
 .closeNavDashboard .sideNav {
@@ -92,7 +92,7 @@
 }
 
 .openNavRightContainer {
-    max-width: calc(100vw - 170px);
+    max-width: calc(100vw - 180px);
 }
 
 .closeNavRightContainer {
@@ -113,7 +113,7 @@
 }
 
 .openNavDashboard .header {
-    max-width: calc(100% - 170px);
+    max-width: calc(100% - 180px);
 }
 
 .closeNavDashboard .header {
@@ -176,7 +176,7 @@
 }
 
 .openNavDashboard .footer {
-    max-width: calc(100% - 170px);
+    max-width: calc(100% - 180px);
 }
 
 .closeNavDashboard .footer {
