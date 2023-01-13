@@ -129,7 +129,7 @@ const getBlueBgList = (length) => {
 
 const getEmployeeTrends = (data, role) => {
     return {
-        noData: (data.filter(emp => emp.employees !== 0).length) === 0,
+        noData: data.length === 0 || ((data.filter(emp => emp.employees !== 0).length) === 0),
         labels: data.filter(emp => emp.employees !== 0)
             .map(emp => {
                 return role === 'ADMIN' ? emp.location : emp.role
