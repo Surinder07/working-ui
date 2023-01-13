@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { InputBox, PasswordPolicy, Button } from "../../components";
+import { validatePassword } from "../../helpers";
 import { FullPageWithImageLayout } from "../../layouts";
 import { LinkExpiredBg, ResetPasswordFinishBg, ResetPasswordFinishSuccessBg } from "../../public/images";
 import { userService } from "../../services";
@@ -89,7 +90,7 @@ const AcceptInvite = (props) => {
             .then(error => {
                 if (!error) {
                     setLoading(true);
-                    props.setPageLoading(true)
+                    props.setPageLoading(true);
                     userService.registerByInvitation(inviteKey, password)
                         .then(res => {
                             if (res.error) {

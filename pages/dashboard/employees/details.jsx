@@ -20,225 +20,125 @@ import { memberService } from "../../../services";
 import { fetchAndHandle, fetchAndHandleGet } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
 
-const requestsD = [
-    {
-        requestId: "6476475",
-        requestType: "request",
-        initiationDate: "01/01/2023",
-        location: "Canada",
-        initiatedBy: "Rahul",
-        assignedTo: "Rajiv",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'basic'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'ok'
-            }
-        ]
-    },
-    {
-        requestId: "6476476",
-        requestType: "request",
-        initiationDate: "01/02/2023",
-        location: "India",
-        initiatedBy: "Arpit",
-        assignedTo: "Sandeep",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'basic'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'ok'
-            }
-        ]
-    },
-    {
-        requestId: "6476477",
-        requestType: "request",
-        initiationDate: "03/01/2023",
-        location: "USA",
-        initiatedBy: "Albert",
-        assignedTo: "Edward",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'basic'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'ok'
-            }
-        ]
-    },
-    {
-        requestId: "6476478",
-        requestType: "request",
-        initiationDate: "02/02/2023",
-        location: "Mexico",
-        initiatedBy: "Ethan",
-        assignedTo: "Ishac",
-        status: "xyz",
-        history: [
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'bad'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'basic'
-            },
-            {
-                title: 'Xyz Raised a Request',
-                description: 'Request for early leave on the next to next week',
-                date: '29th August,2022',
-                status: 'ok'
-            }
-        ]
-    },
-];
+const requestsD = []
 
-const attendanceD = [
-    {
-        date: "01/01/2023",
-        inTime: "10:00 AM",
-        outTime: "05:00 PM",
-        inDate: "01/01/2023",
-        outDate: "01/01/2023",
-        duration: "7 Hrs",
-        entryType: "Entry",
-        comments: "N/A",
-    },
-    {
-        date: "01/01/2023",
-        inTime: "10:00 AM",
-        outTime: "05:00 PM",
-        inDate: "01/01/2023",
-        outDate: "01/01/2023",
-        duration: "7 Hrs",
-        entryType: "Entry",
-        comments: "N/A",
-    },
-    {
-        date: "01/01/2023",
-        inTime: "10:00 AM",
-        outTime: "05:00 PM",
-        inDate: "01/01/2023",
-        outDate: "01/01/2023",
-        duration: "7 Hrs",
-        entryType: "Entry",
-        comments: "N/A",
-    },
-    {
-        date: "01/01/2023",
-        inTime: "10:00 AM",
-        outTime: "05:00 PM",
-        inDate: "01/01/2023",
-        outDate: "01/01/2023",
-        duration: "7 Hrs",
-        entryType: "Entry",
-        comments: "N/A",
-    },
-];
+// const requestsD = [
+//     {
+//         requestId: "6476475",
+//         requestType: "request",
+//         initiationDate: "01/01/2023",
+//         location: "Canada",
+//         initiatedBy: "Rahul",
+//         assignedTo: "Rajiv",
+//         status: "xyz",
+//         history: [
+//             {
+//                 title: 'Xyz Raised a Request',
+//                 description: 'Request for early leave on the next to next week',
+//                 date: '29th August,2022',
+//                 status: 'bad'
+//             },
+//             {
+//                 title: 'Xyz Raised a Request',
+//                 description: 'Request for early leave on the next to next week',
+//                 date: '29th August,2022',
+//                 status: 'basic'
+//             },
+//             {
+//                 title: 'Xyz Raised a Request',
+//                 description: 'Request for early leave on the next to next week',
+//                 date: '29th August,2022',
+//                 status: 'ok'
+//             }
+//         ]
+//     }
+// ];
 
-const shiftD = [
-    {
-        shiftdate: "01/01/2023",
-        shiftName: "Day",
-        startTime: "10:00 AM",
-        endTime: "05:00 PM",
-        workingHours: "7 Hrs",
-        status: "Status",
-        comments: "N/A",
-    },
-    {
-        shiftdate: "01/01/2023",
-        shiftName: "Day",
-        startTime: "10:00 AM",
-        endTime: "05:00 PM",
-        workingHours: "7 Hrs",
-        status: "Status",
-        comments: "N/A",
-    },
-    {
-        shiftdate: "01/01/2023",
-        shiftName: "Day",
-        startTime: "10:00 AM",
-        endTime: "05:00 PM",
-        workingHours: "7 Hrs",
-        status: "Status",
-        comments: "N/A",
-    },
-    {
-        shiftdate: "01/01/2023",
-        shiftName: "Day",
-        startTime: "10:00 AM",
-        endTime: "05:00 PM",
-        workingHours: "7 Hrs",
-        status: "Status",
-        comments: "N/A",
-    },
-];
+const attendanceD = [];
 
-const preferences = {
-    mondayStartTime: '10:00',
-    mondayEndTime: '05:00',
-    tuesdayStartTime: '10:00',
-    tuesdayEndTime: '05:00',
-    wednesdayStartTime: '10:00',
-    wednesdayEndTime: '05:00',
-    thursdayStartTime: '10:00',
-    thursdayEndTime: '05:00',
-    fridayStartTime: '10:00',
-    fridayEndTime: '05:00',
-    saturdayStartTime: '10:00',
-    saturdayEndTime: '05:00',
-    sundayStartTime: '10:00',
-    sundayEndTime: '05:00',
-    wagesPerHour: 22.3,
-    wagesCurrency: 'CAD',
-}
+// const attendanceD = [
+//     {
+//         date: "01/01/2023",
+//         inTime: "10:00 AM",
+//         outTime: "05:00 PM",
+//         inDate: "01/01/2023",
+//         outDate: "01/01/2023",
+//         duration: "7 Hrs",
+//         entryType: "Entry",
+//         comments: "N/A",
+//     },
+//     {
+//         date: "01/01/2023",
+//         inTime: "10:00 AM",
+//         outTime: "05:00 PM",
+//         inDate: "01/01/2023",
+//         outDate: "01/01/2023",
+//         duration: "7 Hrs",
+//         entryType: "Entry",
+//         comments: "N/A",
+//     },
+//     {
+//         date: "01/01/2023",
+//         inTime: "10:00 AM",
+//         outTime: "05:00 PM",
+//         inDate: "01/01/2023",
+//         outDate: "01/01/2023",
+//         duration: "7 Hrs",
+//         entryType: "Entry",
+//         comments: "N/A",
+//     },
+//     {
+//         date: "01/01/2023",
+//         inTime: "10:00 AM",
+//         outTime: "05:00 PM",
+//         inDate: "01/01/2023",
+//         outDate: "01/01/2023",
+//         duration: "7 Hrs",
+//         entryType: "Entry",
+//         comments: "N/A",
+//     },
+// ];
+
+const shiftD = []
+
+// const shiftD = [
+//     {
+//         shiftdate: "01/01/2023",
+//         shiftName: "Day",
+//         startTime: "10:00 AM",
+//         endTime: "05:00 PM",
+//         workingHours: "7 Hrs",
+//         status: "Status",
+//         comments: "N/A",
+//     },
+//     {
+//         shiftdate: "01/01/2023",
+//         shiftName: "Day",
+//         startTime: "10:00 AM",
+//         endTime: "05:00 PM",
+//         workingHours: "7 Hrs",
+//         status: "Status",
+//         comments: "N/A",
+//     },
+//     {
+//         shiftdate: "01/01/2023",
+//         shiftName: "Day",
+//         startTime: "10:00 AM",
+//         endTime: "05:00 PM",
+//         workingHours: "7 Hrs",
+//         status: "Status",
+//         comments: "N/A",
+//     },
+//     {
+//         shiftdate: "01/01/2023",
+//         shiftName: "Day",
+//         startTime: "10:00 AM",
+//         endTime: "05:00 PM",
+//         workingHours: "7 Hrs",
+//         status: "Status",
+//         comments: "N/A",
+//     },
+// ];
 
 const Employees = (props) => {
 

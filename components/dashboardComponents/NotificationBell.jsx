@@ -28,9 +28,11 @@ const NotificationBell = (props) => {
     }
 
     useEffect(() => {
-        loadNotification();
-        const unRead = data.some(notification => !notification.read);
-        setUnread(unRead);
+        loadNotification()
+            .then(res => {
+                const unRead = data.some(notification => !notification.read);
+                setUnread(unRead);
+            });
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);

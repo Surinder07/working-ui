@@ -3,86 +3,38 @@ import { useRouter } from "next/router";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal, PaginationDropdown } from "../../../components";
 
-const requestsD = [
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-];
+const requestsD = [];
 
-const attendanceD = [
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-];
+const attendanceD = [];
 
-const payrollD = [
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-    {
-        Id: "Name",
-        From: "Date",
-        till: "Date",
-        locationName: "Type",
-    },
-];
+const payrollD = [];
+
+// const payrollD = [
+//     {
+//         Id: "Name",
+//         From: "Date",
+//         till: "Date",
+//         locationName: "Type",
+//     },
+//     {
+//         Id: "Name",
+//         From: "Date",
+//         till: "Date",
+//         locationName: "Type",
+//     },
+//     {
+//         Id: "Name",
+//         From: "Date",
+//         till: "Date",
+//         locationName: "Type",
+//     },
+//     {
+//         Id: "Name",
+//         From: "Date",
+//         till: "Date",
+//         locationName: "Type",
+//     },
+// ];
 
 const Reports = (props) => {
 
