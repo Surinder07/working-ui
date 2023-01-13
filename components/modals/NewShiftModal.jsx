@@ -72,26 +72,29 @@ const NewShiftModal = (props) => {
         }
     }, [location])
 
-    useEffect(()=> {
-       props.setData && props.setData({
-        startTime,
-        endTime,
-        startDate,
-        endDate,
-        user,
-        location,
-        role,
-        shiftName
-       })
-    },[])
+    useEffect(() => {
+        props.setData && props.setData({
+            startTime,
+            endTime,
+            startDate,
+            endDate,
+            user,
+            location,
+            role,
+            shiftName
+        })
+    }, [])
+
+    useEffect(() => {
+        if (formType === 'Single Shift') setAssignTo('Users');
+    }, [formType])
 
     const isError = () => {
         return combineBoolean(validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
             validateForEmptyField(endDate, 'End Date', setErrorEndDate, true),
             validateForTime(startTime, setErrorStartTime, formType === 'Single Shift'),
             validateForTime(endTime, setErrorEndTime, formType === 'Single Shift'),
-            validateForEmptyField(location, 'Location', setErrorLocation,
-                (props.role === 'ADMIN' && formType === 'Single Shift' && assignTo === 'Roles')),
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN'),
             validateForEmptyArray(role, "Role", setErrorRole, formType === 'Single Shift' && assignTo === 'Roles'),
             validateForEmptyArray(user, "User", setErrorUser, assignTo === 'Users'));
     }
@@ -174,14 +177,17 @@ const NewShiftModal = (props) => {
                     />
                 </>
             }
-            <Tabs
-                className={DashboardModalStyles.singleColumn}
-                options={assignType}
-                selected={assignTo}
-                setSelected={setAssignTo}
-                size="small"
-                title="Assign Shift to"
-            />
+            {
+                formType === 'Batch' &&
+                <Tabs
+                    className={DashboardModalStyles.singleColumn}
+                    options={assignType}
+                    selected={assignTo}
+                    setSelected={setAssignTo}
+                    size="small"
+                    title="Assign Shift to"
+                />
+            }
             {
                 assignTo === "Users" ?
                     <EditableInput
@@ -212,8 +218,8 @@ const NewShiftModal = (props) => {
                                 initialValue={location}
                                 error={errorLocation}
                                 setError={setErrorLocation}
-                                required={formType === 'Single Shift'}
-                                description={formType === 'Batch' ? 'Leave Location empty to create shift for all locations' : ''}
+                                required
+                                // description={formType === 'Batch' ? 'Leave Location empty to create shift for all locations' : ''}
                                 editOn
                             />
                         }

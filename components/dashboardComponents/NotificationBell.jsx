@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { NotificationsStyles } from "../../styles/elements";
 import Link from 'next/link';
+import { notificationService } from '../../services';
+import { fetchAndHandlePage, getNotificationListingForBell } from "../../helpers";
 
 const notifications = [
     {
@@ -45,6 +47,7 @@ const NotificationBell = (props) => {
     const [unread, setUnread] = useState(true);
     const [showNotifications, setShowNotifications] = useState(false);
     const [boxHeight, setBoxHeight] = useState(0);
+    const [data, setData] = useState([]);
 
     const handleClickOutside = (e) => {
         if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -52,13 +55,19 @@ const NotificationBell = (props) => {
         }
     }
 
+    const loadNotification = async () => {
+        fetchAndHandlePage(() => notificationService.getAll(0, 5, {}, {}),
+            setData, null, null, null, null, getNotificationListingForBell, null);
+    }
+
     useEffect(() => {
+        loadNotification()
+        const unRead = notifications.some(notification => !notification.read);
+        setUnread(unRead);
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-        const unRead = notifications.some(notification => !notification.read);
-        setUnread(unRead);
     }, [])
 
     useEffect(() => {
@@ -83,22 +92,28 @@ const NotificationBell = (props) => {
                     <p>Mark all As Read</p>
                 </div>
                 <div className={NotificationsStyles.content} ref={ref}>
-                    {notifications.map((notification, i) => (
-                        <div className={`${NotificationsStyles.notification} ${notification.read && NotificationsStyles.readNotification}`} key={i}
-                            style={{
-                                borderBottom: notifications.length !== i + 1 ?
-                                    '1.5px solid #999998' : 'none'
-                            }}>
-                            {!notification.read && <div className={NotificationsStyles.unreadInd}></div>}
-                            <div className={NotificationsStyles.notificationHeader}>
-                                <h4>{notification.title}</h4>
-                                <p>{notification.date}</p>
+                    {
+                        data.length > 0 ?
+                            data.map((notification, i) => (
+                                <div className={`${NotificationsStyles.notification} ${notification.read && NotificationsStyles.readNotification}`} key={i}
+                                    style={{
+                                        borderBottom: notifications.length !== i + 1 ?
+                                            '1.5px solid #999998' : 'none'
+                                    }}>
+                                    {!notification.read && <div className={NotificationsStyles.unreadInd}></div>}
+                                    <div className={NotificationsStyles.notificationHeader}>
+                                        <h4>{notification.title}</h4>
+                                        <p>{notification.date}</p>
+                                    </div>
+                                    <p className={NotificationsStyles.message}>{notification.message} </p>
+                                </div>
+                            )) :
+                            <div className={NotificationsStyles.notification}>
+                                <p className={NotificationsStyles.message}>No data available</p>
                             </div>
-                            <p className={NotificationsStyles.message}>{notification.message} </p>
-                        </div>
-                    ))}
+                    }
                 </div>
-                <Link href='/dashboard/notifications'><p className={NotificationsStyles.bottomOption}>View All</p></Link>
+                <Link onClick={() => setShowNotifications(false)} href='/dashboard/notifications'><p className={NotificationsStyles.bottomOption}>View All</p></Link>
             </div>
             {showNotifications && <span className={NotificationsStyles.notificationsPoint}></span>}
         </div>

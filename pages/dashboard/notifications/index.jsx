@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DashboardCard, DeleteModal, NotificationFilter, PaginationDropdown, TabularInfo, WaawNoIndexHead } from "../../../components";
 import { fetchAndHandle, fetchAndHandlePage, getNotificationListing } from "../../../helpers";
-import { notificationService } from "../../../services/notification.service";
+import { notificationService } from "../../../services";
 import { DashboardStyles } from "../../../styles/pages";
 
 const Notifications = (props) => {

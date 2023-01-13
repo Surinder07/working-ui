@@ -11,3 +11,4 @@ export * from './requests.service';
 export * from './searchApp.service';
 export * from './shifts.service';
 export * from './timesheet.service';
+export * from './notification.service';

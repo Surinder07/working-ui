@@ -72,22 +72,24 @@ const Shifts = (props) => {
         },
         {
             key: "Release",
-            action: (id) => console.log("Api call will be added here"),
+            action: (id, status) => console.log("Api call will be added here"),
+            condition: (status) => status === 'CREATED'
         }
     ];
 
     const subTableActions = [
-        {
-            key: "Edit",
-            action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
-        },
+        // {
+        //     key: "Edit",
+        //     action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
+        // },
         {
             key: "Delete",
             action: (id) => console.log("Api call will be added here"),
         },
         {
             key: "Release",
-            action: (id) => console.log("Api call will be added here"),
+            action: (id,) => console.log("Api call will be added here"),
+            condition: (status) => status === 'ASSIGNED'
         }
     ];
 
@@ -179,9 +181,6 @@ const Shifts = (props) => {
                         totalPages={totalPagesMyShift}
                         pageNo={pageNoMyShift}
                         setPageNo={setPageNoMyShift}
-                        showSearch
-                        search={filters.searchKey}
-                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                         showFilter
                         filters={filters}
                         setFilters={setFilters}

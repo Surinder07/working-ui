@@ -114,6 +114,19 @@ export const getNotificationListing = (data) => {
     })
 }
 
+export const getNotificationListingForBell = (data) => {
+    return data.map(notification => {
+        return {
+            internalId: notification.id,
+            title: notification.title,
+            type: notification.type,
+            date: notification.createdTime,
+            read: notification.isRead,
+            message: notification.description
+        }
+    })
+}
+
 export const getShiftsListing = (data) => {
     const getShiftStatusColor = (status) => {
         if (status === 'FAILED') return 'bad';
@@ -388,8 +401,8 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
                 })
             } else {
                 setData(mapperFunction(res.data, userRole));
-                setTotalEntries(res.totalEntries);
-                setTotalPages(res.totalPages);
+                setTotalEntries && setTotalEntries(res.totalEntries);
+                setTotalPages && setTotalPages(res.totalPages);
             }
             loaderFunction && loaderFunction(false);
         })

@@ -127,16 +127,22 @@ const CompleteProfile = (props) => {
                             } else {
                                 secureLocalStorage.saveData(userService.TOKEN_KEY, res.token);
                                 props.setToken(res.token);
-                                userService.getUser().then(res2 => {
-                                    secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res2));
-                                    props.setUser(res2);
-                                })
                                 props.setToasterInfo({
                                     error: false,
                                     title: "Success!",
                                     message: "Profile details saved successfully",
                                 })
-                                router.push('/dasboard');
+                                return res.token;
+                            }
+                            return res;
+                        })
+                        .then(res => {
+                            if(!res.error) {
+                                userService.getUser().then(res => {
+                                    secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
+                                    props.setUser(res);
+                                })
+                                .then(() => router.push('/dashboard'))
                             }
                         })
                 }
