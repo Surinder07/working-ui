@@ -128,7 +128,7 @@ function MyApp({ Component, pageProps }) {
                 {
                     pageInfo.pageView === "loggedOut" &&
                     <NavFooterPageLayout pageInfo={pageInfo} >
-                        {pageLoading ? <></> : getComponentForPages()}
+                        {getComponentForPages()}
                     </NavFooterPageLayout>
                 }
                 {
@@ -140,10 +140,10 @@ function MyApp({ Component, pageProps }) {
                         user={user}
                         setToasterInfo={setToasterInfo}
                     >
-                        {pageLoading ? <></> : getComponentForPages()}
+                        {getComponentForPages()}
                     </DashboardLayout>
                 }
-                {pageInfo.pageView === "fullPage" && (pageLoading ? <></> : getComponentForPages())}
+                {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>
     );
