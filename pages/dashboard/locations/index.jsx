@@ -61,10 +61,12 @@ const Locations = (props) => {
                     "Location updated Successfully", null, setReloadData, props.setPageLoading, null, null,
                     props.setToasterInfo);
             },
+            condition: (status) => true
         },
         {
             key: "Delete",
             action: (id) => setConfirmDeleteModal({ id: id, show: true }),
+            condition: (status) => true
         },
     ];
 

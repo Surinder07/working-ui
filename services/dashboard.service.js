@@ -128,8 +128,10 @@ const getBlueBgList = (length) => {
 };
 
 const getEmployeeTrends = (data, role) => {
+    let noData = data.length === 0;
+    if (data.length > 0) noData = (data.filter(emp => emp.employees !== 0).length) === 0
     return {
-        noData: data.length === 0 || ((data.filter(emp => emp.employees !== 0).length) === 0),
+        noData: noData,
         labels: data.filter(emp => emp.employees !== 0)
             .map(emp => {
                 return role === 'ADMIN' ? emp.location : emp.role

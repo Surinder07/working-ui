@@ -86,7 +86,7 @@ const NewRoleModal = (props) => {
         if (!isError()) {
             fetchAndHandle(props.update ?
                 () => locationAndRoleService.editLocationRole(editRoleRequestBody(props.id, minimumHours, maximumHours, gapsInShifts, maximumWorkDays))
-                : () => locationAndRoleService.addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays)),
+                : () => locationAndRoleService.addNewLocationRole(addRoleRequestBody(location, roleName, minimumHours, maximumHours, gapsInShifts, maximumWorkDays, adminRights)),
                 props.update ? 'Role updated successfully' : 'Role added successfully',
                 setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);

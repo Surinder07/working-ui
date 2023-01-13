@@ -55,14 +55,17 @@ const PaymentHistory = (props) => {
         {
             key: "View",
             action: (id) => console.log(`/dashboard/invoices/?id=${id}`),
+            condition: (status) => true
         },
         {
             key: "Deactivate",
             action: () => console.log("Api call will be added here"),
+            condition: (status) => true
         },
         {
             key: "Delete",
             action: () => console.log("Api call will be added here"),
+            condition: (status) => true
         },
     ];
 

@@ -56,6 +56,7 @@ const Employees = (props) => {
         {
             key: "View",
             action: (id) => router.push(`/dashboard/employees/details?id=${id}`),
+            condition: (status) => true
         },
         {
             key: "activeToggle",
@@ -68,10 +69,12 @@ const Employees = (props) => {
                         setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
                 }
             },
+            condition: (status) => true
         },
         {
             key: "Delete",
             action: (id) => setConfirmDeleteModal({ id: id, show: true }),
+            condition: (status) => true
         },
     ];
 

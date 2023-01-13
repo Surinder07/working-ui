@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { fetchAndHandle, validateForEmptyField } from "../../helpers";
+import { requestService } from "../../services";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 
@@ -25,7 +26,9 @@ const EditRequestsModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal, props.setToasterInfo)
+            fetchAndHandle(() => requestService.update({}), "Responded to request successfully",
+                setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo)
             //     setLoading(true)
             //     if(error == true){
             //         props.setToasterInfo({

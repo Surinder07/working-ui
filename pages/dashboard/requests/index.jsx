@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter, CreateRequestModal, PaginationDropdown } from "../../../components";
-import RequestsModal from "../../../components/modals/EditRequestModal";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, RequestsFilter, EditRequestsModal, CreateRequestModal, PaginationDropdown } from "../../../components";
 import { fetchAndHandlePage, getRequestsListing, joinClasses } from "../../../helpers";
 import { requestService } from "../../../services";
 
@@ -71,7 +70,8 @@ const Requests = (props) => {
                     setEditId(id);
                     setShowEditModal(true);
                 }
-            }
+            },
+            condition: (status) => (status !== 'ACCEPTED' && status !== 'DECLINED')
         }
     ];
 
@@ -88,7 +88,7 @@ const Requests = (props) => {
                 setReloadData={setReloadData}
                 setPageLoading={props.setPageLoading}
             />
-            <RequestsModal
+            <EditRequestsModal
                 showModal={showEditModal}
                 setShowModal={setShowEditModal}
                 id={editId}

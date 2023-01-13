@@ -6,39 +6,6 @@ import Link from 'next/link';
 import { notificationService } from '../../services';
 import { fetchAndHandlePage, getNotificationListingForBell } from "../../helpers";
 
-const notifications = [
-    {
-        title: "Title of the Notification",
-        message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-        date: "27/08/10",
-        read: true
-    },
-    {
-        title: "Title of the Notification",
-        message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-        date: "27/08/10",
-        read: false
-    },
-    {
-        title: "Title of the Notification",
-        message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-        date: "27/08/10",
-        read: true
-    },
-    {
-        title: "Title of the Notification",
-        message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-        date: "27/08/10",
-        read: true
-    },
-    {
-        title: "Title of the Notification",
-        message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-        date: "27/08/10",
-        read: true
-    },
-];
-
 const NotificationBell = (props) => {
 
     const ref = useRef();
@@ -56,13 +23,13 @@ const NotificationBell = (props) => {
     }
 
     const loadNotification = async () => {
-        fetchAndHandlePage(() => notificationService.getAll(0, 5, {}, {}),
+        fetchAndHandlePage(() => notificationService.getAll(1, 5, {}, {}),
             setData, null, null, null, null, getNotificationListingForBell, null);
     }
 
     useEffect(() => {
-        loadNotification()
-        const unRead = notifications.some(notification => !notification.read);
+        loadNotification();
+        const unRead = data.some(notification => !notification.read);
         setUnread(unRead);
         document.addEventListener("mousedown", handleClickOutside);
         return () => {

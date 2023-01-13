@@ -100,7 +100,7 @@ const GenerateReportsModal = (props) => {
                 <>
                     <EditableInput
                         type="dropdown"
-                        options={["India", "Canada", "Germany"]}
+                        options={locations}
                         label="Location"
                         placeholder="Location"
                         className={DashboardModalStyles.singleColumn}

@@ -69,6 +69,7 @@ const Shifts = (props) => {
         {
             key: "Delete Batch",
             action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
+            condition: (status) => true
         },
         {
             key: "Release",
@@ -85,6 +86,7 @@ const Shifts = (props) => {
         {
             key: "Delete",
             action: (id) => console.log("Api call will be added here"),
+            condition: (status) => true
         },
         {
             key: "Release",

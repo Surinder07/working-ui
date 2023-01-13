@@ -30,16 +30,18 @@ const Options = (props) => {
                     boxShadow: showOptions ? '0 0 2px 1px #53525520' : 'none'
                 }}>
                 {
-                    props.options.map((opt, i) => (
-                        <p key={i} onClick={() => opt.action(props.actionId, props.status)}>
-                            {
-                                opt.key === 'activeToggle' ?
-                                    (props.status === 'INVITED' ? 'Resend Invite' :
-                                        (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate')) :
-                                    opt.key
-                            }
-                        </p>
-                    ))
+                    props.options.map((opt, i) => {
+                        return opt.condition(props.status) ?
+                            <p key={i} onClick={() => opt.action(props.actionId, props.status)}>
+                                {
+                                    opt.key === 'activeToggle' ?
+                                        (props.status === 'INVITED' ? 'Resend Invite' :
+                                            (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate')) :
+                                        opt.key
+                                }
+                            </p> :
+                            <></>
+                    })
                 }
             </div>
         </div>

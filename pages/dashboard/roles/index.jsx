@@ -62,6 +62,7 @@ const Roles = (props) => {
                 setUpdateModal(true);
                 setShowModal(true);
             },
+            condition: (status) => true
         },
         {
             key: "activeToggle",
@@ -70,10 +71,12 @@ const Roles = (props) => {
                     "Role updated Successfully", null, setReloadData, props.setPageLoading, null, null,
                     props.setToasterInfo);
             },
+            condition: (status) => true
         },
         {
             key: "Delete",
             action: (id) => setConfirmDeleteModal({ id: id, show: true }),
+            condition: (status) => true
         },
     ];
 

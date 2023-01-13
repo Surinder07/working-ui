@@ -43,8 +43,8 @@ export const editRoleRequestBody = (id, totalHoursPerDayMin, totalHoursPerDayMax
 }
 
 export const addRoleRequestBody = (locationId, name, totalHoursPerDayMin, totalHoursPerDayMax,
-    minHoursBetweenShifts, maxConsecutiveWorkDays, isAdmin) => {
-    return { locationId, name, totalHoursPerDayMin, totalHoursPerDayMax, minHoursBetweenShifts, maxConsecutiveWorkDays, isAdmin }
+    minHoursBetweenShifts, maxConsecutiveWorkDays, admin) => {
+    return { locationId, name, totalHoursPerDayMin, totalHoursPerDayMax, minHoursBetweenShifts, maxConsecutiveWorkDays, admin }
 }
 
 export const getRoleListing = (data, auth) => {
@@ -54,6 +54,7 @@ export const getRoleListing = (data, auth) => {
             id: role.waawId,
             roleName: role.name,
             location: role.location,
+            admin: role.admin.toString(),
             creationDate: role.creationDate,
             createdBy: role.createdBy,
             status: {
