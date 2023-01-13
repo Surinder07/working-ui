@@ -143,21 +143,6 @@ const timeClock = (props) => {
         }
     }, [playing]);
 
-    const actions = [
-        {
-            key: "Add TimeSheet",
-            action: () => console.log("Add TimeSheet will be added")
-        },
-        {
-            key: "Edit",
-            action: () => console.log("Api call will be added here"),
-        },
-        {
-            key: "Delete",
-            action: () => console.log("Api call will be added here"),
-        },
-    ];
-
     return (
         <>
             <WaawNoIndexHead title="Time Clock" />
@@ -194,7 +179,6 @@ const timeClock = (props) => {
                     title="Time Sheet"
                     description="Tabular list of all Time Sheet."
                     data={data}
-                    actions={actions}
                     pagination
                     totalEntries={totalEntries}
                     pageSize={pageSize}

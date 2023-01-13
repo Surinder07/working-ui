@@ -101,8 +101,15 @@ const TabularInfo = (props) => {
                         <p className={TabularInfoStyles.loadingText}>No data available</p>
                     ) : (
                         <>
-                            <Table data={props.data} actions={props.actions} ref={tableRef} pagination={props.pagination} />
-                            {props.pagination && (
+                            <Table
+                                data={props.data}
+                                actions={props.actions}
+                                subActions={props.subActions}
+                                ref={tableRef}
+                                pagination={props.pagination}
+                            />
+                            {
+                                props.pagination &&
                                 <Pagination
                                     totalEntries={props.totalEntries}
                                     entryPerPage={props.pageSize}
@@ -112,7 +119,7 @@ const TabularInfo = (props) => {
                                     setPageNo={props.setPageNo}
                                     onExpand={props.onExpand}
                                 />
-                            )}
+                            }
                         </>
                     )
                 ) : props.children ? (

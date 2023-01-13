@@ -58,7 +58,7 @@ const Calender = (props) => {
                     </Button>
                 }
             </div>
-            <CalendarComponent />
+            <CalendarComponent setPageLoading={props.setPageLoading} />
         </>
     );
 };

@@ -1,3 +1,6 @@
+import { LinkedImage } from "../components";
+import { AmericanExpress, Visa, MasterCard, JCB, UnionPay, Discover, Diners } from "../public/images";
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const usernameRegex = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/;
@@ -36,25 +39,25 @@ export const checkCardType = (number) => {
 
 
     if (visa.test(number)) {
-        return 'VISA';
+        return <LinkedImage src={Visa} style={{width: '35px'}} alt='card' />;
     }
     if (amex.test(number)) {
-        return 'AMEX';
+        return <LinkedImage src={AmericanExpress} style={{height: '28px'}} heightOrient alt='card' />;
     }
     if (mastercard.test(number) || mastercard2.test(number)) {
-        return 'MASTERCARD';
-    }
-    if (disco1.test(number) || disco2.test(number) || disco3.test(number)) {
-        return 'DISCOVER';
-    }
-    if (diners.test(number)) {
-        return 'DINERS';
-    }
-    if (jcb.test(number)) {
-        return 'JCB';
+        return <LinkedImage src={MasterCard} style={{height: '28px'}} heightOrient alt='card' />;
     }
     if (cup1.test(number) || cup2.test(number)) {
-        return 'CHINA_UNION_PAY';
+        return <LinkedImage src={UnionPay} style={{height: '28px'}} heightOrient alt='card' />;
     }
-    return 'UNKNOWN';
+    if (disco1.test(number) || disco2.test(number) || disco3.test(number)) {
+        return <LinkedImage src={Discover} style={{height: '28px'}} heightOrient alt='card' />;
+    }
+    if (diners.test(number)) {
+        return <LinkedImage src={Diners} style={{height: '28px'}} heightOrient alt='card' />;
+    }
+    if (jcb.test(number)) {
+        return <LinkedImage src={JCB} style={{height: '28px'}} heightOrient alt='card' />;
+    }
+    return <></>;
 }

@@ -1,80 +1,23 @@
 import { useEffect, useState } from "react";
-import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday } from "date-fns";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday, getMonth, getYear } from "date-fns";
+import { ArrowLeft, ArrowRight, PropaneSharp } from "@mui/icons-material";
 import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
+import { joinClasses } from "../../helpers";
+import { calendarService } from '../../services';
 
-let events = {
-    id: 1,
-    time: "10th June",
-    inTime: "09:30",
-    outTime: "11:00",
-    duration: "01 hours 30 minutes",
-};
+const CalendarComponent = (props) => {
 
-const holidays = [
-    {
-        id: 1,
-        name: "Diwali",
-        startDatetime: "2022-11-11T13:00",
-        endDatetime: "2022-11-11T14:30",
-        type: "org",
-    },
-    {
-        id: 2,
-        name: `Founder's Day`,
-        startDatetime: "2022-12-20T09:00",
-        endDatetime: "2022-12-20T11:30",
-        type: "org",
-    },
-    {
-        id: 3,
-        name: "Holi",
-        startDatetime: "2022-12-20T17:00",
-        endDatetime: "2022-12-20T18:30",
-        type: "public",
-    },
-    {
-        id: 4,
-        name: "St. Peter day",
-        startDatetime: "2022-12-10T13:00",
-        endDatetime: "2022-12-10T14:30",
-        type: "public",
-    },
-    {
-        id: 5,
-        name: "Christmas",
-        startDatetime: "2022-12-13T14:00",
-        endDatetime: "2022-12-13T14:30",
-        type: "public",
-    },
-];
+    // -------------- Data to display
+    const [holidays, setHolidays] = useState([]);
+    const [timesheets, setTimesheets] = useState([]);
+    const [selectedEvents, setSelectedEvents] = useState([]);
+    // ------------------------------
 
-const workingDays = [
-    {
-        id: 1,
-        startDatetime: "2023-01-05T13:00",
-        endDatetime: "2023-01-05T14:30",
-    },
-    {
-        id: 2,
-        startDatetime: "2022-12-08T13:00",
-        endDatetime: "2022-12-08T14:30",
-    },
-    {
-        id: 3,
-        startDatetime: "2022-12-20T22:00",
-    },
-    {
-        id: 4,
-        endDatetime: "2022-12-21T02:00",
-    },
-];
-
-const CalendarComponent = () => {
     const today = startOfToday();
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+    const [currentYear, setCurrentYear] = useState();
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [disableNext, setDisableNext] = useState(false);
     const [referenceDays, setReferenceDays] = useState(
@@ -115,13 +58,47 @@ const CalendarComponent = () => {
         );
     };
 
-    const classNames = (...classes) => {
-        return classes.filter(Boolean).join(" ");
-    };
+    const getDaysEvent = (day) => {
+        calendarService.getEvents(format(day, "yyyy-MM-dd"))
+            .then(res => {
+                if (!res.error) {
+                    setSelectedEvents(res);
+                }
+            });
+    }
+
+    const getMonthTimesheet = (date) => {
+        const month = getMonth(new Date(date)) + 1;
+        const year = getYear(new Date(date));
+        calendarService.getTimesheets(year, month)
+            .then(res => {
+                if (!res.error) {
+                    setTimesheets(res);
+                }
+            })
+    }
+
+    const getHolidays = (date) => {
+        const year = getYear(new Date(date));
+        calendarService.getHolidays(year)
+            .then(res => {
+                if (!res.error) {
+                    setHolidays(res);
+                }
+            })
+    }
 
     useEffect(() => {
         setSelectedDay(today);
     }, [])
+
+    useEffect(() => {
+        getDaysEvent(selectedDay);
+    }, [selectedDay])
+
+    useEffect(() => {
+        if (!isNaN(currentYear)) getHolidays(currentYear);
+    }, [currentYear])
 
     useEffect(() => {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -134,33 +111,42 @@ const CalendarComponent = () => {
                 setDisableNext(true);
             }
         }
+        getMonthTimesheet(currentMonth);
+        if (currentYear !== getYear(new Date(firstDayCurrentMonth)).toString()) {
+            setCurrentYear(getYear(new Date()).toString());
+        }
     }, [currentMonth]);
+
+    const getTimeFromDate = (date) => {
+        let time = date.split("T")[1];
+        return `${time.split(':')[0]}:${time.split(':')[1]}`
+    }
 
     useEffect(() => {
         let newDaysObj = referenceDays.map((day) => {
             let workedDaysList = [];
-            workingDays
+            timesheets
                 .filter((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day.date))
                 .map((workingDay) =>
                     workedDaysList.push({
                         type: "In",
-                        time: workingDay.startDatetime.split("T")[1],
+                        time: getTimeFromDate(workingDay.startDatetime),
                     })
                 );
-            workingDays
+            timesheets
                 .filter((workingDay) => isSameDay(parseISO(workingDay.endDatetime), day.date))
                 .map((workingDay) =>
                     workedDaysList.push({
                         type: "Out",
-                        time: workingDay.endDatetime.split("T")[1],
+                        time: getTimeFromDate(workingDay.endDatetime),
                     })
                 );
             if (workedDaysList.length > 0) {
                 return {
                     ...day,
                     worked: workedDaysList,
-                    publicHoliday: holidays.filter((holiday) => holiday.type === "public").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
-                    organizationHoliday: holidays.filter((holiday) => holiday.type === "org").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
+                    nationalHoliday: holidays.filter((holiday) => holiday.type === "NATIONAL_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
+                    organizationHoliday: holidays.filter((holiday) => holiday.type === "ORGANIZATION_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
                 };
             }
             return day;
@@ -168,12 +154,12 @@ const CalendarComponent = () => {
         newDaysObj = newDaysObj.map((day) => {
             return {
                 ...day,
-                publicHoliday: holidays.filter((holiday) => holiday.type === "public").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
-                organizationHoliday: holidays.filter((holiday) => holiday.type === "org").some((holiday) => isSameDay(parseISO(holiday.startDatetime), day.date)),
+                nationalHoliday: holidays.filter((holiday) => holiday.type === "NATIONAL_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
+                organizationHoliday: holidays.filter((holiday) => holiday.type === "ORGANIZATION_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
             };
         });
         setDays(newDaysObj);
-    }, [referenceDays]);
+    }, [referenceDays, holidays, timesheets]);
 
     return (
         <div className={CalendarStyles.gridContainer}>
@@ -199,17 +185,17 @@ const CalendarComponent = () => {
                                     onClick={() => {
                                         if (isSameMonth(day.date, firstDayCurrentMonth)) setSelectedDay(day.date);
                                     }}
-                                    className={classNames(
+                                    className={joinClasses(
                                         CalendarStyles.dateContainer,
                                         CalendarStyles.dateInMonths,
                                         isEqual(day.date, selectedDay) && CalendarStyles.selectedDate,
-                                        day.publicHoliday && CalendarStyles.publicHoliday,
+                                        day.nationalHoliday && CalendarStyles.publicHoliday,
                                         day.organizationHoliday && CalendarStyles.organizationHoliday
                                     )}
                                 >
                                     <time
                                         dateTime={format(day.date, "yyyy-MM-dd")}
-                                        className={classNames(
+                                        className={joinClasses(
                                             CalendarStyles.dateValue,
                                             isToday(day.date) && CalendarStyles.todayDate,
                                             !isToday(day.date) && isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notTodayDate,
@@ -233,7 +219,7 @@ const CalendarComponent = () => {
                 <div className={CalendarStyles.events}>
                     <div className={CalendarStyles.event}>
                         <div className={`${CalendarStyles.eventBullet} ${CalendarStyles.publicHoliday}`}></div>
-                        <p>Public Holidays</p>
+                        <p>National Holidays</p>
                     </div>
                     <div className={CalendarStyles.event}>
                         <div className={`${CalendarStyles.eventBullet} ${CalendarStyles.organizationHoliday}`}></div>
@@ -246,14 +232,32 @@ const CalendarComponent = () => {
                 </div>
             </DashboardCard>
             <div className={CalendarStyles.holidaysAndEventsContainer}>
+                <div className={CalendarStyles.eventsContainer}>
+                    <h4>{selectedDay.toLocaleString('default', { month: 'long', day: 'numeric', year: "numeric" })}</h4>
+                    <ul className={CalendarStyles.eventList}>
+                        {
+                            selectedEvents.length > 0 ?
+                                selectedEvents.map((event, i) => (
+                                    <li className={CalendarStyles.dateHoliday} key={`event_${i}`}>
+                                        <span className={CalendarStyles.eventTitle}>{event.name}</span>: {event.time}
+                                    </li>
+                                )) :
+                                <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                        }
+                    </ul>
+                </div>
                 <div className={CalendarStyles.holidayContainer}>
                     <h4>Holidays</h4>
                     <ul className={CalendarStyles.holidayList}>
-                        {holidays.map((holiday, i) => (
-                            <li className={CalendarStyles.dateHoliday}>
-                                {holiday.name}: {holiday.startDatetime}
-                            </li>
-                        ))}
+                        {
+                            holidays.length > 0 ?
+                                holidays.map((holiday, i) => (
+                                    <li className={CalendarStyles.dateHoliday} key={`holiday${i}`}>
+                                        <span className={CalendarStyles.eventTitle}>{holiday.name}</span>: {holiday.displayDate}
+                                    </li>
+                                )) :
+                                <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                        }
                     </ul>
                 </div>
             </div>

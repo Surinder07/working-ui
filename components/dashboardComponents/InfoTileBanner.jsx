@@ -17,11 +17,26 @@ const InfoTileBanner = (props) => {
                                 {DashboardInfoTiles[tile].timeframe && <h3>{DashboardInfoTiles[tile].timeframe}</h3>}
                             </div>
                             {
+                                console.log(props.data, typeof props.data)
+                            }
+                            {
                                 (props.data && props.role) ?
                                     (
-                                        (typeof props.data[tile] === 'string' && props.data[tile].includes('/')) ?
-                                            <h1 className={DashboardStyles.compareValue}>{props.data[tile]}</h1> :
-                                            <h1 className={DashboardStyles.normalValue}>{props.data[tile]}</h1>
+                                        typeof props.data[tile] === 'string' || typeof props.data[tile] === 'number' ?
+                                            <h1 className={DashboardStyles.normalValue}>
+                                                {props.data[tile]}
+                                            </h1> :
+                                            (
+                                                props.data[tile].active ?
+                                                    <h1 className={DashboardStyles.compareValue}>
+                                                        {`${props.data[tile].active}/${props.data[tile].total}`}
+                                                    </h1> :
+                                                    props.data[tile].day ?
+                                                        <div>
+                                                            <h1 className={DashboardStyles.tileDayValue} style={{marginBottom: 0}}>{props.data[tile].day}</h1>
+                                                            <h1 className={DashboardStyles.tileTimeValue} style={{marginTop: 0}}>{props.data[tile].time}</h1>
+                                                        </div> : <h1 className={DashboardStyles.normalValue}>{'-'}</h1>
+                                            )
                                     ) : <h1 className={DashboardStyles.normalValue}>{'-'}</h1>
 
                             }

@@ -296,7 +296,7 @@ const Employees = (props) => {
     useEffect(() => {
         if (!router.isReady) return;
         if (router.query.id) setUserId(router.query.id);
-        // else handleWrongId('Please choose a valid employee first')
+        else handleWrongId('Please choose a valid employee first')
     }, [router.isReady, router.query]);
 
     useEffect(() => {
@@ -342,7 +342,7 @@ const Employees = (props) => {
         props.setToasterInfo({
             error: true,
             title: "Error!",
-            message: message,
+            message: message
         })
         router.push('/dashboard/employees')
     }

@@ -1,5 +1,7 @@
+import { Delete, Edit, FileDownload } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { TableStyles } from "../../../styles/elements";
+import Options from "../Options";
 import Cell from './Cell';
 
 const SubTable = (props) => {
@@ -36,6 +38,13 @@ const SubTable = (props) => {
         }
     }
 
+    const getAction = (id, status) => {
+        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} />;
+        else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
+        else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
+        else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
+    };
+
     return (
         <div
             className={`${TableStyles.subTable} ${props.history && TableStyles.historyTable}`}
@@ -60,18 +69,30 @@ const SubTable = (props) => {
                         {subHead}
                     </div>
                 ))}
+            {props.actions && <div className={TableStyles.subHeaderCell}>Actions</div>}
             {
                 (props.data && props.data.length > 0) &&
-                props.data.map((subData, j) =>
-                    dataKeyList.map((subKey, k) => (
-                        <Cell
-                            key={`cell_${j}_${k}`}
-                            className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
-                            data={subData[subKey]}
-                            rowNum={j}
-                        />
-                    ))
-                )
+                props.data.map((subData, j) => (
+                    <>
+                        {
+                            dataKeyList.map((subKey, k) => (
+                                <Cell
+                                    key={`cell_${j}_${k}`}
+                                    className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
+                                    data={subData[subKey]}
+                                    rowNum={j}
+                                />
+                            ))
+                        }
+                        {
+                            props.actions && (
+                                <div className={TableStyles.subBodyCell} key={`action_${j}`}>
+                                    {getAction(subData["internalId"], subData["status"] && subData["status"].text)}
+                                </div>
+                            )
+                        }
+                    </>
+                ))
             }
             {
                 (props.history && props.history.length > 0) &&

@@ -50,7 +50,7 @@ export const areaConfig = (title, subTitle, xTitle, yTitle) => {
         scales: {
             x: {
                 title: {
-                    text: 'Month',
+                    text: xTitle,
                     display: true,
                     font: {
                         family: 'Mulish'
@@ -68,7 +68,7 @@ export const areaConfig = (title, subTitle, xTitle, yTitle) => {
             },
             y: {
                 title: {
-                    text: 'Invoices Amount',
+                    text: yTitle,
                     display: true,
                     font: {
                         family: 'Mulish'

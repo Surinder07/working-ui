@@ -3,7 +3,7 @@ import { Holiday, ActiveEmployees, ActiveLocation, PendingRequests, Roles, Shift
 export const DashboardTileMap = {
     admin: ['holidayCurrentWeek', 'activeEmployees', 'activeLocations', 'pendingRequests'],
     manager: ['holidayCurrentWeek', 'activeEmployees', 'onlineEmployees', 'pendingRequests'],
-    employee: ['holidayCurrentWeek', 'hoursWorkedByWeek', 'nextShift', 'pendingRequests'],
+    employee: ['holidayCurrentWeek', 'hoursWorkedThisWeek', 'nextShift', 'pendingRequests'],
 }
 
 export const DashboardInfoTiles = {
@@ -35,7 +35,7 @@ export const DashboardInfoTiles = {
         icon: ActiveEmployees,
         href: '/dashboard/shifts'
     },
-    hoursWorkedByWeek: {
+    hoursWorkedThisWeek: {
         title: 'Hours Worked',
         timeframe: 'Current Week',
         icon: Time,

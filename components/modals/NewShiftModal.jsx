@@ -131,6 +131,7 @@ const NewShiftModal = (props) => {
                 label="Start Date"
                 error={errorStartDate}
                 setError={setErrorStartDate}
+                blockPast
                 required
                 editOn
             />
@@ -142,6 +143,7 @@ const NewShiftModal = (props) => {
                 label="End Date"
                 error={errorEndDate}
                 setError={setErrorEndDate}
+                blockPast
                 required
                 editOn
             />

@@ -6,6 +6,7 @@ import LoginRegisterStyles from './LoginRegister.module.css';
 import PaymentInfoStyles from './PaymentInfo.module.css';
 import PricingStyles from './Pricing.module.css';
 import WhyWaawStyles from './WhyWaaw.module.css';
+import PaymentStyles from "./Payment.module.css";
 
 export {
     NotFoundStyles,
@@ -15,5 +16,6 @@ export {
     LoginRegisterStyles,
     PaymentInfoStyles,
     PricingStyles,
-    WhyWaawStyles
+    WhyWaawStyles,
+    PaymentStyles
 }

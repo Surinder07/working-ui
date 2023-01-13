@@ -1,0 +1,208 @@
+.page {
+    padding: 3rem;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #FFF;
+}
+
+.page legend {
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 2.625rem;
+    color: #2996C3;
+    text-transform: uppercase;
+    user-select: none;
+    margin-bottom: 1rem;
+}
+
+.mainContainer {
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - 6rem);
+    border-radius: 1.25rem;
+    max-width: 1200px;
+    border: solid 2px #28A8E0;
+    padding: 2rem 5rem;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer h4,
+.mainContainer p {
+    margin: 0;
+}
+
+.creditCardContainer {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: #E9F9FF;
+    border-radius: 0.5rem;
+    padding: 20px 35px;
+}
+
+.creditCardTextContainer {
+    display: grid;
+    grid-template-columns: 65px auto;
+    row-gap: 10px;
+    width: 100%;
+}
+
+.creditCardTextContainer h4 {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #000000;
+}
+
+.creditCardTextContainer p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #000000;
+    opacity: 0.75;
+}
+
+.verticalCenter {
+    display: flex;
+    align-items: center;
+}
+
+.bullet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #3FEA86;
+    align-items: center;
+}
+
+.nestedBullet {
+    width: 8.25px;
+    height: 8.25px;
+    border-radius: 50px;
+    background: #ffffff;
+}
+
+.cardImages {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.cardImage {
+    height: 40px;
+}
+
+.gridContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    column-gap: 30px;
+}
+
+.gridContainer label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.twoColSpan {
+    grid-column: span 2;
+}
+
+.requiredMessage {
+    position: absolute;
+    bottom: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #CC5252;
+}
+
+.button {
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+    margin: auto;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .mainContainer {
+        display: block;
+        padding: 2rem 2rem;
+        border: none;
+    }
+
+    .bullet {
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        margin: 0;
+    }
+
+    .headerContainer {
+        margin-left: 14px;
+    }
+
+    .header {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: normal;
+        margin: 0;
+        margin-top: 4px;
+    }
+
+    .imageContainer {
+        margin-left: 29px;
+        margin-top: 10px;
+    }
+
+    .creditContainer {
+        display: block;
+        padding: 15px 35px;
+    }
+
+    .gridContainer,
+    .flexContainer {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+    }
+
+    .leftGridContainer,
+    .rightGridContainer {
+        margin: 0;
+    }
+
+    .inputHalfDivLeft,
+    .inputHalfDivRight {
+        width: 100%;
+    }
+
+    .fields {
+        z-index: 100;
+        bottom: 76px;
+        left: 38px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 35px;
+    }
+}

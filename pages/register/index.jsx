@@ -35,6 +35,7 @@ const Register = (props) => {
     const [submitErrorMessage, setSubmitErrorMessage] = useState('');
     const [termsPrivacyModalType, setTermsPrivacyModalType] = useState('');
     const [showTermsPrivacyModal, setShowTermsPrivacyModal] = useState(false);
+    const [showCS, setShowCS] = useState(false);
 
     const showModal = (type) => {
         setTermsPrivacyModalType(type);
@@ -122,7 +123,8 @@ const Register = (props) => {
                 <TermsAndPolicyModal
                     data={termsPrivacyModalType}
                     showModal={showTermsPrivacyModal}
-                    setShowModal={setShowTermsPrivacyModal} />
+                    setShowModal={setShowTermsPrivacyModal}
+                />
             }
             <legend style={{ color: '#000' }}>start y<span style={{ color: '#90D9D3' }}>our </span><span style={{ color: '#2996C3' }}>journey</span></legend>
             <div className={LoginRegisterStyles.choiceContainer}>
@@ -130,8 +132,23 @@ const Register = (props) => {
                     onClick={() => setUserRole('admin')}
                 >For Business</div>
                 <div className={`${LoginRegisterStyles.choice} ${userRole === 'contractor' && LoginRegisterStyles.selected}`}
-                    onClick={() => setUserRole('contractor')}
-                >For Talent</div>
+                    style={{ position: 'relative' }}
+                    onMouseEnter={() => setShowCS(true)}
+                    onMouseLeave={() => setShowCS(false)}
+                // onClick={() => setUserRole('contractor')}
+                >For Talent
+                    {showCS &&
+                        <p style={{
+                            position: 'absolute',
+                            background: '#9B9B9B',
+                            color: '#FFF',
+                            margin: 0,
+                            padding: '15px 25px',
+                            top: '-53px',
+                            zIndex: 500,
+                            borderRadius: '10px'
+                        }}>Coming Soon</p>
+                    }</div>
             </div>
             <InputBox
                 type='email'

@@ -98,10 +98,11 @@
 
 .options p {
     margin: 0;
-    padding: 15px!important;
+    padding: 15px !important;
     text-align: left;
     display: flex;
     align-items: center;
+    width: 100% !important;
 }
 
 .optionSelected,
@@ -115,6 +116,16 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 18px !important;
+}
+
+.errorMessage {
+    position: absolute;
+    bottom: -23px;
+    color: var(--error-message-color) !important;
+    size: 10px !important;
+    line-height: 15px;
+    width: auto;
+    text-align: left !important;
 }
 
 .mapIcon {

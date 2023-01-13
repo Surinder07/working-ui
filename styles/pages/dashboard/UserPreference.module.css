@@ -180,18 +180,18 @@
     font-size: 12px !important;;
 }
 
-.inputLabelContainer {
+/* .inputLabelContainer {
     display: flex;
     flex-direction: column;
-}
+} */
 
-.editableInputContainer {
+/* .editableInputContainer {
     height: 25px;
     display: flex;
     align-items: center;
-}
+} */
 
-.inputLabelContainer p,
+/* .inputLabelContainer p,
 .inputLabelContainer input {
     font-weight: 400;
     font-size: 12px;
@@ -213,11 +213,11 @@
     border: none;
     width: 100%;
     height: fit-content;
-}
+} */
 
-.inputBox {
+/* .inputBox {
     border: 1px solid #D9D9D9;
-}
+} */
 
 .socialWarning {
     display: grid;
@@ -248,4 +248,23 @@
     color: #535255;
     opacity: 0.75;
     margin: 0;
+}
+
+.warnIcon {
+    font-size: 17px !important;
+    margin-right: 10px;
+}
+
+.warnMessage {
+    color: #E4BE3D;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    grid-column: span 2;
+}
+
+.warnMessage a {
+    color: #2996C3;
+    text-decoration: underline;
 }

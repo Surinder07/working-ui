@@ -42,11 +42,11 @@
     margin-left: 4px;
 }
 
-
 .holidayContainer {
     background: #F7F2E5;
     padding: 14px 38px;
     overflow-y: scroll;
+    border: 1px solid #DFE0EB;
     height: 70%;
 }
 
@@ -183,6 +183,33 @@
     color: #000000;
     opacity: 0.75;
     margin-bottom: 14px;
+}
+
+.eventsContainer {
+    padding: 14px 38px;
+    overflow-y: scroll;
+    height: 30%;
+    background-color: #363740;
+    color: #FFF;
+    border: 1px solid #DFE0EB;
+}
+
+.eventsContainer h4,
+.holidayContainer h4 {
+    text-align: center;
+    width: 100%;
+}
+
+.eventList {
+    list-style: none;
+}
+
+.eventList li {
+    color: #FFF;
+}
+
+.eventTitle {
+    font-weight: 700 !important;
 }
 
 .events {

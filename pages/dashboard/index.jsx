@@ -60,18 +60,43 @@ const Dashboard = (props) => {
                         console.log('tileInfo error: "', err);
                     }
                     try {
-                        setLineGraphData(res.invoiceTrends)
+                        setLineGraphData(res.lineGraph);
                     } catch (err) {
                         console.log('invoice trends error: "', err);
                     }
                     try {
-                        setPieGraphData(res.employeeTrends)
+                        setPieGraphData(res.pieGraph);
                     } catch (err) {
                         console.log('employee trends error: "', err);
                     }
                 });
         }
     }, [props.user])
+
+    const getLineGraphTitle = () => {
+        if (props.user.role === 'ADMIN') {
+            return {
+                title: 'Payment History Trends',
+                description: 'Current Year',
+                x: 'Month',
+                y: 'Invoice Amount'
+            }
+        } else if (props.user.role === 'MANAGER') {
+            return {
+                title: 'Total Hours Worked By Employees',
+                description: 'Current Week',
+                x: 'Day of Week',
+                y: 'Total Hours Worked'
+            }
+        } else {
+            return {
+                title: 'Total Hours Worked',
+                description: 'Current Week',
+                x: 'Day of Week',
+                y: 'Total Hours Worked'
+            }
+        }
+    }
 
     return (
         <>
@@ -94,7 +119,7 @@ const Dashboard = (props) => {
                         <div style={{ position: 'relative', height: "100%", minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Line
                                 data={lineGraphData}
-                                options={areaConfig("Payment History Trends", "Current Year ( 2022-2023 )")} />
+                                options={areaConfig(getLineGraphTitle().title, getLineGraphTitle().description, getLineGraphTitle().x, getLineGraphTitle().y)} />
                             {
                                 lineGraphData.noData &&
                                 <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
@@ -104,16 +129,21 @@ const Dashboard = (props) => {
                 }
                 {
                     pieGraphData ?
-                        <div style={{ position: 'relative', minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Pie
-                                data={pieGraphData}
-                                options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
-                            {
-                                pieGraphData.noData &&
-                                <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
-                            }
-                        </div> :
+                        (
+                            pieGraphData === 'noData' ?
+                                <></> :
+                                <div style={{ position: 'relative', minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Pie
+                                        data={pieGraphData}
+                                        options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
+                                    {
+                                        pieGraphData.noData &&
+                                        <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                                    }
+                                </div>
+                        ) :
                         <p>Loading...</p>
+
                 }
             </DashboardCard>
         </>

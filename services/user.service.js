@@ -41,12 +41,12 @@ const emailVerification = async (key) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.verifyEmail, { key }))
 }
 
-const inviteKeyValidation = async (key) => {
+const validateInviteKey = async (key) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validateInviteKey, { key }))
 }
 
-const inviteAndRegister = async (data) => {
-    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite, { data }))
+const registerByInvitation = async (inviteKey, password) => {
+    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite), { inviteKey, password })
 }
 
 const getUser = async () => {
@@ -65,6 +65,10 @@ const completeProfile = async (data) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.completeProfile), data);
 }
 
+const validatePromoCode = async (promoCode) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validatePromoCode, { promoCode }));
+}
+
 export const userService = {
     login,
     registerUser,
@@ -76,6 +80,7 @@ export const userService = {
     TOKEN_KEY,
     USER_KEY,
     emailVerification,
-    inviteKeyValidation,
-    inviteAndRegister
+    validateInviteKey,
+    registerByInvitation,
+    validatePromoCode
 };

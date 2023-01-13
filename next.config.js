@@ -11,6 +11,7 @@ const apiEndpoints = {
         getUserDetails: "/v1/user/getAccount",
         resetPasswordInit: "/v1/unAuth/user/resetPassword/init",
         resetPasswordFinish: "/v1/unAuth/user/resetPassword/finish",
+        validatePromoCode: '/v1/registration/user/validatePromoCode'
     },
     member: {
         sendInvite: '/v1/member/invite/send',
@@ -83,6 +84,11 @@ const apiEndpoints = {
         addHoliday: '/v1/organization/holiday/add',
         editHoliday: '/v1/organization/holiday/edit',
         deleteHoliday: '/v1/organization/holiday/delete'
+    },
+    calender: {
+        getHolidays: '/v1/calender/holidays/get',
+        getTimesheet: '/v1/calender/timesheets/get',
+        getDayEvents: '/v1/calender/events/get'
     }
 };
 

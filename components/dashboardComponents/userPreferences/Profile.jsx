@@ -1,9 +1,10 @@
 import { UserPreferenceStyles } from '../../../styles/pages';
 import { ProfilePlaceholderLarge } from '../../../public/images';
-import { CameraAlt } from '@mui/icons-material';
+import { CameraAlt, Warning } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import UserPreferenceCard from './UserPreferenceCard';
 import { EditableInput } from '../../inputComponents';
+import Link from 'next/link';
 
 const Profile = (props) => {
 
@@ -66,12 +67,12 @@ const Profile = (props) => {
                                 <CameraAlt />
                                 <p>Choose File</p>
                             </div>
-                            <input
+                            {/* <input
                                 type="file"
                                 id="upload-button"
                                 style={{ display: "none" }}
                                 onChange={handleFileChange}
-                            />
+                            /> */}
                         </label>
                     }
                 </div>
@@ -80,10 +81,19 @@ const Profile = (props) => {
                 <h1>Profile Preferences</h1>
                 <UserPreferenceCard
                     title='Personal Details'
-                    isEditable
+                    isEditable={props.data.role === 'ADMIN'}
                     editOn={editPersonalDetails}
                     setEditOn={setEditPersonalDetails}
                 >
+                    {
+                        props.data.role !== 'ADMIN' &&
+                        <p className={UserPreferenceStyles.warnMessage}>
+                            <Warning className={UserPreferenceStyles.warnIcon} />
+                            {'To update any Personal Information, please'}&nbsp;
+                            <Link href='/dashboard/requests'>raise a request</Link>
+                            &nbsp;{'with admin.'}
+                        </p>
+                    }
                     <EditableInput
                         type='text'
                         label='First Name'

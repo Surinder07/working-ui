@@ -12,6 +12,8 @@ import ResetPasswordInitBg from './reset-password-finish-bg.svg';
 import ResetPasswordFinishBg from './reset-password-init-bg.svg';
 import ResetPasswordFinishSuccessBg from './password-reset-finish-success-bg.svg';
 import ResetPasswordInitSuccessBg from './password-reset-init-success-bg.svg';
+import LinkExpiredBg from './link-expired-bg.svg';
+import EmailSuccessBg from './email-success-bg.svg';
 
 export {
     BusinessBg,
@@ -27,5 +29,7 @@ export {
     ResetPasswordInitBg,
     ResetPasswordFinishBg,
     ResetPasswordInitSuccessBg,
-    ResetPasswordFinishSuccessBg
+    ResetPasswordFinishSuccessBg,
+    LinkExpiredBg,
+    EmailSuccessBg
 }

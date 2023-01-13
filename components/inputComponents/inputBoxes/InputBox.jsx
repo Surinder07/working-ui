@@ -1,5 +1,5 @@
 import { InputBoxStyles } from '../../../styles/elements';
-import { Person, Email, Key, Visibility, VisibilityOff, CorporateFare } from '@mui/icons-material';
+import { Person, Email, Key, Visibility, VisibilityOff, CorporateFare, LocationOn, Map, Public } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { joinClasses } from '../../../helpers';
 
@@ -24,6 +24,12 @@ const InputBox = (props) => {
                 return <Person style={{ fontSize: '18px' }} />
             case 'org':
                 return <CorporateFare style={{ fontSize: '18px' }} />
+            case 'country':
+                return <Public style={{ fontSize: '18px' }} />
+            case 'postal':
+                return <LocationOn style={{ fontSize: '18px' }} />
+            case 'address':
+                return <Map style={{ fontSize: '18px' }} />
             default:
                 return <></>
         }

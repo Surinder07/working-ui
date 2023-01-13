@@ -6,7 +6,7 @@ import { LoginRegisterLayout } from '../../styles/layouts';
 import { userService, dropdownService } from '../../services';
 import { DaysOfWeek } from "../../constants";
 import { LoginRegistrationLayout } from "../../layouts";
-import { validateUsername } from "../../helpers";
+import { secureLocalStorage, validateForEmptyField, validateUsername } from "../../helpers";
 import { CompleteProfileBg } from "../../public/images";
 
 const CompleteProfile = (props) => {
@@ -36,8 +36,6 @@ const CompleteProfile = (props) => {
     const [promoMessage, setPromoMessage] = useState({});
     const [promoValue, setPromoValue] = useState('');
     const [loading, setLoading] = useState(false);
-    const [submitErrorMessage, setSubmitErrorMessage] = useState('');
-    const [submitError, setSubmitError] = useState(false);
 
     useEffect(() => {
         props.setPageInfo({
@@ -50,9 +48,9 @@ const CompleteProfile = (props) => {
     }, [])
 
     useEffect(() => {
-        if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
-            router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? '/account/payment-info' : '/dashboard');
-        }
+        // if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
+        //     router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? '/account/payment-info' : '/dashboard');
+        // }
     }, [props.user])
 
     const validateFields = async () => {
@@ -91,11 +89,17 @@ const CompleteProfile = (props) => {
     }
 
     const handlePromoCode = () => {
-        setPromoMessage({
-            error: true,
-            showMessage: true,
-            message: 'Propmo code is expired'
-        })
+        if (!validateForEmptyField(promoValue, '', (val) => setPromoMessage({ ...val, error: true }),
+            true, 'Please enter a valid promo code')) {
+            userService.validatePromoCode()
+                .then(res => {
+                    setPromoMessage({
+                        error: res.error,
+                        message: res.message,
+                        show: true
+                    })
+                })
+        }
     }
 
     const onSubmit = () => {
@@ -121,12 +125,18 @@ const CompleteProfile = (props) => {
                                     })
                                 }
                             } else {
+                                secureLocalStorage.saveData(userService.TOKEN_KEY, res.token);
+                                props.setToken(res.token);
+                                userService.getUser().then(res2 => {
+                                    secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res2));
+                                    props.setUser(res2);
+                                })
                                 props.setToasterInfo({
                                     error: false,
                                     title: "Success!",
                                     message: "Profile details saved successfully",
                                 })
-                                router.push('/account/payment-info');
+                                router.push('/dasboard');
                             }
                         })
                 }
@@ -197,11 +207,14 @@ const CompleteProfile = (props) => {
                 setShowError={setShowErrorOrganization}
             />
             <div className={LoginRegisterLayout.twoHalves}>
-                <DropDown options={DaysOfWeek}
+                <DropDown
+                    options={DaysOfWeek}
                     placeholder='Week Start On'
                     setValue={setWeekStartOn}
                 />
-                <DropDown options={timezones}
+                <DropDown
+                    type='typeAhead'
+                    options={timezones}
                     placeholder='Select Timezone'
                     setValue={setTimezone}
                     errorMessage={'Field is required'}
@@ -209,19 +222,20 @@ const CompleteProfile = (props) => {
                     setShowError={setShowErrorTimezone}
                 />
             </div>
-            <div className={LoginRegisterLayout.twoHalves} style={{ position: 'relative' }}>
-                <InputWithButton
-                    style={{ marginTop: '40px' }}
-                    placeholder='Promo Code'
-                    buttonText='Apply'
-                    onClick={handlePromoCode}
-                    message={promoMessage.message}
-                    error={promoMessage.error}
-                    showMessage={promoMessage.showMessage}
-                    setValue={promoValue}
-                />
-                {submitError && <p className={LoginRegisterLayout.errorTextUp}>{submitErrorMessage}</p>}
-            </div>
+            {/* <div className={LoginRegisterLayout.twoHalves}> */}
+            <InputWithButton
+                style={{ marginTop: '40px', width: '50%' }}
+                placeholder='Promo Code'
+                buttonText='Apply'
+                onClick={handlePromoCode}
+                message={promoMessage.message}
+                error={promoMessage.error}
+                showMessage={promoMessage.show}
+                setShowMessage={(val) => setPromoMessage({ ...promoMessage, show: val })}
+                value={promoValue}
+                setValue={setPromoValue}
+            />
+            {/* </div> */}
             <div className={LoginRegisterLayout.twoHalves}>
                 <Button
                     type='fullWidth'

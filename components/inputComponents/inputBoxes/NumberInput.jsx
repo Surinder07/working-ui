@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
 import { joinClasses } from '../../../helpers';
 import { InputBoxStyles } from '../../../styles/elements';
 
 const NumberInput = (props) => {
+
+    useEffect(() => {
+        props.setValue(0);
+    }, [])
 
     return (
         <div className={joinClasses(InputBoxStyles.numberContainer, props.showError ? InputBoxStyles.inputBoxError : InputBoxStyles.inputBox2Default)}>

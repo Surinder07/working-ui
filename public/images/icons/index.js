@@ -10,3 +10,4 @@ export * from './dashboardIcon';
 export * from './homeGridIcons';
 export * from './mobileApps';
 export * from './socials';
+export * from './creditCardIcon';

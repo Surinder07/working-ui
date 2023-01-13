@@ -258,10 +258,10 @@ const formatTime = (time) => {
  * @param {*} condition additional condition needs to be check or true
  * @return true if error
  * */
-export const validateForEmptyField = (value, name, errorFunction, condition) => {
+export const validateForEmptyField = (value, name, errorFunction, condition, message) => {
     if (value === '' && condition) {
         errorFunction({
-            message: `${name} is required`,
+            message: message ? message : `${name} is required`,
             show: true
         })
         return true;

@@ -26,7 +26,7 @@ const Notifications = (props) => {
             activeMenu: "NOTIFICATIONS",
             activeSubMenu: "none",
         });
-        props.setAllowedRoles('ADMIN', 'MANAGER', 'EMPLOYEE');
+        props.setAllowedRoles(['ADMIN', 'MANAGER', 'EMPLOYEE']);
     }, []);
 
     useEffect(() => {

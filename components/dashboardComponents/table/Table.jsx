@@ -86,7 +86,8 @@ const Table = (props, ref) => {
                                 }}>
                                 {getAction(row["internalId"], row["status"] && row["status"].text)}
                             </div>
-                        )}
+                        )
+                    }
                     {
                         (row.subData || row.history) &&
                         <SubTable
@@ -94,6 +95,7 @@ const Table = (props, ref) => {
                             history={row.history}
                             mainColNum={colNum}
                             expanded={expanded === i + 1}
+                            actions={props.subActions}
                         />
                     }
                 </>

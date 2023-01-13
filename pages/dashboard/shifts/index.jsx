@@ -30,10 +30,11 @@ const Shifts = (props) => {
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
-    const [showShiftModal, setShiftModal] = useState(false);
+    const [showShiftModal, setShowShiftModal] = useState(false);
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: "",
         show: false,
+        type: '' // BATCH OR SINGLE
     });
 
     useEffect(() => {
@@ -66,17 +67,28 @@ const Shifts = (props) => {
 
     const actions = [
         {
-            key: "View",
+            key: "Delete Batch",
             action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
         },
         {
-            key: "Deactivate",
-            action: () => console.log("Api call will be added here"),
+            key: "Release",
+            action: (id) => console.log("Api call will be added here"),
+        }
+    ];
+
+    const subTableActions = [
+        {
+            key: "Edit",
+            action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
         },
         {
             key: "Delete",
-            action: () => console.log("Api call will be added here"),
+            action: (id) => console.log("Api call will be added here"),
         },
+        {
+            key: "Release",
+            action: (id) => console.log("Api call will be added here"),
+        }
     ];
 
     return (
@@ -94,6 +106,7 @@ const Shifts = (props) => {
                 showModal={showAddModal}
                 buttonText="CreateShift"
                 setToasterInfo={props.setToasterInfo}
+                setReloadData={setReloadData}
                 role={props.user.role}
                 setPageLoading={props.setPageLoading}
             />
@@ -135,6 +148,7 @@ const Shifts = (props) => {
                         description="Tabular list of all Employee Shifts."
                         data={data}
                         actions={actions}
+                        subActions={subTableActions}
                         pagination
                         totalEntries={totalEntries}
                         pageSize={pageSize}

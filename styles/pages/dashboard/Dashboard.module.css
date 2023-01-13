@@ -72,6 +72,26 @@
     margin: 25px 0 15px 0;
 }
 
+.infoTile .tileTimeValue,
+.infoTile .tileDayValue  {
+    position: relative;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 42px;
+    color: #535255;
+}
+
+.infoTile .tileTimeValue {
+    font-size: 25px;
+    margin: 0 0 15px 0;
+
+}
+
+.infoTile .tileDayValue {
+    font-size: 20px;
+    margin: 25px 0 0 0;
+}
+
 .infoTile h2 {
     font-size: 16px;
     line-height: 24px;

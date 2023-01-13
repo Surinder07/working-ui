@@ -3,17 +3,33 @@ import LinkedImage from "../LinkedImage";
 import { ProfilePlaceholderSmall } from '../../public/images';
 import { joinClasses } from '../../helpers';
 import { Logout, Settings, AccountCircle } from "@mui/icons-material";
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { userService } from '../../services';
 
 const ProfileImage = (props) => {
 
+    const ref = useRef();
+
     const height = props.size === 'small' ? 30 : 150;
     const [openDrop, setOpenDrop] = useState(false);
 
+    const handleClickOutside = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+            setOpenDrop(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [])
+
     return (
         <div
+            ref={ref}
             className={joinClasses(ProfileImageStyles.container, props.className)}
             style={{ height: `${height + (0.06 * height)}px`, width: `${height + (0.06 * height)}px` }}
         >

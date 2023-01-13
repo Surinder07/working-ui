@@ -36,7 +36,7 @@ const ResetPasswordFinish = (props) => {
         if (!router.isReady) return;
         if (router.query.key)
             setResetKey(router.query.key);
-        // else router.push('/login');
+        else router.push('/login');
     }, [router.isReady, router.query]);
 
     const checkConfirmPasswordError = () => {

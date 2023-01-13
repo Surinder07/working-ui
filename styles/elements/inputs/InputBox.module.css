@@ -113,6 +113,7 @@
     line-height: 15px;
     width: auto;
     text-align: left !important;
+    white-space: nowrap;
 }
 
 .inputBoxWithDropdown {
@@ -294,13 +295,34 @@
     border-left: 1px solid #BFBFBF;
 }
 
+.inputBox input[type="number"],
+.inputBox2 input[type="number"],
 .numberContainer input[type="number"] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
 }
 
+.inputBox input[type=number]::-webkit-inner-spin-button,
+.inputBox input[type=number]::-webkit-outer-spin-button,
+.inputBox2 input[type=number]::-webkit-inner-spin-button,
+.inputBox2 input[type=number]::-webkit-outer-spin-button,
 .numberContainer input[type=number]::-webkit-inner-spin-button,
 .numberContainer input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
+}
+
+.cardTypeIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px 0;
+}
+
+.inputBox .cardTypeIcon {
+    border-left: 1px solid #2996C3;
+}
+
+.inputBox2 .cardTypeIcon {
+    border: 1px solid #BFBFBF;
 }
