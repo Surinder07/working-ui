@@ -46,7 +46,7 @@ const validateInviteKey = async (key) => {
 }
 
 const registerByInvitation = async (inviteKey, password) => {
-    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.registerByInvite), { inviteKey, password })
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.registerByInvite), { inviteKey, password })
 }
 
 const getUser = async () => {
