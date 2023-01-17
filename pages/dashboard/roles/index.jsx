@@ -7,7 +7,7 @@ import { fetchAndHandle, fetchAndHandlePage, getRoleListing } from "../../../hel
 const Roles = (props) => {
     const [updateModal, setUpdateModal] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [showFilterModal,setShowFilterModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -84,57 +84,62 @@ const Roles = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Roles" />
-            <DeleteModal
-                modal={confirmDeleteModal}
-                setModal={setConfirmDeleteModal}
-                onDelete={deleteRole}
-            >
-                This will permanently delete this Role and all associated Employees
-            </DeleteModal>
-            <NewRoleModal
-                setShowModal={setShowModal}
-                showModal={showModal}
-                role={props.user.role}
-                setToasterInfo={props.setToasterInfo}
-                setReloadData={setReloadData}
-                update={updateModal}
-                id={editId}
-                setPageLoading={props.setPageLoading}
-            />
-            <RolesFilter showModal={showFilterModal} setShowModal={setShowFilterModal} role={props.user.role} setReloadData={setReloadData}  setToasterInfo={props.setToasterInfo}/>
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Roles</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                    <Button type="plain" onClick={() => {
-                        setUpdateModal(false);
-                        setShowModal(true)
-                    }}>
-                        + Add new Roles
-                    </Button>
-                </div>
-            </div>
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title="Roles"
-                    description="Tabular list for current role."
-                    data={data}
-                    actions={actions}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    search={filters.searchKey}
-                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                    showFilter
-                    filters={filters}
-                    setFilters={setFilters}
-                    setShowFilterModal={setShowFilterModal}
-                />
-            </DashboardCard>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <DeleteModal
+                            modal={confirmDeleteModal}
+                            setModal={setConfirmDeleteModal}
+                            onDelete={deleteRole}
+                        >
+                            This will permanently delete this Role and all associated Employees
+                        </DeleteModal>
+                        <NewRoleModal
+                            setShowModal={setShowModal}
+                            showModal={showModal}
+                            role={props.user.role}
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
+                            update={updateModal}
+                            id={editId}
+                            setPageLoading={props.setPageLoading}
+                        />
+                        <RolesFilter showModal={showFilterModal} setShowModal={setShowFilterModal} role={props.user.role} setReloadData={setReloadData} setToasterInfo={props.setToasterInfo} />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Roles</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                <Button type="plain" onClick={() => {
+                                    setUpdateModal(false);
+                                    setShowModal(true)
+                                }}>
+                                    + Add new Roles
+                                </Button>
+                            </div>
+                        </div>
+                        <DashboardCard style={{ marginTop: "20px" }}>
+                            <TabularInfo
+                                title="Roles"
+                                description="Tabular list for current role."
+                                data={data}
+                                actions={actions}
+                                pagination
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                                showSearch
+                                search={filters.searchKey}
+                                setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                showFilter
+                                filters={filters}
+                                setFilters={setFilters}
+                                setShowFilterModal={setShowFilterModal}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     );
 };

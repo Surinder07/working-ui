@@ -146,48 +146,53 @@ const timeClock = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Time Clock" />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Time Clock</h1>
-            </div>
-            <DashboardCard className={DashboardStyles.timerCard} style={{ marginTop: "20px" }}>
-                <div>
-                    <h1>Time Clock</h1>
-                    <div className={DashboardStyles.timerContainer}>
-                        <div style={{ paddingRight: '40px' }} className={DashboardStyles.subTimerContainer}>
-                            <h2>Start</h2>
-                            <h3>{start}</h3>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Time Clock</h1>
                         </div>
-                        <div style={{ paddingLeft: '40px' }}>
-                            <h2>Duration</h2>
-                            <h3>{duration}</h3>
-                        </div>
-                    </div>
-                    <div className={DashboardStyles.clockButtons}>
-                        <Button type='dashboard' onClick={startTimer} disabled={playing || disableTimer}>Clock In</Button>
-                        <div style={{ width: '30px' }}></div>
-                        <Button type='dashboard' onClick={stopTimer} disabled={!playing || disableTimer}>Clock Out</Button>
-                    </div>
-                    <p className={DashboardStyles.warnMessage}>
-                        <Warning className={DashboardStyles.warnIcon} />
-                        Please Note you can only start timer once a day. Do not stop timer until shift is finished.
-                    </p>
-                </div>
-                <Clock />
-            </DashboardCard>
-            <DashboardCard style={{ marginTop: "20px" }}>
-                <TabularInfo
-                    title="Time Sheet"
-                    description="Tabular list of all Time Sheet."
-                    data={data}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showFilter
-                />
-            </DashboardCard>
+                        <DashboardCard className={DashboardStyles.timerCard} style={{ marginTop: "20px" }}>
+                            <div>
+                                <h1>Time Clock</h1>
+                                <div className={DashboardStyles.timerContainer}>
+                                    <div style={{ paddingRight: '40px' }} className={DashboardStyles.subTimerContainer}>
+                                        <h2>Start</h2>
+                                        <h3>{start}</h3>
+                                    </div>
+                                    <div style={{ paddingLeft: '40px' }}>
+                                        <h2>Duration</h2>
+                                        <h3>{duration}</h3>
+                                    </div>
+                                </div>
+                                <div className={DashboardStyles.clockButtons}>
+                                    <Button type='dashboard' onClick={startTimer} disabled={playing || disableTimer}>Clock In</Button>
+                                    <div style={{ width: '30px' }}></div>
+                                    <Button type='dashboard' onClick={stopTimer} disabled={!playing || disableTimer}>Clock Out</Button>
+                                </div>
+                                <p className={DashboardStyles.warnMessage}>
+                                    <Warning className={DashboardStyles.warnIcon} />
+                                    Please Note you can only start timer once a day. Do not stop timer until shift is finished.
+                                </p>
+                            </div>
+                            <Clock />
+                        </DashboardCard>
+                        <DashboardCard style={{ marginTop: "20px" }}>
+                            <TabularInfo
+                                title="Time Sheet"
+                                description="Tabular list of all Time Sheet."
+                                data={data}
+                                pagination
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                                showFilter
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     );
 };

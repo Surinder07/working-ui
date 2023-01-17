@@ -72,23 +72,28 @@ const PaymentHistory = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Invoices' />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Payment History</h1>
-            </div>
-            <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo
-                    title='Payment History'
-                    description='Tabular list of all payments with status.'
-                    data={data}
-                    actions={actions}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                />
-            </DashboardCard>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Payment History</h1>
+                        </div>
+                        <DashboardCard style={{ marginTop: '20px' }}>
+                            <TabularInfo
+                                title='Payment History'
+                                description='Tabular list of all payments with status.'
+                                data={data}
+                                actions={actions}
+                                pagination
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     )
 

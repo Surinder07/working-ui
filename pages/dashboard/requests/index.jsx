@@ -79,103 +79,108 @@ const Requests = (props) => {
     return (
         <>
             <WaawNoIndexHead title={"Requests"} />
-            <CreateRequestModal
-                showModal={showAddModal}
-                setShowModal={setShowAddModal}
-                id={editId}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                setReloadData={setReloadData}
-                setPageLoading={props.setPageLoading}
-            />
-            <EditRequestsModal
-                showModal={showEditModal}
-                setShowModal={setShowEditModal}
-                id={editId}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                tabularType={activeTable}
-            />
-            <RequestsFilter
-                showModal={showFilterModal}
-                setShowModal={setShowFilterModal}
-                id={editId}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                setReloadData={setReloadData}
-            />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Requests</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace={props.user.role !== 'ADMIN'} />
-                    {
-                        props.user.role !== "ADMIN" &&
-                        <Button
-                            onClick={() => setShowAddModal(true)}
-                            type="plain"
-                        >+ Create Request</Button>
-                    }
-                </div>
-            </div>
             {
-                (props.user.role && props.user.role === 'MANAGER') &&
-                <div className={DashboardStyles.tableChoices}>
-                    <p
-                        onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
-                        className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
-                        My Requests
-                    </p>
-                    <p
-                        onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
-                        className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
-                        Employee Requests
-                    </p>
-                </div>
-            }
-            {
-                activeTable !== 'my' &&
-                <DashboardCard >
-                    <TabularInfo
-                        title="Request Details"
-                        description="Tabular representation of all employee requests"
-                        data={data}
-                        actions={actions}
-                        pagination
-                        totalEntries={totalEntries}
-                        pageSize={pageSize}
-                        totalPages={totalPages}
-                        pageNo={pageNo}
-                        setPageNo={setPageNo}
-                        showSearch
-                        // search={filters.searchKey}
-                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                        showFilter
-                        // filters={filters}
-                        // setFilters={setFilters}
-                        setShowFilterModal={setShowFilterModal}
-                    />
-                </DashboardCard>
-            }
-            {
-                activeTable === 'my' &&
-                <DashboardCard >
-                    <TabularInfo
-                        title="Request Details"
-                        description="Tabular representation of all my requests"
-                        data={myData}
-                        actions={actions}
-                        pagination
-                        totalEntries={totalEntriesMyData}
-                        pageSize={pageSize}
-                        totalPages={totalPagesMyData}
-                        pageNo={pageNoMyData}
-                        setPageNo={setPageNoMyData}
-                        showFilter
-                        // filters={filters}
-                        // setFilters={setFilters}
-                        setShowFilterModal={setShowFilterModal}
-                    />
-                </DashboardCard>
+                props.pageLoading ? <></> :
+                    <>
+                        <CreateRequestModal
+                            showModal={showAddModal}
+                            setShowModal={setShowAddModal}
+                            id={editId}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            setReloadData={setReloadData}
+                            setPageLoading={props.setPageLoading}
+                        />
+                        <EditRequestsModal
+                            showModal={showEditModal}
+                            setShowModal={setShowEditModal}
+                            id={editId}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            tabularType={activeTable}
+                        />
+                        <RequestsFilter
+                            showModal={showFilterModal}
+                            setShowModal={setShowFilterModal}
+                            id={editId}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            setReloadData={setReloadData}
+                        />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Requests</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace={props.user.role !== 'ADMIN'} />
+                                {
+                                    props.user.role !== "ADMIN" &&
+                                    <Button
+                                        onClick={() => setShowAddModal(true)}
+                                        type="plain"
+                                    >+ Create Request</Button>
+                                }
+                            </div>
+                        </div>
+                        {
+                            (props.user.role && props.user.role === 'MANAGER') &&
+                            <div className={DashboardStyles.tableChoices}>
+                                <p
+                                    onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
+                                    className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
+                                    My Requests
+                                </p>
+                                <p
+                                    onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
+                                    className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
+                                    Employee Requests
+                                </p>
+                            </div>
+                        }
+                        {
+                            activeTable !== 'my' &&
+                            <DashboardCard >
+                                <TabularInfo
+                                    title="Request Details"
+                                    description="Tabular representation of all employee requests"
+                                    data={data}
+                                    actions={actions}
+                                    pagination
+                                    totalEntries={totalEntries}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    pageNo={pageNo}
+                                    setPageNo={setPageNo}
+                                    showSearch
+                                    // search={filters.searchKey}
+                                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                    showFilter
+                                    // filters={filters}
+                                    // setFilters={setFilters}
+                                    setShowFilterModal={setShowFilterModal}
+                                />
+                            </DashboardCard>
+                        }
+                        {
+                            activeTable === 'my' &&
+                            <DashboardCard >
+                                <TabularInfo
+                                    title="Request Details"
+                                    description="Tabular representation of all my requests"
+                                    data={myData}
+                                    actions={actions}
+                                    pagination
+                                    totalEntries={totalEntriesMyData}
+                                    pageSize={pageSize}
+                                    totalPages={totalPagesMyData}
+                                    pageNo={pageNoMyData}
+                                    setPageNo={setPageNoMyData}
+                                    showFilter
+                                    // filters={filters}
+                                    // setFilters={setFilters}
+                                    setShowFilterModal={setShowFilterModal}
+                                />
+                            </DashboardCard>
+                        }
+                    </>
             }
         </>
     );

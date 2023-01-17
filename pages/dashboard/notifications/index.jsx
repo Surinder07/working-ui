@@ -84,51 +84,56 @@ const Notifications = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Notifications' />
-            <NotificationFilter
-                showModal={showFilterModal}
-                setShowModal={setShowFilterModal}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                setReloadData={setReloadData}
-            />
-            <DeleteModal
-                modal={confirmDeleteModal}
-                setModal={setConfirmDeleteModal}
-                onDelete={deleteNotification}
-            >
-                This will permanently delete this Notification
-            </DeleteModal>
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Notifications</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                    <p onClick={markAllAsRead}
-                        style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3', margin: 0 }}>
-                        Mark all as Read
-                    </p>
-                </div>
-            </div>
-            <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo
-                    title='Notifications'
-                    description='Tabular list of all your notifications.'
-                    data={data}
-                    actions={actions}
-                    pagination
-                    onExpand={markAsRead}
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    search={filters.searchKey}
-                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                    showFilter
-                    setShowFilterModal={setShowFilterModal}
-                    filters={filters}
-                />
-            </DashboardCard>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <NotificationFilter
+                            showModal={showFilterModal}
+                            setShowModal={setShowFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            setReloadData={setReloadData}
+                        />
+                        <DeleteModal
+                            modal={confirmDeleteModal}
+                            setModal={setConfirmDeleteModal}
+                            onDelete={deleteNotification}
+                        >
+                            This will permanently delete this Notification
+                        </DeleteModal>
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Notifications</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                <p onClick={markAllAsRead}
+                                    style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3', margin: 0 }}>
+                                    Mark all as Read
+                                </p>
+                            </div>
+                        </div>
+                        <DashboardCard style={{ marginTop: '20px' }}>
+                            <TabularInfo
+                                title='Notifications'
+                                description='Tabular list of all your notifications.'
+                                data={data}
+                                actions={actions}
+                                pagination
+                                onExpand={markAsRead}
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                                showSearch
+                                search={filters.searchKey}
+                                setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                showFilter
+                                setShowFilterModal={setShowFilterModal}
+                                filters={filters}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     )
 

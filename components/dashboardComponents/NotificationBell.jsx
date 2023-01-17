@@ -66,7 +66,7 @@ const NotificationBell = (props) => {
                             data.map((notification, i) => (
                                 <div className={`${NotificationsStyles.notification} ${notification.read && NotificationsStyles.readNotification}`} key={i}
                                     style={{
-                                        borderBottom: notifications.length !== i + 1 ?
+                                        borderBottom: data.length !== i + 1 ?
                                             '1.5px solid #999998' : 'none'
                                     }}>
                                     {!notification.read && <div className={NotificationsStyles.unreadInd}></div>}

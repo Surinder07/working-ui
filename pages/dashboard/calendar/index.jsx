@@ -48,17 +48,22 @@ const Calender = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Calender" />
-            <HolidayModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Calender</h1>
-                {
-                    uploadButton.show &&
-                    <Button type="plain" onClick={() => setShowModal(true)}>
-                        {uploadButton.text}
-                    </Button>
-                }
-            </div>
-            <CalendarComponent setPageLoading={props.setPageLoading} />
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <HolidayModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Calender</h1>
+                            {
+                                uploadButton.show &&
+                                <Button type="plain" onClick={() => setShowModal(true)}>
+                                    {uploadButton.text}
+                                </Button>
+                            }
+                        </div>
+                        <CalendarComponent setPageLoading={props.setPageLoading} />
+                    </>
+            }
         </>
     );
 };

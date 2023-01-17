@@ -60,7 +60,7 @@ const Shifts = (props) => {
         }
         if (props.user.role === 'EMPLOYEE' || props.user.role === 'MANAGER') {
             fetchAndHandlePage(() => shiftsService.getByUser(pageNoMyShift, pageSize, filters, sort),
-                setMyShiftData, setTotalEntriesMyShift, setTotalPagesMyShift, props.setPageLoading, 
+                setMyShiftData, setTotalEntriesMyShift, setTotalPagesMyShift, props.setPageLoading,
                 props.setToasterInfo, getSingleShiftsListing, props.user.role);
         }
     }
@@ -98,99 +98,104 @@ const Shifts = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Shifts" />
-            <DeleteModal
-                modal={confirmDeleteModal}
-                setModal={setConfirmDeleteModal}
-            // onDelete={deleteRole}
-            >
-                This will permanently delete this Shift
-            </DeleteModal>
-            <NewShiftModal
-                setShowModal={setShowAddModal}
-                showModal={showAddModal}
-                buttonText="CreateShift"
-                setToasterInfo={props.setToasterInfo}
-                setReloadData={setReloadData}
-                role={props.user.role}
-                setPageLoading={props.setPageLoading}
-            />
-            <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData} />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Shifts</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace={props.user.role === "MANAGER" || props.user.role === "ADMIN"} />
-                    {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
-                        <Button
-                            type="plain"
-                            onClick={() => setShowAddModal(true)}
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <DeleteModal
+                            modal={confirmDeleteModal}
+                            setModal={setConfirmDeleteModal}
+                        // onDelete={deleteRole}
                         >
-                            + Create new Shifts
-                        </Button>
-                    )}
-                </div>
-            </div>
-            {
-                (props.user.role && props.user.role === 'MANAGER') &&
-                <div className={DashboardStyles.tableChoices}>
-                    <p
-                        onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
-                        className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
-                        My Shifts
-                    </p>
-                    <p
-                        onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
-                        className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
-                        Employee Shifts
-                    </p>
-                </div>
+                            This will permanently delete this Shift
+                        </DeleteModal>
+                        <NewShiftModal
+                            setShowModal={setShowAddModal}
+                            showModal={showAddModal}
+                            buttonText="CreateShift"
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
+                            role={props.user.role}
+                            setPageLoading={props.setPageLoading}
+                        />
+                        <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData} />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Shifts</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace={props.user.role === "MANAGER" || props.user.role === "ADMIN"} />
+                                {(props.user.role === "MANAGER" || props.user.role === "ADMIN") && (
+                                    <Button
+                                        type="plain"
+                                        onClick={() => setShowAddModal(true)}
+                                    >
+                                        + Create new Shifts
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                        {
+                            (props.user.role && props.user.role === 'MANAGER') &&
+                            <div className={DashboardStyles.tableChoices}>
+                                <p
+                                    onClick={() => { if (activeTable !== 'my') setActiveTable('my') }}
+                                    className={joinClasses(DashboardStyles.tableChoice, activeTable === 'my' && DashboardStyles.activeTableChoice)}>
+                                    My Shifts
+                                </p>
+                                <p
+                                    onClick={() => { if (activeTable === 'my') setActiveTable('emp') }}
+                                    className={joinClasses(DashboardStyles.tableChoice, activeTable !== 'my' && DashboardStyles.activeTableChoice)}>
+                                    Employee Shifts
+                                </p>
+                            </div>
+                        }
+                        {
+                            activeTable !== 'my' &&
+                            <DashboardCard >
+                                <TabularInfo
+                                    title="Shifts"
+                                    description="Tabular list of all Employee Shifts."
+                                    data={data}
+                                    actions={actions}
+                                    subActions={subTableActions}
+                                    pagination
+                                    totalEntries={totalEntries}
+                                    pageSize={pageSize}
+                                    totalPages={totalPages}
+                                    pageNo={pageNo}
+                                    setPageNo={setPageNo}
+                                    showSearch
+                                    search={filters.searchKey}
+                                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                    showFilter
+                                    filters={filters}
+                                    setFilters={setFilters}
+                                    setShowFilterModal={setShowFilterModal}
+                                />
+                            </DashboardCard>
+                        }
+                        {
+                            activeTable === 'my' &&
+                            <DashboardCard >
+                                <TabularInfo
+                                    title="Shifts"
+                                    description="Tabular list of my Shifts."
+                                    data={myShiftData}
+                                    actions={actions}
+                                    pagination
+                                    totalEntries={totalEntriesMyShift}
+                                    pageSize={pageSize}
+                                    totalPages={totalPagesMyShift}
+                                    pageNo={pageNoMyShift}
+                                    setPageNo={setPageNoMyShift}
+                                    showFilter
+                                    filters={filters}
+                                    setFilters={setFilters}
+                                    setShowFilterModal={setShowFilterModal}
+                                />
+                            </DashboardCard>
+                        }
+                        {showShiftModal && <ShiftModal />}
+                    </>
             }
-            {
-                activeTable !== 'my' &&
-                <DashboardCard >
-                    <TabularInfo
-                        title="Shifts"
-                        description="Tabular list of all Employee Shifts."
-                        data={data}
-                        actions={actions}
-                        subActions={subTableActions}
-                        pagination
-                        totalEntries={totalEntries}
-                        pageSize={pageSize}
-                        totalPages={totalPages}
-                        pageNo={pageNo}
-                        setPageNo={setPageNo}
-                        showSearch
-                        search={filters.searchKey}
-                        setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                        showFilter
-                        filters={filters}
-                        setFilters={setFilters}
-                        setShowFilterModal={setShowFilterModal}
-                    />
-                </DashboardCard>
-            }
-            {
-                activeTable === 'my' &&
-                <DashboardCard >
-                    <TabularInfo
-                        title="Shifts"
-                        description="Tabular list of my Shifts."
-                        data={myShiftData}
-                        actions={actions}
-                        pagination
-                        totalEntries={totalEntriesMyShift}
-                        pageSize={pageSize}
-                        totalPages={totalPagesMyShift}
-                        pageNo={pageNoMyShift}
-                        setPageNo={setPageNoMyShift}
-                        showFilter
-                        filters={filters}
-                        setFilters={setFilters}
-                        setShowFilterModal={setShowFilterModal}
-                    />
-                </DashboardCard>
-            }
-            {showShiftModal && <ShiftModal />}
         </>
     );
 };

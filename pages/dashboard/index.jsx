@@ -101,51 +101,56 @@ const Dashboard = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Dashboard" />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Overview and Analytics</h1>
-            </div>
-            <InfoTileBanner data={tileInfo} role={props.user.role} />
-            <DashboardTabular role={props.user.role} />
-            <DashboardCard
-                className={DashboardStyles.graph}
-                style={{
-                    marginTop: "20px",
-                    display: "grid",
-                    gridTemplateColumns: "3fr 2fr",
-                }}
-            >
-                {
-                    lineGraphData ?
-                        <div style={{ position: 'relative', height: "100%", minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Line
-                                data={lineGraphData}
-                                options={areaConfig(getLineGraphTitle().title, getLineGraphTitle().description, getLineGraphTitle().x, getLineGraphTitle().y)} />
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Overview and Analytics</h1>
+                        </div>
+                        <InfoTileBanner data={tileInfo} role={props.user.role} />
+                        <DashboardTabular role={props.user.role} />
+                        <DashboardCard
+                            className={DashboardStyles.graph}
+                            style={{
+                                marginTop: "20px",
+                                display: "grid",
+                                gridTemplateColumns: "3fr 2fr",
+                            }}
+                        >
                             {
-                                lineGraphData.noData &&
-                                <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                                lineGraphData ?
+                                    <div style={{ position: 'relative', height: "100%", minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Line
+                                            data={lineGraphData}
+                                            options={areaConfig(getLineGraphTitle().title, getLineGraphTitle().description, getLineGraphTitle().x, getLineGraphTitle().y)} />
+                                        {
+                                            lineGraphData.noData &&
+                                            <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                                        }
+                                    </div> :
+                                    <p>Loading...</p>
                             }
-                        </div> :
-                        <p>Loading...</p>
-                }
-                {
-                    pieGraphData ?
-                        (
-                            pieGraphData === 'noData' ?
-                                <></> :
-                                <div style={{ position: 'relative', minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Pie
-                                        data={pieGraphData}
-                                        options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
-                                    {
-                                        pieGraphData.noData &&
-                                        <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
-                                    }
-                                </div>
-                        ) :
-                        <p>Loading...</p>
+                            {
+                                pieGraphData ?
+                                    (
+                                        pieGraphData === 'noData' ?
+                                            <></> :
+                                            <div style={{ position: 'relative', minHeight: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Pie
+                                                    data={pieGraphData}
+                                                    options={pieConfig("Employee Trends", "Current Year ( 2022-2023 )", "Month", "Invoice Amount")} />
+                                                {
+                                                    pieGraphData.noData &&
+                                                    <p style={{ position: 'absolute', top: '50%' }}>No Data to show</p>
+                                                }
+                                            </div>
+                                    ) :
+                                    <p>Loading...</p>
 
-                }
-            </DashboardCard>
+                            }
+                        </DashboardCard>
+                    </>
+            }
         </>
     );
 };

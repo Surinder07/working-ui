@@ -291,147 +291,152 @@ const Employees = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Employee Details" />
-            <EditTimesheetModal
-                showModal={showModalTimeSheet}
-                setShowModal={setShowModalTimeSheet}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                id={editId}
-            />
-            <EditShiftModal
-                showModal={showModalShift}
-                setShowModal={setShowModalShift}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                id={editId}
-            />
-            <EditRequestsModal
-                showModal={showModalRequest}
-                setShowModal={setShowModalRequest}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                id={editId}
-            />
-            <EmployeeAttendanceFilter
-                showModal={showEmployeeAttendanceFilterModal}
-                setShowModal={setShowEmployeeAttendanceFilterModal}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role} />
-            <EmployeesShiftFilter
-                showModal={showEmployeeShiftFilterModal}
-                setShowModal={setShowEmployeeShiftFilterModal}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role} />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>
-                    <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
-                    {` > Employee Details`}
-                </h1>
-            </div>
-            {/* Employee Personal Details */}
-            <UserPreferenceCard
-                title="Personal Details"
-                isEditable
-                editOn={personalEditOn}
-                setEditOn={setPersonalEditOn}
-                handleCancel={() => {
-                    setFirstName(initialFirstName);
-                    setLastName(initialLastName);
-                    setMobile(initialMobile);
-                    setLocation(initialLocation);
-                    setRole(initialRole);
-                    setEmployeeType(initialEmployeeType);
-                }}
-            >
-                <div className={DashboardStyles.personalContainer}>
-                    <ProfileImage size="big" />
-                    <div className={DashboardStyles.personalContent}>
-                        <EditableInput
-                            label="First Name"
-                            type="text"
-                            value={firstName}
-                            initialValue={initialFirstName}
-                            setValue={setFirstName}
-                            error={errorFirstName}
-                            setError={setErrorFirstName}
-                            editOn={personalEditOn}
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <EditTimesheetModal
+                            showModal={showModalTimeSheet}
+                            setShowModal={setShowModalTimeSheet}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            id={editId}
                         />
-                        <EditableInput
-                            label="Last Name"
-                            type="text"
-                            value={lastName}
-                            initialValue={initialLastName}
-                            setValue={setLastName}
-                            error={errorLastName}
-                            setError={setErrorLastName}
-                            editOn={personalEditOn}
+                        <EditShiftModal
+                            showModal={showModalShift}
+                            setShowModal={setShowModalShift}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            id={editId}
                         />
-                        <EditableInput
-                            label="Email"
-                            type="text"
-                            value={email}
-                            initialValue={email}
-                            setValue={setEmail}
-                            editOn={personalEditOn}
-                            nonEditable
+                        <EditRequestsModal
+                            showModal={showModalRequest}
+                            setShowModal={setShowModalRequest}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            id={editId}
                         />
-                        <EditableInput
-                            label="Mobile"
-                            type="mobile"
-                            value={mobile}
-                            initialValue={initialMobile}
-                            setValue={setMobile}
-                            error={errorMobile}
-                            setError={setErrorMobile}
+                        <EmployeeAttendanceFilter
+                            showModal={showEmployeeAttendanceFilterModal}
+                            setShowModal={setShowEmployeeAttendanceFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role} />
+                        <EmployeesShiftFilter
+                            showModal={showEmployeeShiftFilterModal}
+                            setShowModal={setShowEmployeeShiftFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role} />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>
+                                <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
+                                {` > Employee Details`}
+                            </h1>
+                        </div>
+                        {/* Employee Personal Details */}
+                        <UserPreferenceCard
+                            title="Personal Details"
+                            isEditable
                             editOn={personalEditOn}
+                            setEditOn={setPersonalEditOn}
+                            handleCancel={() => {
+                                setFirstName(initialFirstName);
+                                setLastName(initialLastName);
+                                setMobile(initialMobile);
+                                setLocation(initialLocation);
+                                setRole(initialRole);
+                                setEmployeeType(initialEmployeeType);
+                            }}
+                        >
+                            <div className={DashboardStyles.personalContainer}>
+                                <ProfileImage size="big" />
+                                <div className={DashboardStyles.personalContent}>
+                                    <EditableInput
+                                        label="First Name"
+                                        type="text"
+                                        value={firstName}
+                                        initialValue={initialFirstName}
+                                        setValue={setFirstName}
+                                        error={errorFirstName}
+                                        setError={setErrorFirstName}
+                                        editOn={personalEditOn}
+                                    />
+                                    <EditableInput
+                                        label="Last Name"
+                                        type="text"
+                                        value={lastName}
+                                        initialValue={initialLastName}
+                                        setValue={setLastName}
+                                        error={errorLastName}
+                                        setError={setErrorLastName}
+                                        editOn={personalEditOn}
+                                    />
+                                    <EditableInput
+                                        label="Email"
+                                        type="text"
+                                        value={email}
+                                        initialValue={email}
+                                        setValue={setEmail}
+                                        editOn={personalEditOn}
+                                        nonEditable
+                                    />
+                                    <EditableInput
+                                        label="Mobile"
+                                        type="mobile"
+                                        value={mobile}
+                                        initialValue={initialMobile}
+                                        setValue={setMobile}
+                                        error={errorMobile}
+                                        setError={setErrorMobile}
+                                        editOn={personalEditOn}
+                                    />
+                                    <EditableInput
+                                        label="Location"
+                                        type="text"
+                                        value={location}
+                                        initialValue={initialLocation}
+                                        setValue={setLocation}
+                                        editOn={personalEditOn}
+                                    />
+                                    <EditableInput
+                                        label="Role"
+                                        type="text"
+                                        value={role}
+                                        initialValue={initialRole}
+                                        error={errorRole}
+                                        setError={setErrorRole}
+                                        setValue={setRole}
+                                        editOn={personalEditOn}
+                                    />
+                                    <EditableInput
+                                        label="Employee Id"
+                                        type="text"
+                                        value={employeeId}
+                                        initialValue={employeeId}
+                                        setValue={setEmployeeId}
+                                        editOn={personalEditOn}
+                                        nonEditable
+                                    />
+                                    <EditableInput
+                                        label="Employee type"
+                                        type="dropdown"
+                                        options={employeeTypeValues}
+                                        value={employeeType}
+                                        initialValue={initialEmployeeType}
+                                        setValue={setEmployeeType}
+                                        editOn={personalEditOn}
+                                    />
+                                </div>
+                            </div>
+                        </UserPreferenceCard>
+                        <EmployeePreference
+                            data={employeePreferenceData}
+                            expanded={expandedMenu === 'preferences'}
+                            toggleExpansion={() => handleExpansion('preferences')}
                         />
-                        <EditableInput
-                            label="Location"
-                            type="text"
-                            value={location}
-                            initialValue={initialLocation}
-                            setValue={setLocation}
-                            editOn={personalEditOn}
-                        />
-                        <EditableInput
-                            label="Role"
-                            type="text"
-                            value={role}
-                            initialValue={initialRole}
-                            error={errorRole}
-                            setError={setErrorRole}
-                            setValue={setRole}
-                            editOn={personalEditOn}
-                        />
-                        <EditableInput
-                            label="Employee Id"
-                            type="text"
-                            value={employeeId}
-                            initialValue={employeeId}
-                            setValue={setEmployeeId}
-                            editOn={personalEditOn}
-                            nonEditable
-                        />
-                        <EditableInput
-                            label="Employee type"
-                            type="dropdown"
-                            options={employeeTypeValues}
-                            value={employeeType}
-                            initialValue={initialEmployeeType}
-                            setValue={setEmployeeType}
-                            editOn={personalEditOn}
-                        />
-                    </div>
-                </div>
-            </UserPreferenceCard>
-            <EmployeePreference
-                data={employeePreferenceData}
-                expanded={expandedMenu === 'preferences'}
-                toggleExpansion={() => handleExpansion('preferences')}
-            />
-            {getExpandableData("Shifts", shiftData, getActions('shift'), setShowEmployeeShiftFilterModal)}
-            {getExpandableData("Requests", requestsData, getActions('request'), "")}
-            {getExpandableData("Attendance", attendanceData, getActions('attendance'), setShowEmployeeAttendanceFilterModal)}
+                        {getExpandableData("Shifts", shiftData, getActions('shift'), setShowEmployeeShiftFilterModal)}
+                        {getExpandableData("Requests", requestsData, getActions('request'), "")}
+                        {getExpandableData("Attendance", attendanceData, getActions('attendance'), setShowEmployeeAttendanceFilterModal)}
+                    </>
+            }
         </>
     );
 };

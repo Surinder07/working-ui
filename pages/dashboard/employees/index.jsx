@@ -7,7 +7,7 @@ import { getEmployeeListing, fetchAndHandle, fetchAndHandlePage } from '../../..
 
 const Employees = (props) => {
     const [showModal, setShowModal] = useState(false);
-    const [showFilterModal,setShowFilterModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -81,50 +81,55 @@ const Employees = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Employees" />
-            <DeleteModal
-                modal={confirmDeleteModal}
-                setModal={setConfirmDeleteModal}
-                onDelete={deleteUser}
-            >
-                This will permanently delete this User from your Organization
-            </DeleteModal>
-            <InviteUserModal
-                setShowModal={setShowModal}
-                showModal={showModal}
-                setToasterInfo={props.setToasterInfo}
-                setReloadData={setReloadData}
-                role={props.user.role}
-                setPageLoading={props.setPageLoading}
-            />
-            <EmployeeFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role}/>
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Employees</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                    <Button type='plain' onClick={() => setShowModal(true)}>+ Invite Users</Button>
-                </div>
-            </div>
-            <DashboardCard style={{ marginTop: "20px" }} className={DashboardStyles.employeeCard}>
-                <TabularInfo
-                    title="Employee Sheet"
-                    description="Tabular list Employee details."
-                    data={data}
-                    actions={actions}
-                    pagination
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    search={filters.searchKey}
-                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                    showFilter
-                    filters={filters}
-                    setFilters={setFilters}
-                    setShowFilterModal={setShowFilterModal}
-                />
-            </DashboardCard>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <DeleteModal
+                            modal={confirmDeleteModal}
+                            setModal={setConfirmDeleteModal}
+                            onDelete={deleteUser}
+                        >
+                            This will permanently delete this User from your Organization
+                        </DeleteModal>
+                        <InviteUserModal
+                            setShowModal={setShowModal}
+                            showModal={showModal}
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
+                            role={props.user.role}
+                            setPageLoading={props.setPageLoading}
+                        />
+                        <EmployeeFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Employees</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                <Button type='plain' onClick={() => setShowModal(true)}>+ Invite Users</Button>
+                            </div>
+                        </div>
+                        <DashboardCard style={{ marginTop: "20px" }} className={DashboardStyles.employeeCard}>
+                            <TabularInfo
+                                title="Employee Sheet"
+                                description="Tabular list Employee details."
+                                data={data}
+                                actions={actions}
+                                pagination
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                                showSearch
+                                search={filters.searchKey}
+                                setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                showFilter
+                                filters={filters}
+                                setFilters={setFilters}
+                                setShowFilterModal={setShowFilterModal}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     );
 };

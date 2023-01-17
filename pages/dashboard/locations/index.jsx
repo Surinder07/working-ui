@@ -73,55 +73,60 @@ const Locations = (props) => {
     return (
         <>
             <WaawNoIndexHead title='Locations' />
-            <DeleteModal
-                modal={confirmDeleteModal}
-                setModal={setConfirmDeleteModal}
-                onDelete={deleteLocation}
-            >
-                This will permanently delete this Location and all associated Roles and Employees
-            </DeleteModal>
-            <LocationModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                setToasterInfo={props.setToasterInfo}
-                setReloadData={setReloadData}
-                role={props.user.role}
-            />
-            <LocationFilter 
-             setShowModal={setShowFilterModal}
-             showModal={showFilterModal}
-             setToasterInfo={props.setToasterInfo}
-             role={props.user.role}
-             setReloadData={setReloadData}
-            />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Locations</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                    <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
-                </div>
-            </div>
-            <DashboardCard style={{ marginTop: '20px' }}>
-                <TabularInfo
-                    title='Location Listing'
-                    description='Tabular list of all locations.'
-                    data={data}
-                    pagination
-                    actions={actions}
-                    totalEntries={totalEntries}
-                    pageSize={pageSize}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    showSearch
-                    search={filters.searchKey}
-                    setSearch={(val) => setFilters({ ...filters, searchKey: val })}
-                    showFilter
-                    filters={filters}
-                    setFilters={setFilters}
-                    setShowFilterModal={setShowFilterModal}
-                />
-            </DashboardCard>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <DeleteModal
+                            modal={confirmDeleteModal}
+                            setModal={setConfirmDeleteModal}
+                            onDelete={deleteLocation}
+                        >
+                            This will permanently delete this Location and all associated Roles and Employees
+                        </DeleteModal>
+                        <LocationModal
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
+                            role={props.user.role}
+                        />
+                        <LocationFilter
+                            setShowModal={setShowFilterModal}
+                            showModal={showFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            setReloadData={setReloadData}
+                        />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Locations</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                <Button type='plain' onClick={() => setShowModal(true)}>+ Add new Location</Button>
+                            </div>
+                        </div>
+                        <DashboardCard style={{ marginTop: '20px' }}>
+                            <TabularInfo
+                                title='Location Listing'
+                                description='Tabular list of all locations.'
+                                data={data}
+                                pagination
+                                actions={actions}
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                                showSearch
+                                search={filters.searchKey}
+                                setSearch={(val) => setFilters({ ...filters, searchKey: val })}
+                                showFilter
+                                filters={filters}
+                                setFilters={setFilters}
+                                setShowFilterModal={setShowFilterModal}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     )
 

@@ -34,24 +34,29 @@ const UserPreference = (props) => {
     return (
         <>
             <WaawNoIndexHead title='User Preferences' />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>User Preferences</h1>
-            </div>
-            <div className={UserPreferenceStyles.tabsContainer}>
-                {
-                    tabsToShow.map((tab, i) => (
-                        <p
-                            key={`tab_${i}`}
-                            className={`${UserPreferenceStyles.tabTitle} ${active === tab && UserPreferenceStyles.activeTab}`}
-                            onClick={() => setActive(tab)}>
-                            {tab}
-                        </p>
-                    ))
-                }
-            </div>
-            <div className={UserPreferenceStyles.preferenceBody}>
-                {shownContent}
-            </div>
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>User Preferences</h1>
+                        </div>
+                        <div className={UserPreferenceStyles.tabsContainer}>
+                            {
+                                tabsToShow.map((tab, i) => (
+                                    <p
+                                        key={`tab_${i}`}
+                                        className={`${UserPreferenceStyles.tabTitle} ${active === tab && UserPreferenceStyles.activeTab}`}
+                                        onClick={() => setActive(tab)}>
+                                        {tab}
+                                    </p>
+                                ))
+                            }
+                        </div>
+                        <div className={UserPreferenceStyles.preferenceBody}>
+                            {shownContent}
+                        </div>
+                    </>
+            }
         </>
     );
 };
