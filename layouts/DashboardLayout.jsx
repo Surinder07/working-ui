@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger, FloatingClock } from "../components";
 import { footerIcons, SideNavInfo } from "../constants";
-import { LogoWhite, FaviconWhite, Favicon, Logo } from "../public/images";
+import { LogoWhite, Favicon, Logo } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
@@ -52,7 +52,7 @@ const Dashboard = (props) => {
                         <Hamburger className={DashboardLayout.sideNavHamburger} setOpenMenu={setNavOpen} openMenu={navOpen} />
                         <div>
                             <div className={DashboardLayout.logoContainer}>
-                                <LinkedImage src={navOpen ? LogoWhite : FaviconWhite} heightOrient className={DashboardLayout.logo} alt="Logo" link="/dashboard" />
+                                <LinkedImage src={navOpen ? LogoWhite : Favicon} heightOrient className={DashboardLayout.logo} alt="Logo" link="/dashboard" />
                             </div>
                             <p className={DashboardLayout.version}>Version: {process.env.version}</p>
                             <div className={DashboardLayout.profileContainer}>

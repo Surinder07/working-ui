@@ -51,7 +51,12 @@ const Calender = (props) => {
             {
                 props.pageLoading ? <></> :
                     <>
-                        <HolidayModal showModal={showModal} setShowModal={setShowModal} setToasterInfo={props.setToasterInfo} />
+                        <HolidayModal
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            setToasterInfo={props.setToasterInfo}
+                            setPageLoading={props.setPageLoading}
+                        />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Calender</h1>
                             {

@@ -10,7 +10,7 @@ const EditableInput = (props) => {
         props.setError &&
             props.setError({
                 message: "",
-                show: "false",
+                show: false,
             });
         props.setValue(value);
     };

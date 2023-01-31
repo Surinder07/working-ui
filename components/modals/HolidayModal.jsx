@@ -4,77 +4,62 @@ import { CloudUpload } from "@mui/icons-material";
 import { fetchWrapper } from "../../helpers";
 import Link from 'next/link';
 import { useState } from "react";
+import { organizationService } from "../../services/organization.service";
 
 const HolidayModal = (props) => {
 
     const fileEndpoint = process.env.endpoints.resources.fileTemplate;
     const [file, setFile] = useState({});
     const [loading, setLoading] = useState(false);
+
     const onCancel = () => {
-      setFile({})
+        setFile({})
     }
 
     const handleFileChange = (e) => {
         if (e.target.files.length) {
-            handleUpload(e.target.files[0]);
-            /**
-            * @todo change image in user details
-            */
+            setFile(e.target.files[0]);
         }
     }
-    // const isError = () => {
-    //     return file.length > 0;
-    // }
-    const handleUpload = async file => {
-        console.log('data received', file);
+
+    const saveData = (e) => {
         if (file.name) {
-            fetchAndHandle(() => memberService.inviteByUpload({ file: file }), null, setLoading,
-                props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+            fetchAndHandle(() => organizationService.uploadHolidays({ file: file }), null, setLoading,
+                null, props.setPageLoading, onCancel, props.setShowModal,
                 props.setToasterInfo);
+        } else {
+            props.setToasterInfo({
+                error: true,
+                title: "Error!",
+                message: 'Please select a file first'
+            })
         }
-        //  else if (!isError()) {
-        //     fetchAndHandle(() => memberService.sendInvite(saveUserRequestBody(firstName, lastName, role,
-        //         location, employeeId, email, toggleValue === 'Permanent')), 'Invite Sent Successfully',
-        //         setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
-        //         props.setToasterInfo);
-        // }
-        // const formData = new FormData();
-        // formData.append("image", image.raw);
-
-        // await fetch("YOUR_URL", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "multipart/form-data"
-        //     },
-        //     body: formData
-        // });
-    };
-
+    }
 
     return (
         <DashboardModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
-            buttonText="Submit"
+            buttonText="Upload"
             title="Upload Holiday"
             type="twoColWide"
-            onClick={handleUpload}
+            onClick={saveData}
             onCancel={onCancel}
             loading={loading}
         >
             <div className={`${DashboardModalStyles.singleColumn} ${DashboardModalStyles.uploadContainer}`}>
                 <CloudUpload className={DashboardModalStyles.icon} />
                 <label htmlFor="upload">Select file to Import</label>
-                <input type="file" id="upload" style={{ display: "none" }}  onChange={handleFileChange}/>
+                <input type="file" id="upload" style={{ display: "none" }} onChange={handleFileChange} />
                 <p>
-                        {`Download `}
-                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'holiday', format:'xlsx'})}
-                            className={DashboardModalStyles.download}>xlsx</Link>
-                        {` or `}
-                        <Link download href={fetchWrapper.getApiUrl(fileEndpoint, {resource: 'holiday', format:'csv'})}
-                            className={DashboardModalStyles.download}>csv</Link>
-                        {` template here`}
-                    </p>
+                    {`Download `}
+                    <Link download href={fetchWrapper.getApiUrl(fileEndpoint, { resource: 'holiday', format: 'xlsx' })}
+                        className={DashboardModalStyles.download}>xlsx</Link>
+                    {` or `}
+                    <Link download href={fetchWrapper.getApiUrl(fileEndpoint, { resource: 'holiday', format: 'csv' })}
+                        className={DashboardModalStyles.download}>csv</Link>
+                    {` template here`}
+                </p>
             </div>
         </DashboardModal>
     );

@@ -1,54 +1,52 @@
-import React, {useEffect, useState} from "react";
-import {FilterModal} from "../base";
-import {DashboardModalStyles} from "../../../styles/elements";
-import {EditableInput} from "../../inputComponents";
+import React, { useEffect, useState } from "react";
+import { FilterModal } from "../base";
+import { DashboardModalStyles } from "../../../styles/elements";
+import { EditableInput } from "../../inputComponents";
+import { EmployeeStatus, EmployeeType } from "../../../constants";
+import { fetchAndHandleGet } from "../../../helpers";
+import { dropdownService } from "../../../services";
 
 const EmployeeFilter = (props) => {
-      //------------- Dropdown values
-      const [locations, setLocations] = useState([]);
-      //-----------------------------
-    const [employeeType, setEmployeeType] = useState("");
-    const [role, setRole] = useState("");
-    const [location, setLocation] = useState("");
+    //------------- Dropdown values
+    const [locations, setLocations] = useState([]);
+    const [roles, setRoles] = useState([]);
+    //-----------------------------
+    const [type, setType] = useState("");
+    const [roleId, setRoleId] = useState("");
+    const [locationId, setLocationId] = useState("");
     const [status, setStatus] = useState("");
 
-    const [errorLocation, setErrorLocation] = useState({});
-
     const clearAllFilter = () => {
-        setEmployeeType("")
-        setRole("")
-        setLocation("")
-        setErrorLocation({})
+        setType("")
+        setRoleId("")
+        setLocationId("")
         setStatus("")
         props.setData({})
+        props.setShowModal(false);
     }
 
     useEffect(() => {
-        props.setData && props.setData({
-            employeeType,
-            role,
-            location,
-            status 
-        })
-    },[])
-    
-    const isError = () => {
-        return false
+        if (props.role) {
+            if (props.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            } else {
+                fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+            }
+        }
+    }, [props.role])
+
+    useEffect(() => {
+        setRoleId("");
+        if (locationId !== null && locationId !== '') {
+            fetchAndHandleGet(() => dropdownService.getRoles(locationId), setRoles);
+        }
+    }, [locationId])
+
+    const applyFilter = () => {
+        props.setData({ type, roleId, locationId, status });
+        return true;
     }
 
-    const saveData = () => {
-        if (!isError()) {
-                    let data = {
-                        employeeType: employeeType,
-                        role: role,
-                        location: location,
-                        status:status 
-                    }
-                    props.setData(data)
-                    clearAllFilter()
-                }                  
-    }
-    
     return (
         <div>
             <FilterModal
@@ -57,53 +55,50 @@ const EmployeeFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilter}
                 clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="dropdown"
                     label="Type of Employee"
                     placeholder="Type"
-                    value={employeeType}
-                    setValue={setEmployeeType}
-                    options={["Admin", "Manager", "Employee"]}
+                    value={type}
+                    setValue={setType}
+                    options={EmployeeType}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
-                <EditableInput
-                    type="dropdown"
-                    label="Role"
-                    placeholder="Role"
-                    value={role}
-                    setValue={setRole}
-                    options={["Admin", "Manager", "Employee"]}
-                    className={DashboardModalStyles.singleColumn}
-                    editOn
-                />
-                  {
+                {
                     props.role === 'ADMIN' &&
                     <EditableInput
                         type="typeAhead"
                         options={locations}
                         placeholder="Location"
                         label="Location"
-                        value={location}
-                        setValue={setLocation}
-                        initialValue={location}
-                        error={errorLocation}
-                        setError={setErrorLocation}
+                        value={locationId}
+                        setValue={setLocationId}
+                        initialValue={locationId}
                         className={DashboardModalStyles.singleColumn}
-                        required
                         editOn
                     />
                 }
+                <EditableInput
+                    type="typeAhead"
+                    label='Role'
+                    placeholder={locationId === '' ? 'Select a location to show roles' : 'Role'}
+                    value={roleId}
+                    setValue={setRoleId}
+                    options={roles}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
                 <EditableInput
                     type="dropdown"
                     label="Status"
                     placeholder="Status"
                     value={status}
                     setValue={setStatus}
-                    options={["pending", "In process", "completed"]}
+                    options={EmployeeStatus}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />

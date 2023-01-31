@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { NotificationsStyles } from "../../styles/elements";
 import Link from 'next/link';
-import { notificationService } from '../../services';
-import { fetchAndHandlePage, getNotificationListingForBell } from "../../helpers";
+import { notificationService, userService } from '../../services';
+import { fetchAndHandlePage, getNotificationListingForBell, secureLocalStorage } from "../../helpers";
 
 const NotificationBell = (props) => {
 
@@ -22,17 +22,13 @@ const NotificationBell = (props) => {
         }
     }
 
-    const loadNotification = async () => {
+    const loadNotification = () => {
         fetchAndHandlePage(() => notificationService.getAll(1, 5, {}, {}),
             setData, null, null, null, null, getNotificationListingForBell, null);
     }
 
     useEffect(() => {
-        loadNotification()
-            .then(res => {
-                const unRead = data.some(notification => !notification.read);
-                setUnread(unRead);
-            });
+        loadNotification();
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -40,10 +36,19 @@ const NotificationBell = (props) => {
     }, [])
 
     useEffect(() => {
+        const unRead = data.some(notification => !notification.read);
+        setUnread(unRead);
+    }, [data])
+
+    useEffect(() => {
         if (ref.current) {
             setBoxHeight(ref.current.clientHeight + 100);
         }
     }, [ref.current])
+
+    // const header = {
+    //     access_token: secureLocalStorage.getData(userService.TOKEN_KEY)
+    // }
 
     return (
         <div className={NotificationsStyles.container} ref={containerRef}>

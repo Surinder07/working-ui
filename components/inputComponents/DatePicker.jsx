@@ -22,6 +22,7 @@ const DatePicker = (props) => {
 
     const ref = useRef();
     const today = startOfToday();
+    const [noSelected, setNoSelected] = useState(true);
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
     const [referenceDates, setReferenceDates] = useState(eachDayOfInterval({
@@ -120,7 +121,7 @@ const DatePicker = (props) => {
     }
 
     useEffect(() => {
-        props.setValue(format((props.blockPast ? addDays(today, 1) : today), "yyyy-MM-dd"))
+        // props.setValue(format((props.blockPast ? addDays(today, 1) : today), "yyyy-MM-dd"))
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -132,11 +133,11 @@ const DatePicker = (props) => {
     }, [ref]);
 
     useEffect(() => {
-        if (props.value !== '') {
+        // if (props.value !== '') {
             let newDatesObj = referenceDates.map((date) => {
                 return {
                     ...date,
-                    selected: isSameDay(parseISO(props.value), date.date),
+                    selected: noSelected ? false : isSameDay(parseISO(props.value), date.date),
                     today: isToday(date.date),
                     currentMonth: isSameMonth(date.date, firstDayCurrentMonth)
                 }
@@ -144,7 +145,7 @@ const DatePicker = (props) => {
             setDates(newDatesObj);
             const height = newDatesObj.length > 35 ? 180 : 150;
             setCalendarHeight(height + 60);
-        }
+        // }
     }, [referenceDates, props.value, firstDayCurrentMonth]);
 
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -175,7 +176,7 @@ const DatePicker = (props) => {
                     }
                 </div>
                 <div className={DatePickerStyles.datesContainer}>
-                    {props.value !== '' &&
+                    {
                         dates.map((date, i) => (
                             <p key={`date_${i}`} className={`
                                 ${DatePickerStyles.dates}

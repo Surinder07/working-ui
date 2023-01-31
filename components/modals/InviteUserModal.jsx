@@ -50,12 +50,14 @@ const InviteUserModal = (props) => {
     }
 
     useEffect(() => {
-        if (props.role === 'ADMIN') {
-            fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
-        } else {
-            fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+        if (props.role) {
+            if (props.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            } else {
+                fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+            }
         }
-    }, [])
+    }, [props.role])
 
     useEffect(() => {
         setRole("");

@@ -18,8 +18,8 @@ const toggleActiveLocation = async (id) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveLocation, { id }))
 }
 
-const getAllRoles = (pageNo, pageSize) => {
-    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocationRole, pageNo, pageSize));
+const getAllRoles = (pageNo, pageSize, filters, sort) => {
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocationRole, pageNo, pageSize, { ...filters, ...sort }));
 }
 
 const getRoleById = (id) => {

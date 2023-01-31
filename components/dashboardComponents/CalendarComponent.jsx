@@ -6,6 +6,7 @@ import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
 import { joinClasses } from "../../helpers";
 import { calendarService } from '../../services';
+import { organizationService } from "../../services/organization.service";
 
 const CalendarComponent = (props) => {
 
@@ -80,7 +81,7 @@ const CalendarComponent = (props) => {
 
     const getHolidays = (date) => {
         const year = getYear(new Date(date));
-        calendarService.getHolidays(year)
+        organizationService.getHolidays(year)
             .then(res => {
                 if (!res.error) {
                     setHolidays(res);

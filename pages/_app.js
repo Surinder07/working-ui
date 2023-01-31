@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
-    const [user, setUser] = useState({role: 'ADMIN'});
+    const [user, setUser] = useState({});
     const [allowedRoles, setAllowedRoles] = useState([]); // On each page this will be set to check if given role can access the page
     const [token, setToken] = useState(null);
     const [pageInfo, setPageInfo] = useState({
@@ -122,9 +122,9 @@ function MyApp({ Component, pageProps }) {
         <React.Fragment>
             <WaawHead />
             <div>
-                <TopLoader pageLoading={pageLoading} />
                 <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
                 {pageLoading && <LoadingScreen />}
+                <TopLoader pageLoading={pageLoading} />
                 {
                     pageInfo.pageView === "loggedOut" &&
                     <NavFooterPageLayout pageInfo={pageInfo} >

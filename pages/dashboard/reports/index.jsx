@@ -142,32 +142,37 @@ const Reports = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Reports" />
-            <GenerateReportModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                setToasterInfo={props.setToasterInfo}
-                role={props.user.role}
-                setReloadData={setReloadData}
-            />
-            <div className={DashboardStyles.dashboardTitles}>
-                <h1>Reports</h1>
-                <div className={DashboardStyles.rightContainer}>
-                    <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                    {
-                        (props.user.role === "MANAGER" || props.user.role === "ADMIN") &&
-                        <>
-                            <Button
-                                type="plain"
-                                onClick={() => setShowModal(true)}>
-                                + Generate New Report
-                            </Button>
-                        </>
-                    }
-                </div>
-            </div>
-            {(props.user.role === 'ADMIN') && getExpandableData("Payroll", "Tabular list of existing Payroll Reports", payrollData, getActions("shift"))}
-            {getExpandableData("Attendance", "Tabular list of existing Attendance Reports", attendanceData, getActions("attendance"))}
-            {(props.user.role === 'ADMIN') && getExpandableData("Location Holidays", "Tabular list of existing Location Holiday Reports", requestsData, getActions("request"))}
+            {
+                props.pageLoading ? <></> :
+                    <>
+                        <GenerateReportModal
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            setReloadData={setReloadData}
+                        />
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Reports</h1>
+                            <div className={DashboardStyles.rightContainer}>
+                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                {
+                                    (props.user.role === "MANAGER" || props.user.role === "ADMIN") &&
+                                    <>
+                                        <Button
+                                            type="plain"
+                                            onClick={() => setShowModal(true)}>
+                                            + Generate New Report
+                                        </Button>
+                                    </>
+                                }
+                            </div>
+                        </div>
+                        {(props.user.role === 'ADMIN') && getExpandableData("Payroll", "Tabular list of existing Payroll Reports", payrollData, getActions("shift"))}
+                        {getExpandableData("Attendance", "Tabular list of existing Attendance Reports", attendanceData, getActions("attendance"))}
+                        {(props.user.role === 'ADMIN') && getExpandableData("Location Holidays", "Tabular list of existing Location Holiday Reports", requestsData, getActions("request"))}
+                    </>
+            }
         </>
     );
 };

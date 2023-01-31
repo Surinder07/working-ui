@@ -30,10 +30,10 @@ const FilterModal = (props) => {
 
     const handleClick = (action) => {
         if (action === 1) {
-            props.onClick();
+            if (props.error && props.error.show) return;
+            if (!props.onClick()) return;
         } else {
             props.clearAllFilter();
-            // props.setShowModal(false);
         }
         document.body.style.overflow = "unset";
         props.setShowModal(false);

@@ -99,7 +99,14 @@ const Employees = (props) => {
                             role={props.user.role}
                             setPageLoading={props.setPageLoading}
                         />
-                        <EmployeeFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
+                        <EmployeeFilter
+                            setShowModal={setShowFilterModal}
+                            showModal={showFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                            data={filters}
+                            setData={setFilters}
+                        />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Employees</h1>
                             <div className={DashboardStyles.rightContainer}>
@@ -123,8 +130,6 @@ const Employees = (props) => {
                                 search={filters.searchKey}
                                 setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                                 showFilter
-                                filters={filters}
-                                setFilters={setFilters}
                                 setShowFilterModal={setShowFilterModal}
                             />
                         </DashboardCard>

@@ -76,4 +76,21 @@ export const RequestTypeValues = dropdownService.stringToDropdownObj([
 export const LeaveTypeValues = dropdownService.stringToDropdownObj([
     'Vacation',
     'Sick Leave'
+]);
+
+export const EmployeeStatus = dropdownService.stringToDropdownObj([
+    'Active',
+    'Invited',
+    'Disabled'
+]);
+
+export const EmployeeType = [
+    { display: 'Full Time', value: 'FULL_TIME' },
+    { display: 'Contractor', value: 'CONTRACTOR' }
+];
+
+export const profileType = dropdownService.stringToDropdownObj([
+    'Admin', 'Employee'
 ])
+
+export const status = dropdownService.stringToDropdownObj(['Active', 'Disabled']);

@@ -86,9 +86,14 @@ const apiEndpoints = {
         deleteHoliday: '/v1/organization/holiday/delete'
     },
     calender: {
-        getHolidays: '/v1/calender/holidays/get',
         getTimesheet: '/v1/calender/timesheets/get',
         getDayEvents: '/v1/calender/events/get'
+    },
+    webSocket: {
+        endpoint: '/ws-connect',
+        topics: {
+            notification: '/user/ws-server/notification'
+        }
     }
 };
 

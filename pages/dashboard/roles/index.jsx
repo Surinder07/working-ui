@@ -104,7 +104,15 @@ const Roles = (props) => {
                             id={editId}
                             setPageLoading={props.setPageLoading}
                         />
-                        <RolesFilter showModal={showFilterModal} setShowModal={setShowFilterModal} role={props.user.role} setReloadData={setReloadData} setToasterInfo={props.setToasterInfo} />
+                        <RolesFilter
+                            showModal={showFilterModal}
+                            setShowModal={setShowFilterModal}
+                            role={props.user.role}
+                            filters={filters}
+                            setFilters={setFilters}
+                            setReloadData={setReloadData}
+                            setToasterInfo={props.setToasterInfo}
+                        />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Roles</h1>
                             <div className={DashboardStyles.rightContainer}>
@@ -133,8 +141,6 @@ const Roles = (props) => {
                                 search={filters.searchKey}
                                 setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                                 showFilter
-                                filters={filters}
-                                setFilters={setFilters}
                                 setShowFilterModal={setShowFilterModal}
                             />
                         </DashboardCard>

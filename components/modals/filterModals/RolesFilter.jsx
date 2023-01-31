@@ -1,55 +1,58 @@
-import React, {useEffect, useState} from "react";
-import {FilterModal} from "../base";
-import {DashboardModalStyles} from "../../../styles/elements";
-import {EditableInput} from "../../inputComponents";
-import { validateForEmptyField } from "../../../helpers";
+import React, { useEffect, useState } from "react";
+import { FilterModal } from "../base";
+import { DashboardModalStyles } from "../../../styles/elements";
+import { EditableInput } from "../../inputComponents";
+import { combineBoolean, fetchAndHandleGet, validateForEmptyField } from "../../../helpers";
+import { profileType, status } from "../../../constants";
+import { dropdownService } from "../../../services";
 
 const RolesFilter = (props) => {
-    const [dateFrom, setDateFrom] = useState("");
-    const [dateTo, setDateTo] = useState("");
-    const [profileType, setProfileType] = useState("");
-    const [role, setRole] = useState("");
-    const [status, setStatus] = useState("");
+    // ------------ Dropdown values
+    const [locations, setLocations] = useState([]);
+    // ----------------------------
 
-    const [errorDate,setErrorDate] = useState({});
-    const clearAllFilter = () => {
-        setDateFrom("")
-        setDateTo("")
-        setProfileType("")
-        setRole("")
-        setStatus("")
-        setErrorDate({})
-        props.setData({})
-    }
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [admin, setAdmin] = useState("");
+    const [locationId, setLocationId] = useState("");
+    const [active, setActive] = useState("");
+    const [errorDate, setErrorDate] = useState({});
 
     useEffect(() => {
-        props.setData && props.setData({
-            fromDate: dateFrom,
-            toDate: dateTo,
-            profileType,
-            role,
-            status 
-        })
-    },[])
+        if (props.role) {
+            if (props.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            }
+        }
+    }, [props.role])
+
+    const clearAllFilter = () => {
+        setStartDate("")
+        setEndDate("")
+        setAdmin("")
+        setLocationId("")
+        setActive("")
+        setErrorDate({})
+        props.setFilters({})
+    }
 
     const isError = () => {
-        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
-               validateForEmptyField(dateTo, 'Date', setErrorDate, true) 
+        if ((startDate === '' && endDate !== '') || (startDate !== '' && endDate === '')) {
+            setErrorDate({
+                message: 'Both dates are required',
+                show: true
+            })
+            return true;
+        }
     }
 
-    const saveData = () => {
+    const applyFilters = () => {
         if (!isError()) {
-                    let data = {
-                        fromDate: dateFrom,
-                        toDate: dateTo,
-                        profileType: profileType,
-                        role: role,
-                        status: status 
-                    }
-                    props.setData(data)
-                    clearAllFilter()
-                }
+            props.setFilters({ startDate, endDate, admin, locationId, active });
+            return true;
+        } else return false
     }
+
     return (
         <div>
             <FilterModal
@@ -58,14 +61,15 @@ const RolesFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{width: '100%', textAlign: 'center', margin: 0, color: '#535255'}}>Creation Date</h4>
                 <EditableInput
                     type="date"
-                    label="Creation Date"
-                    value={dateFrom}
-                    setValue={setDateFrom}
+                    label="From"
+                    value={startDate}
+                    setValue={setStartDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
@@ -73,8 +77,8 @@ const RolesFilter = (props) => {
                 <EditableInput
                     type="date"
                     label="To"
-                    value={dateTo}
-                    setValue={setDateTo}
+                    value={endDate}
+                    setValue={setEndDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
@@ -83,32 +87,32 @@ const RolesFilter = (props) => {
                     type="dropdown"
                     label="Profile Type"
                     placeholder="Type"
-                    value={profileType}
-                    setValue={setProfileType}
-                    options={["Admin", "Manager", "Employee"]}
+                    value={admin === '' ? '' : (admin === true ? 'Admin' : 'Employee')}
+                    setValue={(val) => setAdmin(val === 'Admin')}
+                    options={profileType}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
-                  {
+                {
                     props.role === 'ADMIN' &&
                     <EditableInput
-                    type="dropdown"
-                    label="Role"
-                    placeholder="Role"
-                    value={role}
-                    setValue={setRole}
-                    options={["Admin", "Manager", "Employee"]}
-                    className={DashboardModalStyles.singleColumn}
-                    editOn
-                />
+                        type="dropdown"
+                        label="Location"
+                        placeholder="Location"
+                        value={locationId}
+                        setValue={setLocationId}
+                        options={locations}
+                        className={DashboardModalStyles.singleColumn}
+                        editOn
+                    />
                 }
                 <EditableInput
                     type="dropdown"
                     label="Status"
                     placeholder="Status"
-                    value={status}
-                    setValue={setStatus}
-                    options={["pending", "In process", "completed"]}
+                    value={active === '' ? '' : (active === true ? 'Active' : 'Disabled')}
+                    setValue={(val) => setActive(val === 'Active')}
+                    options={status}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
