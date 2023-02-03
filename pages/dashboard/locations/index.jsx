@@ -94,8 +94,8 @@ const Locations = (props) => {
                             setShowModal={setShowFilterModal}
                             showModal={showFilterModal}
                             setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
                             setReloadData={setReloadData}
+                            setFilters={setFilters}
                         />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Locations</h1>

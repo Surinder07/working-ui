@@ -6,8 +6,8 @@ const saveLocation = async ({ name, timezone }) => {
     return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.newLocation), { name, timezone });
 }
 
-const getAllLocations = async (pageNo, pageSize) => {
-    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocation, pageNo, pageSize));
+const getAllLocations = async (pageNo, pageSize, filters, sort) => {
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getLocation, pageNo, pageSize, {...filters, ...sort}));
 }
 
 const removeLocation = async (id) => {

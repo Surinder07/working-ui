@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { status } from "../../../constants";
 import { DashboardModalStyles } from "../../../styles/elements";
 import { EditableInput } from "../../inputComponents";
 import { FilterModal } from "../base";
@@ -8,26 +8,26 @@ const LocationFilter = (props) => {
     //------------- Dropdown values
     const [timezones, setTimezones] = useState([]);
     //-----------------------------
-    const [status, setStatus] = useState("");
+    const [activeStatus, setActiveStatus] = useState("");
     const [timezone, setTimezone] = useState("");
+
+    useEffect(() => {
+        fetchAndHandleGet(dropdownService.getTimezones, setTimezones);
+    }, [])
 
     const clearAllFilter = () => {
         setStatus("");
         setTimezone("");
-        props.setData({})
+        props.setFilters({})
     };
 
-    const saveData = () => {
-        if (!isError()) {
-            let data = {
-                status: status,
-                timezone: timezone
-            }
-            props.setData(data)
-            clearAllFilter()
-        }
+    const applyFilters = () => {
+        props.setData({
+            active: status === 'Active',
+            timezone
+        })
+        props.setShowModal(false);
     }
-
 
     return (
         <div>
@@ -37,16 +37,16 @@ const LocationFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="dropdown"
                     label="Status"
                     placeholder="Status"
-                    value={status}
-                    setValue={setStatus}
-                    options={[{ display: "pending", value: "pending" }, { display: "In Process", value: "In Process" }]}
+                    value={activeStatus}
+                    setValue={setActiveStatus}
+                    options={status}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />

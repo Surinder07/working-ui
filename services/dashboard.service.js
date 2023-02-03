@@ -90,7 +90,7 @@ const getHoursTrends = (data, weekStart) => {
         datasets: [
             {
                 fill: true,
-                label: "Toatl Hours (Current Week)",
+                label: "Total Hours (Current Week)",
                 data: currentWeekData,
                 borderColor: "rgb(53, 162, 235)",
                 backgroundColor: "rgba(53, 162, 235, 0.1)",
@@ -101,7 +101,7 @@ const getHoursTrends = (data, weekStart) => {
             },
             {
                 fill: true,
-                label: "Toatl Hours (Previous Week)",
+                label: "Total Hours (Previous Week)",
                 data: lastWeekData,
                 borderColor: "rgb(223, 224, 235)",
                 backgroundColor: "rgba(223, 224, 235, 0.3)",
