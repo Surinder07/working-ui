@@ -14,8 +14,13 @@ const getActiveTimer = async () => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getTimer));
 }
 
+const getAll = async (pageNo, pageSize, filters) => {
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getAll, pageNo, pageSize, { ...filters }))
+}
+
 export const timesheetService = {
     startTimer,
     stopTimer,
-    getActiveTimer
+    getActiveTimer,
+    getAll
 }

@@ -26,7 +26,7 @@ const EditableInput = (props) => {
             }
             <div style={{ position: 'relative' }}>
                 {
-                    (props.type === 'text' || props.type === 'password') &&
+                    (props.type === 'text' || props.type === 'password' || props.type === 'name') &&
                     (
                         props.editOn ?
                             <InputBox name={props.label} inputType={2} type={props.type} value={props.value} setValue={setValue} disabled={props.nonEditable} /> :

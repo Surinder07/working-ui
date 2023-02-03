@@ -23,7 +23,7 @@ const getMemberById = async (userId) => {
 }
 
 const updateMember = async (data) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateMember), { data });
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateMember), data );
 }
 
 const deleteMember = async (id) => {
@@ -34,8 +34,8 @@ const toggleActiveMember = async (id) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.toggleActiveMember, { id }));
 }
 
-const addEmployeePreferences = async (id, data) => {
-    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.addEmployeePreferences), { id, data });
+const addEmployeePreferences = async (data) => {
+    return fetchWrapper.post(fetchWrapper.getApiUrl(endpoints.addEmployeePreferences), data);
 }
 
 export const memberService = {

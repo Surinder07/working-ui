@@ -43,7 +43,7 @@ const EmployeeFilter = (props) => {
     }, [locationId])
 
     const applyFilter = () => {
-        props.setData({ type, roleId, locationId, status });
+        props.setData({ ...props.data, type, roleId, locationId, status });
         return true;
     }
 

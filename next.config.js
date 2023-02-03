@@ -39,8 +39,10 @@ const apiEndpoints = {
         createShift: '/v1/shifts/create',
         updateShift: '/v1/shifts/update',
         deleteShift: '/v1/shifts/delete',
+        deleteBatch: '/v1/shifts/batch/delete',
         assignShift: '/v1/shifts/assign',
         releaseShift: '/v1/shifts/release',
+        releaseBatch: '/v1/shifts/batch/release',
         getAllShifts: '/v1/shifts/getAll',
         getAllShiftsUser: '/v1/shifts/user/getAll'
     },
@@ -72,7 +74,7 @@ const apiEndpoints = {
         startTimer: '/v1/timesheet/timer/start',
         stopTimer: '/v1/timesheet/timer/stop',
         getTimer: '/v1/timesheet/timer/get',
-        getAll: '/v1/timesheet/getForUser',
+        getAll: '/v1/timesheet/getAll',
         add: '/v1/timesheet/add',
         edit: '/v1/timesheet/edit',
         delete: '/v1/timesheet/delete'

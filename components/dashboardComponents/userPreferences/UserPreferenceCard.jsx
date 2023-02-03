@@ -9,7 +9,7 @@ const UserPreferenceCard = (props) => {
     }
 
     const handleSave = () => {
-        console.log('save')
+        props.onSave && props.onSave()
     }
 
     return (

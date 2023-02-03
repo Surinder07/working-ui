@@ -16,8 +16,8 @@ import {
     EmployeesShiftFilter,
     EmployeeAttendanceFilter,
 } from "../../../components";
-import { memberService } from "../../../services";
-import { fetchAndHandle, fetchAndHandleGet } from "../../../helpers";
+import { dropdownService, memberService } from "../../../services";
+import { fetchAndHandle, fetchAndHandleGet, getUpdateMemberRequestBody } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
 
 const requestsD = []
@@ -144,6 +144,12 @@ const Employees = (props) => {
 
     const router = useRouter();
 
+    // Dropdown values ---------
+    const [locations, setLocations] = useState([]);
+    const [roles, setRoles] = useState([]);
+    // -------------------------
+
+    const [loading, setLoading] = useState(false);
     const [userId, setUserId] = useState("");
     const [mobile, setMobile] = useState({ countryCode: "", mobile: "", country: "" });
     const [initialMobile, setInitialMobile] = useState({ countryCode: "", mobile: "", country: "" });
@@ -153,8 +159,10 @@ const Employees = (props) => {
     const [initialLastName, setInitialLastName] = useState("");
     const [email, setEmail] = useState("");
     const [employeeId, setEmployeeId] = useState("");
+    const [initialEmployeeId, setInitialEmployeeId] = useState("");
     const [location, setLocation] = useState("");
     const [initialLocation, setInitialLocation] = useState("");
+    const [initialLocationId, setInitialLocationId] = useState("");
     const [role, setRole] = useState("");
     const [initialRole, setInitialRole] = useState("");
     const [employeeType, setEmployeeType] = useState("");
@@ -165,6 +173,9 @@ const Employees = (props) => {
     const [attendanceData, setAttendanceData] = useState(attendanceD);
     const [shiftData, setShiftData] = useState(shiftD);
     const [requestsData, setRequestsData] = useState(requestsD);
+
+    // Reload states
+    const [reloadPreferences, setReloadPreferences] = useState(false);
 
     // Error states 
     const [errorMobile, setErrorMobile] = useState({});
@@ -194,6 +205,23 @@ const Employees = (props) => {
     }, []);
 
     useEffect(() => {
+        if (props.user.role) {
+            if (props.user.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            } else {
+                fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+            }
+        }
+    }, [props.user])
+
+    useEffect(() => {
+        if (location !== initialLocationId) setRole("");
+        if (location && location !== '') {
+            fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
+        }
+    }, [location])
+
+    useEffect(() => {
         if (!router.isReady) return;
         if (router.query.id) setUserId(router.query.id);
         else handleWrongId('Please choose a valid employee first')
@@ -220,6 +248,14 @@ const Employees = (props) => {
         fetchAndHandleGet(() => memberService.getMemberById(userId), setEmployeeDetails);
     }
 
+    useEffect(() => {
+        if (reloadPreferences) {
+            fetchEmployeeDetails();
+            setReloadPreferences(false);
+            props.setPageLoading(false);
+        }
+    }, [reloadPreferences])
+
     const setEmployeeDetails = (data) => {
         setFirstName(data.firstName);
         setInitialFirstName(data.firstName);
@@ -229,9 +265,11 @@ const Employees = (props) => {
         setMobile({ country: data.country, countryCode: data.countryCode, mobile: data.mobile });
         setInitialMobile({ country: data.country, countryCode: data.countryCode, mobile: data.mobile });
         setEmployeeId(data.employeeId);
-        setLocation(data.locationName);
+        setInitialEmployeeId(data.employeeId);
+        setLocation(data.locationId);
         setInitialLocation(data.locationName);
-        setRole(data.locationRoleName);
+        setInitialLocationId(data.locationId);
+        setRole(data.locationRoleId);
         setInitialRole(data.locationRoleName);
         setEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
         setInitialEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
@@ -245,6 +283,18 @@ const Employees = (props) => {
             message: message
         })
         router.push('/dashboard/employees')
+    }
+
+    const updateUserData = () => {
+        if (loading) return;
+        try {
+            fetchAndHandle(() => memberService.updateMember(getUpdateMemberRequestBody(firstName, lastName,
+                mobile, location, role, employeeType, employeeId, userId)), "Employee details updated successfully",
+                setLoading, setReloadPreferences, props.setPageLoading, null, null, props.setToasterInfo);
+        } catch {
+            setLoading(false);
+            props.setPageLoading(false);
+        }
     }
 
     const getActions = (tableType) => {
@@ -341,10 +391,11 @@ const Employees = (props) => {
                                 setFirstName(initialFirstName);
                                 setLastName(initialLastName);
                                 setMobile(initialMobile);
-                                setLocation(initialLocation);
+                                setLocation(initialLocationId);
                                 setRole(initialRole);
                                 setEmployeeType(initialEmployeeType);
                             }}
+                            onSave={updateUserData}
                         >
                             <div className={DashboardStyles.personalContainer}>
                                 <ProfileImage size="big" />
@@ -384,21 +435,26 @@ const Employees = (props) => {
                                         value={mobile}
                                         initialValue={initialMobile}
                                         setValue={setMobile}
-                                        error={errorMobile}
-                                        setError={setErrorMobile}
+                                        // error={errorMobile}
+                                        // setError={setErrorMobile}
                                         editOn={personalEditOn}
                                     />
-                                    <EditableInput
-                                        label="Location"
-                                        type="text"
-                                        value={location}
-                                        initialValue={initialLocation}
-                                        setValue={setLocation}
-                                        editOn={personalEditOn}
-                                    />
+                                    {
+                                        props.user.role && props.user.role === 'ADMIN' &&
+                                        < EditableInput
+                                            label="Location"
+                                            type="typeAhead"
+                                            options={locations}
+                                            value={location}
+                                            initialValue={initialLocation}
+                                            setValue={setLocation}
+                                            editOn={personalEditOn}
+                                        />
+                                    }
                                     <EditableInput
                                         label="Role"
-                                        type="text"
+                                        type="typeAhead"
+                                        options={roles}
                                         value={role}
                                         initialValue={initialRole}
                                         error={errorRole}
@@ -413,7 +469,6 @@ const Employees = (props) => {
                                         initialValue={employeeId}
                                         setValue={setEmployeeId}
                                         editOn={personalEditOn}
-                                        nonEditable
                                     />
                                     <EditableInput
                                         label="Employee type"
@@ -431,6 +486,10 @@ const Employees = (props) => {
                             data={employeePreferenceData}
                             expanded={expandedMenu === 'preferences'}
                             toggleExpansion={() => handleExpansion('preferences')}
+                            setToasterInfo={props.setToasterInfo}
+                            userId={userId}
+                            setPageLoading={props.setPageLoading}
+                            setReloadData={setReloadPreferences}
                         />
                         {getExpandableData("Shifts", shiftData, getActions('shift'), setShowEmployeeShiftFilterModal)}
                         {getExpandableData("Requests", requestsData, getActions('request'), "")}

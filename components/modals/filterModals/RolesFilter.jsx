@@ -48,7 +48,7 @@ const RolesFilter = (props) => {
 
     const applyFilters = () => {
         if (!isError()) {
-            props.setFilters({ startDate, endDate, admin, locationId, active });
+            props.setFilters({ ...props.filters, startDate, endDate, admin, locationId, active });
             return true;
         } else return false
     }
@@ -64,7 +64,7 @@ const RolesFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
-                <h4 className={DashboardModalStyles.singleColumn} style={{width: '100%', textAlign: 'center', margin: 0, color: '#535255'}}>Creation Date</h4>
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Creation Date</h4>
                 <EditableInput
                     type="date"
                     label="From"

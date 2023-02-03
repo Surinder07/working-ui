@@ -9,7 +9,7 @@ const InputBox = (props) => {
     const [visibilityIcon, setVisibilityIcon] = useState(<Visibility style={{ fontSize: '18px' }} />);
 
     useEffect(() => {
-        if (props.type === 'user' || props.type === 'org' || props.type === 'email') {
+        if (props.type === 'user' || props.type === 'name' || props.type === 'org' || props.type === 'email') {
             setType('text')
         }
     })
@@ -21,6 +21,8 @@ const InputBox = (props) => {
             case 'password':
                 return <Key style={{ fontSize: '18px' }} />
             case 'user':
+                return <Person style={{ fontSize: '18px' }} />
+            case 'name':
                 return <Person style={{ fontSize: '18px' }} />
             case 'org':
                 return <CorporateFare style={{ fontSize: '18px' }} />
@@ -62,6 +64,7 @@ const InputBox = (props) => {
                 value={props.value}
                 disabled={props.disabled}
                 onChange={(e) => {
+                    if (props.type === 'name' && !e.target.value.match(/^[A-Za-z]+$/) && e.target.value !== '') return;
                     props.setValue(e.target.value);
                     props.setShowError && props.setShowError(false);
                 }}

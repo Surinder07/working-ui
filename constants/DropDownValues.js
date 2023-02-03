@@ -94,3 +94,8 @@ export const profileType = dropdownService.stringToDropdownObj([
 ])
 
 export const status = dropdownService.stringToDropdownObj(['Active', 'Disabled']);
+
+export const timesheetType = [
+    {display: 'Clocked', value: 'CLOCKED'},
+    {display: 'Manual', value: 'ADDED_BY_ADMIN'}
+]

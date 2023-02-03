@@ -17,9 +17,6 @@ const InfoTileBanner = (props) => {
                                 {DashboardInfoTiles[tile].timeframe && <h3>{DashboardInfoTiles[tile].timeframe}</h3>}
                             </div>
                             {
-                                console.log(props.data, typeof props.data)
-                            }
-                            {
                                 (props.data && props.role) ?
                                     (
                                         typeof props.data[tile] === 'string' || typeof props.data[tile] === 'number' ?

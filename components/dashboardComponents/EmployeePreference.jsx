@@ -5,13 +5,15 @@ import { TableStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { currencies } from "../../constants";
 import { memberService } from "../../services";
-import { fetchAndHandle } from "../../helpers";
+import { fetchAndHandle, updatePreferenceRequestBody } from "../../helpers";
+import { isAssetError } from "next/dist/client/route-loader";
 
 const EmployeePreference = (props) => {
 
     const [editOn, setEditOn] = useState(false);
     const [initialPreferences, setInitialPreferences] = useState({});
     const [preferences, setPreferences] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const getDayObject = (day, startTime, endTime) => {
         return {
@@ -58,26 +60,51 @@ const EmployeePreference = (props) => {
         setPreferences(initialPreferences);
     }
 
+    const isError = () => {
+        let error = false;
+        preferences.rowsData.map(row => {
+            if (row.working && (row.startTime.hours === '-' || row.startTime.minutes === '-' ||
+                row.endTime.hours === '-' || row.endTime.minutes === '-')) error = true;
+        })
+        if (error) props.setToasterInfo({
+            error: true,
+            title: "Error!",
+            message: "Please select a time for all working days",
+        })
+        return error;
+    }
+
     const onSave = () => {
-        fetchAndHandle(() => memberService.addEmployeePreferences())
+        if (loading) return;
+        if (!isError()) {
+            try {
+                fetchAndHandle(() => memberService.addEmployeePreferences(updatePreferenceRequestBody(preferences, props.userId)),
+                    "Preferences update successfuly", setLoading, props.setReloadData, props.setPageLoading,
+                    null, null, props.setToasterInfo, () => setEditOn(false));
+            } catch {
+                setLoading(false)
+            }
+        }
     }
 
     useEffect(() => {
-        const preferenceObj = {
-            rowsData: [
-                getDayObject('Sunday', props.data.sundayStartTime, props.data.sundayEndTime),
-                getDayObject('Monday', props.data.mondayStartTime, props.data.mondayEndTime),
-                getDayObject('Tuesday', props.data.tuesdayStartTime, props.data.tuesdayEndTime),
-                getDayObject('Wednesday', props.data.wednesdayStartTime, props.data.wednesdayEndTime),
-                getDayObject('Thursday', props.data.thursdayStartTime, props.data.thursdayEndTime),
-                getDayObject('Friday', props.data.fridayStartTime, props.data.fridayEndTime),
-                getDayObject('Saturday', props.data.saturdayStartTime, props.data.saturdayEndTime),
-            ],
-            wagesPerHour: props.data.wagesPerHour,
-            wagesCurrency: props.data.wagesCurrency
+        if (props.data) {
+            const preferenceObj = {
+                rowsData: [
+                    getDayObject('Sunday', props.data.sundayStartTime, props.data.sundayEndTime),
+                    getDayObject('Monday', props.data.mondayStartTime, props.data.mondayEndTime),
+                    getDayObject('Tuesday', props.data.tuesdayStartTime, props.data.tuesdayEndTime),
+                    getDayObject('Wednesday', props.data.wednesdayStartTime, props.data.wednesdayEndTime),
+                    getDayObject('Thursday', props.data.thursdayStartTime, props.data.thursdayEndTime),
+                    getDayObject('Friday', props.data.fridayStartTime, props.data.fridayEndTime),
+                    getDayObject('Saturday', props.data.saturdayStartTime, props.data.saturdayEndTime),
+                ],
+                wagesPerHour: props.data.wagesPerHour,
+                wagesCurrency: props.data.wagesCurrency
+            }
+            setPreferences(preferenceObj);
+            setInitialPreferences(preferenceObj);
         }
-        setPreferences(preferenceObj);
-        setInitialPreferences(preferenceObj);
     }, [props.data])
 
     return (

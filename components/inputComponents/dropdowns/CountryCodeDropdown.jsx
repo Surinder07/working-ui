@@ -28,12 +28,12 @@ const CountryCodeDropdown = (props) => {
     useEffect(() => {
         const selectedOption = props.value.country && props.value.country !== '' ? props.options.find(option => {
             return option.country === props.value.country;
-        }) : props.options[0];
-        setDisplayValue(selectedOption.selectDisplay);
+        }) : null;
+        setDisplayValue(selectedOption === null ? '-' : selectedOption.selectDisplay);
         props.setValue({
             ...props.value,
-            countryCode: selectedOption.value,
-            country: selectedOption.country
+            countryCode: selectedOption === null ? '' : selectedOption.value,
+            country: selectedOption === null ? '' : selectedOption.country
         });
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
@@ -58,7 +58,7 @@ const CountryCodeDropdown = (props) => {
                 {
                     props.options.map((option, i) => (
                         <p key={i} onClick={() => {
-                            props.setValue(option.value);
+                            props.setValue({...props.value, countryCode: option.value, country: option.country});
                             setDisplayValue(option.selectDisplay);
                         }}
                         ><Image src={option.icon} height={20} width={20} alt={option.display} style={{ marginRight: '15px' }} />

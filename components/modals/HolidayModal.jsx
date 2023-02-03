@@ -1,7 +1,7 @@
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
 import { CloudUpload } from "@mui/icons-material";
-import { fetchWrapper } from "../../helpers";
+import { fetchAndHandle, fetchWrapper } from "../../helpers";
 import Link from 'next/link';
 import { useState } from "react";
 import { organizationService } from "../../services/organization.service";
@@ -22,11 +22,10 @@ const HolidayModal = (props) => {
         }
     }
 
-    const saveData = (e) => {
+    const saveData = () => {
         if (file.name) {
             fetchAndHandle(() => organizationService.uploadHolidays({ file: file }), null, setLoading,
-                null, props.setPageLoading, onCancel, props.setShowModal,
-                props.setToasterInfo);
+                null, props.setPageLoading, onCancel, props.setShowModal, props.setToasterInfo);
         } else {
             props.setToasterInfo({
                 error: true,

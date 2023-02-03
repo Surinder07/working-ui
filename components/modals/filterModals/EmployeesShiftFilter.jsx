@@ -13,6 +13,7 @@ const EmployeesShiftFilter = (props) => {
         message: '',
         show: false
     });
+    
     const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")

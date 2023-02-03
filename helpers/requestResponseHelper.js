@@ -104,8 +104,8 @@ export const getNotificationListing = (data) => {
             type: notification.type,
             date: notification.createdTime,
             status: {
-                text: notification.isRead ? 'Read' : 'Unread',
-                status: notification.isRead ? 'ok' : 'warn',
+                text: notification.read ? 'Read' : 'Unread',
+                status: notification.read ? 'ok' : 'warn',
                 displayType: 'color'
             },
             subData: [{
@@ -180,6 +180,19 @@ export const getSingleShiftsListing = (data) => {
             inTime: shift.start.date + " " + shift.start.time,
             outTime: shift.end.date + " " + shift.end.time,
             comments: shift.notes
+        }
+    })
+}
+
+export const getTimesheetListing = (data) => {
+    return data.map(timesheet => {
+        return {
+            internalId: timesheet.id,
+            start: timesheet.start ? timesheet.start.date + " " + timesheet.start.time : '-',
+            end: timesheet.end ? timesheet.end.date + " " + timesheet.end.time : '-',
+            duration: timesheet.duration ? timesheet.duration : '-',
+            type: timesheet.type,
+            comments: timesheet.comment
         }
     })
 }
@@ -259,6 +272,43 @@ export const newRequestRequestBody = (requestType, timeOffFormType, fromDate, ti
         req = { ...req, subType: getSubtype() }
     }
     return req;
+}
+
+export const updatePreferenceRequestBody = (data, id) => {
+    let tempObj = {};
+    data.rowsData.map(row => {
+        const startKey = `${row.days.toLowerCase()}StartTime`
+        const endKey = `${row.days.toLowerCase()}EndTime`
+        tempObj[startKey] = row.working ? `${row.startTime.hours}:${row.startTime.minutes}` : null;
+        tempObj[endKey] = row.working ? `${row.endTime.hours}:${row.endTime.minutes}` : null;
+        // {
+        //     ...tempObj,
+        //     startKey: row.working ? row.startTime : null,
+        //     endKey: row.working ? row.endTime : null
+        // }
+    })
+    return {
+        ...tempObj,
+        userId: id,
+        wagesPerHour: data.wagesPerHour,
+        wagesCurrency: data.wagesCurrency,
+    }
+}
+
+export const getUpdateMemberRequestBody = (firstName, lastName, mobile, location, role, employeeType,
+    employeeId, userId) => {
+    return {
+        id: userId,
+        firstName,
+        lastName,
+        employeeId,
+        countryCode: mobile.countryCode,
+        mobile: mobile.mobile,
+        country: mobile.country,
+        locationId: location,
+        roleId: role,
+        fullTime: employeeType === 'Full Time'
+    }
 }
 
 const formatTime = (time) => {

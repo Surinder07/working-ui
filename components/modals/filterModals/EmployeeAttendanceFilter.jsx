@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {FilterModal} from "../base";
-import {DashboardModalStyles} from "../../../styles/elements";
-import {EditableInput} from "../../inputComponents";
-import { validateForEmptyField } from "../../../helpers";
+import { useState } from "react";
+import { FilterModal } from "../base";
+import { DashboardModalStyles } from "../../../styles/elements";
+import { EditableInput } from "../../inputComponents";
+import { timesheetType } from "../../../constants";
 
 const EmployeeAttendanceFilter = (props) => {
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
     const [entryType, setEntryType] = useState("");
-    const [errorDate,setErrorDate] = useState({
+    const [errorDate, setErrorDate] = useState({
         message: '',
         show: false
     });
+
     const clearAllFilter = () => {
         setDateFrom("")
         setDateTo("")
@@ -23,29 +24,18 @@ const EmployeeAttendanceFilter = (props) => {
         props.setData({})
     }
 
-    useEffect(() => {
-        props.setData && props.setData({
-            fromDate: dateFrom,
-            toDate: dateTo,
-            entryType
+    if ((dateFrom === '' && dateTo !== '') || (dateFrom !== '' && dateTo === '')) {
+        setErrorDate({
+            message: 'Both dates are required',
+            show: true
         })
-    },[])
-
-    const isError = () => {
-        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
-        validateForEmptyField(dateTo, 'Date', setErrorDate, true)
+        return true;
     }
 
-    const saveData = () => {
+    const applyFilter = () => {
         if (!isError()) {
-                    let data = {
-                        fromDate: dateFrom,
-                        toDate: dateTo,
-                        entryType: entryType
-                    }
-                    props.setData(data)
-                    clearAllFilter()
-                }            
+            props.setFilters({ ...props.filters, startDate, endDate, type: entryType })
+        } else return false;
     }
 
     return (
@@ -56,7 +46,7 @@ const EmployeeAttendanceFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilter}
                 clearAllFilter={clearAllFilter}
             >
                 <EditableInput
@@ -83,7 +73,7 @@ const EmployeeAttendanceFilter = (props) => {
                     placeholder="Entry Type"
                     value={entryType}
                     setValue={setEntryType}
-                    options={["Day", "Night"]}
+                    options={timesheetType}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />

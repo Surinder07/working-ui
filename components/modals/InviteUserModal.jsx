@@ -144,7 +144,7 @@ const InviteUserModal = (props) => {
                 <p className={DashboardModalStyles.seperator}>— OR —</p>
             </div>
             <EditableInput
-                type="text"
+                type="name"
                 label="First Name"
                 value={firstName}
                 setValue={setFirstName}
@@ -155,7 +155,7 @@ const InviteUserModal = (props) => {
                 editOn
             />
             <EditableInput
-                type="text"
+                type="name"
                 label="Last Name"
                 value={lastName}
                 setValue={setLastName}

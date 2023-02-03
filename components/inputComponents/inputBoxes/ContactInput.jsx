@@ -49,7 +49,7 @@ const ContactInput = (props) => {
                             ...props.value,
                             mobile: e.target.value
                         });
-                        props.setShowError(false);
+                        props.setShowError && props.setShowError(false);
                     }
                 }}
                 style={{ paddingLeft: '15px' }}

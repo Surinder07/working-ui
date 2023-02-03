@@ -3,41 +3,17 @@ import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button } from "../../../components";
 import { Warning } from "@mui/icons-material";
 import { timesheetService } from "../../../services";
-
-const timesheet = [
-    {
-        inDate: '02/01/2023',
-        inTime: '10:00',
-        outDate: '02/01/2023',
-        outTime: '05:30',
-        type: 'daily',
-        comment: 'N/A'
-    },
-    {
-        inDate: '03/01/2023',
-        inTime: '10:30',
-        outDate: '04/01/2023',
-        outTime: '06:00',
-        type: 'daily',
-        comment: 'N/A'
-    },
-    {
-        inDate: '04/01/2023',
-        inTime: '11:00',
-        outDate: '04/01/2023',
-        outTime: '06:30',
-        type: 'daily',
-        comment: 'N/A'
-    },
-]
+import { fetchAndHandlePage, getTimesheetListing } from "../../../helpers";
 
 const timeClock = (props) => {
 
-    const [data, setData] = useState(timesheet);
+    const [data, setData] = useState();
+    const [reloadData, setReloadData] = useState(false);
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
+    const [filters, setFilters] = useState({});
     const [start, setStart] = useState("--:--");
     const [startDate, setStartDate] = useState(new Date());
     const [duration, setDuration] = useState("00:00:00");
@@ -71,6 +47,7 @@ const timeClock = (props) => {
                     setStart(`${timeArray[0]}:${timeArray[1]}`)
                     setStartDate(now);
                     setPlaying(true);
+                    setReloadData(true);
                 }
             })
     }
@@ -87,6 +64,7 @@ const timeClock = (props) => {
                 } else {
                     setPlaying(false);
                     setDisableTimer(true);
+                    setReloadData(true);
                 }
             });
     }
@@ -102,7 +80,6 @@ const timeClock = (props) => {
                     })
                 }
                 else {
-                    console.log(res)
                     if (!res) {
                         setPlaying(false);
                         setDisableTimer(false)
@@ -142,6 +119,22 @@ const timeClock = (props) => {
             };
         }
     }, [playing]);
+
+    useEffect(() => {
+        fetchData();
+    }, [pageNo, pageSize, filters]);
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData])
+
+    const fetchData = () => {
+        fetchAndHandlePage(() => timesheetService.getAll(pageNo, pageSize, filters),
+            setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
+            getTimesheetListing, props.user.role);
+
+    }
 
     return (
         <>
