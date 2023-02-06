@@ -1,65 +1,70 @@
-import React, {useEffect, useState} from "react";
-import {FilterModal} from "../base";
-import {DashboardModalStyles} from "../../../styles/elements";
-import {EditableInput} from "../../inputComponents";
+import React, { useEffect, useState } from "react";
+import { FilterModal } from "../base";
+import { DashboardModalStyles } from "../../../styles/elements";
+import { EditableInput } from "../../inputComponents";
+import { combineBoolean, fetchAndHandleGet } from "../../../helpers";
+import { batchStatusOptions, shiftStatusOptions } from "../../../constants";
+import { dropdownService } from "../../../services";
 const ShiftsFilter = (props) => {
-       //------------- Dropdown values
-       const [locations, setLocations] = useState([]);
-       //-----------------------------
-    const [shiftFromDate, setShiftFromDate] = useState("");
-    const [shiftToDate, setShiftToDate] = useState("");
-    const [role, setRole] = useState("");
-    const [location, setLocation] = useState("");
+
+    //------------- Dropdown values
+    const [locations, setLocations] = useState([]);
+    const [roles, setRoles] = useState([]);
+    //-----------------------------
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [roleId, setRoleId] = useState("");
+    const [locationId, setLocationId] = useState("");
     const [shiftStatus, setShiftStatus] = useState("");
     const [batchStatus, setBatchStatus] = useState("");
-    const [errorDate,setErrorDate] = useState({
+    const [errorDate, setErrorDate] = useState({
         message: '',
         show: false
     });
-    const [errorLocation, setErrorLocation] = useState({});
+
+    useEffect(() => {
+        if (props.role) {
+            if (props.role === 'ADMIN') {
+                fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
+            } else {
+                fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
+            }
+        }
+    }, [props.role])
+
+    useEffect(() => {
+        setRoleId("");
+        if (locationId !== null && locationId !== '') {
+            fetchAndHandleGet(() => dropdownService.getRoles(locationId), setRoles);
+        }
+    }, [locationId])
+    
     const clearAllFilter = () => {
-        setShiftFromDate("")
-        setShiftToDate("")
-        setRole("")
-        setLocation("")
+        setStartDate("")
+        setEndDate("")
+        setRoleId("")
+        setLocationId("")
         setShiftStatus("")
         setBatchStatus("")
-        setErrorLocation({})
         setErrorDate({})
-        props.setData({})
+        props.setFilters({})
     }
-
-    
-    useEffect(() => {
-        props.setData && props.setData({
-            fromDate: shiftFromDate,
-            toDate: shiftToDate,
-            role,
-            location,
-            shiftStatus,
-            batchStatus,
-        })
-    },[])
 
     const isError = () => {
-        return validateForEmptyField(shiftFromDate, 'Date', setErrorDate, true) ||
-               validateForEmptyField(shiftToDate, 'Date', setErrorDate, true) ||
-               validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
+        if ((startDate === '' && endDate !== '') || (startDate !== '' && endDate === '')) {
+            setErrorDate({
+                message: 'Both dates are required',
+                show: true
+            })
+            return true;
+        }
     }
 
-    const saveData = () => {
+    const applyFilters = () => {
         if (!isError()) {
-                    let data = {
-                        fromDate: shiftFromDate,
-                        toDate: shiftToDate,
-                        role: role,
-                        location: location,
-                        shiftStatus: shiftStatus,
-                        batchStatus: batchStatus, 
-                    }
-                    props.setData(data)
-                    clearAllFilter()
-                }
+            props.setFilters({ ...props.filters, startDate, endDate, locationId, roleId, shiftStatus, batchStatus });
+            return true;
+        } else return false
     }
 
     return (
@@ -70,14 +75,14 @@ const ShiftsFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"
                     label="Shifts From"
-                    value={shiftFromDate}
-                    setValue={setShiftFromDate}
+                    value={startDate}
+                    setValue={setStartDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
@@ -85,46 +90,42 @@ const ShiftsFilter = (props) => {
                 <EditableInput
                     type="date"
                     label="To"
-                    value={shiftToDate}
-                    setValue={setShiftToDate}
+                    value={endDate}
+                    setValue={setEndDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
                 />
-                <EditableInput
-                    type="dropdown"
-                    label="Role"
-                    placeholder="Role"
-                    value={role}
-                    setValue={setRole}
-                    options={["Admin", "Manager", "Employee"]}
-                    className={DashboardModalStyles.singleColumn}
-                    editOn
-                />
-                 {
+                {
                     props.role === 'ADMIN' &&
                     <EditableInput
                         type="typeAhead"
                         options={locations}
                         placeholder="Location"
                         label="Location"
-                        value={location}
-                        setValue={setLocation}
-                        initialValue={location}
-                        error={errorLocation}
-                        setError={setErrorLocation}
+                        value={locationId}
+                        setValue={setLocationId}
                         className={DashboardModalStyles.singleColumn}
-                        required
                         editOn
                     />
                 }
-                  <EditableInput
+                <EditableInput
+                    type="typeAhead"
+                    label="Role"
+                    placeholder={locationId === '' ? 'Select a location to show roles' : 'Role'}
+                    value={roleId}
+                    setValue={setRoleId}
+                    options={roles}
+                    className={DashboardModalStyles.singleColumn}
+                    editOn
+                />
+                <EditableInput
                     type="dropdown"
                     label="Shift Status"
                     placeholder="Shift Status"
                     value={shiftStatus}
                     setValue={setShiftStatus}
-                    options={["pending", "In process", "completed"]}
+                    options={shiftStatusOptions}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
@@ -134,7 +135,7 @@ const ShiftsFilter = (props) => {
                     placeholder="Batch Status"
                     value={batchStatus}
                     setValue={setBatchStatus}
-                    options={["pending", "In process", "completed"]}
+                    options={batchStatusOptions}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />

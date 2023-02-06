@@ -93,9 +93,19 @@ export const profileType = dropdownService.stringToDropdownObj([
     'Admin', 'Employee'
 ])
 
-export const status = dropdownService.stringToDropdownObj(['Active', 'Disabled']);
+export const status = dropdownService.stringToDropdownObj([
+    'Active', 'Disabled'
+], true);
 
 export const timesheetType = [
     {display: 'Clocked', value: 'CLOCKED'},
     {display: 'Manual', value: 'ADDED_BY_ADMIN'}
 ]
+
+export const shiftStatusOptions = dropdownService.stringToDropdownObj([
+    'Created', 'Assigned', 'Released', 'Conflict', 'Failed'
+], true)
+
+export const batchStatusOptions = dropdownService.stringToDropdownObj([
+    'Created', 'Released'
+], true)

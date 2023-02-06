@@ -38,8 +38,8 @@ const SubTable = (props) => {
         }
     }
 
-    const getAction = (id, status) => {
-        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} />;
+    const getAction = (id, status, date) => {
+        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} date={date} />;
         else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
         else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
         else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
@@ -87,7 +87,7 @@ const SubTable = (props) => {
                         {
                             props.actions && (
                                 <div className={TableStyles.subBodyCell} key={`action_${j}`}>
-                                    {getAction(subData["internalId"], subData["status"] && subData["status"].text)}
+                                    {getAction(subData["internalId"], subData["status"] && subData["status"].text, subData["inTime"] && subData["inTime"])}
                                 </div>
                             )
                         }

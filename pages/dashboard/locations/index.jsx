@@ -34,7 +34,7 @@ const Locations = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, filters, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();

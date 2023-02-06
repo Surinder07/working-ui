@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { status } from "../../../constants";
+import { fetchAndHandleGet } from "../../../helpers";
+import { dropdownService } from "../../../services";
 import { DashboardModalStyles } from "../../../styles/elements";
 import { EditableInput } from "../../inputComponents";
 import { FilterModal } from "../base";
@@ -16,14 +18,14 @@ const LocationFilter = (props) => {
     }, [])
 
     const clearAllFilter = () => {
-        setStatus("");
+        setActiveStatus("");
         setTimezone("");
         props.setFilters({})
     };
 
     const applyFilters = () => {
-        props.setData({
-            active: status === 'Active',
+        props.setFilters({
+            active: activeStatus === '' ? '' : activeStatus === 'Active',
             timezone
         })
         props.setShowModal(false);

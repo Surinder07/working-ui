@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
-import { fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses } from "../../../helpers";
+import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses } from "../../../helpers";
 import { shiftsService } from "../../../services";
 
 const Shifts = (props) => {
@@ -65,16 +65,48 @@ const Shifts = (props) => {
         }
     }
 
+    const deleteShiftOrBatch = () => {
+        console.log(confirmDeleteModal);
+        // return;
+        if (confirmDeleteModal.type === 'BATCH') {
+            fetchAndHandle(() => shiftsService.deleteBatch(confirmDeleteModal.id),
+                "Batch Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
+                props.setToasterInfo);
+        } else {
+            fetchAndHandle(() => shiftsService.deleteShift(confirmDeleteModal.id),
+                "Shift Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
+                props.setToasterInfo);
+        }
+    }
+
+    const releaseShiftOrBatch = (type, id) => {
+        if (type === 'BATCH') {
+            fetchAndHandle(() => shiftsService.releaseBatch(id),
+                "Batch Released Successfully", null, setReloadData, props.setPageLoading, null, null,
+                props.setToasterInfo);
+        } else {
+            fetchAndHandle(() => shiftsService.releaseShift(id),
+                "Shift Released Successfully", null, setReloadData, props.setPageLoading, null, null,
+                props.setToasterInfo);
+        }
+    }
+
     const actions = [
         {
             key: "Delete Batch",
-            action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
-            condition: (status) => true
+            action: (id) => {
+                setConfirmDeleteModal({
+                    id: id,
+                    show: true,
+                    type: 'BATCH'
+                })
+            },
+            condition: (status, date) => checkDateForPast(date)
         },
         {
             key: "Release",
-            action: (id, status) => console.log("Api call will be added here"),
-            condition: (status) => status === 'CREATED'
+            action: (id) => releaseShiftOrBatch("BATCH", id),
+            condition: (status, date) => status === 'CREATED' && checkDateForPast(date)
         }
     ];
 
@@ -85,13 +117,19 @@ const Shifts = (props) => {
         // },
         {
             key: "Delete",
-            action: (id) => console.log("Api call will be added here"),
-            condition: (status) => true
+            action: (id) => {
+                setConfirmDeleteModal({
+                    id: id,
+                    show: true,
+                    type: 'SINGLE'
+                })
+            },
+            condition: (status, date) => checkDateForPast(date)
         },
         {
             key: "Release",
-            action: (id,) => console.log("Api call will be added here"),
-            condition: (status) => status === 'ASSIGNED'
+            action: (id) => releaseShiftOrBatch("SHIFT", id),
+            condition: (status, date) => status === 'ASSIGNED' && checkDateForPast(date)
         }
     ];
 
@@ -104,9 +142,9 @@ const Shifts = (props) => {
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
-                        // onDelete={deleteRole}
+                            onDelete={deleteShiftOrBatch}
                         >
-                            This will permanently delete this Shift
+                            This will permanently delete this Shift/Batch
                         </DeleteModal>
                         <NewShiftModal
                             setShowModal={setShowAddModal}
@@ -117,7 +155,14 @@ const Shifts = (props) => {
                             role={props.user.role}
                             setPageLoading={props.setPageLoading}
                         />
-                        <ShiftsFilter setShowModal={setShowFilterModal} showModal={showFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} setReloadData={setReloadData} />
+                        <ShiftsFilter
+                            filters={filters}
+                            setFilters={setFilters}
+                            setShowModal={setShowFilterModal}
+                            showModal={showFilterModal}
+                            setToasterInfo={props.setToasterInfo}
+                            role={props.user.role}
+                        />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Shifts</h1>
                             <div className={DashboardStyles.rightContainer}>
@@ -186,10 +231,10 @@ const Shifts = (props) => {
                                     totalPages={totalPagesMyShift}
                                     pageNo={pageNoMyShift}
                                     setPageNo={setPageNoMyShift}
-                                    showFilter
-                                    filters={filters}
-                                    setFilters={setFilters}
-                                    setShowFilterModal={setShowFilterModal}
+                                // showFilter
+                                // filters={filters}
+                                // setFilters={setFilters}
+                                // setShowFilterModal={setShowFilterModal}
                                 />
                             </DashboardCard>
                         }

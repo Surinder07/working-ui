@@ -175,7 +175,7 @@ export const getSingleShiftsListing = (data) => {
     return data.map(shift => {
         return {
             internalId: shift.id,
-            id: shift.batchId,
+            id: shift.waawId,
             shiftName: shift.name,
             inTime: shift.start.date + " " + shift.start.time,
             outTime: shift.end.date + " " + shift.end.time,

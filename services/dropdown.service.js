@@ -2,9 +2,9 @@ import { fetchWrapper } from '../helpers';
 
 const endpoints = process.env.endpoints.dropdown;
 
-const stringToDropdownObj = (list) => {
+const stringToDropdownObj = (list, capitalize) => {
     return list.map(str => {
-        return { display: str, value: str }
+        return { display: str, value: capitalize ? str.toUpperCase() : str }
     })
 }
 

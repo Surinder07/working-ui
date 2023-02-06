@@ -56,12 +56,6 @@ const DatePicker = (props) => {
         border: 'none'
     }
 
-    const addDays = (date, days) => {
-        var result = new Date(date);
-        result.setDate(result.getDate() + days);
-        return result;
-    }
-
     const isTodayOrPast = (date) => {
         return differenceInDays(date, today) <= 0;
     }
@@ -117,7 +111,10 @@ const DatePicker = (props) => {
         if (props.blockPast && isTodayOrPast(parseISO(date))) {
             return;
         }
-        if (isSameMonth(parseISO(date), firstDayCurrentMonth)) props.setValue(date);
+        if (isSameMonth(parseISO(date), firstDayCurrentMonth)) {
+            props.setValue(date);
+            setNoSelected(false);
+        }
     }
 
     useEffect(() => {
@@ -133,7 +130,6 @@ const DatePicker = (props) => {
     }, [ref]);
 
     useEffect(() => {
-        // if (props.value !== '') {
             let newDatesObj = referenceDates.map((date) => {
                 return {
                     ...date,
@@ -145,7 +141,6 @@ const DatePicker = (props) => {
             setDates(newDatesObj);
             const height = newDatesObj.length > 35 ? 180 : 150;
             setCalendarHeight(height + 60);
-        // }
     }, [referenceDates, props.value, firstDayCurrentMonth]);
 
     const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];

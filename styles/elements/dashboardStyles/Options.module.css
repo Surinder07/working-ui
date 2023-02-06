@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    cursor: pointer;
     width: 20px;
     height: 20px;
 }
@@ -52,16 +51,26 @@
     font-size: 14px;
     line-height: 21px;
     letter-spacing: 0.2px;
-    color: #A8A8A8;
     padding: 0 25px;
     height: 50px;
     display: flex;
     align-items: center;
     margin: 0%;
     word-break: normal!important;
+    user-select: none;
 }
 
-.openOptions p:hover {
+.openOptions .enabled {
+    color: #A8A8A8;
+    cursor: pointer;
+}
+
+.openOptions .enabled:hover {
     background-color: #DFEFF6;
     color: #2996C3;
+}
+
+.openOptions .disabled {
+    background-color: #cacaca;
+    color: #838383;
 }

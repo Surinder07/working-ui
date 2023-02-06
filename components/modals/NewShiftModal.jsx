@@ -90,16 +90,19 @@ const NewShiftModal = (props) => {
     }, [formType])
 
     const isError = () => {
-        return combineBoolean(validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
+        return combineBoolean(
+            validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
             validateForEmptyField(endDate, 'End Date', setErrorEndDate, true),
             validateForTime(startTime, setErrorStartTime, formType === 'Single Shift'),
             validateForTime(endTime, setErrorEndTime, formType === 'Single Shift'),
-            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN'),
+            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN' && assignTo === 'Roles'),
             validateForEmptyArray(role, "Role", setErrorRole, formType === 'Single Shift' && assignTo === 'Roles'),
-            validateForEmptyArray(user, "User", setErrorUser, assignTo === 'Users'));
+            validateForEmptyArray(user, "User", setErrorUser, assignTo === 'Users')
+        );
     }
 
     const saveData = () => {
+        console.log(isError())
         if (!isError()) {
             fetchAndHandle(() => shiftsService.newShift(newShiftRequestBody(formType, location, role, user,
                 startDate, startTime, endDate, endTime, releaseImmediately, shiftName)),

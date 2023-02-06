@@ -31,8 +31,8 @@ const Table = (props, ref) => {
         }
     }, [props.data]);
 
-    const getAction = (id, status) => {
-        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} />;
+    const getAction = (id, status, date) => {
+        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} date={date} />;
         else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
         else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
         else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
@@ -84,7 +84,7 @@ const Table = (props, ref) => {
                                     background: !props.pagination && (props.data.length === i + 1) ? 'none' :
                                         'repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )'
                                 }}>
-                                {getAction(row["internalId"], row["status"] && row["status"].text)}
+                                {getAction(row["internalId"], row["status"] && row["status"].text, row["startDate"] && row["startDate"])}
                             </div>
                         )
                     }

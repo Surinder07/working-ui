@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { joinClasses } from '../../helpers';
 import { OptionsStyles } from '../../styles/elements';
 
 const Options = (props) => {
@@ -31,16 +32,20 @@ const Options = (props) => {
                 }}>
                 {
                     props.options.map((opt, i) => {
-                        return opt.condition(props.status) ?
-                            <p key={i} onClick={() => opt.action(props.actionId, props.status)}>
-                                {
-                                    opt.key === 'activeToggle' ?
-                                        (props.status === 'INVITED' ? 'Resend Invite' :
-                                            (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate')) :
-                                        opt.key
-                                }
-                            </p> :
-                            <></>
+                        return <p
+                            key={i}
+                            className={opt.condition(props.status, props.date) ? OptionsStyles.enabled : OptionsStyles.disabled}
+                            onClick={() => {
+                                if (opt.condition(props.status, props.date)) opt.action(props.actionId, props.status)
+                            }}
+                        >
+                            {
+                                opt.key === 'activeToggle' ?
+                                    (props.status === 'INVITED' ? 'Resend Invite' :
+                                        (props.status === 'ACTIVE' ? 'Deactivate' : 'Activate')) :
+                                    opt.key
+                            }
+                        </p>
                     })
                 }
             </div>
