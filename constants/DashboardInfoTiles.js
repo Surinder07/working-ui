@@ -33,7 +33,7 @@ export const DashboardInfoTiles = {
     onlineEmployees: {
         title: 'Employees Online',
         icon: ActiveEmployees,
-        href: '/dashboard/shifts'
+        href: '/dashboard/employees'
     },
     hoursWorkedThisWeek: {
         title: 'Hours Worked',

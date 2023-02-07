@@ -44,7 +44,7 @@ const NotificationBell = (props) => {
         if (ref.current) {
             setBoxHeight(ref.current.clientHeight + 100);
         }
-    }, [ref.current])
+    }, [ref.current, data])
 
     // const header = {
     //     access_token: secureLocalStorage.getData(userService.TOKEN_KEY)

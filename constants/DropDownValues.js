@@ -71,7 +71,7 @@ export const RequestTypeValues = dropdownService.stringToDropdownObj([
     'Personal Information Update',
     'Timeoff',
     'Overtime'
-])
+], true)
 
 export const LeaveTypeValues = dropdownService.stringToDropdownObj([
     'Vacation',
@@ -104,8 +104,12 @@ export const timesheetType = [
 
 export const shiftStatusOptions = dropdownService.stringToDropdownObj([
     'Created', 'Assigned', 'Released', 'Conflict', 'Failed'
-], true)
+], true);
 
 export const batchStatusOptions = dropdownService.stringToDropdownObj([
     'Created', 'Released'
-], true)
+], true);
+
+export const requestStatus = dropdownService.stringToDropdownObj([
+    'New', 'Open', 'Accepted', 'Denied'
+], true);

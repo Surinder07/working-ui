@@ -16,8 +16,8 @@ import {
     EmployeesShiftFilter,
     EmployeeAttendanceFilter,
 } from "../../../components";
-import { dropdownService, memberService } from "../../../services";
-import { fetchAndHandle, fetchAndHandleGet, getUpdateMemberRequestBody } from "../../../helpers";
+import { dropdownService, memberService, timesheetService } from "../../../services";
+import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
 
 const requestsD = []
@@ -169,10 +169,21 @@ const Employees = (props) => {
     const [initialEmployeeType, setInitialEmployeeType] = useState("");
     const [employeePreferenceData, setEmployeePreferenceData] = useState({});
 
+    // Pagination info states
+    const [pageNoAttendance, setPageNoAttendance] = useState(1);
+    const [totalPagesAttendance, setTotalPagesAttendance] = useState(1);
+    const [totalEntriesAttendance, setTotalEntriesAttendance] = useState(0);
+    const [pageNoShifts, setPageNoShifts] = useState(1);
+    const [totalPagesShifts, setTotalPagesShifts] = useState(1);
+    const [totalEntriesShifts, setTotalEntriesShifts] = useState(0);
+    const [pageNoRequests, setPageNoRequests] = useState(1);
+    const [totalPagesRequests, setTotalPagesRequests] = useState(1);
+    const [totalEntriesRequests, setTotalEntriesRequests] = useState(0);
+
     // Pagination data states
-    const [attendanceData, setAttendanceData] = useState(attendanceD);
-    const [shiftData, setShiftData] = useState(shiftD);
-    const [requestsData, setRequestsData] = useState(requestsD);
+    const [attendanceData, setAttendanceData] = useState([]);
+    const [shiftData, setShiftData] = useState([]);
+    const [requestsData, setRequestsData] = useState([]);
 
     // Reload states
     const [reloadPreferences, setReloadPreferences] = useState(false);
@@ -239,14 +250,29 @@ const Employees = (props) => {
 
     const fetchAllData = async () => {
         fetchEmployeeDetails();
-        // Fetch attendance
-        // Fetch Shifts
-        // Fetch requests
+        fetchEmployeeAttendance();
+        fetchEmployeeShifts();
+        fetchEmployeeRequests();
     }
 
     const fetchEmployeeDetails = () => {
         fetchAndHandleGet(() => memberService.getMemberById(userId), setEmployeeDetails);
     }
+
+    const fetchEmployeeAttendance = () => {
+        fetchAndHandlePage(() => timesheetService.getAll(pageNoAttendance, 5, { userId }),
+        setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, null, null,
+        getTimesheetListing);
+    }
+
+    const fetchEmployeeShifts = () => {
+
+    }
+
+    const fetchEmployeeRequests = () => {
+
+    }
+
 
     useEffect(() => {
         if (reloadPreferences) {
@@ -325,13 +351,23 @@ const Employees = (props) => {
         return (
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
-                    data={data}
+                    data={title === 'Attendance' ? attendanceData :
+                    (title === 'Requests' ? requestsData : shiftData)}
                     title={title}
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
                     expandable
                     actions={actions}
                     pagination
+                    totalEntries={title === 'Attendance' ? totalEntriesAttendance :
+                        (title === 'Requests' ? totalEntriesRequests : totalEntriesShifts)}
+                    pageSize={5}
+                    totalPages={title === 'Attendance' ? totalPagesAttendance :
+                        (title === 'Requests' ? totalPagesRequests : totalPagesShifts)}
+                    pageNo={title === 'Attendance' ? pageNoAttendance :
+                        (title === 'Requests' ? pageNoRequests : pageNoShifts)}
+                    setPageNo={title === 'Attendance' ? setPageNoAttendance :
+                        (title === 'Requests' ? setPageNoRequests : setPageNoShifts)}
                     setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>

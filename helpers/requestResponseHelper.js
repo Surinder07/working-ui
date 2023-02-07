@@ -395,15 +395,16 @@ export const combineBoolean = (...values) => {
  * @param {*} showModal setShowModal function to hide the modal on success
  * @param {*} setToaster setToaster function to update info to be shown on success or error toaster
  * @param {*} successFunc func to run on success
+ * @param {*} errorFunc func to run on error
  */
 export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloadFunc,
-    pageLoaderFunc, onCancel, showModal, setToaster, successFunc) => {
+    pageLoaderFunc, onCancel, showModal, setToaster, successFunc, errorFunc) => {
     pageLoaderFunc && pageLoaderFunc(true);
     loadingFunc && loadingFunc(true);
     fetchFunction()
         .then(res => {
             if (res.error) {
-                setToaster && setToaster({
+                errorFunc ? errorFunc(res.message) : setToaster && setToaster({
                     error: true,
                     title: "Error!",
                     message: res.message,

@@ -7,6 +7,7 @@ import { profileType, status } from "../../../constants";
 import { dropdownService } from "../../../services";
 
 const RolesFilter = (props) => {
+    
     // ------------ Dropdown values
     const [locations, setLocations] = useState([]);
     // ----------------------------

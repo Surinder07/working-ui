@@ -38,7 +38,7 @@ const Login = (props) => {
                         localStorage.removeItem(userService.USER_KEY);
                     } else {
                         props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
-                        router.push('/dashboard/calendar');
+                        router.push('/dashboard');
                     }
                 })
         }

@@ -18,7 +18,11 @@ const Employees = (props) => {
     const [sort, setSort] = useState({});
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: '',
-        show: false
+        show: false,
+        message: 'This will permanently delete this employee, make sure there are no dependencies on this employee.',
+        disableMessage: 'This will disable this employee, make sure there are no dependencies on this employee.',
+        errorMessage: '',
+        type: 'delete'
     })
     const router = useRouter();
 
@@ -49,7 +53,14 @@ const Employees = (props) => {
 
     const deleteUser = () => {
         fetchAndHandle(() => memberService.deleteMember(confirmDeleteModal.id), "User Deleted Successfully", null,
-            setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
+            setReloadData, props.setPageLoading, null, null, props.setToasterInfo,
+            null, (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg }));
+    }
+
+    const toggleUserActivity = (id) => {
+        fetchAndHandle(() => memberService.toggleActiveMember(id ? id : confirmDeleteModal.id),
+            "User updated Successfully", null, setReloadData, props.setPageLoading, null, null,
+            props.setToasterInfo, null, (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg }));
     }
 
     const actions = [
@@ -65,15 +76,15 @@ const Employees = (props) => {
                     fetchAndHandle(() => memberService.resendInvite(id), "Invite was successfully resent", null,
                         setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
                 } else {
-                    fetchAndHandle(() => memberService.toggleActiveMember(id), "User updated Successfully", null,
-                        setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
+                    if (status === 'ACTIVE') setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: 'disable' });
+                    else toggleUserActivity(id);
                 }
             },
             condition: (status) => true
         },
         {
             key: "Delete",
-            action: (id) => setConfirmDeleteModal({ id: id, show: true }),
+            action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: 'delete' }),
             condition: (status) => true
         },
     ];
@@ -87,10 +98,9 @@ const Employees = (props) => {
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
-                            onDelete={deleteUser}
-                        >
-                            This will permanently delete this User from your Organization
-                        </DeleteModal>
+                            onSubmit={confirmDeleteModal.type === 'delete' ? deleteUser : toggleUserActivity}
+                            disable={confirmDeleteModal.type === 'disable'}
+                        />
                         <InviteUserModal
                             setShowModal={setShowModal}
                             showModal={showModal}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { fetchAndHandle, validateForEmptyField } from "../../helpers";
+import { combineBoolean, fetchAndHandle, validateForEmptyField } from "../../helpers";
 import { requestService } from "../../services";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
@@ -12,42 +12,32 @@ const EditRequestsModal = (props) => {
     const [choice, setChoice] = useState(responseOptions[0]);
     const [comment, setComment] = useState("");
     const [commentError, setCommentError] = useState({});
+    const [choiceError, setChoiceError] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
         setChoice("")
         setComment("")
         setCommentError({})
+        setChoiceError({})
     }
 
     const isError = () => {
-        return validateForEmptyField(comment, 'comment', setCommentError, true)
+        return combineBoolean(
+            validateForEmptyField(comment, 'comment', setCommentError, true),
+            validateForEmptyField(choice, 'choice', setChoiceError, props.tabularType === 'emp')
+        )
+    }
+
+    const capitalizeAndAddUnderScore = (string) => {
+        return string.toUpperCase().replace(" ", "_");
     }
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(() => requestService.update({}), "Responded to request successfully",
-                setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
-                props.setToasterInfo)
-            //     setLoading(true)
-            //     if(error == true){
-            //         props.setToasterInfo({
-            //             error: true,
-            //             title: 'Error!',
-            //             message: res.message
-            //         })
-            //     }
-            //     else{
-            //         props.setToasterInfo({
-            //             error: false,
-            //             title: 'Success!',
-            //             message: 'User invited successfully'
-            //         });
-            //         props.setReloadData(true)
-            //         onCancel()
-            //     }
-            //     setLoading(false)
-            // })
+            fetchAndHandle(() => requestService.update({ response: capitalizeAndAddUnderScore(choice), comment }),
+                "Responded to request successfully", setLoading, props.setReloadData, props.setPageLoading, onCancel,
+                props.setShowModal, props.setToasterInfo);
         }
     }
 
@@ -70,6 +60,8 @@ const EditRequestsModal = (props) => {
                     options={responseOptions}
                     value={choice}
                     setValue={setChoice}
+                    error={choiceError}
+                    setError={setChoiceError}
                     editOn
                 />
             }

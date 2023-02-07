@@ -22,6 +22,7 @@ const Requests = (props) => {
     const [totalEntriesMyData, setTotalEntriesMyData] = useState(0);
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
+    const [myFilters, setMyFilters] = useState({});
     const [sort, setSort] = useState({});
 
     useEffect(() => {
@@ -42,7 +43,7 @@ const Requests = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, reloadData, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();
@@ -56,7 +57,7 @@ const Requests = (props) => {
                 getRequestsListing, props.user.role);
         }
         if (props.user.role === 'EMPLOYEE' || props.user.role === 'MANAGER') {
-            fetchAndHandlePage(() => requestService.getAllForUser(pageNo, pageSize, filters, sort),
+            fetchAndHandlePage(() => requestService.getAllForUser(pageNo, pageSize, myFilters, sort),
                 setMyData, setTotalEntriesMyData, setTotalPagesMyData, props.setPageLoading, props.setToasterInfo,
                 getRequestsListing, props.user.role);
         }
@@ -102,10 +103,12 @@ const Requests = (props) => {
                         <RequestsFilter
                             showModal={showFilterModal}
                             setShowModal={setShowFilterModal}
-                            id={editId}
-                            setToasterInfo={props.setToasterInfo}
                             role={props.user.role}
-                            setReloadData={setReloadData}
+                            filters={filters}
+                            setFilters={setFilters}
+                            myFilters={myFilters}
+                            setMyFilters={setMyFilters}
+                            tabularType={activeTable}
                         />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Requests</h1>
@@ -150,11 +153,10 @@ const Requests = (props) => {
                                     pageNo={pageNo}
                                     setPageNo={setPageNo}
                                     showSearch
-                                    // search={filters.searchKey}
                                     setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                                     showFilter
-                                    // filters={filters}
-                                    // setFilters={setFilters}
+                                    filters={filters}
+                                    setFilters={setFilters}
                                     setShowFilterModal={setShowFilterModal}
                                 />
                             </DashboardCard>
@@ -174,8 +176,8 @@ const Requests = (props) => {
                                     pageNo={pageNoMyData}
                                     setPageNo={setPageNoMyData}
                                     showFilter
-                                    // filters={filters}
-                                    // setFilters={setFilters}
+                                    filters={myFilters}
+                                    setFilters={setMyFilters}
                                     setShowFilterModal={setShowFilterModal}
                                 />
                             </DashboardCard>

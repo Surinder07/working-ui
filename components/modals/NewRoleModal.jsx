@@ -129,6 +129,7 @@ const NewRoleModal = (props) => {
                         initialValue={location}
                         error={errorLocation}
                         setError={setErrorLocation}
+                        nonEditable={props.update}
                         required
                         editOn
                     />

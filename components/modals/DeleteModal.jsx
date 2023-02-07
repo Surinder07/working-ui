@@ -13,12 +13,14 @@ const DeleteModal = (props) => {
 
     const handleClick = (action) => {
         if (action === 1) {
-            props.onDelete && props.onDelete()
+            props.onSubmit && props.onSubmit()
         }
         document.body.style.overflow = "unset";
         props.setModal({
+            ...props.modal,
             id: '',
-            show: false
+            show: false,
+            errorMessage: ''
         });
     };
 
@@ -28,12 +30,18 @@ const DeleteModal = (props) => {
                 <div className={`${DashboardModalStyles.modal} ${DashboardModalStyles.deleteModal}`}>
                     <div className={DashboardModalStyles.subContainer}>
                         <h1>{props.title}</h1>
-                        <h1>Are you sure you want to delete this?</h1>
+                        <h1>{`Are you sure you want to ${props.disable ? 'disable' : 'delete'} this?`}</h1>
                         <div>
                             {
-                                props.children ?
-                                    <p>{props.children}</p> :
-                                    <p>This will be permanently deleted from your account</p>
+                                props.modal.errorMessage === '' ?
+                                    (
+                                        props.disable ?
+                                            <p>{props.modal.disableMessage}</p> :
+                                            <p>{props.modal.message}</p>
+                                    ) :
+                                    <p className={DashboardModalStyles.errorDeleteMessage}>
+                                        {props.modal.errorMessage}
+                                    </p>
                             }
                         </div>
                         <div className={DashboardModalStyles.buttonContainer}>
@@ -41,7 +49,7 @@ const DeleteModal = (props) => {
                                 Cancel
                             </Button>
                             <Button type="delete" onClick={() => handleClick(1)}>
-                                Delete
+                                {props.disable ? 'Disable' : 'Delete'}
                             </Button>
                         </div>
                     </div>

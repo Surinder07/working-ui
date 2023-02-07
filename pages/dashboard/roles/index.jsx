@@ -19,7 +19,11 @@ const Roles = (props) => {
     const [editId, setEditId] = useState('');
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: '',
-        show: false
+        show: false,
+        message: 'This will permanently delete this role, make sure there are no dependencies on this role.',
+        disableMessage: 'This will disable this role, make sure there are no dependencies on this role.',
+        errorMessage: '',
+        type: 'delete'
     })
 
     useEffect(() => {
@@ -50,7 +54,13 @@ const Roles = (props) => {
     const deleteRole = () => {
         fetchAndHandle(() => locationAndRoleService.removeLocationRole(confirmDeleteModal.id),
             "Role Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
-            props.setToasterInfo);
+            props.setToasterInfo, null, (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg }));
+    }
+
+    const toggleRoleActivity = (id) => {
+        fetchAndHandle(() => locationAndRoleService.toggleActiveLocationRole(id ? id : confirmDeleteModal.id),
+            "Role updated Successfully", null, setReloadData, props.setPageLoading, null, null,
+            props.setToasterInfo, null, (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg }));
     }
 
     const actions = [
@@ -66,16 +76,15 @@ const Roles = (props) => {
         },
         {
             key: "activeToggle",
-            action: (id) => {
-                fetchAndHandle(() => locationAndRoleService.toggleActiveLocationRole(id),
-                    "Role updated Successfully", null, setReloadData, props.setPageLoading, null, null,
-                    props.setToasterInfo);
+            action: (id, status) => {
+                if (status === 'ACTIVE') setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: 'disable' });
+                else toggleRoleActivity(id);
             },
             condition: (status) => true
         },
         {
             key: "Delete",
-            action: (id) => setConfirmDeleteModal({ id: id, show: true }),
+            action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: 'delete' }),
             condition: (status) => true
         },
     ];
@@ -90,10 +99,9 @@ const Roles = (props) => {
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
-                            onDelete={deleteRole}
-                        >
-                            This will permanently delete this Role and all associated Employees
-                        </DeleteModal>
+                            onSubmit={confirmDeleteModal.type === 'delete' ? deleteRole : toggleRoleActivity}
+                            disable={confirmDeleteModal.type === 'disable'}
+                        />
                         <NewRoleModal
                             setShowModal={setShowModal}
                             showModal={showModal}

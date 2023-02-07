@@ -17,7 +17,7 @@ const DashboardModal = (props) => {
     const [scrollable, setScrollable] = useState(false);
 
     useEffect(() => {
-        if (props.showModal) {
+        if (props.showModal && modalRef.current) {
             document.body.style.overflow = "hidden";
             if (modalRef.current && (window.innerHeight < modalRef.current.clientHeight)) {
                 setScrollable(true);
@@ -25,7 +25,7 @@ const DashboardModal = (props) => {
                 setScrollable(false);
             }
         }
-    }, [modalRef.current]);
+    }, [modalRef.current, props.showModal]);
 
     const handleClick = (action) => {
         if (action === 1) {
