@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TableStyles } from "../../../styles/elements";
 import Cell from './Cell';
 import { Edit, Delete, AddCircleOutline, RemoveCircleOutline, FileDownload } from "@mui/icons-material";
@@ -6,6 +6,7 @@ import Options from "../Options";
 import SubTable from "./SubTable";
 
 const Table = (props, ref) => {
+
     const [displayHeaders, setDisplayHeaders] = useState([]);
     const [dataKeyList, setDataKeyList] = useState([]);
     const [colNum, setColNum] = useState(0);
@@ -59,14 +60,14 @@ const Table = (props, ref) => {
                                 <RemoveCircleOutline className={TableStyles.expandIcons}
                                     onClick={() => {
                                         setExpanded(0);
-                                        props.setExpandedSubTable(false);
+                                        props.setSubTableExpanded(false);
                                     }} />
                             ) : (
                                 <AddCircleOutline className={TableStyles.expandIcons}
                                     onClick={() => {
                                         setExpanded(i + 1);
                                         props.onExpand && props.onExpand(row["internalId"], row["status"].text);
-                                        props.setExpandedSubTable(true);
+                                        props.setSubTableExpanded(true);
                                     }} />
                             )}
                         </div>
@@ -101,6 +102,7 @@ const Table = (props, ref) => {
                             mainColNum={colNum}
                             expanded={expanded === i + 1}
                             actions={props.subActions}
+                            setSubTableHeight={props.setSubTableHeight}
                         />
                     }
                 </>

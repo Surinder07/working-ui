@@ -7,8 +7,10 @@ import { Table } from "./table";
 
 const TabularInfo = (props) => {
     const [noData, setNoData] = useState(false);
-    const [tableHeight, setTableHeight] = useState("450px");
-    const [expandedSubTable, setExpandedSubTable] = useState(false);
+    const [initialTableHeight, setInitialTableHeight] = useState(450);
+    const [tableHeight, setTableHeight] = useState(450);
+    const [subTableHeight, setSubTableHeight] = useState(0);
+    const [subTableExpanded, setSubTableExpanded] = useState(false);
 
     const tableRef = useRef();
     const searchRef = useRef();
@@ -17,18 +19,17 @@ const TabularInfo = (props) => {
 
     useEffect(() => {
         if (tableRef.current) {
-            setTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0));
+            setInitialTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0));
+            setTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0) +
+                (subTableExpanded ? subTableHeight : 0));
         } else if (props.data) {
-            setTableHeight("50px");
+            setTableHeight(50 + (subTableExpanded ? subTableHeight : 0));
         }
     }, [tableRef.current]);
 
     useEffect(() => {
-        if (tableRef.current) {
-            if (expandedSubTable) setTableHeight(tableHeight + 230)
-            else setTableHeight(tableHeight - 230)
-        }
-    }, [expandedSubTable])
+        setTableHeight(initialTableHeight + (subTableExpanded ? subTableHeight : 0));
+    }, [subTableExpanded])
 
     useEffect(() => {
         setNoData(false);
@@ -117,7 +118,8 @@ const TabularInfo = (props) => {
                                 ref={tableRef}
                                 pagination={props.pagination}
                                 onExpand={props.onExpand}
-                                setExpandedSubTable={setExpandedSubTable}
+                                setSubTableHeight={setSubTableHeight}
+                                setSubTableExpanded={setSubTableExpanded}
                             />
                             {
                                 props.pagination &&

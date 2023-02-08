@@ -1,5 +1,5 @@
 import { Delete, Edit, FileDownload } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TableStyles } from "../../../styles/elements";
 import Options from "../Options";
 import Cell from './Cell';
@@ -9,6 +9,14 @@ const SubTable = (props) => {
     const [displayHeaders, setDisplayHeaders] = useState([]);
     const [dataKeyList, setDataKeyList] = useState([]);
     const [colNum, setColNum] = useState(0);
+
+    const ref = useRef();
+
+    useEffect(() => {
+        if (ref.current) {
+            if(ref.current.clientHeight !== 0) props.setSubTableHeight(ref.current.clientHeight);
+        }
+    }, [props.expanded])
 
     useEffect(() => {
         if (props.data && props.data.length > 0) {
@@ -47,6 +55,7 @@ const SubTable = (props) => {
 
     return (
         <div
+            ref={ref}
             className={`${TableStyles.subTable} ${props.history && TableStyles.historyTable}`}
             style={{
                 gridColumn: `span ${props.mainColNum}`,

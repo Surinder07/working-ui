@@ -89,10 +89,10 @@ const CreateRequestModal = (props) => {
                 editOn
             />
             {
-                (requestType === 'Timeoff' || requestType === 'Overtime') &&
+                (requestType === 'TIMEOFF' || requestType === 'OVERTIME') &&
                 <>
                     {
-                        requestType === 'Timeoff' &&
+                        requestType === 'TIMEOFF' &&
                         <Tabs
                             className={DashboardModalStyles.singleColumn}
                             options={["Full Day", "Half Day"]}
@@ -102,7 +102,7 @@ const CreateRequestModal = (props) => {
                         />
                     }
                     {
-                        (requestType === 'Timeoff' && timeOffFormType === 'Full Day') &&
+                        (requestType === 'TIMEOFF' && timeOffFormType === 'Full Day') &&
                         <>
                             <EditableInput
                                 type="date"
@@ -119,8 +119,6 @@ const CreateRequestModal = (props) => {
                                 type="date"
                                 value={tillDate}
                                 setValue={setTillDate}
-                                error={errorDate}
-                                setError={setErrorDate}
                                 label="Till"
                                 blockPast
                                 required
@@ -129,7 +127,7 @@ const CreateRequestModal = (props) => {
                         </>
                     }
                     {
-                        ((requestType === 'Timeoff' && timeOffFormType === 'Half Day') || requestType === 'Overtime') &&
+                        ((requestType === 'TIMEOFF' && timeOffFormType === 'Half Day') || requestType === 'OVERTIME') &&
                         <>
                             <EditableInput
                                 type="date"
@@ -166,7 +164,7 @@ const CreateRequestModal = (props) => {
                         </>
                     }
                     {
-                        requestType === 'Timeoff' &&
+                        requestType === 'TIMEOFF' &&
                         <EditableInput
                             type="dropdown"
                             options={LeaveTypeValues}
