@@ -40,6 +40,8 @@ const Shifts = (props) => {
     useEffect(() => {
         if (props.user.role && props.user.role === 'ADMIN') {
             setActiveTable('emp')
+        } else if (props.user.role && props.user.role !== 'MANAGER') {
+            setActiveTable('my');
         }
     }, [props.user])
 
@@ -224,7 +226,6 @@ const Shifts = (props) => {
                                     title="Shifts"
                                     description="Tabular list of my Shifts."
                                     data={myShiftData}
-                                    actions={actions}
                                     pagination
                                     totalEntries={totalEntriesMyShift}
                                     pageSize={pageSize}

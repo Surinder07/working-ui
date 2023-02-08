@@ -56,12 +56,17 @@ const Table = (props, ref) => {
                         (row.subData || row.history) &&
                         <div key={`expand_${i}`} className={TableStyles.bodyCell}>
                             {expanded === i + 1 ? (
-                                <RemoveCircleOutline className={TableStyles.expandIcons} onClick={() => setExpanded(0)} />
+                                <RemoveCircleOutline className={TableStyles.expandIcons}
+                                    onClick={() => {
+                                        setExpanded(0);
+                                        props.setExpandedSubTable(false);
+                                    }} />
                             ) : (
                                 <AddCircleOutline className={TableStyles.expandIcons}
                                     onClick={() => {
                                         setExpanded(i + 1);
-                                        props.onExpand && props.onExpand(row["internalId"], row["status"].text)
+                                        props.onExpand && props.onExpand(row["internalId"], row["status"].text);
+                                        props.setExpandedSubTable(true);
                                     }} />
                             )}
                         </div>

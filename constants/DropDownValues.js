@@ -67,11 +67,11 @@ export const employeeTypeValues = dropdownService.stringToDropdownObj([
     'Part Time'
 ]);
 
-export const RequestTypeValues = dropdownService.stringToDropdownObj([
-    'Personal Information Update',
-    'Timeoff',
-    'Overtime'
-], true)
+export const RequestTypeValues = [
+    { display: 'Personal Information Update', value: 'INFORMATION_UPDATE' },
+    { display: 'Timeoff', value: 'TIMEOFF' },
+    { display: 'Overtime', value: 'OVERTIME' }
+];
 
 export const LeaveTypeValues = dropdownService.stringToDropdownObj([
     'Vacation',
@@ -98,8 +98,8 @@ export const status = dropdownService.stringToDropdownObj([
 ], true);
 
 export const timesheetType = [
-    {display: 'Clocked', value: 'CLOCKED'},
-    {display: 'Manual', value: 'ADDED_BY_ADMIN'}
+    { display: 'Clocked', value: 'CLOCKED' },
+    { display: 'Manual', value: 'ADDED_BY_ADMIN' }
 ]
 
 export const shiftStatusOptions = dropdownService.stringToDropdownObj([
@@ -112,4 +112,12 @@ export const batchStatusOptions = dropdownService.stringToDropdownObj([
 
 export const requestStatus = dropdownService.stringToDropdownObj([
     'New', 'Open', 'Accepted', 'Denied'
+], true);
+
+export const notificationType = dropdownService.stringToDropdownObj([
+    'Employee', 'Shift', 'Request', 'Location', 'Role', 'Payment', 'Report', 'Calendar', 'Account'
+], true);
+
+export const notificationStatus = dropdownService.stringToDropdownObj([
+    'Read', 'Unread'
 ], true);

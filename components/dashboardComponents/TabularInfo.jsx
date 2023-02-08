@@ -8,6 +8,7 @@ import { Table } from "./table";
 const TabularInfo = (props) => {
     const [noData, setNoData] = useState(false);
     const [tableHeight, setTableHeight] = useState("450px");
+    const [expandedSubTable, setExpandedSubTable] = useState(false);
 
     const tableRef = useRef();
     const searchRef = useRef();
@@ -16,11 +17,18 @@ const TabularInfo = (props) => {
 
     useEffect(() => {
         if (tableRef.current) {
-            setTableHeight(`${tableRef.current.clientHeight + (props.pagination ? 50 : 0)}px`);
+            setTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0));
         } else if (props.data) {
             setTableHeight("50px");
         }
     }, [tableRef.current]);
+
+    useEffect(() => {
+        if (tableRef.current) {
+            if (expandedSubTable) setTableHeight(tableHeight + 230)
+            else setTableHeight(tableHeight - 230)
+        }
+    }, [expandedSubTable])
 
     useEffect(() => {
         setNoData(false);
@@ -50,10 +58,11 @@ const TabularInfo = (props) => {
                         <div className={TabularInfoStyles.editOption} ref={editRef}>
                             {props.editOn ? (
                                 <>
-                                    <p style={{ color: "#CC5252" }} onClick={() => {
-                                        props.onCancel && props.onCancel();
-                                        props.setEditOn(false);
-                                    }}>
+                                    <p style={{ color: "#CC5252" }}
+                                        onClick={() => {
+                                            props.onCancel && props.onCancel();
+                                            props.setEditOn(false);
+                                        }}>
                                         Cancel
                                     </p>
                                     <p style={{ color: "#2996C3" }} onClick={() => { props.onSave && props.onSave() }}>Save</p>
@@ -89,7 +98,7 @@ const TabularInfo = (props) => {
             <div className={TabularInfoStyles.tabularMapped}
                 style={
                     props.expandable ? {
-                        height: props.expanded ? tableHeight : 0,
+                        height: props.expanded ? `${tableHeight}px` : 0,
                         transition: "0.2s all ease",
                         overflow: "hidden",
                         marginTop: props.expanded && "20px",
@@ -107,6 +116,8 @@ const TabularInfo = (props) => {
                                 subActions={props.subActions}
                                 ref={tableRef}
                                 pagination={props.pagination}
+                                onExpand={props.onExpand}
+                                setExpandedSubTable={setExpandedSubTable}
                             />
                             {
                                 props.pagination &&

@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
 import { combineBoolean, fetchAndHandle, validateForEmptyField } from "../../helpers";
 import { requestService } from "../../services";
@@ -35,7 +34,7 @@ const EditRequestsModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            fetchAndHandle(() => requestService.update({ response: capitalizeAndAddUnderScore(choice), comment }),
+            fetchAndHandle(() => requestService.update({ id: props.id, response: capitalizeAndAddUnderScore(choice), comment }),
                 "Responded to request successfully", setLoading, props.setReloadData, props.setPageLoading, onCancel,
                 props.setShowModal, props.setToasterInfo);
         }

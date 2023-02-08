@@ -99,7 +99,7 @@ const Dashboard = (props) => {
                     <div className={DashboardLayout.headerRight}>
                         <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" disabled />
                         <div className={DashboardLayout.helpIcon}>?</div>
-                        <NotificationBell />
+                        <NotificationBell setPageLoading={props.setPageLoading} />
                         <h3 className={DashboardLayout.userName}>{userName}</h3>
                         <ProfileImage className={DashboardLayout.profilePicture} size={"small"} header dropdown />
                     </div>

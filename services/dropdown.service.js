@@ -4,7 +4,7 @@ const endpoints = process.env.endpoints.dropdown;
 
 const stringToDropdownObj = (list, capitalize) => {
     return list.map(str => {
-        return { display: str, value: capitalize ? str.toUpperCase().replace(" ", "_") : str }
+        return { display: str, value: capitalize ? str.toUpperCase().replaceAll(" ", "_") : str }
     })
 }
 
@@ -27,7 +27,6 @@ const getLocations = async () => {
 const getRoles = async (locationId) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getRoles, { locationId }))
         .then(res => {
-            console.log(res)
             return res.map(options => {
                 return { display: options.name, value: options.id }
             })

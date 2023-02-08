@@ -60,15 +60,21 @@ const RequestsFilter = (props) => {
 
     const isError = () => {
         if (props.tabularType === 'emp') {
-            return combineBoolean(
-                validateForEmptyField(startDate, 'Date', setErrorDate, true),
-                validateForEmptyField(endDate, 'Date', setErrorDate, true)
-            )
+            if ((startDate === '' && endDate !== '') || (startDate !== '' && endDate === '')) {
+                setErrorDate({
+                    message: 'Both dates are required',
+                    show: true
+                })
+                return true;
+            }
         } else {
-            return combineBoolean(
-                validateForEmptyField(myStartDate, 'Date', setErrorMyDate, true),
-                validateForEmptyField(myEndDate, 'Date', setErrorMyDate, true)
-            )
+            if ((myStartDate === '' && myEndDate !== '') || (myStartDate !== '' && myEndDate === '')) {
+                setErrorMyDate({
+                    message: 'Both dates are required',
+                    show: true
+                })
+                return true;
+            }
         }
     }
 
@@ -76,15 +82,16 @@ const RequestsFilter = (props) => {
         if (!isError()) {
             if (props.tabularType === 'emp') props.setFilters({
                 ...props.filters, startDate, endDate, type, status, locationId
-            }) 
+            })
             else props.setMyFilters({
                 ...props.myFilters,
-                startDate: myStartDate, 
-                endDate: myEndDate, 
-                type: myType, 
+                startDate: myStartDate,
+                endDate: myEndDate,
+                type: myType,
                 status: myStatus
             })
-        }
+            return true;
+        } else return false;
     }
     return (
         <div>
@@ -110,7 +117,7 @@ const RequestsFilter = (props) => {
                     type="date"
                     label="To"
                     value={props.tabularType === 'emp' ? endDate : myEndDate}
-                    setValue={props.tabularType === 'emp' ? setEndDate: setMyEndDate}
+                    setValue={props.tabularType === 'emp' ? setEndDate : setMyEndDate}
                     setError={props.tabularType === 'emp' ? setErrorDate : setErrorMyDate}
                     editOn
                 />
@@ -126,7 +133,7 @@ const RequestsFilter = (props) => {
                         className={DashboardModalStyles.singleColumn}
                         editOn
                     />
-                 }
+                }
                 <EditableInput
                     type="dropdown"
                     label="Request Type"

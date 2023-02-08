@@ -36,6 +36,7 @@ const CalendarComponent = (props) => {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
         updateDays(format(firstDayNextMonth, "MMM-yyyy"));
+        setCurrentYear(format(firstDayNextMonth, "yyyy"))
     };
 
     const nextMonth = () => {
@@ -43,6 +44,7 @@ const CalendarComponent = (props) => {
         if (!disableNext) {
             setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
             updateDays(format(firstDayNextMonth, "MMM-yyyy"));
+            setCurrentYear(format(firstDayNextMonth, "yyyy"))
         }
     };
 
@@ -84,7 +86,22 @@ const CalendarComponent = (props) => {
         organizationService.getHolidays(year)
             .then(res => {
                 if (!res.error) {
-                    setHolidays(res);
+                    console.log(res.map(holiday => {
+                        return {
+                            ...holiday,
+                            displayDate: new Date(holiday.year, holiday.month, holiday.date, 0, 0, 0)
+                                .toLocaleString('default', { month: 'long', day: '2-digit' }),
+                                date: holiday.year + '-' + holiday.month + '-' + holiday.date + 'T00:00:00' 
+                        }
+                    }))
+                    setHolidays(res.map(holiday => {
+                        return {
+                            ...holiday,
+                            displayDate: new Date(holiday.year, holiday.month, holiday.date, 0, 0, 0)
+                                .toLocaleString('default', { month: 'long', day: '2-digit' }),
+                                date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00' 
+                        }
+                    }));
                 }
             })
     }

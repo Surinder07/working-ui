@@ -16,8 +16,8 @@ import {
     EmployeesShiftFilter,
     EmployeeAttendanceFilter,
 } from "../../../components";
-import { dropdownService, memberService, timesheetService } from "../../../services";
-import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
+import { dropdownService, memberService, requestService, shiftsService, timesheetService } from "../../../services";
+import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getRequestsListing, getSingleShiftsListing, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
 
 const requestsD = []
@@ -261,16 +261,20 @@ const Employees = (props) => {
 
     const fetchEmployeeAttendance = () => {
         fetchAndHandlePage(() => timesheetService.getAll(pageNoAttendance, 5, { userId }),
-        setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, null, null,
-        getTimesheetListing);
+            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, null, null,
+            getTimesheetListing);
     }
 
     const fetchEmployeeShifts = () => {
-
+        fetchAndHandlePage(() => shiftsService.getByUser(pageNoShifts, 5, { userId }),
+            setShiftData, setTotalEntriesShifts, setTotalPagesShifts, null, null,
+            getSingleShiftsListing);
     }
 
     const fetchEmployeeRequests = () => {
-
+        fetchAndHandlePage(() => requestService.getAllForUser(pageNoRequests, 5, { userId }),
+            setRequestsData, setTotalEntriesRequests, setTotalPagesRequests, null, null,
+            getRequestsListing);
     }
 
 
@@ -352,7 +356,7 @@ const Employees = (props) => {
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
                     data={title === 'Attendance' ? attendanceData :
-                    (title === 'Requests' ? requestsData : shiftData)}
+                        (title === 'Requests' ? requestsData : shiftData)}
                     title={title}
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}

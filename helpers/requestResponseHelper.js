@@ -122,7 +122,7 @@ export const getNotificationListingForBell = (data) => {
             title: notification.title,
             type: notification.type,
             date: notification.createdTime,
-            read: notification.isRead,
+            read: notification.read,
             message: notification.description
         }
     })
@@ -199,7 +199,6 @@ export const getTimesheetListing = (data) => {
 
 export const getRequestsListing = (data) => {
     const getHistoryList = (history) => {
-        console.log('history', history)
         return history.map(hist => {
             return {
                 title: hist.title,
@@ -419,9 +418,10 @@ export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloa
                 })
                 onCancel && onCancel();
                 loadingFunc && loadingFunc(false);
-                reloadFunc ? reloadFunc(true) : (pageLoaderFunc && pageLoaderFunc(false));
+                reloadFunc && reloadFunc(true);
                 successFunc && successFunc();
                 showModal && showModal(false);
+                pageLoaderFunc && pageLoaderFunc(false);
             }
         })
         .catch(() => {

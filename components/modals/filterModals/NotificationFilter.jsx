@@ -1,55 +1,47 @@
-import React, {useEffect, useState} from "react";
-import {FilterModal} from "../base";
-import {DashboardModalStyles} from "../../../styles/elements";
-import {EditableInput} from "../../inputComponents";
+import { useEffect, useState } from "react";
+import { FilterModal } from "../base";
+import { DashboardModalStyles } from "../../../styles/elements";
+import { EditableInput } from "../../inputComponents";
 import { validateForEmptyField } from "../../../helpers";
+import { notificationStatus, notificationType } from "../../../constants";
 
 const NotificationFilter = (props) => {
-    const [dateFrom, setDateFrom] = useState("");
-    const [dateTo, setDateTo] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [type, setType] = useState("");
     const [status, setStatus] = useState("");
 
-    const [errorDate,setErrorDate] = useState({
+    const [errorDate, setErrorDate] = useState({
         message: '',
         show: false
     });
 
     const clearAllFilter = () => {
-        setDateFrom("")
-        setDateTo("")
+        setStartDate("")
+        setEndDate("")
         setType("")
         setStatus("")
         setErrorDate({})
-        props.setData({})
+        props.setFilters({})
     }
 
-    useEffect(()=> {
-        props.setData && props.setData({
-            fromDate:dateFrom,
-            tillDate:dateTo,
-            type,
-            status,
-        })
-    },[])
-
-    const isError =  () => {
-        return validateForEmptyField(dateFrom, 'Date', setErrorDate, true) ||
-        validateForEmptyField(dateTo, 'Date', setErrorDate, true)
+    const isError = () => {
+        if ((startDate === '' && endDate !== '') || (startDate !== '' && endDate === '')) {
+            setErrorDate({
+                message: 'Both dates are required',
+                show: true
+            })
+            return true;
+        }
     }
 
-    const saveData = () => {
+    const applyFilters = () => {
         if (!isError()) {
-                    let data = {
-                        fromDate: dateFrom,
-                        toDate: dateTo,
-                        type: type,
-                        status:status 
-                    }
-                    props.setData(data)
-                    clearAllFilter()
-                }
+            props.setFilters({ startDate, endDate, type, status })
+            return true;
+        } else return false;
     }
+
     return (
         <div>
             <FilterModal
@@ -58,14 +50,14 @@ const NotificationFilter = (props) => {
                 buttonText="Apply Filter"
                 title="Filter Options"
                 type="twoColNarrow"
-                onClick={saveData}
+                onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
                 <EditableInput
                     type="date"
                     label="Date"
-                    value={dateFrom}
-                    setValue={setDateFrom}
+                    value={startDate}
+                    setValue={setStartDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
@@ -73,10 +65,8 @@ const NotificationFilter = (props) => {
                 <EditableInput
                     type="date"
                     label="To"
-                    value={dateTo}
-                    setValue={setDateTo}
-                    error={errorDate}
-                    setError={setErrorDate}
+                    value={endDate}
+                    setValue={setEndDate}
                     editOn
                 />
                 <EditableInput
@@ -85,7 +75,7 @@ const NotificationFilter = (props) => {
                     placeholder="Type"
                     value={type}
                     setValue={setType}
-                    options={["Admin", "Manager", "Employee"]}
+                    options={notificationType}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />
@@ -95,7 +85,7 @@ const NotificationFilter = (props) => {
                     placeholder="Status"
                     value={status}
                     setValue={setStatus}
-                    options={["pending", "In process", "completed"]}
+                    options={notificationStatus}
                     className={DashboardModalStyles.singleColumn}
                     editOn
                 />

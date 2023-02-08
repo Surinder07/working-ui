@@ -32,12 +32,12 @@ const getData = async (role) => {
 }
 
 const getInvoicesTrends = (data) => {
-    const currentYearData = data.currentYear ? months
+    const currentYearData = (data.currentYear && Object.keys(data.currentYear).length > 0) ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
         .map(month => {
             return data.currentYear[month]
         }) : [];
-    const previousYearData = data.previousYear ? months
+    const previousYearData = (data.previousYear && Object.keys(data.previousYear).length > 0) ? months
         .filter(month => Object.keys(data.previousYear).includes(month))
         .map(month => {
             return data.previousYear[month]
@@ -75,14 +75,12 @@ const getInvoicesTrends = (data) => {
 
 const getHoursTrends = (data, weekStart) => {
     const currentWeekData = data.currentWeek ? days
-        .filter(day => Object.keys(data.currentWeek).includes(day))
         .map(day => {
-            return data.currentYear[day]
+            return data.currentWeek[day] ?  (data.currentWeek[day] / 60) : 0
         }) : [];
     const lastWeekData = data.lastWeek ? days
-        .filter(day => Object.keys(data.lastWeek).includes(day))
         .map(day => {
-            return data.lastWeek[day]
+            return data.lastWeek[day] ?  (data.lastWeek[day] / 60) : 0
         }) : [];
     return {
         noData: (currentWeekData.length === 0 && lastWeekData.length === 0),
@@ -115,16 +113,18 @@ const getHoursTrends = (data, weekStart) => {
 }
 
 const getBlueBgList = (length) => {
-    var result = [],
-        left = 0.1,
-        right = 1,
-        delta = (right - left) / (length - 1);
-    while (left < right) {
-        result.push(left);
-        left += delta;
-    }
-    result.push(right);
-    return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
+    if (length > 0) {
+        var result = [],
+            left = 0.1,
+            right = 1,
+            delta = (right - left) / (length - 1);
+        while (left < right) {
+            result.push(left);
+            left += delta;
+        }
+        result.push(right);
+        return result.map((alpha) => `rgba(41, 150, 195, ${alpha})`);
+    } return [];
 };
 
 const getEmployeeTrends = (data, role) => {
@@ -139,7 +139,7 @@ const getEmployeeTrends = (data, role) => {
         datasets: [
             {
                 label: "Active Employees",
-                data: data.length > 0 ? data.map(emp => emp.employees) : [],
+                data: data.length > 0 ? data.filter(emp => emp.employees !== 0).map(emp => emp.employees) : [],
                 backgroundColor: getBlueBgList(data.length),
                 hoverOffset: 4,
             },

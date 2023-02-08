@@ -139,6 +139,7 @@ function MyApp({ Component, pageProps }) {
                         screenType={screenType}
                         user={user}
                         setToasterInfo={setToasterInfo}
+                        setPageLoading={setPageLoading}
                     >
                         {getComponentForPages()}
                     </DashboardLayout>

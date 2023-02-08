@@ -16,7 +16,10 @@ const Notifications = (props) => {
     const [sort, setSort] = useState({});
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: '',
-        show: false
+        show: false,
+        message: 'This will permanately delete this notification',
+        errorMessage: '',
+        type: 'delete'
     })
 
     useEffect(() => {
@@ -52,11 +55,12 @@ const Notifications = (props) => {
 
     const actions = {
         key: 'Delete',
-        action: (id) => setConfirmDeleteModal({ id: id, show: true })
+        action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true })
     }
 
     const markAsRead = (id, status) => {
-        if (status.text === 'Unread') {
+        if (status === 'Unread') {
+            console.log("reached", status)
             fetchAndHandle(() => notificationService.markAsRead(id), "", null, null, props.setPageLoading,
                 null, null, null, () => {
                     let newData = data;
@@ -65,7 +69,8 @@ const Notifications = (props) => {
                             return {
                                 ...item, status: {
                                     ...item.status,
-                                    text: 'Read'
+                                    text: 'Read',
+                                    status: 'ok'
                                 }
                             }
                         }
@@ -90,17 +95,14 @@ const Notifications = (props) => {
                         <NotificationFilter
                             showModal={showFilterModal}
                             setShowModal={setShowFilterModal}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
-                            setReloadData={setReloadData}
+                            filters={filters}
+                            setFilters={setFilters}
                         />
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
-                            onDelete={deleteNotification}
-                        >
-                            This will permanently delete this Notification
-                        </DeleteModal>
+                            onSubmit={deleteNotification}
+                        />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Notifications</h1>
                             <div className={DashboardStyles.rightContainer}>
@@ -124,12 +126,8 @@ const Notifications = (props) => {
                                 totalPages={totalPages}
                                 pageNo={pageNo}
                                 setPageNo={setPageNo}
-                                showSearch
-                                search={filters.searchKey}
-                                setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                                 showFilter
                                 setShowFilterModal={setShowFilterModal}
-                                filters={filters}
                             />
                         </DashboardCard>
                     </>

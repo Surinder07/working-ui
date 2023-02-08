@@ -110,7 +110,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.0.3",
+        version: "1.0.4",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

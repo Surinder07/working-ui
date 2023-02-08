@@ -54,7 +54,6 @@ const Dashboard = (props) => {
         if (props.user.role) {
             dashboardService.getData(props.user.role)
                 .then(res => {
-                    console.log(res)
                     try {
                         setTileInfo(res.tilesInfo);
                     } catch (err) {

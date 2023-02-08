@@ -43,7 +43,7 @@ const Requests = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize, reloadData, sort]);
+    }, [pageNo, pageSize, filters, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();
@@ -99,6 +99,8 @@ const Requests = (props) => {
                             setToasterInfo={props.setToasterInfo}
                             role={props.user.role}
                             tabularType={activeTable}
+                            setPageLoading={props.setPageLoading}
+                            setReloadData={setReloadData}
                         />
                         <RequestsFilter
                             showModal={showFilterModal}

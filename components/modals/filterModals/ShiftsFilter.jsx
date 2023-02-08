@@ -26,19 +26,21 @@ const ShiftsFilter = (props) => {
         if (props.role) {
             if (props.role === 'ADMIN') {
                 fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
-            } else {
+            } else if (props.role === 'MANAGER') {
                 fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
             }
         }
     }, [props.role])
 
     useEffect(() => {
-        setRoleId("");
-        if (locationId !== null && locationId !== '') {
-            fetchAndHandleGet(() => dropdownService.getRoles(locationId), setRoles);
+        if (props.role === 'ADMIN' || props.role === 'MANAGER') {
+            setRoleId("");
+            if (locationId !== null && locationId !== '') {
+                fetchAndHandleGet(() => dropdownService.getRoles(locationId), setRoles);
+            }
         }
     }, [locationId])
-    
+
     const clearAllFilter = () => {
         setStartDate("")
         setEndDate("")
