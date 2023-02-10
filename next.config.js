@@ -66,6 +66,7 @@ const apiEndpoints = {
     },
     dashboard: {
         getData: "/v1/dashboard/getData",
+        getShiftData: '/v1/dashboard/getData/shift'
     },
     resources: {
         fileTemplate: "/v1/unAuth/resource/downloadFile",
@@ -110,7 +111,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.0.5",
+        version: "1.0.6",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

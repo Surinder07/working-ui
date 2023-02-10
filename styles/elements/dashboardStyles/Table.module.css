@@ -54,7 +54,9 @@
     background: repeating-linear-gradient(to bottom,
             transparent 0, transparent 49px,
             #DFE0EB 49px, #DFE0EB 50px);
-    word-break: break-all;
+    word-wrap: break-word;
+    word-break: keep-all;
+    text-align: center;
 }
 
 .subBodyCellLeft {

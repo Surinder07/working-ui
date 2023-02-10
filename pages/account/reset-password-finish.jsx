@@ -6,6 +6,7 @@ import { FullPageWithImageLayout } from "../../layouts";
 import { FullPageLayout } from '../../styles/layouts';
 import { userService } from "../../services";
 import { ResetPasswordFinishBg, ResetPasswordFinishSuccessBg } from "../../public/images";
+import { validatePassword } from "../../helpers";
 
 const ResetPasswordFinish = (props) => {
 
@@ -78,6 +79,7 @@ const ResetPasswordFinish = (props) => {
         validateForms()
             .then(error => {
                 if (!error) {
+                    props.setPageLoading(true);
                     userService.finishResetPassword(resetKey, password)
                         .then(res => {
                             if (res.error) {
@@ -85,8 +87,10 @@ const ResetPasswordFinish = (props) => {
                                 setSubmitError(true);
                                 setTimeout(() => setSubmitError(false), 3000);
                                 setLoading(false);
+                                props.setPageLoading(false);
                             } else {
                                 setResetSuccess(true);
+                                props.setPageLoading(false);
                             }
                         })
                 }
@@ -136,7 +140,7 @@ const ResetPasswordFinish = (props) => {
                 <Button
                     type='default'
                     onClick={handleSubmit}
-                    disabled={loading}
+                    // disabled={loading}
                 >
                     Reset Password
                 </Button>

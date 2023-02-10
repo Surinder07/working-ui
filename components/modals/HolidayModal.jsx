@@ -1,6 +1,6 @@
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
-import { CloudUpload } from "@mui/icons-material";
+import { Close, CloudUpload } from "@mui/icons-material";
 import { fetchAndHandle, fetchWrapper } from "../../helpers";
 import Link from 'next/link';
 import { useState } from "react";
@@ -50,6 +50,14 @@ const HolidayModal = (props) => {
                 <CloudUpload className={DashboardModalStyles.icon} />
                 <label htmlFor="upload">Select file to Import</label>
                 <input type="file" id="upload" style={{ display: "none" }} onChange={handleFileChange} />
+                {
+                    file.name &&
+                    <p className={DashboardModalStyles.fileName}>
+                        {file.name}
+                        <Close className={DashboardModalStyles.icon} onClick={() => setFile({})} />
+                    </p>
+                }
+                <p>Must be .xlsx or .csv file using our email template</p>
                 <p>
                     {`Download `}
                     <Link download href={fetchWrapper.getApiUrl(fileEndpoint, { resource: 'holiday', format: 'xlsx' })}

@@ -29,13 +29,13 @@ export const DaysOfWeek = dropdownService.stringToDropdownObj([
 ]);
 
 export const DaysOfWeekShort = [
+    'Sun',
     'Mon',
     'Tue',
     'Wed',
     'Thu',
     'Fri',
-    'Sat',
-    'Sun'
+    'Sat'
 ];
 
 export const hours = Array.from(Array(24).keys())
@@ -69,7 +69,7 @@ export const employeeTypeValues = dropdownService.stringToDropdownObj([
 
 export const RequestTypeValues = [
     { display: 'Personal Information Update', value: 'INFORMATION_UPDATE' },
-    { display: 'Timeoff', value: 'TIMEOFF' },
+    { display: 'Timeoff', value: 'TIME_OFF' },
     { display: 'Overtime', value: 'OVERTIME' }
 ];
 

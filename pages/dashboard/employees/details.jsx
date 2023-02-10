@@ -20,126 +20,6 @@ import { dropdownService, memberService, requestService, shiftsService, timeshee
 import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getRequestsListing, getSingleShiftsListing, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
 
-const requestsD = []
-
-// const requestsD = [
-//     {
-//         requestId: "6476475",
-//         requestType: "request",
-//         initiationDate: "01/01/2023",
-//         location: "Canada",
-//         initiatedBy: "Rahul",
-//         assignedTo: "Rajiv",
-//         status: "xyz",
-//         history: [
-//             {
-//                 title: 'Xyz Raised a Request',
-//                 description: 'Request for early leave on the next to next week',
-//                 date: '29th August,2022',
-//                 status: 'bad'
-//             },
-//             {
-//                 title: 'Xyz Raised a Request',
-//                 description: 'Request for early leave on the next to next week',
-//                 date: '29th August,2022',
-//                 status: 'basic'
-//             },
-//             {
-//                 title: 'Xyz Raised a Request',
-//                 description: 'Request for early leave on the next to next week',
-//                 date: '29th August,2022',
-//                 status: 'ok'
-//             }
-//         ]
-//     }
-// ];
-
-const attendanceD = [];
-
-// const attendanceD = [
-//     {
-//         date: "01/01/2023",
-//         inTime: "10:00 AM",
-//         outTime: "05:00 PM",
-//         inDate: "01/01/2023",
-//         outDate: "01/01/2023",
-//         duration: "7 Hrs",
-//         entryType: "Entry",
-//         comments: "N/A",
-//     },
-//     {
-//         date: "01/01/2023",
-//         inTime: "10:00 AM",
-//         outTime: "05:00 PM",
-//         inDate: "01/01/2023",
-//         outDate: "01/01/2023",
-//         duration: "7 Hrs",
-//         entryType: "Entry",
-//         comments: "N/A",
-//     },
-//     {
-//         date: "01/01/2023",
-//         inTime: "10:00 AM",
-//         outTime: "05:00 PM",
-//         inDate: "01/01/2023",
-//         outDate: "01/01/2023",
-//         duration: "7 Hrs",
-//         entryType: "Entry",
-//         comments: "N/A",
-//     },
-//     {
-//         date: "01/01/2023",
-//         inTime: "10:00 AM",
-//         outTime: "05:00 PM",
-//         inDate: "01/01/2023",
-//         outDate: "01/01/2023",
-//         duration: "7 Hrs",
-//         entryType: "Entry",
-//         comments: "N/A",
-//     },
-// ];
-
-const shiftD = []
-
-// const shiftD = [
-//     {
-//         shiftdate: "01/01/2023",
-//         shiftName: "Day",
-//         startTime: "10:00 AM",
-//         endTime: "05:00 PM",
-//         workingHours: "7 Hrs",
-//         status: "Status",
-//         comments: "N/A",
-//     },
-//     {
-//         shiftdate: "01/01/2023",
-//         shiftName: "Day",
-//         startTime: "10:00 AM",
-//         endTime: "05:00 PM",
-//         workingHours: "7 Hrs",
-//         status: "Status",
-//         comments: "N/A",
-//     },
-//     {
-//         shiftdate: "01/01/2023",
-//         shiftName: "Day",
-//         startTime: "10:00 AM",
-//         endTime: "05:00 PM",
-//         workingHours: "7 Hrs",
-//         status: "Status",
-//         comments: "N/A",
-//     },
-//     {
-//         shiftdate: "01/01/2023",
-//         shiftName: "Day",
-//         startTime: "10:00 AM",
-//         endTime: "05:00 PM",
-//         workingHours: "7 Hrs",
-//         status: "Status",
-//         comments: "N/A",
-//     },
-// ];
-
 const Employees = (props) => {
 
     const router = useRouter();
@@ -248,32 +128,44 @@ const Employees = (props) => {
         }
     }, [userId]);
 
-    const fetchAllData = async () => {
-        fetchEmployeeDetails();
+    useEffect(() => {
         fetchEmployeeAttendance();
-        fetchEmployeeShifts();
+    }, [pageNoAttendance])
+
+    useEffect(() => {
         fetchEmployeeRequests();
+    }, [pageNoRequests])
+
+    useEffect(() => {
+        fetchEmployeeShifts();
+    }, [pageNoShifts])
+
+    const fetchAllData = async () => {
+        fetchEmployeeDetails()
+            .then(() => fetchEmployeeAttendance()
+                .then(() => fetchEmployeeShifts()
+                    .then(() => fetchEmployeeRequests())))
     }
 
-    const fetchEmployeeDetails = () => {
+    const fetchEmployeeDetails = async () => {
         fetchAndHandleGet(() => memberService.getMemberById(userId), setEmployeeDetails);
     }
 
-    const fetchEmployeeAttendance = () => {
+    const fetchEmployeeAttendance = async () => {
         fetchAndHandlePage(() => timesheetService.getAll(pageNoAttendance, 5, { userId }),
-            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, null, null,
-            getTimesheetListing);
+            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, props.setPageLoading, 
+            null, getTimesheetListing);
     }
 
-    const fetchEmployeeShifts = () => {
+    const fetchEmployeeShifts = async () => {
         fetchAndHandlePage(() => shiftsService.getByUser(pageNoShifts, 5, { userId }),
-            setShiftData, setTotalEntriesShifts, setTotalPagesShifts, null, null,
+            setShiftData, setTotalEntriesShifts, setTotalPagesShifts, props.setPageLoading, null,
             getSingleShiftsListing);
     }
 
-    const fetchEmployeeRequests = () => {
+    const fetchEmployeeRequests = async () => {
         fetchAndHandlePage(() => requestService.getAllForUser(pageNoRequests, 5, { userId }),
-            setRequestsData, setTotalEntriesRequests, setTotalPagesRequests, null, null,
+            setRequestsData, setTotalEntriesRequests, setTotalPagesRequests, props.setPageLoading, null,
             getRequestsListing);
     }
 
@@ -361,7 +253,7 @@ const Employees = (props) => {
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
                     expandable
-                    actions={actions}
+                    // actions={actions}
                     pagination
                     totalEntries={title === 'Attendance' ? totalEntriesAttendance :
                         (title === 'Requests' ? totalEntriesRequests : totalEntriesShifts)}

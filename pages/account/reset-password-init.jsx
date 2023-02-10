@@ -45,6 +45,7 @@ const ResetPasswordInit = (props) => {
         checkEmailError()
             .then(error => {
                 if (!error) {
+                    props.setPageLoading(true);
                     userService.requestResetPassword(email)
                         .then(res => {
                             if (res.error) {
@@ -52,8 +53,10 @@ const ResetPasswordInit = (props) => {
                                 setSubmitError(true);
                                 setTimeout(() => setSubmitError(false), 3000);
                                 setLoading(false);
+                                props.setPageLoading(false);
                             } else {
                                 setShowSuccessModal(true);
+                                props.setPageLoading(false);
                             }
                         })
                 }

@@ -11,9 +11,9 @@ import { organizationService } from "../../services/organization.service";
 const CalendarComponent = (props) => {
 
     // -------------- Data to display
-    const [holidays, setHolidays] = useState([]);
+    const [holidays, setHolidays] = useState();
     const [timesheets, setTimesheets] = useState([]);
-    const [selectedEvents, setSelectedEvents] = useState([]);
+    const [selectedEvents, setSelectedEvents] = useState();
     // ------------------------------
 
     const today = startOfToday();
@@ -86,23 +86,15 @@ const CalendarComponent = (props) => {
         organizationService.getHolidays(year)
             .then(res => {
                 if (!res.error) {
-                    console.log(res.map(holiday => {
-                        return {
-                            ...holiday,
-                            displayDate: new Date(holiday.year, holiday.month, holiday.date, 0, 0, 0)
-                                .toLocaleString('default', { month: 'long', day: '2-digit' }),
-                                date: holiday.year + '-' + holiday.month + '-' + holiday.date + 'T00:00:00' 
-                        }
-                    }))
                     setHolidays(res.map(holiday => {
                         return {
                             ...holiday,
                             displayDate: new Date(holiday.year, holiday.month, holiday.date, 0, 0, 0)
                                 .toLocaleString('default', { month: 'long', day: '2-digit' }),
-                                date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00' 
+                            date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00'
                         }
                     }));
-                }
+                } else console.log(res.message)
             })
     }
 
@@ -141,7 +133,8 @@ const CalendarComponent = (props) => {
     }
 
     useEffect(() => {
-        let newDaysObj = referenceDays.map((day) => {
+        if (holidays && selectedEvents) {
+            let newDaysObj = referenceDays.map((day) => {
             let workedDaysList = [];
             timesheets
                 .filter((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day.date))
@@ -177,7 +170,8 @@ const CalendarComponent = (props) => {
             };
         });
         setDays(newDaysObj);
-    }, [referenceDays, holidays, timesheets]);
+    }
+    }, [referenceDays, holidays, timesheets, selectedEvents]);
 
     return (
         <div className={CalendarStyles.gridContainer}>
@@ -201,7 +195,10 @@ const CalendarComponent = (props) => {
                                 <div
                                     key={`day_${i}`}
                                     onClick={() => {
-                                        if (isSameMonth(day.date, firstDayCurrentMonth)) setSelectedDay(day.date);
+                                        if (isSameMonth(day.date, firstDayCurrentMonth)) {
+                                            setSelectedDay(day.date);
+                                            setSelectedEvents();
+                                        }
                                     }}
                                     className={joinClasses(
                                         CalendarStyles.dateContainer,
@@ -254,13 +251,15 @@ const CalendarComponent = (props) => {
                     <h4>{selectedDay.toLocaleString('default', { month: 'long', day: 'numeric', year: "numeric" })}</h4>
                     <ul className={CalendarStyles.eventList}>
                         {
-                            selectedEvents.length > 0 ?
-                                selectedEvents.map((event, i) => (
-                                    <li className={CalendarStyles.dateHoliday} key={`event_${i}`}>
-                                        <span className={CalendarStyles.eventTitle}>{event.name}</span>: {event.time}
-                                    </li>
-                                )) :
-                                <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                            selectedEvents ? (
+                                selectedEvents.length > 0 ?
+                                    selectedEvents.map((event, i) => (
+                                        <li className={CalendarStyles.dateHoliday} key={`event_${i}`}>
+                                            <span className={CalendarStyles.eventTitle}>{event.name}</span>: {event.time}
+                                        </li>
+                                    )) :
+                                    <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                            ) : <li className={CalendarStyles.dateHoliday}>Loading...</li>
                         }
                     </ul>
                 </div>
@@ -268,13 +267,15 @@ const CalendarComponent = (props) => {
                     <h4>Holidays</h4>
                     <ul className={CalendarStyles.holidayList}>
                         {
-                            holidays.length > 0 ?
-                                holidays.map((holiday, i) => (
-                                    <li className={CalendarStyles.dateHoliday} key={`holiday${i}`}>
-                                        <span className={CalendarStyles.eventTitle}>{holiday.name}</span>: {holiday.displayDate}
-                                    </li>
-                                )) :
-                                <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                            holidays ? (
+                                holidays.length > 0 ?
+                                    holidays.map((holiday, i) => (
+                                        <li className={CalendarStyles.dateHoliday} key={`holiday${i}`}>
+                                            <span className={CalendarStyles.eventTitle}>{holiday.name}</span>: {holiday.displayDate}
+                                        </li>
+                                    )) :
+                                    <li className={CalendarStyles.dateHoliday}>No Data Available</li>
+                            ) : <li className={CalendarStyles.dateHoliday}>Loading...</li>
                         }
                     </ul>
                 </div>

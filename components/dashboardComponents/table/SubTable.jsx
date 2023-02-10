@@ -74,6 +74,7 @@ const SubTable = (props) => {
                         key={`head_${j}`}
                         className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
                             ${TableStyles.subHeaderCell}`}
+                            style={displayHeaders.length === 1 ? {paddingLeft: '20px'} : {}}
                     >
                         {subHead}
                     </div>
@@ -89,6 +90,7 @@ const SubTable = (props) => {
                                     key={`cell_${j}_${k}`}
                                     className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
                                     data={subData[subKey]}
+                                    style={displayHeaders.length === 1 ? {paddingLeft: '20px'} : {}}
                                     rowNum={j}
                                 />
                             ))

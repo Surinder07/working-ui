@@ -2,6 +2,7 @@ import Router from 'next/router';
 import { userService } from '../services/user.service';
 import { secureLocalStorage } from './secureLocalStorage';
 import getConfig from 'next/config';
+import { useStyleRegistry } from 'styled-jsx';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = publicRuntimeConfig.apiUrl;
@@ -89,11 +90,10 @@ const handleResponse = async (response, url) => {
     return response.text().then((text) => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401 && !url.includes('login')) {
+            if (response.status === 401 && !url.includes('authenticate')) {
                 userService.logout();
             }
             else if (response.status === 403 && data) {
-                console.log(data.waawErrorCode);
                 switch (data.waawErrorCode) {
                     case 'WE_001':
                         Router.push('/account/complete-profile');
@@ -104,6 +104,12 @@ const handleResponse = async (response, url) => {
                     default:
                         localStorage.removeItem(userService.TOKEN_KEY);
                         localStorage.removeItem(userService.USER_KEY);
+                        if(url.includes('authenticate')) {
+                            return {
+                                error: true,
+                                message: data.message
+                            }
+                        }
                         Router.push('/login');
                 }
                 return {};

@@ -57,7 +57,7 @@ const DatePicker = (props) => {
     }
 
     const isTodayOrPast = (date) => {
-        return differenceInDays(date, today) <= 0;
+        return differenceInDays(date, today) < 0;
     }
 
     const previousMonth = () => {
@@ -118,7 +118,6 @@ const DatePicker = (props) => {
     }
 
     useEffect(() => {
-        // props.setValue(format((props.blockPast ? addDays(today, 1) : today), "yyyy-MM-dd"))
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);

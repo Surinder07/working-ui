@@ -61,13 +61,15 @@ const DropDown = (props) => {
     }
 
     const onClick = () => {
-        if (!props.openUp) {
-            if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
-                setOpenDown(false);
-            if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
-                setOpenDown(true);
+        if (!props.disabled) {
+            if (!props.openUp) {
+                if ((ref.current.offsetTop + (props.options.length * 50) + ref.current.clientHeight) > window.innerHeight)
+                    setOpenDown(false);
+                if ((ref.current.offsetTop - window.scrollY < props.options.length * 50))
+                    setOpenDown(true);
+            }
+            setOpen(!open);
         }
-        setOpen(!open);
     }
 
     useEffect(() => {
@@ -78,10 +80,12 @@ const DropDown = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={joinClasses(props.inputType === 2 ? DropdownStyles.mulishBasicCountainer : DropdownStyles.poppinsBasicContainer, DropdownStyles.dropdownRelative, props.showError ? DropdownStyles.inputBoxError : DropdownStyles.inputBoxDefault)}
+        <div ref={ref} className={joinClasses(props.inputType === 2 ? DropdownStyles.mulishBasicCountainer : DropdownStyles.poppinsBasicContainer, 
+            DropdownStyles.dropdownRelative, props.showError ? DropdownStyles.inputBoxError : DropdownStyles.inputBoxDefault,
+            props.disabled && DropdownStyles.inputBoxDisabled)}
             style={props.style}>
             <div className={DropdownStyles.selected2} onClick={onClick}>
-                {props.type === 'typeAhead' ? <input value={inputValue} placeholder={displayValue} onChange={updateOptions} /> : displayValue}
+                {props.type === 'typeAhead' ? <input value={inputValue} placeholder={displayValue} onChange={updateOptions} disabled={props.disabled} /> : displayValue}
                 {open ? <KeyboardArrowUp className={DropdownStyles.dropDownIcon} /> :
                     <KeyboardArrowDown className={DropdownStyles.dropDownIcon} />}
             </div>

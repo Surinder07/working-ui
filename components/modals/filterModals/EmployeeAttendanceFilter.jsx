@@ -5,18 +5,18 @@ import { EditableInput } from "../../inputComponents";
 import { timesheetType } from "../../../constants";
 
 const EmployeeAttendanceFilter = (props) => {
-    const [dateFrom, setDateFrom] = useState("");
-    const [dateTo, setDateTo] = useState("");
-    const [entryType, setEntryType] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [type, setType] = useState("");
     const [errorDate, setErrorDate] = useState({
         message: '',
         show: false
     });
 
     const clearAllFilter = () => {
-        setDateFrom("")
-        setDateTo("")
-        setEntryType("")
+        setStartDate("")
+        setEndDate("")
+        setType("")
         setErrorDate({
             message: '',
             show: false
@@ -24,7 +24,7 @@ const EmployeeAttendanceFilter = (props) => {
         props.setData({})
     }
 
-    if ((dateFrom === '' && dateTo !== '') || (dateFrom !== '' && dateTo === '')) {
+    if ((startDate === '' && endDate !== '') || (startDate !== '' && endDate === '')) {
         setErrorDate({
             message: 'Both dates are required',
             show: true
@@ -34,7 +34,7 @@ const EmployeeAttendanceFilter = (props) => {
 
     const applyFilter = () => {
         if (!isError()) {
-            props.setFilters({ ...props.filters, startDate, endDate, type: entryType })
+            props.setFilters({ ...props.filters, startDate, endDate, type })
         } else return false;
     }
 
@@ -52,8 +52,8 @@ const EmployeeAttendanceFilter = (props) => {
                 <EditableInput
                     type="date"
                     label="Start Date"
-                    value={dateFrom}
-                    setValue={setDateFrom}
+                    value={startDate}
+                    setValue={setStartDate}
                     error={errorDate}
                     setError={setErrorDate}
                     editOn
@@ -61,9 +61,8 @@ const EmployeeAttendanceFilter = (props) => {
                 <EditableInput
                     type="date"
                     label="To"
-                    value={dateTo}
-                    setValue={setDateTo}
-                    error={errorDate}
+                    value={endDate}
+                    setValue={setEndDate}
                     setError={setErrorDate}
                     editOn
                 />
@@ -71,8 +70,8 @@ const EmployeeAttendanceFilter = (props) => {
                     type="dropdown"
                     label="Entry Type"
                     placeholder="Entry Type"
-                    value={entryType}
-                    setValue={setEntryType}
+                    value={type}
+                    setValue={setType}
                     options={timesheetType}
                     className={DashboardModalStyles.singleColumn}
                     editOn

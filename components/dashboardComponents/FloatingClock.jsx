@@ -66,7 +66,6 @@ const FloatingClock = (props) => {
                         })
                     }
                     else {
-                        console.log(res)
                         if (!res) {
                             setPlaying(false);
                             setDisableTimer(false)

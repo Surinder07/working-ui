@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
@@ -10,7 +9,7 @@ import { requestService } from "../../services";
 
 const CreateRequestModal = (props) => {
 
-    const [requestType, setRequestType] = useState(RequestTypeValues[0].display);
+    const [requestType, setRequestType] = useState(RequestTypeValues[0].value);
     const [timeOffFormType, setTimeOffFormType] = useState("Full Day");
     const [fromDate, setFromDate] = useState("");
     const [tillDate, setTillDate] = useState("");
@@ -28,7 +27,7 @@ const CreateRequestModal = (props) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        setRequestType(RequestTypeValues[0].display);
+        setRequestType(RequestTypeValues[0].value);
     }, [])
 
     const onCancel = () => {
@@ -60,6 +59,8 @@ const CreateRequestModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
+            console.log(newRequestRequestBody(requestType, timeOffFormType,
+                fromDate, tillDate, typeOfLeave, startTime, duration, description))
             fetchAndHandle(() => requestService.addNew(newRequestRequestBody(requestType, timeOffFormType,
                 fromDate, tillDate, typeOfLeave, startTime, duration, description)),
                 'Request added successfully', setLoading, props.setReloadData, props.setPageLoading,
@@ -89,10 +90,10 @@ const CreateRequestModal = (props) => {
                 editOn
             />
             {
-                (requestType === 'TIMEOFF' || requestType === 'OVERTIME') &&
+                (requestType === 'TIME_OFF' || requestType === 'OVERTIME') &&
                 <>
                     {
-                        requestType === 'TIMEOFF' &&
+                        requestType === 'TIME_OFF' &&
                         <Tabs
                             className={DashboardModalStyles.singleColumn}
                             options={["Full Day", "Half Day"]}
@@ -102,7 +103,7 @@ const CreateRequestModal = (props) => {
                         />
                     }
                     {
-                        (requestType === 'TIMEOFF' && timeOffFormType === 'Full Day') &&
+                        (requestType === 'TIME_OFF' && timeOffFormType === 'Full Day') &&
                         <>
                             <EditableInput
                                 type="date"
@@ -127,7 +128,7 @@ const CreateRequestModal = (props) => {
                         </>
                     }
                     {
-                        ((requestType === 'TIMEOFF' && timeOffFormType === 'Half Day') || requestType === 'OVERTIME') &&
+                        ((requestType === 'TIME_OFF' && timeOffFormType === 'Half Day') || requestType === 'OVERTIME') &&
                         <>
                             <EditableInput
                                 type="date"
@@ -164,7 +165,7 @@ const CreateRequestModal = (props) => {
                         </>
                     }
                     {
-                        requestType === 'TIMEOFF' &&
+                        requestType === 'TIME_OFF' &&
                         <EditableInput
                             type="dropdown"
                             options={LeaveTypeValues}

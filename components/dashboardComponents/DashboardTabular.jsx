@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { fetchAndHandlePage, getSingleShiftsListing } from "../../helpers";
+import { dashboardService } from "../../services";
 import DashboardCard from "./DashboardCard";
 import TabularInfo from "./TabularInfo";
 
@@ -25,18 +27,14 @@ const DashboardTabular = (props) => {
             //     getNotificationListing, props.user.role);
         } else if (props.role === 'MANAGER') {
             setTitle('Schedule shift for today');
-            setDescription('Tabular list of all shifts assigned for today');
-            setData([]);
-            // fetchAndHandlePage(() => notificationService.getAll(pageNo, 5, filters, sort),
-            //     setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
-            //     getNotificationListing, props.user.role);
+            setDescription('Tabular list of all shifts assigned to employees for today');
+            fetchAndHandlePage(() => dashboardService.getShiftData(pageNo, 5), setData, setTotalEntries,
+                setTotalPages, null, null, getSingleShiftsListing, props.role);
         } else {
-            setTitle('Schedule shift for today');
-            setDescription('Tabular list of all shifts assigned for today');
-            setData([]);
-            // fetchAndHandlePage(() => notificationService.getAll(pageNo, 5, filters, sort),
-            //     setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
-            //     getNotificationListing, props.user.role);
+            setTitle('Upcoming scheduled shifts ');
+            setDescription('Tabular list of all upcoming shifts');
+            fetchAndHandlePage(() => dashboardService.getShiftData(pageNo, 5), setData, setTotalEntries,
+                setTotalPages, null, null, getSingleShiftsListing, props.role);
         }
     }
 

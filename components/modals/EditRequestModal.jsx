@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { combineBoolean, fetchAndHandle, validateForEmptyField } from "../../helpers";
 import { requestService } from "../../services";
 import { EditableInput } from "../inputComponents";
@@ -8,11 +8,15 @@ const EditRequestsModal = (props) => {
 
     const responseOptions = ['Approve', 'Reject', 'Refer Back'];
 
-    const [choice, setChoice] = useState(responseOptions[0]);
+    const [choice, setChoice] = useState(responseOptions[2]);
     const [comment, setComment] = useState("");
     const [commentError, setCommentError] = useState({});
     const [choiceError, setChoiceError] = useState({});
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (props.tabularType === 'my') setChoice("Refer Back")
+    }, [])
 
     const onCancel = () => {
         setChoice("")

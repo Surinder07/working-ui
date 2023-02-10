@@ -1,3 +1,5 @@
+import { PropaneSharp } from "@mui/icons-material";
+
 // Requests -----------------
 export const saveUserRequestBody = (firstName, lastName, locationRoleId, locationId,
     employeeId, email, fullTime) => {
@@ -171,9 +173,18 @@ export const getShiftsListing = (data) => {
     })
 }
 
-export const getSingleShiftsListing = (data) => {
+export const getSingleShiftsListing = (data, role) => {
     return data.map(shift => {
-        return {
+        return (role && role === 'MANAGER') ? {
+            internalId: shift.id,
+            id: shift.waawId,
+            shiftName: shift.name,
+            employeeName: shift.employeeName,
+            employeeEmail: shift.employeeEmail,
+            inTime: shift.start.date + " " + shift.start.time,
+            outTime: shift.end.date + " " + shift.end.time,
+            comments: shift.notes
+        } : {
             internalId: shift.id,
             id: shift.waawId,
             shiftName: shift.name,
@@ -240,7 +251,7 @@ export const getRequestsListing = (data) => {
 export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
     endDate, endTime, instantRelease, shiftName) => {
     return {
-        type: formType === 'SINGLE SHIFT' ? 'SINGLE' : 'BATCH',
+        type: formType === 'Single Shift' ? 'SINGLE' : 'BATCH',
         locationId, userIds: userIds === '' ? [] : userIds, shiftName,
         locationRoleIds: roleIds === '' ? [] : roleIds,
         start: { date: startDate, time: formatTime(startTime) },
@@ -258,7 +269,7 @@ export const newRequestRequestBody = (requestType, timeOffFormType, fromDate, ti
         else return 'SICK_LEAVE_FULL_DAY';
     }
     let req = {
-        type: requestType === 'Overtime' ? 'OVERTIME' : (requestType === 'Timeoff' ? 'TIME_OFF' : 'INFORMATION_UPDATE'),
+        type: requestType,
         start: fromDate === '' ? null : {
             date: fromDate,
             time: startTime === '' ? null : formatTime(startTime)
@@ -267,7 +278,7 @@ export const newRequestRequestBody = (requestType, timeOffFormType, fromDate, ti
         duration: duration,
         description: description
     }
-    if (requestType === 'Timeoff') {
+    if (requestType === 'TIME_OFF') {
         req = { ...req, subType: getSubtype() }
     }
     return req;

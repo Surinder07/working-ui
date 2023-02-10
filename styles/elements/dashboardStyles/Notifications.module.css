@@ -132,7 +132,9 @@
     opacity: 0.75;
     display: -webkit-box;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
+    word-wrap: break-word;
+    word-break: keep-all;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }

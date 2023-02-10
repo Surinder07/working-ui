@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button, EmployeeAttendanceFilter } from "../../../components";
 import { Warning } from "@mui/icons-material";
 import { timesheetService } from "../../../services";
 import { fetchAndHandlePage, getTimesheetListing } from "../../../helpers";
@@ -14,6 +14,7 @@ const timeClock = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [filters, setFilters] = useState({});
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [start, setStart] = useState("--:--");
     const [startDate, setStartDate] = useState(new Date());
     const [duration, setDuration] = useState("00:00:00");
@@ -170,6 +171,12 @@ const timeClock = (props) => {
                             </div>
                             <Clock />
                         </DashboardCard>
+                        <EmployeeAttendanceFilter
+                            showModal={showFilterModal}
+                            setShowModal={setShowFilterModal}
+                            filters={filters}
+                            setFilters={setFilters}
+                        />
                         <DashboardCard style={{ marginTop: "20px" }}>
                             <TabularInfo
                                 title="Time Sheet"
@@ -182,6 +189,7 @@ const timeClock = (props) => {
                                 pageNo={pageNo}
                                 setPageNo={setPageNo}
                                 showFilter
+                                setShowFilterModal={setShowFilterModal}
                             />
                         </DashboardCard>
                     </>

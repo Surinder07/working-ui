@@ -144,7 +144,7 @@ const Shifts = (props) => {
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
-                            onDelete={deleteShiftOrBatch}
+                            onSubmit={deleteShiftOrBatch}
                         >
                             This will permanently delete this Shift/Batch
                         </DeleteModal>

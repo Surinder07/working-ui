@@ -31,6 +31,10 @@ const getData = async (role) => {
         });
 }
 
+const getShiftData = async (pageNo, pageSize) => {
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getShiftData, pageNo, pageSize, {}))
+}
+
 const getInvoicesTrends = (data) => {
     const currentYearData = (data.currentYear && Object.keys(data.currentYear).length > 0) ? months
         .filter(month => Object.keys(data.currentYear).includes(month))
@@ -155,5 +159,6 @@ const startArrayFromMidElelment = (el, array) => {
 }
 
 export const dashboardService = {
-    getData
+    getData,
+    getShiftData
 }
