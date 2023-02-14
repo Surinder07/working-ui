@@ -79,6 +79,7 @@
     width: 100%;
     margin-bottom: 30px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .notification {

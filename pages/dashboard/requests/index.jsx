@@ -38,12 +38,14 @@ const Requests = (props) => {
     useEffect(() => {
         if (props.user.role && props.user.role === 'ADMIN') {
             setActiveTable('emp')
+        } else if (props.user.role && props.user.role === 'EMPLOYEE') {
+            setActiveTable('my')
         }
     }, [props.user])
 
     useEffect(() => {
         fetchData();
-    }, [pageNo, pageSize, filters, sort]);
+    }, [pageNo, pageNoMyData, pageSize, filters, myFilters, sort]);
 
     useEffect(() => {
         if (reloadData) fetchData();
@@ -57,7 +59,7 @@ const Requests = (props) => {
                 getRequestsListing, props.user.role);
         }
         if (props.user.role === 'EMPLOYEE' || props.user.role === 'MANAGER') {
-            fetchAndHandlePage(() => requestService.getAllForUser(pageNo, pageSize, myFilters, sort),
+            fetchAndHandlePage(() => requestService.getAllForUser(pageNoMyData, pageSize, myFilters, sort),
                 setMyData, setTotalEntriesMyData, setTotalPagesMyData, props.setPageLoading, props.setToasterInfo,
                 getRequestsListing, props.user.role);
         }

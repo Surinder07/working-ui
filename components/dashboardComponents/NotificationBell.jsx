@@ -28,18 +28,15 @@ const NotificationBell = (props) => {
             setData, null, null, null, null, getNotificationListingForBell, null);
     }
 
-    const markAsRead = (id, status) => {
-        if (status.text === 'Unread') {
+    const markAsRead = (id, read) => {
+        if (!read) {
             fetchAndHandle(() => notificationService.markAsRead(id), "", null, null, props.setPageLoading,
                 null, null, null, () => {
                     let newData = data;
                     newData = newData.map(item => {
                         if (item.internalId === id) {
                             return {
-                                ...item, status: {
-                                    ...item.status,
-                                    text: 'Read'
-                                }
+                                ...item, read: true
                             }
                         }
                         return item;
@@ -108,9 +105,9 @@ const NotificationBell = (props) => {
                                     key={i}
                                     className={joinClasses(NotificationsStyles.notification, notification.read && NotificationsStyles.readNotification)}
                                     style={{
-                                        borderBottom: data.length !== i + 1 ?
-                                            '1.5px solid #999998' : 'none'
-                                    }}>
+                                        borderBottom: data.length !== i + 1 ? '1.5px solid #999998' : 'none'
+                                    }}
+                                    onClick={() => markAsRead(notification.internalId, notification.read)}>
                                     {!notification.read && <div className={NotificationsStyles.unreadInd}></div>}
                                     <div className={NotificationsStyles.notificationHeader}>
                                         <h4>{notification.title}</h4>

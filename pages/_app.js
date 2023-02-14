@@ -64,7 +64,12 @@ function MyApp({ Component, pageProps }) {
 
     const checkPageLoading = () => {
         const handleStart = (url) => url !== router.asPath && setPageLoading(true);
-        const handleComplete = (url) => url === router.asPath && setPageLoading(false);
+        const handleComplete = (url) => {
+            url === router.asPath && setPageLoading(false);
+            if (localStorage.getItem(userService.USER_KEY)) {
+                setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
+            }
+        }
 
         router.events.on("routeChangeStart", handleStart);
         router.events.on("routeChangeComplete", handleComplete);

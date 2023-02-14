@@ -17,13 +17,14 @@ const Login = (props) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [emailError, setEmailError] = useState(false);
     const [emailMessage, setEmailMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState('');
 
     useEffect(() => {
+        props.setPageLoading(true);
         props.setPageInfo({
             authenticationRequired: false,
             pageView: 'fullPage',
@@ -36,11 +37,21 @@ const Login = (props) => {
                     if (res.error) {
                         localStorage.removeItem(userService.TOKEN_KEY);
                         localStorage.removeItem(userService.USER_KEY);
+                        setLoading(false);
+                        props.setPageLoading(false);
                     } else {
-                        props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)))
+                        props.setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
+                        props.setPageLoading(false);
                         router.push('/dashboard');
                     }
                 })
+                .catch(() => {
+                    setLoading(false);
+                    props.setPageLoading(false);
+                })
+        } else {
+            setLoading(false);
+            props.setPageLoading(false);
         }
     }, [])
 

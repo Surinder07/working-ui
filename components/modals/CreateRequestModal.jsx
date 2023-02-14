@@ -59,8 +59,6 @@ const CreateRequestModal = (props) => {
 
     const saveData = () => {
         if (!isError()) {
-            console.log(newRequestRequestBody(requestType, timeOffFormType,
-                fromDate, tillDate, typeOfLeave, startTime, duration, description))
             fetchAndHandle(() => requestService.addNew(newRequestRequestBody(requestType, timeOffFormType,
                 fromDate, tillDate, typeOfLeave, startTime, duration, description)),
                 'Request added successfully', setLoading, props.setReloadData, props.setPageLoading,

@@ -265,7 +265,7 @@ export const newRequestRequestBody = (requestType, timeOffFormType, fromDate, ti
     const getSubtype = () => {
         if (timeOffFormType === 'Full Day' && typeOfLeave === 'Vacation') return 'VACATION_LEAVE_FULL_DAY';
         else if (typeOfLeave === 'Vacation') return 'VACATION_LEAVE_HALF_DAY';
-        else if (timeOffFormType === 'Half Day' && typeOfLeave === 'Sick Leeave') return 'SICK_LEAVE_HALF_DAY';
+        else if (timeOffFormType === 'Half Day' && typeOfLeave === 'Sick Leave') return 'SICK_LEAVE_HALF_DAY';
         else return 'SICK_LEAVE_FULL_DAY';
     }
     let req = {
