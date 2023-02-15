@@ -47,7 +47,7 @@ const VerifyEmail = (props) => {
         finished ?
             <FullPageWithImageLayout
                 title={success ? 'Email Verified' : 'Link Expired'}
-                background={success ? '/bg/email-success-bg.svg' : '/bg/link-expired-bg.svg'}
+                background={success ? '/images/bg/email-success-bg.svg' : '/images/bg/link-expired-bg.svg'}
             >
                 {
                     success ?

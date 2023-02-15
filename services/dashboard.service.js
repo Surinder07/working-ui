@@ -7,27 +7,29 @@ const days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 const getData = async (role) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getData))
         .then(res => {
-            let data = res;
-            if (role === 'ADMIN') {
-                data = {
-                    ...data,
-                    lineGraph: getInvoicesTrends(res.invoiceTrends),
-                    pieGraph: getEmployeeTrends(res.employeeTrends, role)
+            if (!res.error) {
+                let data = res;
+                if (role === 'ADMIN') {
+                    data = {
+                        ...data,
+                        lineGraph: getInvoicesTrends(res.invoiceTrends),
+                        pieGraph: getEmployeeTrends(res.employeeTrends, role)
+                    }
+                } else if (role === 'MANAGER') {
+                    data = {
+                        ...data,
+                        lineGraph: getHoursTrends(res.hoursThisWeek, res.weekStart),
+                        pieGraph: getEmployeeTrends(res.employeeTrends, role)
+                    }
+                } else {
+                    data = {
+                        ...data,
+                        lineGraph: getHoursTrends(res.hoursThisWeek, res.weekStart),
+                        pieGraph: 'noData'
+                    }
                 }
-            } else if (role === 'MANAGER') {
-                data = {
-                    ...data,
-                    lineGraph: getHoursTrends(res.hoursThisWeek, res.weekStart),
-                    pieGraph: getEmployeeTrends(res.employeeTrends, role)
-                }
-            } else {
-                data = {
-                    ...data,
-                    lineGraph: getHoursTrends(res.hoursThisWeek, res.weekStart),
-                    pieGraph: 'noData'
-                }
+                return data;
             }
-            return data;
         });
 }
 
@@ -80,11 +82,11 @@ const getInvoicesTrends = (data) => {
 const getHoursTrends = (data, weekStart) => {
     const currentWeekData = data.currentWeek ? days
         .map(day => {
-            return data.currentWeek[day] ?  (data.currentWeek[day] / 60) : 0
+            return data.currentWeek[day] ? (data.currentWeek[day] / 60) : 0
         }) : [];
     const lastWeekData = data.lastWeek ? days
         .map(day => {
-            return data.lastWeek[day] ?  (data.lastWeek[day] / 60) : 0
+            return data.lastWeek[day] ? (data.lastWeek[day] / 60) : 0
         }) : [];
     return {
         noData: (currentWeekData.length === 0 && lastWeekData.length === 0),

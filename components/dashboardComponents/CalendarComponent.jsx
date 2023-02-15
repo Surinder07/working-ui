@@ -123,7 +123,7 @@ const CalendarComponent = (props) => {
         }
         getMonthTimesheet(currentMonth);
         if (currentYear !== getYear(new Date(firstDayCurrentMonth)).toString()) {
-            setCurrentYear(getYear(new Date()).toString());
+            setCurrentYear(getYear(new Date(firstDayCurrentMonth)).toString());
         }
     }, [currentMonth]);
 
