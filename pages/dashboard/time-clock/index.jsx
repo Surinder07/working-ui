@@ -19,7 +19,7 @@ const timeClock = (props) => {
     const [startDate, setStartDate] = useState(new Date());
     const [duration, setDuration] = useState("00:00:00");
     const [playing, setPlaying] = useState(false);
-    const [disableTimer, setDisableTimer] = useState(false);
+    const [disableTimer, setDisableTimer] = useState(true);
 
     useEffect(() => {
         props.setPageInfo({

@@ -1,5 +1,5 @@
 import { joinClasses } from '../../../helpers';
-import { InputBoxStyles } from '../../../styles/elements/inputs';
+import { ButtonStyles, InputBoxStyles } from '../../../styles/elements/inputs';
 
 const InputWithButton = (props) => {
     return (
@@ -18,20 +18,26 @@ const InputWithButton = (props) => {
                     onChange={(e) => {
                         props.setValue(e.target.value);
                         props.setShowMessage(false);
+                        props.setDisabled(false);
                     }}
                     autoComplete='off'
                 />
                 <button
                     disabled={props.disabled}
                     onClick={props.onClick}
-                    className={(props.showMessage && props.error) ?
-                        InputBoxStyles.buttonError : InputBoxStyles.buttonDefault}
+                    className={joinClasses(
+                        (props.showMessage && props.error) ? InputBoxStyles.buttonError : InputBoxStyles.buttonDefault,
+                        props.disabled && ButtonStyles.disabledButton
+                    )}
                 >
                     {props.buttonText}
                 </button>
                 {
                     props.showMessage &&
-                    <p className={`${InputBoxStyles.message} ${props.error ? InputBoxStyles.errorMessage : InputBoxStyles.successMessage}`}>
+                    <p 
+                    className={joinClasses(InputBoxStyles.message, props.error ? InputBoxStyles.errorMessage : InputBoxStyles.successMessage)}
+                    style={{width: '200%'}}
+                    >
                         {props.message}
                     </p>
                 }

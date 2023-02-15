@@ -36,6 +36,7 @@ const CompleteProfile = (props) => {
     const [promoMessage, setPromoMessage] = useState({});
     const [promoValue, setPromoValue] = useState('');
     const [loading, setLoading] = useState(false);
+    const [promoDisabled, setPromoDisabled] = useState(false);
 
     useEffect(() => {
         props.setPageInfo({
@@ -91,13 +92,15 @@ const CompleteProfile = (props) => {
     const handlePromoCode = () => {
         if (!validateForEmptyField(promoValue, '', (val) => setPromoMessage({ ...val, error: true }),
             true, 'Please enter a valid promo code')) {
-            userService.validatePromoCode()
+            setPromoDisabled(true);
+            userService.validatePromoCode(promoValue)
                 .then(res => {
                     setPromoMessage({
                         error: res.error,
                         message: res.message,
                         show: true
                     })
+                    if (res.error) setPromoDisabled(false);
                 })
         }
     }
@@ -137,12 +140,12 @@ const CompleteProfile = (props) => {
                             return res;
                         })
                         .then(res => {
-                            if(!res.error) {
+                            if (!res.error) {
                                 userService.getUser().then(res => {
                                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                                     props.setUser(res);
                                 })
-                                .then(() => router.push('/dashboard'))
+                                    .then(() => router.push('/dashboard'))
                             }
                         })
                 }
@@ -228,7 +231,6 @@ const CompleteProfile = (props) => {
                     setShowError={setShowErrorTimezone}
                 />
             </div>
-            {/* <div className={LoginRegisterLayout.twoHalves}> */}
             <InputWithButton
                 style={{ marginTop: '40px', width: '50%' }}
                 placeholder='Promo Code'
@@ -240,8 +242,9 @@ const CompleteProfile = (props) => {
                 setShowMessage={(val) => setPromoMessage({ ...promoMessage, show: val })}
                 value={promoValue}
                 setValue={setPromoValue}
+                disabled={promoDisabled}
+                setDisabled={setPromoDisabled}
             />
-            {/* </div> */}
             <div className={LoginRegisterLayout.twoHalves}>
                 <Button
                     type='fullWidth'

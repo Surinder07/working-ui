@@ -147,7 +147,10 @@ export const getShiftsListing = (data) => {
             role: subData.locationRoleName,
             inTime: subData.start.date + " " + subData.start.time,
             outTime: subData.end.date + " " + subData.end.time,
-            comments: subData.notes,
+            comments: {
+                displayType: 'comment',
+                text: subData.notes
+            },
             status: {
                 text: subData.shiftStatus,
                 status: getShiftStatusColor(subData.shiftStatus),
@@ -183,14 +186,20 @@ export const getSingleShiftsListing = (data, role) => {
             employeeEmail: shift.employeeEmail,
             inTime: shift.start.date + " " + shift.start.time,
             outTime: shift.end.date + " " + shift.end.time,
-            comments: shift.notes
+            comments: {
+                displayType: 'comment',
+                text: shift.notes
+            }
         } : {
             internalId: shift.id,
             id: shift.waawId,
             shiftName: shift.name,
             inTime: shift.start.date + " " + shift.start.time,
             outTime: shift.end.date + " " + shift.end.time,
-            comments: shift.notes
+            comments: {
+                displayType: 'comment',
+                text: shift.notes
+            }
         }
     })
 }
