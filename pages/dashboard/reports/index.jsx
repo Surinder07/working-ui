@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal, PaginationDropdown } from "../../../components";
+import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal, PaginationDropdown, ReportsFilter } from "../../../components";
 import { reportsService } from "../../../services";
 import { fetchAndHandlePage, getReportListing } from "../../../helpers";
+import Link from "next/link";
 
 const Reports = (props) => {
+
+    const fileRef = useRef();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
 
@@ -44,13 +47,31 @@ const Reports = (props) => {
     }, []);
 
     useEffect(() => {
-        fetchData();
+        if (props.user.role)
+            fetchData();
     }, [pageNo, attendanceFilter, payrollFilter, holidayFilter])
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData])
 
     const actions = {
         key: "Download",
         action: (id) => {
-            reportsService.download(id);
+            reportsService.download(id)
+                .then(res => {
+                    if (res.error) {
+
+                    } else {
+                        const url = window.URL.createObjectURL(res);
+                        fileRef.current.href = url;
+                        fileRef.current.target = '_blank';
+                        fileRef.current.download = 'Report_' + new Date() + '.xls';
+                        document.getElementById('file_download').click();
+                        window.URL.revokeObjectURL(url);
+                    }
+                });
         }
     };
 
@@ -63,20 +84,26 @@ const Reports = (props) => {
     };
 
     const fetchData = () => {
-        fetchAndHandlePage(() => reportsService.getAll(pageNo.Attendance, 5, attendanceFilter),
-            setAttendanceData, (e) => setTotalEntries({ ...totalEntries, Attendance: e }),
-            (e) => setTotalPages({ ...totalPages, Attendance: e }),
-            props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
-        if (props.user.role === 'ADMIN') {
-            fetchAndHandlePage(() => reportsService.getAll(pageNo.Payroll, 5, payrollFilter),
-                setPayrollData, (e) => setTotalEntries({ ...totalEntries, Payroll: e }),
-                (e) => setTotalPages({ ...totalPages, Payroll: e }),
+        try {
+            fetchAndHandlePage(() => reportsService.getAll(pageNo.Attendance, 5, attendanceFilter),
+                setAttendanceData, (e) => setTotalEntries({ ...totalEntries, Attendance: e }),
+                (e) => setTotalPages({ ...totalPages, Attendance: e }),
                 props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
-            fetchAndHandlePage(() => reportsService.getAll(pageNo['Location Holidays'], 5, holidayFilter),
-                setRequestsData, (e) => setTotalEntries({ ...totalEntries, 'Location Holidays': e }),
-                (e) => setTotalPages({ ...totalPages, 'Location Holidays': e }),
-                props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+            if (props.user.role === 'ADMIN') {
+                fetchAndHandlePage(() => reportsService.getAll(pageNo.Payroll, 5, payrollFilter),
+                    setPayrollData, (e) => setTotalEntries({ ...totalEntries, Payroll: e }),
+                    (e) => setTotalPages({ ...totalPages, Payroll: e }),
+                    props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+                fetchAndHandlePage(() => reportsService.getAll(pageNo['Location Holidays'], 5, holidayFilter),
+                    setRequestsData, (e) => setTotalEntries({ ...totalEntries, 'Location Holidays': e }),
+                    (e) => setTotalPages({ ...totalPages, 'Location Holidays': e }),
+                    props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+            }
         }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 
     const getExpandableData = (title, description, data) => {
@@ -95,7 +122,11 @@ const Reports = (props) => {
                     pageSize={5}
                     totalPages={totalPages[title]}
                     pageNo={pageNo[title]}
-                    setPageNo={(no) => setPageNo({ ...pageNo, title: no })}
+                    setPageNo={(no) => setPageNo(() => {
+                        let temp = pageNo;
+                        temp[title] = no;
+                        setPageNo(temp);
+                    })}
                     setShowFilterModal={setShowFilterModal}
                     showFilter
                 />
@@ -117,6 +148,19 @@ const Reports = (props) => {
                             setReloadData={setReloadData}
                             setPageLoading={props.setPageLoading}
                         />
+                        <ReportsFilter
+                            showModal={showFilterModal}
+                            setShowModal={setShowFilterModal}
+                            role={props.user.role}
+                            attendanceFilter={attendanceFilter}
+                            setAttendanceFilter={setAttendanceFilter}
+                            payrollFilter={payrollFilter}
+                            setPayrollFilter={setPayrollFilter}
+                            holidayFilter={holidayFilter}
+                            setHolidayFilter={setHolidayFilter}
+                            expandedMenu={expandedMenu}
+                        />
+                        <Link href="" ref={fileRef} id="file_download" hidden={true} />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Reports</h1>
                             <div className={DashboardStyles.rightContainer}>

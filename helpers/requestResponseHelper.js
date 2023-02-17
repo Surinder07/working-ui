@@ -255,12 +255,18 @@ export const getRequestsListing = (data) => {
     })
 }
 
-export const getReportListing = (data) => {
+export const getReportListing = (data, role) => {
     return data.map(report => {
-        return {
-            intrnalId: report.id,
+        return role === 'ADMIN' ? {
+            internalId: report.id,
             id: report.waawId,
             location: report.locationName,
+            reportFrom: report.from,
+            reportTo: report.to,
+            generatedOn: report.createdOn
+        } : {
+            intrnalId: report.id,
+            id: report.waawId,
             reportFrom: report.from,
             reportTo: report.to,
             generatedOn: report.createdOn
@@ -311,11 +317,6 @@ export const updatePreferenceRequestBody = (data, id) => {
         const endKey = `${row.days.toLowerCase()}EndTime`
         tempObj[startKey] = row.working ? `${row.startTime.hours}:${row.startTime.minutes}` : null;
         tempObj[endKey] = row.working ? `${row.endTime.hours}:${row.endTime.minutes}` : null;
-        // {
-        //     ...tempObj,
-        //     startKey: row.working ? row.startTime : null,
-        //     endKey: row.working ? row.endTime : null
-        // }
     })
     return {
         ...tempObj,
@@ -484,7 +485,6 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
                     message: res.message,
                 })
             } else {
-                console.log(res)
                 setData(mapperFunction(res.data, userRole));
                 setTotalEntries && setTotalEntries(res.totalEntries);
                 setTotalPages && setTotalPages(res.totalPages);

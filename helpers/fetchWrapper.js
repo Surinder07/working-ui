@@ -22,6 +22,18 @@ const getPaginationUrl = (endpoint, pageNo, pageSize, queryMap) => {
     return getApiUrl(updatedEndpoint, queryMap);
 }
 
+const getFile = async (url) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(url)
+    };
+    const response = await fetch(url, requestOptions);
+    return Math.floor(response.status / 100) === 2 ? response.blob() : {
+        error: true,
+        message: 'Something went wrong. Please try again later.'
+    };
+}
+
 const get = async (url) => {
     const requestOptions = {
         method: 'GET',
@@ -104,7 +116,7 @@ const handleResponse = async (response, url) => {
                     default:
                         localStorage.removeItem(userService.TOKEN_KEY);
                         localStorage.removeItem(userService.USER_KEY);
-                        if(url.includes('authenticate')) {
+                        if (url.includes('authenticate')) {
                             return {
                                 error: true,
                                 message: data.message
@@ -133,6 +145,7 @@ const handleResponse = async (response, url) => {
 
 export const fetchWrapper = {
     get,
+    getFile,
     post,
     put,
     delete: _delete,
