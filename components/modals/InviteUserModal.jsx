@@ -60,7 +60,7 @@ const InviteUserModal = (props) => {
     }, [props.role])
 
     useEffect(() => {
-        setRole("");
+        props.role === 'ADMIN' && setRole("");
         if (location && location !== '') {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
@@ -80,10 +80,10 @@ const InviteUserModal = (props) => {
 
     const isError = () => {
         return combineBoolean(
-            validateForEmptyField(firstName, 'First Name', setErrorFirstName, true) ||
-            validateForEmptyField(lastName, 'Last Name', setErrorLastName, true) ||
-            validateForEmptyField(email, 'Email', setErrorEmail, true) ||
-            validateForEmptyField(role, 'Role', setErrorRole, true) ||
+            validateForEmptyField(firstName, 'First Name', setErrorFirstName, true),
+            validateForEmptyField(lastName, 'Last Name', setErrorLastName, true),
+            validateForEmptyField(email, 'Email', setErrorEmail, true),
+            validateForEmptyField(role, 'Role', setErrorRole, true),
             validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
         );
     }

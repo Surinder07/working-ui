@@ -19,6 +19,7 @@ const FloatingClock = (props) => {
     }, [])
 
     const startTimer = () => {
+        props.setPageLoading(true)
         timesheetService.startTimer()
             .then(res => {
                 if (res.error) {
@@ -35,10 +36,12 @@ const FloatingClock = (props) => {
                     setStartDate(now);
                     setPlaying(true);
                 }
+                props.setPageLoading(false)
             })
     }
 
     const stopTimer = () => {
+        props.setPageLoading(true)
         timesheetService.stopTimer()
             .then(res => {
                 if (res.error) {
@@ -51,11 +54,13 @@ const FloatingClock = (props) => {
                     setPlaying(false);
                     setDisableTimer(true);
                 }
+                props.setPageLoading(false)
             });
     }
 
     const checkActiveTimer = () => {
         if (props.role !== 'ADMIN') {
+            props.setPageLoading(true);
             timesheetService.getActiveTimer()
                 .then(res => {
                     if (res.error) {
@@ -68,7 +73,7 @@ const FloatingClock = (props) => {
                     else {
                         if (!res) {
                             setPlaying(false);
-                            setDisableTimer(false)
+                            setDisableTimer(false);
                         } else {
                             setStart(res.startTime)
                             const date = new Date(Date.parse(res.startTimestamp));
@@ -85,6 +90,9 @@ const FloatingClock = (props) => {
                             }
                         }
                     }
+                    props.setPageLoading(false)
+                }).catch(() => {
+                    props.setPageLoading(false)
                 })
         }
     }

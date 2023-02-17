@@ -3,8 +3,8 @@ import { useState } from "react";
 import { EditableInput } from "../inputComponents";
 import { DashboardModal } from "./base";
 import { DashboardModalStyles } from "../../styles/elements";
-import { dropdownService } from "../../services";
-import { fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
+import { dropdownService, reportsService } from "../../services";
+import { combineBoolean, fetchAndHandle, fetchAndHandleGet, validateForEmptyField } from "../../helpers";
 import { ReportType } from "../../constants";
 
 
@@ -15,16 +15,25 @@ const GenerateReportsModal = (props) => {
     const [fromValue, setFromValue] = useState("");
     const [tillValue, setTillValue] = useState("")
     const [location, setLocation] = useState("")
-    const [reportType, setReportType] = useState("Attendance")
-
+    const [reportType, setReportType] = useState("ATTENDANCE")
+    const [loading, setLoading] = useState(false);
 
     const [locationError, setLocationError] = useState({
         message: "",
         show: false
     })
-    const [reportTypeError, setReportTypeError] = useState({})
-
-    const [loading, setLoading] = useState(false);
+    const [reportTypeError, setReportTypeError] = useState({
+        message: "",
+        show: false
+    })
+    const [startError, setStartError] = useState({
+        message: "",
+        show: false
+    })
+    const [endError, setEndError] = useState({
+        message: "",
+        show: false
+    })
 
     useEffect(() => {
         if (props.showModal && props.role === 'ADMIN')
@@ -37,31 +46,25 @@ const GenerateReportsModal = (props) => {
         setLocation("")
         setReportTypeError({})
         setLocationError({})
+        setStartError({})
+        setEndError({})
     }
 
     const isError = () => {
-        return validateForEmptyField(location, 'Location', setLocationError, props.role === 'ADMIN')
+        return combineBoolean(
+            validateForEmptyField(location, 'Location', setLocationError, props.role === 'ADMIN'),
+            validateForEmptyField(fromValue, 'From date', setStartError, true),
+            validateForEmptyField(tillValue, 'To date', setEndError, true),
+            validateForEmptyField(reportType, 'Report type', setReportTypeError, true)
+        )
     }
 
-    const saveData = () => {
+    const generateReport = () => {
         if (!isError()) {
-            fetchAndHandle(setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal, props.setToasterInfo)
-            // setLoading(true)
-            //     props.setToasterInfo({
-            //         error: true,
-            //         title: 'Error!',
-            //         message: res.message
-            //     })
-            // }
-            // else {
-            //     props.setToasterInfo({
-            //         error: false,
-            //         title: 'Success!',
-            //         message: 'Report Generated successfully'
-            //     });
-            //     props.setReloadData(true)
-            //     onCancel()
-            // setLoading(false)
+            fetchAndHandle(() => reportsService.generate(fromValue, tillValue, reportType, location),
+                null, setLoading, props.setReloadData, props.setPageLoading, onCancel, props.setShowModal,
+                props.setToasterInfo)
+            props.setShowModal(false);
         }
     }
 
@@ -73,7 +76,7 @@ const GenerateReportsModal = (props) => {
             buttonText="Generate and Email"
             title="Generate Reports"
             type="twoColNarrow"
-            onClick={saveData}
+            onClick={generateReport}
             onCancel={onCancel}
             loading={loading}
         >
@@ -83,6 +86,8 @@ const GenerateReportsModal = (props) => {
                 setValue={setFromValue}
                 initialValue={fromValue}
                 label="From"
+                error={startError}
+                setError={setStartError}
                 required
                 editOn
             />
@@ -91,6 +96,8 @@ const GenerateReportsModal = (props) => {
                 value={tillValue}
                 setValue={setTillValue}
                 initialValue={tillValue}
+                error={endError}
+                setError={setEndError}
                 label="Till"
                 required
                 editOn

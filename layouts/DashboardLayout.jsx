@@ -120,7 +120,7 @@ const Dashboard = (props) => {
                     <LinkedImage className={DashboardLayout.footerLogo} src={Favicon} heightOrient alt="WAAW" />
                 </div>
             </div>
-            {props.user.role !== 'ADMIN' && <FloatingClock setToasterInfo={props.setToasterInfo} role={props.user.role} />}
+            {props.user.role !== 'ADMIN' && <FloatingClock setToasterInfo={props.setToasterInfo} role={props.user.role} setPageLoading={props.setPageLoading} />}
         </div>
     );
 };

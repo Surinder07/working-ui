@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { NotificationsStyles } from "../../styles/elements";
 import Link from 'next/link';
 import { notificationService } from '../../services';
-import { fetchAndHandle, fetchAndHandlePage, getNotificationListingForBell, joinClasses, secureLocalStorage } from "../../helpers";
+import { fetchAndHandle, fetchAndHandlePage, getNotificationListingForBell, joinClasses } from "../../helpers";
 
 const NotificationBell = (props) => {
 
@@ -77,10 +77,6 @@ const NotificationBell = (props) => {
             setBoxHeight(ref.current.clientHeight + 100);
         }
     }, [ref.current, data])
-
-    // const header = {
-    //     access_token: secureLocalStorage.getData(userService.TOKEN_KEY)
-    // }
 
     return (
         <div className={NotificationsStyles.container} ref={containerRef}>

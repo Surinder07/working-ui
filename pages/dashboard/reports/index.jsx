@@ -1,61 +1,25 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, Button, TabularInfo, DashboardCard, GenerateReportModal, PaginationDropdown } from "../../../components";
-
-const requestsD = [];
-
-const attendanceD = [];
-
-const payrollD = [];
-
-// const payrollD = [
-//     {
-//         Id: "Name",
-//         From: "Date",
-//         till: "Date",
-//         locationName: "Type",
-//     },
-//     {
-//         Id: "Name",
-//         From: "Date",
-//         till: "Date",
-//         locationName: "Type",
-//     },
-//     {
-//         Id: "Name",
-//         From: "Date",
-//         till: "Date",
-//         locationName: "Type",
-//     },
-//     {
-//         Id: "Name",
-//         From: "Date",
-//         till: "Date",
-//         locationName: "Type",
-//     },
-// ];
+import { reportsService } from "../../../services";
+import { fetchAndHandlePage, getReportListing } from "../../../helpers";
 
 const Reports = (props) => {
-
-    const router = useRouter();
 
     const [expandedMenu, setExpandedMenu] = useState("none");
 
     const [showModal, setShowModal] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false);
-    const [requestsData, setRequestsData] = useState(requestsD);
-    const [attendanceData, setAttendanceData] = useState(attendanceD);
-    const [payrollData, setPayrollData] = useState(payrollD);
+    const [requestsData, setRequestsData] = useState();
+    const [attendanceData, setAttendanceData] = useState();
+    const [payrollData, setPayrollData] = useState();
+    const [attendanceFilter, setAttendanceFilter] = useState({ reportType: 'ATTENDANCE' });
+    const [payrollFilter, setPayrollFilter] = useState({ reportType: 'PAYROLL' });
+    const [holidayFilter, setHolidayFilter] = useState({ reportType: 'HOLIDAYS' });
     const [pageNo, setPageNo] = useState({
         "Payroll": 1,
         "Attendance": 1,
         "Location Holidays": 1
-    });
-    const [pageSize, setPageSize] = useState({
-        "Payroll": 10,
-        "Attendance": 10,
-        "Location Holidays": 10
     });
     const [totalPages, setTotalPages] = useState({
         "Payroll": 1,
@@ -80,28 +44,14 @@ const Reports = (props) => {
     }, []);
 
     useEffect(() => {
-        if (!router.isReady) return;
-        if (router.query.key) setUserId(router.query.id);
-    }, [router.isReady, router.query]);
+        fetchData();
+    }, [pageNo, attendanceFilter, payrollFilter, holidayFilter])
 
-    const getActions = (tableType) => {
-        return {
-            key: "Download",
-            action: (id) => {
-                setEditId(id);
-                switch (tableType) {
-                    case "request":
-                        setShowModalRequest(true);
-                        break;
-                    case "attendance":
-                        setShowModalTimeSheet(true);
-                        break;
-                    case "shift":
-                        setShowModalShift(true);
-                        BrandingWatermark;
-                }
-            },
-        };
+    const actions = {
+        key: "Download",
+        action: (id) => {
+            reportsService.download(id);
+        }
     };
 
     const handleExpansion = (clickedMenu) => {
@@ -112,9 +62,24 @@ const Reports = (props) => {
         }
     };
 
+    const fetchData = () => {
+        fetchAndHandlePage(() => reportsService.getAll(pageNo.Attendance, 5, attendanceFilter),
+            setAttendanceData, (e) => setTotalEntries({ ...totalEntries, Attendance: e }),
+            (e) => setTotalPages({ ...totalPages, Attendance: e }),
+            props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+        if (props.user.role === 'ADMIN') {
+            fetchAndHandlePage(() => reportsService.getAll(pageNo.Payroll, 5, payrollFilter),
+                setPayrollData, (e) => setTotalEntries({ ...totalEntries, Payroll: e }),
+                (e) => setTotalPages({ ...totalPages, Payroll: e }),
+                props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+            fetchAndHandlePage(() => reportsService.getAll(pageNo['Location Holidays'], 5, holidayFilter),
+                setRequestsData, (e) => setTotalEntries({ ...totalEntries, 'Location Holidays': e }),
+                (e) => setTotalPages({ ...totalPages, 'Location Holidays': e }),
+                props.setPageLoading, props.setToasterInfo, getReportListing, props.user.role);
+        }
+    }
 
-
-    const getExpandableData = (title, description, data, actions) => {
+    const getExpandableData = (title, description, data) => {
         return (
             <DashboardCard style={{ marginTop: "20px" }}>
                 <TabularInfo
@@ -127,11 +92,10 @@ const Reports = (props) => {
                     actions={actions}
                     pagination
                     totalEntries={totalEntries[title]}
-                    pageSize={pageSize[title]}
+                    pageSize={5}
                     totalPages={totalPages[title]}
                     pageNo={pageNo[title]}
                     setPageNo={(no) => setPageNo({ ...pageNo, title: no })}
-                    showSearch
                     setShowFilterModal={setShowFilterModal}
                     showFilter
                 />
@@ -151,11 +115,12 @@ const Reports = (props) => {
                             setToasterInfo={props.setToasterInfo}
                             role={props.user.role}
                             setReloadData={setReloadData}
+                            setPageLoading={props.setPageLoading}
                         />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Reports</h1>
                             <div className={DashboardStyles.rightContainer}>
-                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                                {/* <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace /> */}
                                 {
                                     (props.user.role === "MANAGER" || props.user.role === "ADMIN") &&
                                     <>
@@ -168,9 +133,9 @@ const Reports = (props) => {
                                 }
                             </div>
                         </div>
-                        {(props.user.role === 'ADMIN') && getExpandableData("Payroll", "Tabular list of existing Payroll Reports", payrollData, getActions("shift"))}
-                        {getExpandableData("Attendance", "Tabular list of existing Attendance Reports", attendanceData, getActions("attendance"))}
-                        {(props.user.role === 'ADMIN') && getExpandableData("Location Holidays", "Tabular list of existing Location Holiday Reports", requestsData, getActions("request"))}
+                        {(props.user.role === 'ADMIN') && getExpandableData("Payroll", "Tabular list of existing Payroll Reports", payrollData)}
+                        {getExpandableData("Attendance", "Tabular list of existing Attendance Reports", attendanceData)}
+                        {(props.user.role === 'ADMIN') && getExpandableData("Location Holidays", "Tabular list of existing Location Holiday Reports", requestsData)}
                     </>
             }
         </>

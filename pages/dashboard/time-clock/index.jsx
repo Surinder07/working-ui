@@ -33,6 +33,7 @@ const timeClock = (props) => {
     }, []);
 
     const startTimer = () => {
+        props.setPageLoading(true)
         timesheetService.startTimer()
             .then(res => {
                 if (res.error) {
@@ -50,10 +51,12 @@ const timeClock = (props) => {
                     setPlaying(true);
                     setReloadData(true);
                 }
+                props.setPageLoading(false)
             })
     }
 
     const stopTimer = () => {
+        props.setPageLoading(true)
         timesheetService.stopTimer()
             .then(res => {
                 if (res.error) {
@@ -67,10 +70,12 @@ const timeClock = (props) => {
                     setDisableTimer(true);
                     setReloadData(true);
                 }
+                props.setPageLoading(false)
             });
     }
 
     const checkActiveTimer = () => {
+        props.setPageLoading(true);
         timesheetService.getActiveTimer()
             .then(res => {
                 if (res.error) {
@@ -83,13 +88,14 @@ const timeClock = (props) => {
                 else {
                     if (!res) {
                         setPlaying(false);
-                        setDisableTimer(false)
+                        setDisableTimer(false);
                     } else {
                         setStart(res.startTime)
                         const date = new Date(Date.parse(res.startTimestamp));
                         setStartDate(date);
                         if (res.endDate == null) {
                             setPlaying(true);
+                            setDisableTimer(false);
                         } else {
                             var newDate = new Date(new Date(Date.parse(res.endTimestamp)) - date);
                             var hour = newDate.getUTCHours().toString().padStart(2, '0');
@@ -100,6 +106,9 @@ const timeClock = (props) => {
                         }
                     }
                 }
+                props.setPageLoading(false);
+            }).catch(() => {
+                props.setPageLoading(false)
             })
     }
 

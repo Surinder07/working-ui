@@ -92,6 +92,11 @@ const apiEndpoints = {
         getTimesheet: '/v1/calender/timesheets/get',
         getDayEvents: '/v1/calender/events/get'
     },
+    reports: {
+        get: '/v1/reports/get',
+        generate: '/v1/reports/generate',
+        download: '/v1/reports/download'
+    },
     webSocket: {
         endpoint: '/ws-connect',
         topics: {
@@ -111,7 +116,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.0.9",
+        version: "1.1.0",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

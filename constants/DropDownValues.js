@@ -60,7 +60,7 @@ export const ReportType = dropdownService.stringToDropdownObj([
     'Payroll',
     'Attendance',
     'Holidays'
-]);
+], true);
 
 export const employeeTypeValues = dropdownService.stringToDropdownObj([
     'Full Time',

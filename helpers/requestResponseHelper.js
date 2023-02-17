@@ -1,10 +1,8 @@
-import { PropaneSharp } from "@mui/icons-material";
-
 // Requests -----------------
 export const saveUserRequestBody = (firstName, lastName, locationRoleId, locationId,
-    employeeId, email, fullTime) => {
+    employeeId, email, isFullTime) => {
     return {
-        firstName, lastName, locationRoleId, locationId, employeeId, email, fullTime
+        firstName, lastName, locationRoleId, locationId, employeeId, email, isFullTime
     }
 }
 
@@ -257,6 +255,19 @@ export const getRequestsListing = (data) => {
     })
 }
 
+export const getReportListing = (data) => {
+    return data.map(report => {
+        return {
+            intrnalId: report.id,
+            id: report.waawId,
+            location: report.locationName,
+            reportFrom: report.from,
+            reportTo: report.to,
+            generatedOn: report.createdOn
+        }
+    })
+}
+
 export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
     endDate, endTime, instantRelease, shiftName) => {
     return {
@@ -444,7 +455,8 @@ export const fetchAndHandle = (fetchFunction, successMessage, loadingFunc, reloa
                 pageLoaderFunc && pageLoaderFunc(false);
             }
         })
-        .catch(() => {
+        .catch((e) => {
+            console.log(e)
             pageLoaderFunc && pageLoaderFunc(false);
             loadingFunc && loadingFunc(false);
         })
@@ -472,13 +484,17 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
                     message: res.message,
                 })
             } else {
+                console.log(res)
                 setData(mapperFunction(res.data, userRole));
                 setTotalEntries && setTotalEntries(res.totalEntries);
                 setTotalPages && setTotalPages(res.totalPages);
             }
             loaderFunction && loaderFunction(false);
         })
-        .catch(() => loaderFunction && loaderFunction(false));
+        .catch((e) => {
+            console.log(e)
+            loaderFunction && loaderFunction(false)
+        });
 }
 
 export const fetchAndHandleGet = (fetchFunction, setData) => {
