@@ -107,7 +107,7 @@ export const shiftStatusOptions = dropdownService.stringToDropdownObj([
 ], true);
 
 export const batchStatusOptions = dropdownService.stringToDropdownObj([
-    'Created', 'Released'
+    'Created', 'Released', 'Failed'
 ], true);
 
 export const requestStatus = dropdownService.stringToDropdownObj([
