@@ -265,7 +265,7 @@ export const getReportListing = (data, role) => {
             reportTo: report.to,
             generatedOn: report.createdOn
         } : {
-            intrnalId: report.id,
+            internalId: report.id,
             id: report.waawId,
             reportFrom: report.from,
             reportTo: report.to,
