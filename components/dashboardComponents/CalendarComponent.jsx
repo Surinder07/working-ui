@@ -82,19 +82,20 @@ const CalendarComponent = (props) => {
     }
 
     const getHolidays = (date) => {
-        const year = getYear(new Date(date));
+        const year = new Date(date).getUTCFullYear();
         organizationService.getHolidays(year)
             .then(res => {
                 if (!res.error) {
+                    console.log(res)
                     setHolidays(res.map(holiday => {
                         return {
                             ...holiday,
-                            displayDate: new Date(holiday.year, holiday.month, holiday.date, 0, 0, 0)
+                            displayDate: new Date(holiday.year, holiday.month - 1, holiday.date, 0, 0, 0)
                                 .toLocaleString('default', { month: 'long', day: '2-digit' }),
                             date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00'
                         }
                     }));
-                } else console.log(res.message)
+                }
             })
     }
 
