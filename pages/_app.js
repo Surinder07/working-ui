@@ -107,6 +107,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         if (!user.role && localStorage.getItem(userService.USER_KEY)) {
             setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
+            setToken(secureLocalStorage.getData(userService.TOKEN_KEY))
         } else if (!user.role && pageInfo.authenticationRequired) {
             router.push("/login");
         }

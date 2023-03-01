@@ -55,7 +55,7 @@ const Shifts = (props) => {
     useEffect(() => {
         if (reloadData) fetchData();
         setReloadData(false);
-    }, [reloadData])
+    }, [reloadData]);
 
     const fetchData = () => {
         if (props.user.role === 'ADMIN' || props.user.role === 'MANAGER') {
@@ -145,7 +145,7 @@ const Shifts = (props) => {
                 props.pageLoading ? <></> :
                     <>
                         <SockJsClient url={fetchWrapper.getApiUrl(webSocketEndpoints.endpoint).replace('api/', '')}
-                            headers={{ access_token: secureLocalStorage.getData(userService.TOKEN_KEY) }}
+                            headers={{ access_token: props.token }}
                             topics={[webSocketEndpoints.topics.shift]}
                             onConnect={() => {
                                 console.log("Connected to Websocket");
@@ -156,7 +156,7 @@ const Shifts = (props) => {
                             onMessage={(msg) => {
                                 setReloadData(true);
                             }}
-                            options={{ headers: { access_token: secureLocalStorage.getData(userService.TOKEN_KEY) } }}
+                            options={{ headers: { access_token: props.token } }}
                             debug={false}
                         />
                         <DeleteModal
