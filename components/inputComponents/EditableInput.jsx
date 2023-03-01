@@ -29,7 +29,14 @@ const EditableInput = (props) => {
                     (props.type === 'text' || props.type === 'password' || props.type === 'name') &&
                     (
                         props.editOn ?
-                            <InputBox name={props.label} inputType={2} type={props.type} value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <InputBox
+                                name={props.label}
+                                inputType={2}
+                                type={props.type}
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                            /> :
                             <p>{props.initialValue ? props.initialValue : '-'}</p>
                     )
                 }
@@ -37,7 +44,13 @@ const EditableInput = (props) => {
                     props.type === 'mobile' &&
                     (
                         props.editOn ?
-                            <ContactInput name={props.label} inputType={2} value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <ContactInput
+                                name={props.label}
+                                inputType={2}
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                            /> :
                             <p>{props.initialValue.countryCode} - {props.value.mobile}</p>
                     )
                 }
@@ -45,7 +58,12 @@ const EditableInput = (props) => {
                     props.type === 'time' &&
                     (
                         props.editOn ?
-                            <TimeInput value={props.value} setValue={setValue} disabled={props.nonEditable} openUp={props.openUp} /> :
+                            <TimeInput
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                                openUp={props.openUp}
+                            /> :
                             <p>{props.initialValue.hours}:{props.initialValue.minutes}</p>
                     )
                 }
@@ -53,7 +71,16 @@ const EditableInput = (props) => {
                     (props.type === 'dropdown' || props.type === 'typeAhead') &&
                     (
                         props.editOn ?
-                            <DropDown type={props.type} options={props.options} value={props.value} setValue={setValue} placeholder={props.placeholder} disabled={props.nonEditable} inputType={2} openUp={props.openUp} /> :
+                            <DropDown
+                                type={props.type}
+                                options={props.options}
+                                value={props.value}
+                                setValue={setValue}
+                                placeholder={props.placeholder}
+                                disabled={props.nonEditable}
+                                inputType={2}
+                                openUp={props.openUp}
+                            /> :
                             <p>{!props.initialValue || props.initialValue === '' ? '-' : props.initialValue}</p>
                     )
                 }
@@ -61,7 +88,11 @@ const EditableInput = (props) => {
                     props.type === 'toggle' &&
                     (
                         props.editOn ?
-                            <Toggle value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <Toggle
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                            /> :
                             <p>{props.initialValue ? <CheckCircle style={{ color: '#2996C3' }} /> : <Cancel style={{ color: '#999' }} />}</p>
                     )
                 }
@@ -69,7 +100,11 @@ const EditableInput = (props) => {
                     props.type === 'toggle2' &&
                     (
                         props.editOn ?
-                            <ToggleWithValue options={props.options} selected={props.value} setSelected={setValue} /> :
+                            <ToggleWithValue
+                                options={props.options}
+                                selected={props.value}
+                                setSelected={setValue}
+                            /> :
                             <p>{props.initialValue}</p>
                     )
                 }
@@ -77,32 +112,59 @@ const EditableInput = (props) => {
                     props.type === 'date' &&
                     (
                         props.editOn ?
-                            <DatePicker value={props.value} setValue={setValue} disabled={props.nonEditable} blockPast={props.blockPast} /> :
+                            <DatePicker
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                                blockPast={props.blockPast}
+                            /> :
                             <p>{props.initialValue}</p>
                     )
                 }
                 {
                     props.type === 'multiselect' &&
-                    <MultiSelectDropdown values={props.values} setValues={props.setValues} placeholder={props.placeholder} options={props.options} setShowError={props.setShowError} showError={props.showError} />
+                    <MultiSelectDropdown
+                        values={props.values}
+                        setValues={props.setValues}
+                        placeholder={props.placeholder}
+                        options={props.options}
+                        setShowError={props.setShowError}
+                        showError={props.showError}
+                    />
                 }
                 {
                     props.type === 'textarea' && (
                         props.editOn ?
-                            <TextArea value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <TextArea
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                            /> :
                             <p>{props.initialValue}</p>
                     )
                 }
                 {
                     props.type === 'number' && (
                         props.editOn ?
-                            <NumberInput value={props.value} setValue={setValue} disabled={props.nonEditable} placeholder={props.placeholder} /> :
+                            <NumberInput
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                                placeholder={props.placeholder}
+                                max={props.max}
+                            /> :
                             <p>{props.initialValue}</p>
                     )
                 }
                 {
                     props.type === 'radio' && (
                         props.editOn ?
-                            <RadioButtons options={props.options} value={props.value} setValue={setValue} disabled={props.nonEditable} /> :
+                            <RadioButtons
+                                options={props.options}
+                                value={props.value}
+                                setValue={setValue}
+                                disabled={props.nonEditable}
+                            /> :
                             <p>{props.initialValue}</p>
                     )
                 }

@@ -97,10 +97,14 @@ const apiEndpoints = {
         generate: '/v1/reports/generate',
         download: '/v1/reports/download'
     },
+    openApis:{
+      subscribe: '/v1/unAuth/open/subscribe'
+    },
     webSocket: {
         endpoint: '/ws-connect',
         topics: {
-            notification: '/user/ws-server/notification'
+            notification: '/user/ws-server/notification',
+            shift: '/user/ws-server/shift'
         }
     }
 };
@@ -116,7 +120,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.1.1",
+        version: "1.1.2",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

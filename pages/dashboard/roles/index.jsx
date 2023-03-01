@@ -21,7 +21,7 @@ const Roles = (props) => {
         id: '',
         show: false,
         message: 'This will permanently delete this role, make sure there are no dependencies on this role.',
-        disableMessage: 'This will disable this role, make sure there are no dependencies on this role.',
+        disableMessage: 'This will deactivate this role, make sure there are no dependencies on this role.',
         errorMessage: '',
         type: 'delete'
     })

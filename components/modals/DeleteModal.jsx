@@ -30,7 +30,7 @@ const DeleteModal = (props) => {
                 <div className={`${DashboardModalStyles.modal} ${DashboardModalStyles.deleteModal}`}>
                     <div className={DashboardModalStyles.subContainer}>
                         <h1>{props.title}</h1>
-                        <h1>{`Are you sure you want to ${props.disable ? 'disable' : 'delete'} this?`}</h1>
+                        <h1>{`Are you sure you want to ${props.disable ? 'deactivate' : 'delete'} this?`}</h1>
                         <div>
                             {
                                 props.modal.errorMessage === '' ?
@@ -49,7 +49,7 @@ const DeleteModal = (props) => {
                                 Cancel
                             </Button>
                             <Button type="delete" onClick={() => handleClick(1)}>
-                                {props.disable ? 'Disable' : 'Delete'}
+                                {props.disable ? 'Deactivate' : 'Delete'}
                             </Button>
                         </div>
                     </div>

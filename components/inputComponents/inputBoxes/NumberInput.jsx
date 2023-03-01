@@ -10,7 +10,8 @@ const NumberInput = (props) => {
 
     return (
         <div className={joinClasses(InputBoxStyles.numberContainer, props.showError ? InputBoxStyles.inputBoxError : InputBoxStyles.inputBox2Default)}>
-            <p className={InputBoxStyles.decrease} onClick={() => props.setValue(parseInt(props.value) - 1)}>-</p>
+            <p className={InputBoxStyles.decrease} onClick={() => {
+                if (props.value > 0)props.setValue(parseInt(props.value) - 1)}}>-</p>
             <input
                 name={props.name}
                 id={props.id}
@@ -19,9 +20,13 @@ const NumberInput = (props) => {
                 disbaled={props.disbaled}
                 type='number'
                 value={props.value}
-                onChange={(e) => props.setValue(e.target.value)}
+                onChange={(e) => {
+                    if (e.target.value <= props.max && props.value >= 0) props.setValue(e.target.value)
+                }}
             />
-            <p className={InputBoxStyles.increase} onClick={() => props.setValue(parseInt(props.value) + 1)}>+</p>
+            <p className={InputBoxStyles.increase} onClick={() => {
+                if (!props.max || props.value < props.max) props.setValue(parseInt(props.value) + 1)
+            }}>+</p>
         </div>
     )
 }

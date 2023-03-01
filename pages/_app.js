@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import { WaawHead, TopLoader, LoadingScreen } from "../components";
+import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster } from "../components";
 import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath } from "../helpers";
 import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
-import { Toaster } from "../components";
 
 function MyApp({ Component, pageProps }) {
 
@@ -28,6 +27,11 @@ function MyApp({ Component, pageProps }) {
         message: "",
     });
     const [showToaster, setShowToaster] = useState(false);
+    const [notificationToast, setNotificationToast] = useState({
+        show: false,
+        title: '',
+        message: ''
+    });
 
     useEffect(() => {
         if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
@@ -40,10 +44,23 @@ function MyApp({ Component, pageProps }) {
             setShowToaster(true);
             const timer = setTimeout(() => {
                 setShowToaster(false);
-            }, 2000);
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, [toasterInfo]);
+
+    useEffect(() => {
+        if (notificationToast.show) {
+            const timer = setTimeout(() => {
+                setNotificationToast({
+                    show: false,
+                    title: '',
+                    message: ''
+                })
+            }, 10000);
+            return () => clearTimeout(timer);
+        }
+    }, [notificationToast]);
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
@@ -127,7 +144,19 @@ function MyApp({ Component, pageProps }) {
         <React.Fragment>
             <WaawHead />
             <div>
-                <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} />
+                <Toaster
+                    error={toasterInfo.error}
+                    title={toasterInfo.title}
+                    message={toasterInfo.message}
+                    show={showToaster}
+                    setShowToaster={setShowToaster}
+                />
+                <NotificationToaster
+                    title={notificationToast.title}
+                    description={notificationToast.message}
+                    show={notificationToast.show}
+                    setToast={setNotificationToast}
+                />
                 {pageLoading && <LoadingScreen />}
                 <TopLoader pageLoading={pageLoading} />
                 {
@@ -145,6 +174,7 @@ function MyApp({ Component, pageProps }) {
                         user={user}
                         setToasterInfo={setToasterInfo}
                         setPageLoading={setPageLoading}
+                        setNotificationToast={setNotificationToast}
                     >
                         {getComponentForPages()}
                     </DashboardLayout>

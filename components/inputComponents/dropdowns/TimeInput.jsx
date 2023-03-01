@@ -6,6 +6,7 @@ const TimeInput = (props) => {
     return (
         <div className={DropdownStyles.timeContainer}>
             <DropDown
+                type='typeAhead'
                 inputType={2}
                 options={hours}
                 placeholder='HH'
@@ -14,6 +15,7 @@ const TimeInput = (props) => {
                 openUp={props.openUp}
             />
             <DropDown
+                type='typeAhead'
                 inputType={2}
                 options={minutes}
                 placeholder='MM'

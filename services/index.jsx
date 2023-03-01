@@ -12,3 +12,5 @@ export * from './searchApp.service';
 export * from './shifts.service';
 export * from './timesheet.service';
 export * from './notification.service';
+export * from './organization.service';
+export * from './waawOpen.service';

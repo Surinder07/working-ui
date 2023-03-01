@@ -10,7 +10,12 @@ const getHolidays = async (year) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getHolidays, {year}))
 }
 
+const updatePreferences = async (data) => {
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateOrganizationPreferences), data);
+}
+
 export const organizationService = {
     uploadHolidays,
-    getHolidays
+    getHolidays,
+    updatePreferences
 }

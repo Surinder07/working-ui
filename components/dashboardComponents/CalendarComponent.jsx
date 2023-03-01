@@ -5,8 +5,7 @@ import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
 import { joinClasses } from "../../helpers";
-import { calendarService } from '../../services';
-import { organizationService } from "../../services/organization.service";
+import { calendarService, organizationService } from '../../services';
 
 const CalendarComponent = (props) => {
 
@@ -49,7 +48,7 @@ const CalendarComponent = (props) => {
     };
 
     const updateDays = (current) => {
-        const firstDay = parse(current, "MMM-yyyy", new Date());
+        const firstDay = parse(current, "MMM-yyyy", new Date(new Date().toLocaleString('en', { timeZone: props.timezone })));
         setFirstDayCurrentMonth(firstDay);
         setReferenceDays(
             eachDayOfInterval({
@@ -71,27 +70,28 @@ const CalendarComponent = (props) => {
     }
 
     const getMonthTimesheet = (date) => {
-        const month = getMonth(new Date(date)) + 1;
-        const year = getYear(new Date(date));
-        calendarService.getTimesheets(year, month)
-            .then(res => {
-                if (!res.error) {
-                    setTimesheets(res);
-                }
-            })
+        if (props.timezone) {
+            const month = getMonth(new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone }))) + 1;
+            const year = getYear(new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })));
+            calendarService.getTimesheets(year, month)
+                .then(res => {
+                    if (!res.error) {
+                        setTimesheets(res);
+                    }
+                })
+        }
     }
 
     const getHolidays = (date) => {
-        const year = new Date(date).getUTCFullYear();
+        const year = new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })).getUTCFullYear();
         organizationService.getHolidays(year)
             .then(res => {
                 if (!res.error) {
-                    console.log(res)
                     setHolidays(res.map(holiday => {
                         return {
                             ...holiday,
                             displayDate: new Date(holiday.year, holiday.month - 1, holiday.date, 0, 0, 0)
-                                .toLocaleString('default', { month: 'long', day: '2-digit' }),
+                                .toLocaleString('default', { month: 'long', day: '2-digit', timezone: props.timezone }),
                             date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00'
                         }
                     }));
@@ -101,11 +101,11 @@ const CalendarComponent = (props) => {
 
     useEffect(() => {
         setSelectedDay(today);
-    }, [])
+    }, [props.timezone])
 
     useEffect(() => {
         getDaysEvent(selectedDay);
-    }, [selectedDay])
+    }, [selectedDay, props.timezone])
 
     useEffect(() => {
         if (!isNaN(currentYear)) getHolidays(currentYear);
@@ -126,7 +126,7 @@ const CalendarComponent = (props) => {
         if (currentYear !== getYear(new Date(firstDayCurrentMonth)).toString()) {
             setCurrentYear(getYear(new Date(firstDayCurrentMonth)).toString());
         }
-    }, [currentMonth]);
+    }, [currentMonth, props.timezone]);
 
     const getTimeFromDate = (date) => {
         let time = date.split("T")[1];
@@ -136,42 +136,42 @@ const CalendarComponent = (props) => {
     useEffect(() => {
         if (holidays && selectedEvents) {
             let newDaysObj = referenceDays.map((day) => {
-            let workedDaysList = [];
-            timesheets
-                .filter((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day.date))
-                .map((workingDay) =>
-                    workedDaysList.push({
-                        type: "In",
-                        time: getTimeFromDate(workingDay.startDatetime),
-                    })
-                );
-            timesheets
-                .filter((workingDay) => isSameDay(parseISO(workingDay.endDatetime), day.date))
-                .map((workingDay) =>
-                    workedDaysList.push({
-                        type: "Out",
-                        time: getTimeFromDate(workingDay.endDatetime),
-                    })
-                );
-            if (workedDaysList.length > 0) {
+                let workedDaysList = [];
+                timesheets
+                    .filter((workingDay) => isSameDay(parseISO(workingDay.startDatetime), day.date))
+                    .map((workingDay) =>
+                        workedDaysList.push({
+                            type: "In",
+                            time: getTimeFromDate(workingDay.startDatetime),
+                        })
+                    );
+                timesheets
+                    .filter((workingDay) => isSameDay(parseISO(workingDay.endDatetime), day.date))
+                    .map((workingDay) =>
+                        workedDaysList.push({
+                            type: "Out",
+                            time: getTimeFromDate(workingDay.endDatetime),
+                        })
+                    );
+                if (workedDaysList.length > 0) {
+                    return {
+                        ...day,
+                        worked: workedDaysList,
+                        nationalHoliday: holidays.filter((holiday) => holiday.type === "NATIONAL_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
+                        organizationHoliday: holidays.filter((holiday) => holiday.type === "ORGANIZATION_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
+                    };
+                }
+                return day;
+            });
+            newDaysObj = newDaysObj.map((day) => {
                 return {
                     ...day,
-                    worked: workedDaysList,
                     nationalHoliday: holidays.filter((holiday) => holiday.type === "NATIONAL_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
                     organizationHoliday: holidays.filter((holiday) => holiday.type === "ORGANIZATION_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
                 };
-            }
-            return day;
-        });
-        newDaysObj = newDaysObj.map((day) => {
-            return {
-                ...day,
-                nationalHoliday: holidays.filter((holiday) => holiday.type === "NATIONAL_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
-                organizationHoliday: holidays.filter((holiday) => holiday.type === "ORGANIZATION_HOLIDAY").some((holiday) => isSameDay(parseISO(holiday.date), day.date)),
-            };
-        });
-        setDays(newDaysObj);
-    }
+            });
+            setDays(newDaysObj);
+        }
     }, [referenceDays, holidays, timesheets, selectedEvents]);
 
     return (

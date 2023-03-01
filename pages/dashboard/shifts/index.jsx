@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
-import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses } from "../../../helpers";
-import { shiftsService } from "../../../services";
+import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, fetchWrapper, getShiftsListing, getSingleShiftsListing, joinClasses, secureLocalStorage } from "../../../helpers";
+import { shiftsService, userService } from "../../../services";
+import SockJsClient from 'react-stomp';
+
+const webSocketEndpoints = process.env.endpoints.webSocket;
 
 const Shifts = (props) => {
     useEffect(() => {
@@ -141,6 +144,21 @@ const Shifts = (props) => {
             {
                 props.pageLoading ? <></> :
                     <>
+                        <SockJsClient url={fetchWrapper.getApiUrl(webSocketEndpoints.endpoint).replace('api/', '')}
+                            headers={{ access_token: secureLocalStorage.getData(userService.TOKEN_KEY) }}
+                            topics={[webSocketEndpoints.topics.shift]}
+                            onConnect={() => {
+                                console.log("Connected to Websocket");
+                            }}
+                            onDisconnect={() => {
+                                console.log("Disconnected from Websocket");
+                            }}
+                            onMessage={(msg) => {
+                                setReloadData(true);
+                            }}
+                            options={{ headers: { access_token: secureLocalStorage.getData(userService.TOKEN_KEY) } }}
+                            debug={false}
+                        />
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}

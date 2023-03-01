@@ -1,14 +1,16 @@
 import { ToasterStyles } from "../styles/elements";
-import { CheckCircle, Cancel } from '@mui/icons-material';
+import { CheckCircle, Cancel, Close } from '@mui/icons-material';
+import { joinClasses } from "../helpers";
 
 const Toaster = (props) => {
     return (
-        <div className={`
-            ${ToasterStyles.container} 
-            ${props.error ? ToasterStyles.error : ToasterStyles.default}
-            ${props.show ? ToasterStyles.visible : ToasterStyles.hidden}
-            `}
+        <div className={joinClasses(
+            ToasterStyles.container,
+            props.error ? ToasterStyles.error : ToasterStyles.default,
+            props.show ? ToasterStyles.visible : ToasterStyles.hidden
+        )}
             style={props.style}>
+            <Close onClick={() => props.setShowToaster(false)} className={ToasterStyles.hideNotification}/>
             <div className={ToasterStyles.iconContainer}>
                 {props.error ? <Cancel className={ToasterStyles.icon} /> : <CheckCircle className={ToasterStyles.icon} />}
             </div>

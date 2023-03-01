@@ -1,5 +1,5 @@
-import {MobileModalStyles} from "../../../styles/elements";
-import {ArrowBack, MoreVert} from "@mui/icons-material";
+import { MobileModalStyles } from "../../../styles/elements";
+import { ArrowBack, MoreVert } from "@mui/icons-material";
 
 const MobileModal = (props) => {
     return (

@@ -19,6 +19,7 @@ const NewRoleModal = (props) => {
 
     const [errorRoleName, setErrorRoleName] = useState({});
     const [errorLocation, setErrorLocation] = useState({});
+    const [errorHours, setErrorHours] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
@@ -76,10 +77,16 @@ const NewRoleModal = (props) => {
 
 
     const isError = () => {
-        return combineBoolean(
-            validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update) ||
+        let error = combineBoolean(
+            validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update),
             validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
         );
+        let maxMinHourError = minimumHours > maximumHours;
+        if (maxMinHourError) setErrorHours({
+            message: 'Minimum hours cannot be more than maximim hours',
+            show: true
+        })
+        return error || maxMinHourError;
     }
 
     const saveData = () => {
@@ -140,6 +147,9 @@ const NewRoleModal = (props) => {
                     value={maximumHours}
                     setValue={setMaximumHours}
                     initialValue={maximumHours}
+                    error={errorHours}
+                    setHour={setErrorHours}
+                    max={24}
                     editOn
                 />
                 <EditableInput
@@ -148,6 +158,7 @@ const NewRoleModal = (props) => {
                     value={minimumHours}
                     setValue={setMinimumHours}
                     initialValue={minimumHours}
+                    max={24}
                     editOn
                 />
                 <EditableInput
@@ -156,6 +167,7 @@ const NewRoleModal = (props) => {
                     value={maximumWorkDays}
                     setValue={setMaximumWorkDays}
                     initialValue={maximumWorkDays}
+                    max={7}
                     editOn
                 />
                 <EditableInput

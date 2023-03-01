@@ -1,5 +1,10 @@
 import { AmericaIcon, CanadaIcon } from '../public/images';
-import { dropdownService } from '../services';
+
+const stringToDropdownObj = (list, capitalize) => {
+    return list.map(str => {
+        return { display: str, value: capitalize ? str.toUpperCase().replaceAll(" ", "_") : str }
+    })
+}
 
 export const CountryCodes = [
     {
@@ -18,7 +23,7 @@ export const CountryCodes = [
     }
 ];
 
-export const DaysOfWeek = dropdownService.stringToDropdownObj([
+export const DaysOfWeek = stringToDropdownObj([
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -48,21 +53,21 @@ export const minutes = Array.from(Array(60).keys())
         return { display: str.toString().padStart(2, '0'), value: str.toString().padStart(2, '0') }
     });
 
-export const currencies = dropdownService.stringToDropdownObj(['CAD', 'USD']);
+export const currencies = stringToDropdownObj(['CAD', 'USD']);
 
-export const PayrollFrequency = dropdownService.stringToDropdownObj([
+export const PayrollFrequency = stringToDropdownObj([
     'Weekly',
-    'Half Month',
+    'Mid Month',
     'Monthly'
 ])
 
-export const ReportType = dropdownService.stringToDropdownObj([
+export const ReportType = stringToDropdownObj([
     'Payroll',
     'Attendance',
     'Holidays'
 ], true);
 
-export const employeeTypeValues = dropdownService.stringToDropdownObj([
+export const employeeTypeValues = stringToDropdownObj([
     'Full Time',
     'Part Time'
 ]);
@@ -73,12 +78,12 @@ export const RequestTypeValues = [
     { display: 'Overtime', value: 'OVERTIME' }
 ];
 
-export const LeaveTypeValues = dropdownService.stringToDropdownObj([
+export const LeaveTypeValues = stringToDropdownObj([
     'Vacation',
     'Sick Leave'
 ]);
 
-export const EmployeeStatus = dropdownService.stringToDropdownObj([
+export const EmployeeStatus = stringToDropdownObj([
     'Active',
     'Invited',
     'Disabled'
@@ -89,11 +94,11 @@ export const EmployeeType = [
     { display: 'Contractor', value: 'CONTRACTOR' }
 ];
 
-export const profileType = dropdownService.stringToDropdownObj([
+export const profileType = stringToDropdownObj([
     'Admin', 'Employee'
 ])
 
-export const status = dropdownService.stringToDropdownObj([
+export const status = stringToDropdownObj([
     'Active', 'Disabled'
 ], true);
 
@@ -102,22 +107,22 @@ export const timesheetType = [
     { display: 'Manual', value: 'ADDED_BY_ADMIN' }
 ]
 
-export const shiftStatusOptions = dropdownService.stringToDropdownObj([
+export const shiftStatusOptions = stringToDropdownObj([
     'Created', 'Assigned', 'Released', 'Conflict', 'Failed'
 ], true);
 
-export const batchStatusOptions = dropdownService.stringToDropdownObj([
+export const batchStatusOptions = stringToDropdownObj([
     'Created', 'Released', 'Failed'
 ], true);
 
-export const requestStatus = dropdownService.stringToDropdownObj([
+export const requestStatus = stringToDropdownObj([
     'New', 'Open', 'Accepted', 'Denied'
 ], true);
 
-export const notificationType = dropdownService.stringToDropdownObj([
+export const notificationType = stringToDropdownObj([
     'Employee', 'Shift', 'Request', 'Location', 'Role', 'Payment', 'Report', 'Calendar', 'Account'
 ], true);
 
-export const notificationStatus = dropdownService.stringToDropdownObj([
+export const notificationStatus = stringToDropdownObj([
     'Read', 'Unread'
 ], true);

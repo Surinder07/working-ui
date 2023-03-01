@@ -178,7 +178,7 @@ const timeClock = (props) => {
                                     Please Note you can only start timer once a day. Do not stop timer until shift is finished.
                                 </p>
                             </div>
-                            <Clock />
+                            <Clock timezone = {props.user.timezone} />
                         </DashboardCard>
                         <EmployeeAttendanceFilter
                             showModal={showFilterModal}

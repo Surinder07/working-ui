@@ -2,7 +2,6 @@ import Router from 'next/router';
 import { userService } from '../services/user.service';
 import { secureLocalStorage } from './secureLocalStorage';
 import getConfig from 'next/config';
-import { useStyleRegistry } from 'styled-jsx';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = publicRuntimeConfig.apiUrl;

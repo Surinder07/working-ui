@@ -11,6 +11,33 @@
     overflow: hidden;
 }
 
+.notificationContainer {
+    position: fixed;
+    bottom: 3.125em;
+    right: 1.25em;
+    background-color: #333;
+    color: #EEE;
+    z-index: 10001;
+    column-gap: 1.25em;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.notificationContainer h2,
+.notificationContainer p {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+.hideNotification {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .visible {
     width: 21.875em;
     padding: 1.25rem 2rem;
@@ -18,6 +45,7 @@
 
 .hidden {
     width: 0;
+    height: 0;
     padding: 0;
 }
 
@@ -47,9 +75,24 @@
     margin-bottom: 0.3125em;
 }
 
+.notificationContainer h2 {
+    font-weight: 600;
+    font-size: 1em;
+    line-height: 1.25em;
+    margin: 0;
+    margin-bottom: 0.3125em;
+}
+
 .messageContainer p {
     font-weight: 500;
     font-size: 1em;
+    line-height: 1.5em;
+    margin: 0;
+}
+
+.notificationContainer p {
+    font-weight: 400;
+    font-size: 0.8em;
     line-height: 1.5em;
     margin: 0;
 }

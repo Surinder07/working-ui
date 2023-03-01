@@ -1,7 +1,10 @@
 {
-    "files.exclude": {
-        "node_modules": true
-    },
     "prettier.bracketSpacing": false,
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 4,
+    "files.exclude": {
+        ".vscode": true,
+        "build": true,
+        "node_modules": true,
+        "out": true
+    }
 }

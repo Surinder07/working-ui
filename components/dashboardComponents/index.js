@@ -11,6 +11,7 @@ import PaginationDropdown from "./PaginationDropdown";
 import Clock from './Clock';
 import DashboardTabular from "./DashboardTabular";
 import FloatingClock from './FloatingClock';
+import NotificationToaster from "./NotificationToaster";
 
 export {
     CalendarComponent,
@@ -25,7 +26,8 @@ export {
     PaginationDropdown,
     Clock,
     DashboardTabular,
-    FloatingClock
+    FloatingClock,
+    NotificationToaster
 };
 
 export * from "./userPreferences";

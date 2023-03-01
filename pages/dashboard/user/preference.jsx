@@ -23,11 +23,11 @@ const UserPreference = (props) => {
             setTabsToShow(ProfileTabs[props.user.role.toLowerCase()])
             setActive(ProfileTabs[props.user.role.toLowerCase()][0])
         }
-    }, [props.user])
+    }, [props.user.role])
 
     useEffect(() => {
         if (props.user) {
-            setShownContent(getProfileElement(active, props.user, props.setUser))
+            setShownContent(getProfileElement(active, props.user, props.setUser, props.setPageLoading, props.setToasterInfo))
         }
     }, [active])
 

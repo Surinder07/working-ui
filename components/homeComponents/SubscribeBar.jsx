@@ -2,7 +2,7 @@ import { SubscribeBarStyles } from '../../styles/elements';
 import { ArrowForward } from "@mui/icons-material";
 import { useState } from 'react';
 import { Modal } from '../modals';
-import { firebaseDb } from '../../services';
+import { waawOpenService } from '../../services';
 import { RotatingLoader } from '../loaders';
 
 const SubscribeBar = (props) => {
@@ -32,16 +32,19 @@ const SubscribeBar = (props) => {
             return;
         }
         setShowLoader(true);
-        firebaseDb.collection("waitlist")
-            .add({
-                email: email,
-                date: new Date()
-            })
-            .then(() => {
-                setModalTitle('Thankyou for your interest');
-                setModalMessage('We have successfuly added you to our wait list.');
-                setShowModal(true);
-                setShowLoader(false);
+        waawOpenService.subscribeToWaaw(email)
+            .then((res) => {
+                if (res.error) {
+                    setModalTitle('Error');
+                    setModalMessage(res.message ? res.message : 'There was some issue while connecting to sever. Please try again later.');
+                    setShowModal(true);
+                    setShowLoader(false);
+                } else {
+                    setModalTitle('Thankyou for your interest');
+                    setModalMessage('We have successfuly added you to our wait list.');
+                    setShowModal(true);
+                    setShowLoader(false);
+                }
             })
             .catch((error) => {
                 setModalTitle('Error');

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import UserPreferenceCard from "./UserPreferenceCard";
 import { EditableInput } from "../../inputComponents";
 import { PayrollFrequency } from "../../../constants";
+import { organizationService } from "../../../services";
 
 const Organization = (props) => {
 
@@ -12,9 +13,10 @@ const Organization = (props) => {
     const [payrollFrequency, setPayrollFrequency] = useState("");
     const [timezone, setTimezone] = useState("");
     const [waawId, setWaawId] = useState("");
-    const [overTimeRequest, setOverTimeRequest] = useState("");
-    const [timeClock, setTimeClock] = useState("");
-    const [timeSheet, setTimeSheet] = useState("");
+    const [allowUserToClockInTime, setAllowUserToClockInTime] = useState(0);
+    const [overTimeRequest, setOverTimeRequest] = useState(true);
+    const [timeOff, setTimeOff] = useState(true);
+    const [timeSheet, setTimeSheet] = useState(true);
 
     const [data, setData] = useState({});
 
@@ -27,13 +29,52 @@ const Organization = (props) => {
     const resetData = () => {
         setData(props.data.organizationPreferences);
         setOrganizationName(props.data.organization);
-        setStartWeek(data.weekStart);
-        setPayrollFrequency(data.payrollGenerationFrequency);
+        setStartWeek(props.data.startOfWeek);
+        setPayrollFrequency(props.data.organizationPreferences.payrollGenerationFrequency);
         setTimezone(props.data.organizationTimezone);
         setWaawId(props.data.organizationWaawId);
-        setOverTimeRequest(props.data.isOvertimeRequestEnabled);
-        setTimeClock(props.data.isTimeoffEnabledDefault);
-        setTimeSheet(props.data.isTimeClockEnabledDefault);
+        setOverTimeRequest(props.data.organizationPreferences.isOvertimeRequestEnabled);
+        setTimeOff(props.data.organizationPreferences.isTimeoffEnabledDefault);
+        setTimeSheet(props.data.organizationPreferences.isTimeClockEnabledDefault);
+        setAllowUserToClockInTime(props.data.organizationPreferences.allowUserToClockInTime);
+    }
+
+    const saveData = () => {
+        props.setLoading(true);
+        organizationService.updatePreferences({
+            isTimeclockEnabledDefault: timeSheet,
+            isTimeoffEnabledDefault: timeOff,
+            isOvertimeRequestEnabled: overTimeRequest,
+            payrollGenerationFrequency: payrollFrequency,
+            clockInAllowedMinutesBeforeShift: allowUserToClockInTime
+        })
+        .then((res) => {
+            if (res.error) {
+                props.setToaster({
+                    error: true,
+                    title: "Error",
+                    message: res.message,
+                })
+            } else {
+                props.setToaster({
+                    error: false,
+                    title: "Success",
+                    message: 'Preferences updated successfully.',
+                })
+                props.setData({
+                    ...props.data,
+                    organizationPreferences: {
+                        isTimeclockEnabledDefault: timeSheet,
+                        isTimeoffEnabledDefault: timeOff,
+                        isOvertimeRequestEnabled: overTimeRequest,
+                        payrollGenerationFrequency: payrollFrequency,
+                        clockInAllowedMinutesBeforeShift: allowUserToClockInTime
+                    }
+                })
+            }
+            props.setLoading(false);
+        })
+        .catch(() => props.setLoading(false))
     }
 
     return (
@@ -46,6 +87,7 @@ const Organization = (props) => {
                     editOn={editPersonalDetails}
                     setEditOn={setEditPersonalDetails}
                     handleCancel={resetData}
+                    onSave={saveData}
                 >
                     <EditableInput
                         type="text"
@@ -70,7 +112,7 @@ const Organization = (props) => {
                         label="Start of the Week"
                         value={startWeek}
                         setValue={setStartWeek}
-                        initialValue={data.weekStart}
+                        initialValue={props.data.startOfWeek}
                         editOn={editPersonalDetails}
                         nonEditable
                     />
@@ -81,7 +123,7 @@ const Organization = (props) => {
                         placeholder='Select Payroll generation Frequency'
                         value={payrollFrequency}
                         setValue={setPayrollFrequency}
-                        initialValue={data.payrollGenerationFrequency}
+                        initialValue={props.data.organizationPreferences.payrollGenerationFrequency}
                         editOn={editPersonalDetails}
                     />
                     <EditableInput
@@ -92,6 +134,14 @@ const Organization = (props) => {
                         initialValue={props.data.organizationWaawId}
                         editOn={editPersonalDetails}
                         nonEditable
+                    />
+                    <EditableInput
+                        type='number'
+                        label='Allow user to clock in before shift (minutes)'
+                        value={allowUserToClockInTime}
+                        setValue={setAllowUserToClockInTime}
+                        initialValue={props.data.organizationPreferences.clockInAllowedMinutesBeforeShift}
+                        editOn={editPersonalDetails}
                     />
                     <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
                         <EditableInput
@@ -105,8 +155,8 @@ const Organization = (props) => {
                         <EditableInput
                             type="toggle"
                             label="Time Off Request Enabled"
-                            value={timeClock}
-                            setValue={setTimeClock}
+                            value={timeOff}
+                            setValue={setTimeOff}
                             initialValue={data.isTimeoffEnabledDefault}
                             editOn={editPersonalDetails}
                         />

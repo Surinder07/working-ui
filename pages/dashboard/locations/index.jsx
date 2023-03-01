@@ -21,7 +21,7 @@ const Locations = (props) => {
         id: '',
         show: false,
         message: 'This will permanently delete this location, make sure there are no dependencies on this location.',
-        disableMessage: 'This will disable this location, make sure there are no dependencies on this location.',
+        disableMessage: 'This will deactivate this location, make sure there are no dependencies on this location.',
         errorMessage: '',
         type: 'delete'
     })

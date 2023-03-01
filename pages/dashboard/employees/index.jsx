@@ -20,7 +20,7 @@ const Employees = (props) => {
         id: '',
         show: false,
         message: 'This will permanently delete this employee, make sure there are no dependencies on this employee.',
-        disableMessage: 'This will disable this employee, make sure there are no dependencies on this employee.',
+        disableMessage: 'This will deactivate this employee, make sure there are no dependencies on this employee.',
         errorMessage: '',
         type: 'delete'
     })
