@@ -140,7 +140,7 @@
 
 .userPreferenceCard p {
     font-weight: 400;
-    font-size: 12px!important;
+    font-size: 12px !important;
     line-height: 18px;
     margin: 0;
 }
@@ -177,7 +177,8 @@
 }
 
 .editIcon {
-    font-size: 12px !important;;
+    font-size: 12px !important;
+    ;
 }
 
 /* .inputLabelContainer {
@@ -267,4 +268,18 @@
 .warnMessage a {
     color: #2996C3;
     text-decoration: underline;
+}
+
+@media only screen and (max-width: 480px) {
+    .profileContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .cardBody {
+        grid-template-columns: 1fr;
+    }
+
+    .nonProfileContainer {
+        grid-template-columns: 1fr;
+    }
 }

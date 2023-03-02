@@ -34,13 +34,13 @@
 .dashboardButton,
 .cancelButton,
 .deleteButton {
-    font-weight: 700!important;
-    font-size: 16px!important;
-    line-height: 20px!important;
-    letter-spacing: 0.2px!important;
-    border-radius: 0!important;
-    box-shadow: none!important;
-    padding: 7px 30px!important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+    letter-spacing: 0.2px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 7px 30px !important;
 }
 
 .closeButton {
@@ -107,8 +107,16 @@
         width: 100%;
         margin: 10px 0;
     }
+
     .plainButton {
         white-space: nowrap;
         margin-left: -100px;
+    }
+
+    .closeButton,
+    .dashboardButton,
+    .cancelButton,
+    .deleteButton {
+        padding: 7px 7px !important;
     }
 }

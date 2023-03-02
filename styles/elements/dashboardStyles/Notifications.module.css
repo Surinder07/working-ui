@@ -4,7 +4,8 @@
 }
 
 .bell {
-    font-size: 30px!important;;
+    font-size: 30px !important;
+    ;
     color: #C5C7CD;
     cursor: pointer;
 }
@@ -155,7 +156,7 @@
 
 @media only screen and (max-width: 480px) {
     .notifications {
-        right: -83px;
+        right: -87px;
         width: 370px;
     }
 }

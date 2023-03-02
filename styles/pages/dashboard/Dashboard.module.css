@@ -73,7 +73,7 @@
 }
 
 .infoTile .tileTimeValue,
-.infoTile .tileDayValue  {
+.infoTile .tileDayValue {
     position: relative;
     font-size: 25px;
     font-weight: 600;
@@ -263,9 +263,4 @@
         grid-template-columns: 1fr;
     }
 
-    .employeeCard {
-        background: transparent;
-        border: none;
-        padding: 0;
-    }
 }

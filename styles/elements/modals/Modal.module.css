@@ -25,8 +25,8 @@
 
 .closeIcon {
     position: absolute;
-    right: 50px;
-    top: 40px;
+    right: 25px;
+    top: 25px;
     color: var(--footer-text-color);
     font-size: 30px;
     cursor: pointer;
@@ -70,6 +70,7 @@
     font-size: 28px !important;
     line-height: 42px !important;
     margin-top: 2rem !important;
+    text-align: center;
 }
 
 .modal h2 {

@@ -165,15 +165,13 @@
         justify-content: space-between;
         margin-bottom: 20px;
     }
-   .header {
-    grid-template-columns: 1fr;
-   }
-    .tableContainer h2,
-    .tableContainer h4 {
-        display: none;
+
+    .header {
+        grid-template-columns: 1fr;
     }
-    .tabularMapped{
-        margin-top:45px;
+
+    .tabularMapped {
+        margin-top: 45px;
     }
 
     .search {

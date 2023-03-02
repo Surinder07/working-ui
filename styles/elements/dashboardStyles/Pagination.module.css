@@ -41,8 +41,8 @@
 }
 
 .numberActiveButton {
-    border: 1px solid #2996C3!important;
-    color: #2996C3!important;
+    border: 1px solid #2996C3 !important;
+    color: #2996C3 !important;
 }
 
 .navigationButton {
@@ -56,7 +56,7 @@
 }
 
 .dropdown {
-    position: relative;
+    position: absolute;
     padding: 7px 10px 7px 15px;
     outline: none;
     background-color: #FFFFFF00;
@@ -124,14 +124,15 @@
 }
 
 @media only screen and (max-width: 480px) {
- .dropdown {
-     width:140px;
-     height:30px;
-    padding: 0;
-    z-index: 1;
-    white-space: nowrap;
-    top:120px;
-    right: 40%;
- }
+    .dropdown {
+        width: 140px;
+        height: 30px;
+        padding: 0;
+        z-index: 1;
+        white-space: nowrap;
+        top: 229px;
+        /* right: 30px; */
+        left: 30px;
+    }
 
 }
