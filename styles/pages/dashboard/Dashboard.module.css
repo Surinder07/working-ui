@@ -263,4 +263,16 @@
         grid-template-columns: 1fr;
     }
 
+    .personalContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .personalContent {
+        margin-top: 20px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboardTitles h1 {
+        font-size: 22px;
+    }
 }

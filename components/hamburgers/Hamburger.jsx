@@ -12,9 +12,9 @@ const Hamburger = (props) => {
                 onChange={(e) => {
                     props.setOpenMenu(e.target.checked);
                     if (e.target.checked === true) {
-                        props.blockScroll();
+                        document.body.style.overflow = "hidden";
                     } else {
-                        props.allowScroll();
+                        document.body.style.overflow = "unset";
                     }
                 }}
             />

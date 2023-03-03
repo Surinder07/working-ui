@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { DashboardStyles } from "../../../styles/pages";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {DashboardStyles} from "../../../styles/pages";
 import Link from "next/link";
 import {
     WaawNoIndexHead,
@@ -16,12 +16,11 @@ import {
     EmployeesShiftFilter,
     EmployeeAttendanceFilter,
 } from "../../../components";
-import { dropdownService, memberService, requestService, shiftsService, timesheetService } from "../../../services";
-import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getRequestsListing, getSingleShiftsListing, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
-import { employeeTypeValues } from "../../../constants";
+import {dropdownService, memberService, requestService, shiftsService, timesheetService} from "../../../services";
+import {fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getRequestsListing, getSingleShiftsListing, getTimesheetListing, getUpdateMemberRequestBody} from "../../../helpers";
+import {employeeTypeValues} from "../../../constants";
 
 const Employees = (props) => {
-
     const router = useRouter();
 
     // Dropdown values ---------
@@ -31,8 +30,8 @@ const Employees = (props) => {
 
     const [loading, setLoading] = useState(false);
     const [userId, setUserId] = useState("");
-    const [mobile, setMobile] = useState({ countryCode: "", mobile: "", country: "" });
-    const [initialMobile, setInitialMobile] = useState({ countryCode: "", mobile: "", country: "" });
+    const [mobile, setMobile] = useState({countryCode: "", mobile: "", country: ""});
+    const [initialMobile, setInitialMobile] = useState({countryCode: "", mobile: "", country: ""});
     const [firstName, setFirstName] = useState("");
     const [initialFirstName, setInitialFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -68,7 +67,7 @@ const Employees = (props) => {
     // Reload states
     const [reloadPreferences, setReloadPreferences] = useState(false);
 
-    // Error states 
+    // Error states
     const [errorMobile, setErrorMobile] = useState({});
     const [errorFirstName, setErrorFirstName] = useState({});
     const [errorLastName, setErrorLastName] = useState({});
@@ -92,83 +91,88 @@ const Employees = (props) => {
             activeMenu: "EMPLOYEES",
             activeSubMenu: "none",
         });
-        props.setAllowedRoles(['ADMIN', 'MANAGER']);
+        props.setAllowedRoles(["ADMIN", "MANAGER"]);
     }, []);
 
     useEffect(() => {
         if (props.user.role) {
-            if (props.user.role === 'ADMIN') {
+            if (props.user.role === "ADMIN") {
                 fetchAndHandleGet(() => dropdownService.getLocations(), setLocations);
             } else {
                 fetchAndHandleGet(() => dropdownService.getRoles(null), setRoles);
             }
         }
-    }, [props.user])
+    }, [props.user]);
 
     useEffect(() => {
         if (location !== initialLocationId) setRole("");
-        if (location && location !== '') {
+        if (location && location !== "") {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
-    }, [location])
+    }, [location]);
 
     useEffect(() => {
         if (!router.isReady) return;
         if (router.query.id) setUserId(router.query.id);
-        else handleWrongId('Please choose a valid employee first')
+        else handleWrongId("Please choose a valid employee first");
     }, [router.isReady, router.query]);
 
     useEffect(() => {
-        if (userId !== '') {
+        if (userId !== "") {
             props.setPageLoading(true);
-            fetchAllData()
-                .then(() => {
-                    props.setPageLoading(false);
-                })
+            fetchAllData().then(() => {
+                props.setPageLoading(false);
+            });
         }
     }, [userId]);
 
     useEffect(() => {
         fetchEmployeeAttendance();
-    }, [pageNoAttendance])
+    }, [pageNoAttendance]);
 
     useEffect(() => {
         fetchEmployeeRequests();
-    }, [pageNoRequests])
+    }, [pageNoRequests]);
 
     useEffect(() => {
         fetchEmployeeShifts();
-    }, [pageNoShifts])
+    }, [pageNoShifts]);
 
     const fetchAllData = async () => {
-        fetchEmployeeDetails()
-            .then(() => fetchEmployeeAttendance()
-                .then(() => fetchEmployeeShifts()
-                    .then(() => fetchEmployeeRequests())))
-    }
+        fetchEmployeeDetails().then(() => fetchEmployeeAttendance().then(() => fetchEmployeeShifts().then(() => fetchEmployeeRequests())));
+    };
 
     const fetchEmployeeDetails = async () => {
         fetchAndHandleGet(() => memberService.getMemberById(userId), setEmployeeDetails);
-    }
+    };
 
     const fetchEmployeeAttendance = async () => {
-        fetchAndHandlePage(() => timesheetService.getAll(pageNoAttendance, 5, { userId }),
-            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, props.setPageLoading, 
-            null, getTimesheetListing);
-    }
+        fetchAndHandlePage(
+            () => timesheetService.getAll(pageNoAttendance, 5, {userId}),
+            setAttendanceData,
+            setTotalEntriesAttendance,
+            setTotalPagesAttendance,
+            props.setPageLoading,
+            null,
+            getTimesheetListing
+        );
+    };
 
     const fetchEmployeeShifts = async () => {
-        fetchAndHandlePage(() => shiftsService.getByUser(pageNoShifts, 5, { userId }),
-            setShiftData, setTotalEntriesShifts, setTotalPagesShifts, props.setPageLoading, null,
-            getSingleShiftsListing);
-    }
+        fetchAndHandlePage(() => shiftsService.getByUser(pageNoShifts, 5, {userId}), setShiftData, setTotalEntriesShifts, setTotalPagesShifts, props.setPageLoading, null, getSingleShiftsListing);
+    };
 
     const fetchEmployeeRequests = async () => {
-        fetchAndHandlePage(() => requestService.getAllForUser(pageNoRequests, 5, { userId }),
-            setRequestsData, setTotalEntriesRequests, setTotalPagesRequests, props.setPageLoading, null,
-            getRequestsListing);
-    }
-
+        fetchAndHandlePage(
+            () => requestService.getAllForUser(pageNoRequests, 5, {userId}),
+            setRequestsData,
+            setTotalEntriesRequests,
+            setTotalPagesRequests,
+            props.setPageLoading,
+            null,
+            getRequestsListing
+        );
+    };
 
     useEffect(() => {
         if (reloadPreferences) {
@@ -176,7 +180,7 @@ const Employees = (props) => {
             setReloadPreferences(false);
             props.setPageLoading(false);
         }
-    }, [reloadPreferences])
+    }, [reloadPreferences]);
 
     const setEmployeeDetails = (data) => {
         setFirstName(data.firstName);
@@ -184,8 +188,8 @@ const Employees = (props) => {
         setLastName(data.lastName);
         setInitialLastName(data.lastName);
         setEmail(data.email);
-        setMobile({ country: data.country, countryCode: data.countryCode, mobile: data.mobile });
-        setInitialMobile({ country: data.country, countryCode: data.countryCode, mobile: data.mobile });
+        setMobile({country: data.country, countryCode: data.countryCode, mobile: data.mobile});
+        setInitialMobile({country: data.country, countryCode: data.countryCode, mobile: data.mobile});
         setEmployeeId(data.employeeId);
         setInitialEmployeeId(data.employeeId);
         setLocation(data.locationId);
@@ -193,51 +197,58 @@ const Employees = (props) => {
         setInitialLocationId(data.locationId);
         setRole(data.locationRoleId);
         setInitialRole(data.locationRoleName);
-        setEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
-        setInitialEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
+        setEmployeeType(data.fullTime ? "Full Time" : "Part Time");
+        setInitialEmployeeType(data.fullTime ? "Full Time" : "Part Time");
         setEmployeePreferenceData(data.employeePreferences);
-    }
+    };
 
     const handleWrongId = (message) => {
         props.setToasterInfo({
             error: true,
             title: "Error!",
-            message: message
-        })
-        router.push('/dashboard/employees')
-    }
+            message: message,
+        });
+        router.push("/dashboard/employees");
+    };
 
     const updateUserData = () => {
         if (loading) return;
         try {
-            fetchAndHandle(() => memberService.updateMember(getUpdateMemberRequestBody(firstName, lastName,
-                mobile, location, role, employeeType, employeeId, userId)), "Employee details updated successfully",
-                setLoading, setReloadPreferences, props.setPageLoading, null, null, props.setToasterInfo);
+            fetchAndHandle(
+                () => memberService.updateMember(getUpdateMemberRequestBody(firstName, lastName, mobile, location, role, employeeType, employeeId, userId)),
+                "Employee details updated successfully",
+                setLoading,
+                setReloadPreferences,
+                props.setPageLoading,
+                null,
+                null,
+                props.setToasterInfo
+            );
         } catch {
             setLoading(false);
             props.setPageLoading(false);
         }
-    }
+    };
 
     const getActions = (tableType) => {
         return {
-            key: 'Edit',
+            key: "Edit",
             action: (id) => {
                 setEditId(id);
                 switch (tableType) {
-                    case 'request':
+                    case "request":
                         setShowModalRequest(true);
                         break;
-                    case 'attendance':
+                    case "attendance":
                         setShowModalTimeSheet(true);
                         break;
-                    case 'shift':
+                    case "shift":
                         setShowModalShift(true);
                         break;
                 }
-            }
-        }
-    }
+            },
+        };
+    };
 
     const handleExpansion = (clickedMenu) => {
         setExpandedMenu(clickedMenu === expandedMenu ? "none" : clickedMenu);
@@ -245,25 +256,20 @@ const Employees = (props) => {
 
     const getExpandableData = (title, data, actions, setShowFilterModal) => {
         return (
-            <DashboardCard style={{ marginTop: "20px" }}>
+            <DashboardCard style={{marginTop: "20px"}}>
                 <TabularInfo
-                    data={title === 'Attendance' ? attendanceData :
-                        (title === 'Requests' ? requestsData : shiftData)}
+                    data={title === "Attendance" ? attendanceData : title === "Requests" ? requestsData : shiftData}
                     title={title}
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
                     expandable
                     // actions={actions}
                     pagination
-                    totalEntries={title === 'Attendance' ? totalEntriesAttendance :
-                        (title === 'Requests' ? totalEntriesRequests : totalEntriesShifts)}
+                    totalEntries={title === "Attendance" ? totalEntriesAttendance : title === "Requests" ? totalEntriesRequests : totalEntriesShifts}
                     pageSize={5}
-                    totalPages={title === 'Attendance' ? totalPagesAttendance :
-                        (title === 'Requests' ? totalPagesRequests : totalPagesShifts)}
-                    pageNo={title === 'Attendance' ? pageNoAttendance :
-                        (title === 'Requests' ? pageNoRequests : pageNoShifts)}
-                    setPageNo={title === 'Attendance' ? setPageNoAttendance :
-                        (title === 'Requests' ? setPageNoRequests : setPageNoShifts)}
+                    totalPages={title === "Attendance" ? totalPagesAttendance : title === "Requests" ? totalPagesRequests : totalPagesShifts}
+                    pageNo={title === "Attendance" ? pageNoAttendance : title === "Requests" ? pageNoRequests : pageNoShifts}
+                    setPageNo={title === "Attendance" ? setPageNoAttendance : title === "Requests" ? setPageNoRequests : setPageNoShifts}
                     setShowFilterModal={setShowFilterModal}
                 />
             </DashboardCard>
@@ -273,161 +279,127 @@ const Employees = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Employee Details" />
-            {
-                props.pageLoading ? <></> :
-                    <>
-                        <EditTimesheetModal
-                            showModal={showModalTimeSheet}
-                            setShowModal={setShowModalTimeSheet}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
-                            id={editId}
-                        />
-                        <EditShiftModal
-                            showModal={showModalShift}
-                            setShowModal={setShowModalShift}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
-                            id={editId}
-                        />
-                        <EditRequestsModal
-                            showModal={showModalRequest}
-                            setShowModal={setShowModalRequest}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
-                            id={editId}
-                        />
-                        <EmployeeAttendanceFilter
-                            showModal={showEmployeeAttendanceFilterModal}
-                            setShowModal={setShowEmployeeAttendanceFilterModal}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role} />
-                        <EmployeesShiftFilter
-                            showModal={showEmployeeShiftFilterModal}
-                            setShowModal={setShowEmployeeShiftFilterModal}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role} />
-                        <div className={DashboardStyles.dashboardTitles}>
-                            <h1>
-                                <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
-                                {` > Employee Details`}
-                            </h1>
-                        </div>
-                        {/* Employee Personal Details */}
-                        <UserPreferenceCard
-                            title="Personal Details"
-                            isEditable
-                            editOn={personalEditOn}
-                            setEditOn={setPersonalEditOn}
-                            handleCancel={() => {
-                                setFirstName(initialFirstName);
-                                setLastName(initialLastName);
-                                setMobile(initialMobile);
-                                setLocation(initialLocationId);
-                                setRole(initialRole);
-                                setEmployeeType(initialEmployeeType);
-                            }}
-                            onSave={updateUserData}
-                        >
-                            <div className={DashboardStyles.personalContainer}>
-                                <ProfileImage size="big" />
-                                <div className={DashboardStyles.personalContent}>
+            {props.pageLoading ? (
+                <></>
+            ) : (
+                <>
+                    <EditTimesheetModal showModal={showModalTimeSheet} setShowModal={setShowModalTimeSheet} setToasterInfo={props.setToasterInfo} role={props.user.role} id={editId} />
+                    <EditShiftModal showModal={showModalShift} setShowModal={setShowModalShift} setToasterInfo={props.setToasterInfo} role={props.user.role} id={editId} />
+                    <EditRequestsModal showModal={showModalRequest} setShowModal={setShowModalRequest} setToasterInfo={props.setToasterInfo} role={props.user.role} id={editId} />
+                    <EmployeeAttendanceFilter
+                        showModal={showEmployeeAttendanceFilterModal}
+                        setShowModal={setShowEmployeeAttendanceFilterModal}
+                        setToasterInfo={props.setToasterInfo}
+                        role={props.user.role}
+                    />
+                    <EmployeesShiftFilter showModal={showEmployeeShiftFilterModal} setShowModal={setShowEmployeeShiftFilterModal} setToasterInfo={props.setToasterInfo} role={props.user.role} />
+                    <div className={DashboardStyles.dashboardTitles}>
+                        <h1>
+                            <Link href="/dashboard/employees" style={{color: "#535255"}}>
+                                Employees
+                            </Link>
+                            <h1 style={{display: "inline", fontSize: "18px"}}>{` > Employee Details`}</h1>
+                        </h1>
+                    </div>
+                    {/* Employee Personal Details */}
+                    <UserPreferenceCard
+                        title="Personal Details"
+                        isEditable
+                        editOn={personalEditOn}
+                        setEditOn={setPersonalEditOn}
+                        handleCancel={() => {
+                            setFirstName(initialFirstName);
+                            setLastName(initialLastName);
+                            setMobile(initialMobile);
+                            setLocation(initialLocationId);
+                            setRole(initialRole);
+                            setEmployeeType(initialEmployeeType);
+                        }}
+                        onSave={updateUserData}
+                    >
+                        <div className={DashboardStyles.personalContainer}>
+                            <ProfileImage size="big" />
+                            <div className={DashboardStyles.personalContent}>
+                                <EditableInput
+                                    label="First Name"
+                                    type="text"
+                                    value={firstName}
+                                    initialValue={initialFirstName}
+                                    setValue={setFirstName}
+                                    error={errorFirstName}
+                                    setError={setErrorFirstName}
+                                    editOn={personalEditOn}
+                                />
+                                <EditableInput
+                                    label="Last Name"
+                                    type="text"
+                                    value={lastName}
+                                    initialValue={initialLastName}
+                                    setValue={setLastName}
+                                    error={errorLastName}
+                                    setError={setErrorLastName}
+                                    editOn={personalEditOn}
+                                />
+                                <EditableInput label="Email" type="text" value={email} initialValue={email} setValue={setEmail} editOn={personalEditOn} nonEditable />
+                                <EditableInput
+                                    label="Mobile"
+                                    type="mobile"
+                                    value={mobile}
+                                    initialValue={initialMobile}
+                                    setValue={setMobile}
+                                    // error={errorMobile}
+                                    // setError={setErrorMobile}
+                                    editOn={personalEditOn}
+                                />
+                                {props.user.role && props.user.role === "ADMIN" && (
                                     <EditableInput
-                                        label="First Name"
-                                        type="text"
-                                        value={firstName}
-                                        initialValue={initialFirstName}
-                                        setValue={setFirstName}
-                                        error={errorFirstName}
-                                        setError={setErrorFirstName}
-                                        editOn={personalEditOn}
-                                    />
-                                    <EditableInput
-                                        label="Last Name"
-                                        type="text"
-                                        value={lastName}
-                                        initialValue={initialLastName}
-                                        setValue={setLastName}
-                                        error={errorLastName}
-                                        setError={setErrorLastName}
-                                        editOn={personalEditOn}
-                                    />
-                                    <EditableInput
-                                        label="Email"
-                                        type="text"
-                                        value={email}
-                                        initialValue={email}
-                                        setValue={setEmail}
-                                        editOn={personalEditOn}
-                                        nonEditable
-                                    />
-                                    <EditableInput
-                                        label="Mobile"
-                                        type="mobile"
-                                        value={mobile}
-                                        initialValue={initialMobile}
-                                        setValue={setMobile}
-                                        // error={errorMobile}
-                                        // setError={setErrorMobile}
-                                        editOn={personalEditOn}
-                                    />
-                                    {
-                                        props.user.role && props.user.role === 'ADMIN' &&
-                                        < EditableInput
-                                            label="Location"
-                                            type="typeAhead"
-                                            options={locations}
-                                            value={location}
-                                            initialValue={initialLocation}
-                                            setValue={setLocation}
-                                            editOn={personalEditOn}
-                                        />
-                                    }
-                                    <EditableInput
-                                        label="Role"
+                                        label="Location"
                                         type="typeAhead"
-                                        options={roles}
-                                        value={role}
-                                        initialValue={initialRole}
-                                        error={errorRole}
-                                        setError={setErrorRole}
-                                        setValue={setRole}
+                                        options={locations}
+                                        value={location}
+                                        initialValue={initialLocation}
+                                        setValue={setLocation}
                                         editOn={personalEditOn}
                                     />
-                                    <EditableInput
-                                        label="Employee Id"
-                                        type="text"
-                                        value={employeeId}
-                                        initialValue={employeeId}
-                                        setValue={setEmployeeId}
-                                        editOn={personalEditOn}
-                                    />
-                                    <EditableInput
-                                        label="Employee type"
-                                        type="dropdown"
-                                        options={employeeTypeValues}
-                                        value={employeeType}
-                                        initialValue={initialEmployeeType}
-                                        setValue={setEmployeeType}
-                                        editOn={personalEditOn}
-                                    />
-                                </div>
+                                )}
+                                <EditableInput
+                                    label="Role"
+                                    type="typeAhead"
+                                    options={roles}
+                                    value={role}
+                                    initialValue={initialRole}
+                                    error={errorRole}
+                                    setError={setErrorRole}
+                                    setValue={setRole}
+                                    editOn={personalEditOn}
+                                />
+                                <EditableInput label="Employee Id" type="text" value={employeeId} initialValue={employeeId} setValue={setEmployeeId} editOn={personalEditOn} />
+                                <EditableInput
+                                    label="Employee type"
+                                    type="dropdown"
+                                    options={employeeTypeValues}
+                                    value={employeeType}
+                                    initialValue={initialEmployeeType}
+                                    setValue={setEmployeeType}
+                                    editOn={personalEditOn}
+                                />
                             </div>
-                        </UserPreferenceCard>
-                        <EmployeePreference
-                            data={employeePreferenceData}
-                            expanded={expandedMenu === 'preferences'}
-                            toggleExpansion={() => handleExpansion('preferences')}
-                            setToasterInfo={props.setToasterInfo}
-                            userId={userId}
-                            setPageLoading={props.setPageLoading}
-                            setReloadData={setReloadPreferences}
-                        />
-                        {getExpandableData("Shifts", shiftData, getActions('shift'), setShowEmployeeShiftFilterModal)}
-                        {getExpandableData("Requests", requestsData, getActions('request'), "")}
-                        {getExpandableData("Attendance", attendanceData, getActions('attendance'), setShowEmployeeAttendanceFilterModal)}
-                    </>
-            }
+                        </div>
+                    </UserPreferenceCard>
+                    <EmployeePreference
+                        data={employeePreferenceData}
+                        expanded={expandedMenu === "preferences"}
+                        toggleExpansion={() => handleExpansion("preferences")}
+                        setToasterInfo={props.setToasterInfo}
+                        userId={userId}
+                        setPageLoading={props.setPageLoading}
+                        setReloadData={setReloadPreferences}
+                    />
+                    {getExpandableData("Shifts", shiftData, getActions("shift"), setShowEmployeeShiftFilterModal)}
+                    {getExpandableData("Requests", requestsData, getActions("request"), "")}
+                    {getExpandableData("Attendance", attendanceData, getActions("attendance"), setShowEmployeeAttendanceFilterModal)}
+                </>
+            )}
         </>
     );
 };

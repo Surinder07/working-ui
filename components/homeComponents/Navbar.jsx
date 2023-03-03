@@ -6,11 +6,9 @@ import {PageStyles} from "../../styles/pages";
 import {NavLinks, logo} from "../../constants";
 import {joinClasses} from "../../helpers";
 import {useState} from "react";
-import {useScrollBlock} from "../../helpers";
 
 const Navbar = (props) => {
     const [openMenu, setOpenMenu] = useState(false);
-    const [blockScroll, allowScroll] = useScrollBlock();
 
     const getMenuLink = (key, text, link, extraClass) => {
         return (
@@ -25,7 +23,7 @@ const Navbar = (props) => {
     return (
         <nav className={joinClasses(NavbarStyles.nav, PageStyles.pagePadding)}>
             <div className={joinClasses(NavbarStyles.navEl, NavbarStyles.showMobile)}>
-                <Hamburger blockScroll={blockScroll} allowScroll={allowScroll} setOpenMenu={setOpenMenu} openMenu={openMenu} />
+                <Hamburger setOpenMenu={setOpenMenu} openMenu={openMenu} />
             </div>
             <div className={NavbarStyles.navEl}>
                 <LinkedImage className={NavbarStyles.logo} link={logo.default.link} src={logo.default.src} alt={logo.default.alt} heightOrient keepQuality />
