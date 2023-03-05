@@ -56,7 +56,7 @@ const Profile = (props) => {
             <div className={UserPreferenceStyles.picContainer}>
                 <div
                     className={UserPreferenceStyles.pic}
-                    style={{ backgroundImage: `url(${props.img ? props.img : ProfilePlaceholderLarge.src})` }}
+                    style={{ backgroundImage: `url(${props.data.imageUrl ? props.data.imageUrl : ProfilePlaceholderLarge.src})` }}
                     onMouseEnter={() => setUploadVisible(true)}
                     onMouseLeave={() => setUploadVisible(false)}
                 >

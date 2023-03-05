@@ -9,16 +9,13 @@ import {
     DashboardCard,
     ProfileImage,
     EditableInput,
-    EditTimesheetModal,
-    EditShiftModal,
     EditRequestsModal,
-    EmployeePreference,
-    EmployeesShiftFilter,
-    EmployeeAttendanceFilter,
+    EmployeePreference
 } from "../../../components";
 import { dropdownService, memberService, requestService, shiftsService, timesheetService } from "../../../services";
 import { fetchAndHandle, fetchAndHandleGet, fetchAndHandlePage, getRequestsListing, getSingleShiftsListing, getTimesheetListing, getUpdateMemberRequestBody } from "../../../helpers";
 import { employeeTypeValues } from "../../../constants";
+import EditShiftTimesheetModal from "../../../components/modals/EditShiftTimesheetModal";
 
 const Employees = (props) => {
 
@@ -67,6 +64,9 @@ const Employees = (props) => {
 
     // Reload states
     const [reloadPreferences, setReloadPreferences] = useState(false);
+    const [reloadShifts, setReloadShifts] = useState(false);
+    const [reloadAttendance, setReloadAttendance] = useState(false);
+    const [reloadRequests, setReloadRequests] = useState(false);
 
     // Error states 
     const [errorMobile, setErrorMobile] = useState({});
@@ -75,15 +75,12 @@ const Employees = (props) => {
     const [errorRole, setErrorRole] = useState({});
 
     // Modal States
-    const [showModalTimeSheet, setShowModalTimeSheet] = useState(false);
-    const [showModalShift, setShowModalShift] = useState(false);
-    const [showModalRequest, setShowModalRequest] = useState(false);
-    const [showEmployeeShiftFilterModal, setShowEmployeeShiftFilterModal] = useState(false);
-    const [showEmployeeAttendanceFilterModal, setShowEmployeeAttendanceFilterModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editId, setEditId] = useState("");
+    const [showEditRequestModal, setShowEditRequestModal] = useState(false);
 
     const [expandedMenu, setExpandedMenu] = useState("none");
     const [personalEditOn, setPersonalEditOn] = useState(false);
-    const [editId, setEditId] = useState("");
 
     useEffect(() => {
         props.setPageInfo({
@@ -140,6 +137,27 @@ const Employees = (props) => {
         fetchEmployeeShifts();
     }, [pageNoShifts])
 
+    useEffect(() => {
+        if (reloadAttendance) {
+            fetchEmployeeAttendance();
+            setReloadAttendance(false)
+        }
+    }, [reloadAttendance])
+
+    useEffect(() => {
+        if (reloadRequests) {
+            fetchEmployeeRequests();
+            setReloadRequests(false)
+        }
+    }, [reloadRequests])
+
+    useEffect(() => {
+        if (reloadShifts) {
+            fetchEmployeeShifts();
+            setReloadShifts(false)
+        }
+    }, [reloadShifts])
+
     const fetchAllData = async () => {
         fetchEmployeeDetails()
             .then(() => fetchEmployeeAttendance()
@@ -153,7 +171,7 @@ const Employees = (props) => {
 
     const fetchEmployeeAttendance = async () => {
         fetchAndHandlePage(() => timesheetService.getAll(pageNoAttendance, 5, { userId }),
-            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, props.setPageLoading, 
+            setAttendanceData, setTotalEntriesAttendance, setTotalPagesAttendance, props.setPageLoading,
             null, getTimesheetListing);
     }
 
@@ -226,13 +244,13 @@ const Employees = (props) => {
                 setEditId(id);
                 switch (tableType) {
                     case 'request':
-                        setShowModalRequest(true);
+                        setShowEditRequestModal(true);
                         break;
                     case 'attendance':
-                        setShowModalTimeSheet(true);
+                        setShowEditModal(true);
                         break;
                     case 'shift':
-                        setShowModalShift(true);
+                        setShowEditModal(true);
                         break;
                 }
             }
@@ -253,7 +271,7 @@ const Employees = (props) => {
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
                     expandable
-                    // actions={actions}
+                    actions={actions}
                     pagination
                     totalEntries={title === 'Attendance' ? totalEntriesAttendance :
                         (title === 'Requests' ? totalEntriesRequests : totalEntriesShifts)}
@@ -276,37 +294,25 @@ const Employees = (props) => {
             {
                 props.pageLoading ? <></> :
                     <>
-                        <EditTimesheetModal
-                            showModal={showModalTimeSheet}
-                            setShowModal={setShowModalTimeSheet}
+                        <EditShiftTimesheetModal
+                            type={expandedMenu === 'attendance' ? 'Timesheet' : 'Shift'}
+                            showModal={showEditModal}
+                            setShowModal={setShowEditModal}
+                            setPageLoading={props.setPageLoading}
                             setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
-                            id={editId}
-                        />
-                        <EditShiftModal
-                            showModal={showModalShift}
-                            setShowModal={setShowModalShift}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role}
+                            setReloadData={expandedMenu === 'attendance' ? setReloadAttendance : setReloadShifts}
                             id={editId}
                         />
                         <EditRequestsModal
-                            showModal={showModalRequest}
-                            setShowModal={setShowModalRequest}
+                            tabularType={'emp'}
+                            showModal={showEditRequestModal}
+                            setShowModal={setShowEditRequestModal}
+                            setPageLoading={props.setPageLoading}
+                            setReloadData={setReloadRequests}
                             setToasterInfo={props.setToasterInfo}
                             role={props.user.role}
                             id={editId}
                         />
-                        <EmployeeAttendanceFilter
-                            showModal={showEmployeeAttendanceFilterModal}
-                            setShowModal={setShowEmployeeAttendanceFilterModal}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role} />
-                        <EmployeesShiftFilter
-                            showModal={showEmployeeShiftFilterModal}
-                            setShowModal={setShowEmployeeShiftFilterModal}
-                            setToasterInfo={props.setToasterInfo}
-                            role={props.user.role} />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>
                                 <Link href="/dashboard/employees" style={{ color: "#535255" }}>Employees</Link>
@@ -367,8 +373,8 @@ const Employees = (props) => {
                                         value={mobile}
                                         initialValue={initialMobile}
                                         setValue={setMobile}
-                                        // error={errorMobile}
-                                        // setError={setErrorMobile}
+                                        error={errorMobile}
+                                        setError={setErrorMobile}
                                         editOn={personalEditOn}
                                     />
                                     {
@@ -423,9 +429,9 @@ const Employees = (props) => {
                             setPageLoading={props.setPageLoading}
                             setReloadData={setReloadPreferences}
                         />
-                        {getExpandableData("Shifts", shiftData, getActions('shift'), setShowEmployeeShiftFilterModal)}
-                        {getExpandableData("Requests", requestsData, getActions('request'), "")}
-                        {getExpandableData("Attendance", attendanceData, getActions('attendance'), setShowEmployeeAttendanceFilterModal)}
+                        {getExpandableData("Shifts", shiftData, getActions('shift'))}
+                        {getExpandableData("Requests", requestsData, getActions('request'))}
+                        {getExpandableData("Attendance", attendanceData, getActions('attendance'))}
                     </>
             }
         </>

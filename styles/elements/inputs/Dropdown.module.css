@@ -142,3 +142,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.timeContainer input {
+    width: 25px;
+    min-width: unset!important;
+}

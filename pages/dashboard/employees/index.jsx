@@ -37,6 +37,13 @@ const Employees = (props) => {
     }, []);
 
     useEffect(() => {
+        if (props.stompMsg.invite) {
+            setReloadData(true)
+            props.resetStompMsg('invite')
+        }
+    }, [props.stompMsg.invite])
+
+    useEffect(() => {
         fetchData();
     }, [pageNo, pageSize, filters, sort]);
 

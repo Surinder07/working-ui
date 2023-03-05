@@ -112,6 +112,13 @@ const CalendarComponent = (props) => {
     }, [currentYear])
 
     useEffect(() => {
+        if (props.stompMsg.holiday) {
+            if (!isNaN(currentYear)) getHolidays(currentYear);
+            props.resetStompMsg('holiday');
+        }
+    }, [props.stompMsg.holiday])
+
+    useEffect(() => {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
         if (format(firstDayNextMonth, "yyyy") <= format(firstDayCurrentMonth, "yyyy")) {
             setDisableNext(false);

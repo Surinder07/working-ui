@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
-import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, fetchWrapper, getShiftsListing, getSingleShiftsListing, joinClasses, secureLocalStorage } from "../../../helpers";
-import { shiftsService, userService } from "../../../services";
-import SockJsClient from 'react-stomp';
-
-const webSocketEndpoints = process.env.endpoints.webSocket;
+import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses, secureLocalStorage } from "../../../helpers";
+import { shiftsService } from "../../../services";
+import EditShiftTimesheetModal from "../../../components/modals/EditShiftTimesheetModal";
 
 const Shifts = (props) => {
     useEffect(() => {
@@ -34,11 +32,20 @@ const Shifts = (props) => {
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
     const [showShiftModal, setShowShiftModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editId, setEditId] = useState('');
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
         id: "",
         show: false,
         type: '' // BATCH OR SINGLE
     });
+
+    useEffect(() => {
+        if (props.stompMsg.shift) {
+            setReloadData(true)
+            props.resetStompMsg('shift')
+        }
+    }, [props.stompMsg.shift])
 
     useEffect(() => {
         if (props.user.role && props.user.role === 'ADMIN') {
@@ -71,8 +78,6 @@ const Shifts = (props) => {
     }
 
     const deleteShiftOrBatch = () => {
-        console.log(confirmDeleteModal);
-        // return;
         if (confirmDeleteModal.type === 'BATCH') {
             fetchAndHandle(() => shiftsService.deleteBatch(confirmDeleteModal.id),
                 "Batch Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
@@ -116,10 +121,14 @@ const Shifts = (props) => {
     ];
 
     const subTableActions = [
-        // {
-        //     key: "Edit",
-        //     action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
-        // },
+        {
+            key: "Edit",
+            action: (id) => {
+                setEditId(id);
+                setShowEditModal(true);
+            },
+            condition: (status, date) => activeTable === 'emp'
+        },
         {
             key: "Delete",
             action: (id) => {
@@ -144,21 +153,6 @@ const Shifts = (props) => {
             {
                 props.pageLoading ? <></> :
                     <>
-                        <SockJsClient url={fetchWrapper.getApiUrl(webSocketEndpoints.endpoint).replace('api/', '')}
-                            headers={{ access_token: props.token }}
-                            topics={[webSocketEndpoints.topics.shift]}
-                            onConnect={() => {
-                                console.log("Connected to Websocket");
-                            }}
-                            onDisconnect={() => {
-                                console.log("Disconnected from Websocket");
-                            }}
-                            onMessage={(msg) => {
-                                setReloadData(true);
-                            }}
-                            options={{ headers: { access_token: props.token } }}
-                            debug={false}
-                        />
                         <DeleteModal
                             modal={confirmDeleteModal}
                             setModal={setConfirmDeleteModal}
@@ -182,6 +176,15 @@ const Shifts = (props) => {
                             showModal={showFilterModal}
                             setToasterInfo={props.setToasterInfo}
                             role={props.user.role}
+                        />
+                        <EditShiftTimesheetModal
+                            type='Shift'
+                            showModal={showEditModal}
+                            setShowModal={setShowEditModal}
+                            setPageLoading={props.setPageLoading}
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
+                            id={editId}
                         />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Shifts</h1>

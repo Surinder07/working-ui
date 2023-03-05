@@ -210,7 +210,10 @@ export const getTimesheetListing = (data) => {
             end: timesheet.end ? timesheet.end.date + " " + timesheet.end.time : '-',
             duration: timesheet.duration ? timesheet.duration : '-',
             type: timesheet.type,
-            comments: timesheet.comment
+            comments: {
+                displayType: 'comment',
+                text: timesheet.comment
+            }
         }
     })
 }

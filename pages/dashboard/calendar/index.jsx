@@ -66,7 +66,12 @@ const Calender = (props) => {
                                 </Button>
                             }
                         </div>
-                        <CalendarComponent setPageLoading={props.setPageLoading} timezone={props.user.timezone} />
+                        <CalendarComponent
+                            setPageLoading={props.setPageLoading}
+                            timezone={props.user.timezone}
+                            stompMsg={props.stompMsg}
+                            resetStompMsg={props.resetStompMsg}
+                        />
                     </>
             }
         </>

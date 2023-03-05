@@ -11,15 +11,25 @@ const NewRoleModal = (props) => {
     //-----------------------------
     const [roleName, setRoleName] = useState("");
     const [location, setLocation] = useState("");
-    const [maximumHours, setMaximumHours] = useState(0);
-    const [minimumHours, setMinimumHours] = useState(0);
+    const [maximumHours, setMaximumHours] = useState({
+        hours: 0,
+        minutes: 0
+    });
+    const [minimumHours, setMinimumHours] = useState({
+        hours: 0,
+        minutes: 0
+    });
     const [maximumWorkDays, setMaximumWorkDays] = useState(0);
-    const [gapsInShifts, setGapsInShifts] = useState(0);
+    const [gapsInShifts, setGapsInShifts] = useState({
+        hours: 0,
+        minutes: 0
+    });
     const [adminRights, setAdminRights] = useState(false);
 
     const [errorRoleName, setErrorRoleName] = useState({});
     const [errorLocation, setErrorLocation] = useState({});
     const [errorHours, setErrorHours] = useState({});
+    const [errorMinutes, setErrorMinutes] = useState({});
     const [loading, setLoading] = useState(false);
 
     const onCancel = () => {
@@ -79,13 +89,19 @@ const NewRoleModal = (props) => {
     const isError = () => {
         let error = combineBoolean(
             validateForEmptyField(roleName, 'Name', setErrorRoleName, !props.update),
-            validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
+            // validateForEmptyField(location, 'Location', setErrorLocation, props.role === 'ADMIN')
         );
-        let maxMinHourError = minimumHours > maximumHours;
-        if (maxMinHourError) setErrorHours({
-            message: 'Minimum hours cannot be more than maximim hours',
-            show: true
-        })
+        let maxMinHourError = (minimumHours.hours > maximumHours.hours) || (minimumHours.hours === maximumHours.hours && minimumHours.minutes > maximumHours.minutes);
+        if (maxMinHourError) {
+            setErrorHours({
+                message: 'Minimum time cannot be',
+                show: true
+            });
+            setErrorMinutes({
+                message: 'more than maximim time',
+                show: true
+            })
+        }
         return error || maxMinHourError;
     }
 
@@ -141,26 +157,62 @@ const NewRoleModal = (props) => {
                         editOn
                     />
                 }
-                <EditableInput
-                    type="number"
-                    label="Total hours per day (Maximum)"
-                    value={maximumHours}
-                    setValue={setMaximumHours}
-                    initialValue={maximumHours}
-                    error={errorHours}
-                    setHour={setErrorHours}
-                    max={24}
-                    editOn
-                />
-                <EditableInput
-                    type="number"
-                    label="Total hours per day (Minimum)"
-                    value={minimumHours}
-                    setValue={setMinimumHours}
-                    initialValue={minimumHours}
-                    max={24}
-                    editOn
-                />
+                <div>
+                    <label>Total time per day (Maximum)</label>
+                    <div className={DashboardModalStyles.twoColumn}>
+                        <EditableInput
+                            type="number"
+                            label="Hours"
+                            value={maximumHours.hours}
+                            setValue={(val) => setMaximumHours({ ...maximumHours, hours: val })}
+                            initialValue={maximumHours.hours}
+                            error={errorHours}
+                            setError={(e) => {
+                                setErrorHours(e);
+                                setErrorMinutes(e);
+                            }}
+                            max={23}
+                            editOn
+                        />
+                        <EditableInput
+                            type="number"
+                            label="Minutes"
+                            value={maximumHours.minutes}
+                            setValue={(val) => setMaximumHours({ ...maximumHours, minutes: val })}
+                            initialValue={maximumHours.minutes}
+                            error={errorMinutes}
+                            setError={(e) => {
+                                setErrorHours(e);
+                                setErrorMinutes(e);
+                            }}
+                            max={59}
+                            editOn
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label>Total time per day (Minimum)</label>
+                    <div className={DashboardModalStyles.twoColumn}>
+                        <EditableInput
+                            type="number"
+                            label="Hours"
+                            value={minimumHours.hours}
+                            setValue={(val) => setMinimumHours({ ...maximumHours, hours: val })}
+                            initialValue={minimumHours.hours}
+                            max={23}
+                            editOn
+                        />
+                        <EditableInput
+                            type="number"
+                            label="Minutes"
+                            value={minimumHours.minutes}
+                            setValue={(val) => setMinimumHours({ ...minimumHours, minutes: val })}
+                            initialValue={minimumHours.minutes}
+                            max={59}
+                            editOn
+                        />
+                    </div>
+                </div>
                 <EditableInput
                     type="number"
                     label="Maximum consecutive work days"
@@ -170,14 +222,29 @@ const NewRoleModal = (props) => {
                     max={7}
                     editOn
                 />
-                <EditableInput
-                    type="number"
-                    label="Minimum gaps between shifts (hrs)"
-                    value={gapsInShifts}
-                    setValue={setGapsInShifts}
-                    initialValue={gapsInShifts}
-                    editOn
-                />
+                <div>
+                    <label>Minimum gaps between shifts</label>
+                    <div className={DashboardModalStyles.twoColumn}>
+                        <EditableInput
+                            type="number"
+                            label="Hours"
+                            value={gapsInShifts.hours}
+                            setValue={(val) => setGapsInShifts({ ...maximumHours, hours: val })}
+                            initialValue={gapsInShifts.hours}
+                            max={23}
+                            editOn
+                        />
+                        <EditableInput
+                            type="number"
+                            label="Minutes"
+                            value={gapsInShifts.minutes}
+                            setValue={(val) => setGapsInShifts({ ...minimumHours, minutes: val })}
+                            initialValue={gapsInShifts.minutes}
+                            max={59}
+                            editOn
+                        />
+                    </div>
+                </div>
                 {
                     (!props.update && props.role === 'ADMIN') &&
                     <Checkbox

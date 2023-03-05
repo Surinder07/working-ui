@@ -4,9 +4,12 @@ import UserPreferenceCard from "./UserPreferenceCard";
 import { EditableInput } from "../../inputComponents";
 import { PayrollFrequency } from "../../../constants";
 import { organizationService } from "../../../services";
+import { ImagePlaceholder } from "../../../public/images";
+import { CameraAlt } from "@mui/icons-material";
 
 const Organization = (props) => {
 
+    const [uploadVisible, setUploadVisible] = useState(false);
     const [editPersonalDetails, setEditPersonalDetails] = useState(false);
     const [organizationName, setOrganizationName] = useState();
     const [startWeek, setStartWeek] = useState("");
@@ -78,7 +81,31 @@ const Organization = (props) => {
     }
 
     return (
-        <div className={UserPreferenceStyles.nonProfileContainer}>
+        <div className={UserPreferenceStyles.profileContainer}>
+            <div className={UserPreferenceStyles.picContainer}>
+                <div
+                    className={UserPreferenceStyles.pic}
+                    style={{ backgroundImage: `url(${props.img ? props.img : ImagePlaceholder.src})` }}
+                    onMouseEnter={() => setUploadVisible(true)}
+                    onMouseLeave={() => setUploadVisible(false)}
+                >
+                    {
+                        uploadVisible &&
+                        <label className={UserPreferenceStyles.uploadContainer} htmlFor='upload-button'>
+                            <div className={UserPreferenceStyles.uploadBox}>
+                                <CameraAlt />
+                                <p>Choose File</p>
+                            </div>
+                            {/* <input
+                                type="file"
+                                id="upload-button"
+                                style={{ display: "none" }}
+                                onChange={handleFileChange}
+                            /> */}
+                        </label>
+                    }
+                </div>
+            </div>
             <div>
                 <h1>Organization Preferences</h1>
                 <UserPreferenceCard

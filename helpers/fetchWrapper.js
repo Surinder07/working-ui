@@ -53,7 +53,6 @@ const post = async (url, body) => {
 }
 
 const put = async (url, body) => {
-    console.log(url)
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', ...authHeader(url) },

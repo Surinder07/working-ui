@@ -3,11 +3,8 @@ import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { NotificationsStyles } from "../../styles/elements";
 import Link from 'next/link';
-import { notificationService, userService } from '../../services';
-import { fetchAndHandle, fetchAndHandlePage, fetchWrapper, getNotificationListingForBell, joinClasses, secureLocalStorage } from "../../helpers";
-import SockJsClient from 'react-stomp';
-
-const webSocketEndpoints = process.env.endpoints.webSocket;
+import { notificationService } from '../../services';
+import { fetchAndHandle, fetchAndHandlePage, getNotificationListingForBell, joinClasses, secureLocalStorage } from "../../helpers";
 
 const NotificationBell = (props) => {
 
@@ -54,23 +51,20 @@ const NotificationBell = (props) => {
             props.setPageLoading, null, null, null, null)
     }
 
-    const updateNotification = (newData) => {
-        props.setNotificationToast({
-            show: true,
-            title: newData.title,
-            message: newData.description
-        })
-        data.pop();
-        setData([{
-            internalId: newData.id,
-            title: newData.title,
-            type: newData.type,
-            date: 'now',
-            read: newData.read,
-            message: newData.description
-        }].concat(data))
-        setUnread(true);
-    }
+    useEffect(() => {
+        if (props.stompMsg.id) {
+            data.pop();
+            setData([{
+                internalId: props.stompMsg.id,
+                title: props.stompMsg.title,
+                type: props.stompMsg.type,
+                date: 'now',
+                read: props.stompMsg.read,
+                message: props.stompMsg.description
+            }].concat(data))
+            setUnread(true);
+        }
+    }, [props.stompMsg])
 
     useEffect(() => loadNotification(), [showNotifications])
 
@@ -99,21 +93,6 @@ const NotificationBell = (props) => {
 
     return (
         <div className={NotificationsStyles.container} ref={containerRef}>
-            <SockJsClient url={fetchWrapper.getApiUrl(webSocketEndpoints.endpoint).replace('api/', '')}
-                headers={{ access_token: secureLocalStorage.getData(userService.TOKEN_KEY) }}
-                topics={[webSocketEndpoints.topics.notification]}
-                onConnect={() => {
-                    console.log("Connected to Websocket");
-                }}
-                onDisconnect={() => {
-                    console.log("Disconnected from Websocket");
-                }}
-                onMessage={(msg) => {
-                    updateNotification(msg);
-                }}
-                options={{ headers: { access_token: secureLocalStorage.getData(userService.TOKEN_KEY) } }}
-                debug={false}
-            />
             <Notifications
                 className={NotificationsStyles.bell}
                 onClick={() => {

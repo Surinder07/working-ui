@@ -4,6 +4,7 @@ import { InputBox, ContactInput, TextArea, NumberInput } from './inputBoxes';
 import { TimeInput, DropDown, MultiSelectDropdown } from './dropdowns';
 import DatePicker from './DatePicker';
 import { RadioButtons, Toggle, ToggleWithValue } from './toggles';
+import { joinClasses } from '../../helpers';
 
 const EditableInput = (props) => {
     const setValue = (value) => {
@@ -16,7 +17,7 @@ const EditableInput = (props) => {
     };
 
     return (
-        <div className={`${EditableInputStyles.container} ${props.className}`} style={props.style}>
+        <div className={joinClasses(EditableInputStyles.container, props.className)} style={props.style}>
             {
                 props.label &&
                 <label htmlFor={props.label}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button, EmployeeAttendanceFilter } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button, EmployeeAttendanceFilter, TimesheetFilter } from "../../../components";
 import { Warning } from "@mui/icons-material";
 import { timesheetService } from "../../../services";
 import { fetchAndHandlePage, getTimesheetListing } from "../../../helpers";
@@ -180,7 +180,7 @@ const timeClock = (props) => {
                             </div>
                             <Clock timezone = {props.user.timezone} />
                         </DashboardCard>
-                        <EmployeeAttendanceFilter
+                        <TimesheetFilter
                             showModal={showFilterModal}
                             setShowModal={setShowFilterModal}
                             filters={filters}

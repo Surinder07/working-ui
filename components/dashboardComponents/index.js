@@ -12,6 +12,7 @@ import Clock from './Clock';
 import DashboardTabular from "./DashboardTabular";
 import FloatingClock from './FloatingClock';
 import NotificationToaster from "./NotificationToaster";
+import StompSocket from './StompSocket';
 
 export {
     CalendarComponent,
@@ -27,7 +28,8 @@ export {
     Clock,
     DashboardTabular,
     FloatingClock,
-    NotificationToaster
+    NotificationToaster,
+    StompSocket
 };
 
 export * from "./userPreferences";

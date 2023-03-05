@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster } from "../components";
+import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, StompSocket } from "../components";
 import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath } from "../helpers";
 import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
@@ -32,6 +32,16 @@ function MyApp({ Component, pageProps }) {
         title: '',
         message: ''
     });
+    const [stompMsg, setStompMsg] = useState({
+        shift: false,
+        holiday: false,
+        invite: false,
+        timesheet: {
+            allow: false,
+            allowAfterMinutes: 0
+        },
+        notification: {}
+    })
 
     useEffect(() => {
         if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
@@ -137,6 +147,15 @@ function MyApp({ Component, pageProps }) {
                 setToasterInfo={setToasterInfo}
                 setAllowedRoles={setAllowedRoles}
                 setPageLoading={setPageLoading}
+                stompMsg={stompMsg}
+                resetStompMsg={(topic) => {
+                    let temp = stompMsg;
+                    temp[topic] = topic === 'timesheet' ? {
+                        allow: false,
+                        allowAfterMinutes: 0
+                    } : false;
+                    setStompMsg(temp);
+                }}
             />
         );
     };
@@ -175,8 +194,17 @@ function MyApp({ Component, pageProps }) {
                         user={user}
                         setToasterInfo={setToasterInfo}
                         setPageLoading={setPageLoading}
-                        setNotificationToast={setNotificationToast}
+                        stompMsg={stompMsg.notification}
                     >
+                        {
+                            token &&
+                            <StompSocket
+                                token={token}
+                                setNotificationToast={setNotificationToast}
+                                stompMsg={stompMsg}
+                                setStompMsg={setStompMsg}
+                            />
+                        }
                         {getComponentForPages()}
                     </DashboardLayout>
                 }

@@ -36,7 +36,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
+.subContainer label {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #535255;
+    margin-bottom: 5px;
+}
+
+.subContainer .twoColumn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+}
+
+.subContainer .twoColumn label {
+    font-size: 12px!important;
+    color: #828285!important;
 }
 
 .closeIcon {

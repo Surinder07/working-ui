@@ -11,7 +11,11 @@ const apiEndpoints = {
         getUserDetails: "/v1/user/getAccount",
         resetPasswordInit: "/v1/unAuth/user/resetPassword/init",
         resetPasswordFinish: "/v1/unAuth/user/resetPassword/finish",
-        validatePromoCode: '/v1/registration/user/validatePromoCode'
+        validatePromoCode: '/v1/registration/user/validatePromoCode',
+        updateProfileImage: '/v1/user/updateProfileImage',
+        updateUser: '/v1/user/update',
+        updateEmailInit: '/v1/unAuth/user/email/update',
+        updateEmailFinish: '/v1/unAuth/user/email/verify'
     },
     member: {
         sendInvite: '/v1/member/invite/send',
@@ -42,9 +46,11 @@ const apiEndpoints = {
         deleteBatch: '/v1/shifts/batch/delete',
         assignShift: '/v1/shifts/assign',
         releaseShift: '/v1/shifts/release',
+        editShift: '/v1/shifts/edit',
         releaseBatch: '/v1/shifts/batch/release',
         getAllShifts: '/v1/shifts/getAll',
-        getAllShiftsUser: '/v1/shifts/user/getAll'
+        getAllShiftsUser: '/v1/shifts/user/getAll',
+        getById: '/v1/shifts/get'
     },
     requests: {
         newRequest: '/v1/requests/new',
@@ -69,19 +75,21 @@ const apiEndpoints = {
         getShiftData: '/v1/dashboard/getData/shift'
     },
     resources: {
-        fileTemplate: "/v1/unAuth/resource/downloadFile",
+        fileTemplate: "/v1/unAuth/resource/downloadFile"
     },
     timesheet: {
         startTimer: '/v1/timesheet/timer/start',
         stopTimer: '/v1/timesheet/timer/stop',
         getTimer: '/v1/timesheet/timer/get',
         getAll: '/v1/timesheet/getAll',
+        getById: '/v1/timesheet/get',
         add: '/v1/timesheet/add',
         edit: '/v1/timesheet/edit',
         delete: '/v1/timesheet/delete'
     },
     organization: {
         updateOrganizationPreferences: '/v1/organization/update',
+        uploadLogo: '/v1/organizagion/logo/upload',
         getHolidays: '/v1/organization/holiday/getAll',
         addHolidaysExcel: '/v1/organization/holiday/upload',
         addHoliday: '/v1/organization/holiday/add',
@@ -104,7 +112,10 @@ const apiEndpoints = {
         endpoint: '/ws-connect',
         topics: {
             notification: '/user/ws-server/notification',
-            shift: '/user/ws-server/shift'
+            shift: '/user/ws-server/shift',
+            timesheet: '/user/ws-server/timesheet',
+            userInvite: '/user/ws-server/user-invite',
+            holidayUpload: '/user/ws-server/holiday-upload'
         }
     }
 };
@@ -120,7 +131,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.1.2",
+        version: "1.1.3",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

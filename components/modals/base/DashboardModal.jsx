@@ -1,6 +1,7 @@
 import { DashboardModalStyles } from "../../../styles/elements";
 import { Button } from "../../inputComponents";
 import { useEffect, useRef, useState } from "react";
+import { joinClasses } from "../../../helpers";
 
 /**
  * @param {*} type {twoColWide, twoColNarrow, singleCol}
@@ -41,8 +42,8 @@ const DashboardModal = (props) => {
         DashboardModalStyles.gridDoubleNarrow : DashboardModalStyles.gridSingle
 
     return props.showModal ? (
-        <div className={`${DashboardModalStyles.modalBackdrop} ${scrollable && DashboardModalStyles.scrollBackdrop}`}>
-            <div className={`${DashboardModalStyles.modal}`} ref={modalRef} style={{height: scrollable ? 'fit-content' : 'unset'}}>
+        <div className={joinClasses(DashboardModalStyles.modalBackdrop, scrollable && DashboardModalStyles.scrollBackdrop)}>
+            <div className={joinClasses(DashboardModalStyles.modal)} ref={modalRef} style={{height: scrollable ? 'fit-content' : 'unset'}}>
                 <div className={DashboardModalStyles.subContainer}>
                     <h1>{props.title}</h1>
                     <div className={gridClass}>

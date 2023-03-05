@@ -4,7 +4,7 @@ import { DashboardModalStyles } from '../../../styles/elements';
 import { EditableInput } from '../../inputComponents';
 import { timesheetType } from '../../../constants';
 
-const EmployeeAttendanceFilter = (props) => {
+const TimesheetFilter = (props) => {
 
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -86,4 +86,4 @@ const EmployeeAttendanceFilter = (props) => {
     );
 };
 
-export default EmployeeAttendanceFilter;
+export default TimesheetFilter;

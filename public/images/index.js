@@ -4,6 +4,7 @@ import LogoInverted from './logoInverted.svg';
 import LogoWhite from './logoWhite.svg';
 import ProfilePlaceholderSmall from './ProfilePlaceholderSmall.svg';
 import ProfilePlaceholderLarge from './ProfilePlaceholderLarge.svg';
+import ImagePlaceholder from './ImagePlaceholder.svg';
 
 export { 
     Favicon,
@@ -11,7 +12,8 @@ export {
     LogoInverted, 
     LogoWhite, 
     ProfilePlaceholderSmall, 
-    ProfilePlaceholderLarge 
+    ProfilePlaceholderLarge,
+    ImagePlaceholder
 }
 export * from './bg';
 export * from './icons';

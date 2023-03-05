@@ -97,11 +97,25 @@ const Dashboard = (props) => {
                 <div className={DashboardLayout.header}>
                     <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
                     <div className={DashboardLayout.headerRight}>
-                        <SearchBar className={DashboardLayout.searchBar} setValue={console.log} placeholder="Search" disabled />
+                        <SearchBar
+                            className={DashboardLayout.searchBar}
+                            setValue={console.log}
+                            placeholder="Search"
+                            disabled
+                        />
                         <div className={DashboardLayout.helpIcon}>?</div>
-                        <NotificationBell setPageLoading={props.setPageLoading} setNotificationToast={props.setNotificationToast}/>
+                        <NotificationBell
+                            setPageLoading={props.setPageLoading}
+                            setNotificationToast={props.setNotificationToast}
+                            stompMsg={props.stompMsg}
+                        />
                         <h3 className={DashboardLayout.userName}>{userName}</h3>
-                        <ProfileImage className={DashboardLayout.profilePicture} size={"small"} header dropdown />
+                        <ProfileImage
+                            className={DashboardLayout.profilePicture}
+                            size={"small"}
+                            header
+                            dropdown
+                        />
                     </div>
                     <div style={{ width: "fit-content" }} className={DashboardLayout.mobileLogo}>
                         <LinkedImage className={DashboardLayout.logo} src={Logo} heightOrient alt="Logo" link="/dashboard" />
