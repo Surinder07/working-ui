@@ -41,8 +41,8 @@
 }
 
 .numberActiveButton {
-    border: 1px solid #2996C3!important;
-    color: #2996C3!important;
+    border: 1px solid #2996C3 !important;
+    color: #2996C3 !important;
 }
 
 .navigationButton {
@@ -124,14 +124,15 @@
 }
 
 @media only screen and (max-width: 480px) {
- .dropdown {
-     width:140px;
-     height:30px;
-    padding: 0;
-    z-index: 1;
-    white-space: nowrap;
-    top:120px;
-    right: 40%;
- }
+    .dropdown {
+        position: absolute;
+        width: 140px;
+        height: 30px;
+        padding: 0;
+        z-index: 1;
+        white-space: nowrap;
+        top: 130px;
+        left: 15px;
+    }
 
 }

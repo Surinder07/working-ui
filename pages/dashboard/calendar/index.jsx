@@ -47,7 +47,7 @@ const Calender = (props) => {
 
     return (
         <>
-            <WaawNoIndexHead title="Calender" />
+            <WaawNoIndexHead title="Calendar" />
             {
                 props.pageLoading ? <></> :
                     <>
@@ -58,7 +58,7 @@ const Calender = (props) => {
                             setPageLoading={props.setPageLoading}
                         />
                         <div className={DashboardStyles.dashboardTitles}>
-                            <h1>Calender</h1>
+                            <h1>Calendar</h1>
                             {
                                 uploadButton.show &&
                                 <Button type="plain" onClick={() => setShowModal(true)}>

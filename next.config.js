@@ -115,7 +115,8 @@ const apiEndpoints = {
             shift: '/user/ws-server/shift',
             timesheet: '/user/ws-server/timesheet',
             userInvite: '/user/ws-server/user-invite',
-            holidayUpload: '/user/ws-server/holiday-upload'
+            holidayUpload: '/user/ws-server/holiday-upload',
+            updateUserDetail: '/user/ws-server/update-user-detail'
         }
     }
 };

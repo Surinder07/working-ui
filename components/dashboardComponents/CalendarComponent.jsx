@@ -83,8 +83,12 @@ const CalendarComponent = (props) => {
     }
 
     const getHolidays = (date) => {
-        const year = new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })).getUTCFullYear();
-        organizationService.getHolidays(year)
+        // console.log('date', new Date(date))
+        // console.log('with timezone', new Date(date).toLocaleString('default', { timeZone: props.timezone }))
+        // console.log('new date', new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })))
+        // console.log('year', new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })).getUTCFullYear())
+        // const year = new Date(new Date(date).toLocaleString('default', { timeZone: props.timezone })).getUTCFullYear();
+        organizationService.getHolidays(date)
             .then(res => {
                 if (!res.error) {
                     setHolidays(res.map(holiday => {

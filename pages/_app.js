@@ -5,6 +5,7 @@ import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, Stomp
 import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath } from "../helpers";
 import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
+import { PropaneSharp } from "@mui/icons-material";
 
 function MyApp({ Component, pageProps }) {
 
@@ -203,6 +204,7 @@ function MyApp({ Component, pageProps }) {
                                 setNotificationToast={setNotificationToast}
                                 stompMsg={stompMsg}
                                 setStompMsg={setStompMsg}
+                                setUser={setUser}
                             />
                         }
                         {getComponentForPages()}

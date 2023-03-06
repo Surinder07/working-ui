@@ -39,6 +39,7 @@ const ProfileImage = (props) => {
                 style={{ height: `${height}px`, width: `${height}px` }}
             >
                 <LinkedImage
+                    heightOrient
                     style={{ cursor: 'pointer', height: `${height}px` }}
                     src={props.src ? props.src : ProfilePlaceholderSmall}
                     alt={props.user ? (props.user.firstName + ' ' + props.user.lastName) : 'profile'}

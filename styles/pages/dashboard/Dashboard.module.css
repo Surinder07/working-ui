@@ -253,6 +253,10 @@
 }
 
 @media only screen and (max-width: 480px) {
+    .dashboardTitles {
+        position: relative;
+    }
+
     .graph {
         grid-template-columns: 1fr;
         grid-template-rows: 3fr 2fr;

@@ -1,5 +1,6 @@
-import { fetchWrapper } from "../../helpers";
+import { fetchWrapper, secureLocalStorage } from "../../helpers";
 import SockJsClient from 'react-stomp';
+import { userService } from "../../services";
 
 const webSocketEndpoints = process.env.endpoints.webSocket;
 
@@ -14,7 +15,8 @@ const StompSocket = (props) => {
                     webSocketEndpoints.topics.shift,
                     webSocketEndpoints.topics.timesheet,
                     webSocketEndpoints.topics.userInvite,
-                    webSocketEndpoints.topics.holidayUpload
+                    webSocketEndpoints.topics.holidayUpload,
+                    webSocketEndpoints.topics.updateUserDetail
                 ]}
                 onConnect={() => {
                     console.log("Connected to Websocket");
@@ -36,21 +38,30 @@ const StompSocket = (props) => {
                             })
                             break;
                         case webSocketEndpoints.topics.shift:
-
+                            props.setStompMsg({
+                                ...props.stompMsg,
+                                shift: true
+                            })
                             break;
                         case webSocketEndpoints.topics.timesheet:
 
                             break;
                         case webSocketEndpoints.topics.userInvite:
-
+                            props.setStompMsg({
+                                ...props.stompMsg,
+                                invite: true
+                            })
                             break;
                         case webSocketEndpoints.topics.holidayUpload:
-
+                            props.setStompMsg({
+                                ...props.stompMsg,
+                                holiday: true
+                            })
                             break;
+                        case webSocketEndpoints.topics.updateUserDetail:
+                            secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(msg));
+                            props.setUser(msg);
                     }
-                    console.log(msg)
-                    console.log(topic)
-                    // updateNotification(msg);
                 }}
                 options={{ headers: { access_token: props.token } }}
                 debug={false}

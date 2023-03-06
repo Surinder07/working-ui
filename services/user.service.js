@@ -69,6 +69,14 @@ const validatePromoCode = async (promoCode) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validatePromoCode, { promoCode }));
 }
 
+const updateProfileImage = async (file) => {
+    return fetchWrapper.postForm(fetchWrapper.getApiUrl(endpoints.updateProfileImage), { file });
+}
+
+const updateLoggedUserDetails = async (data) => {
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateUser), data);
+}
+
 export const userService = {
     login,
     registerUser,
@@ -82,5 +90,7 @@ export const userService = {
     emailVerification,
     validateInviteKey,
     registerByInvitation,
-    validatePromoCode
+    validatePromoCode,
+    updateProfileImage,
+    updateLoggedUserDetails
 };

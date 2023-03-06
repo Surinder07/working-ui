@@ -42,7 +42,8 @@ const Shifts = (props) => {
 
     useEffect(() => {
         if (props.stompMsg.shift) {
-            setReloadData(true)
+            setReloadData(true);
+            console.log(props.stompMsg)
             props.resetStompMsg('shift')
         }
     }, [props.stompMsg.shift])
@@ -127,7 +128,7 @@ const Shifts = (props) => {
                 setEditId(id);
                 setShowEditModal(true);
             },
-            condition: (status, date) => activeTable === 'emp'
+            condition: (status, date) => activeTable === 'emp' && checkDateForPast(date)
         },
         {
             key: "Delete",

@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import UserPreferenceCard from './UserPreferenceCard';
 import { EditableInput } from '../../inputComponents';
 import Link from 'next/link';
+import { userService } from '../../../services';
+import { combineBoolean, validateForEmptyField } from '../../../helpers';
 
 const Profile = (props) => {
 
@@ -17,6 +19,8 @@ const Profile = (props) => {
     });
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [errorFirstName, setErrorFirstName] = useState({});
+    const [errorLastName, setErrorLastName] = useState({});
 
     useEffect(() => {
         setFirstName(props.data.firstName);
@@ -26,30 +30,65 @@ const Profile = (props) => {
             countryCode: props.data.countryCode,
             country: props.data.country
         });
-    }, [])
+    }, []);
 
-    const handleFileChange = (e) => {
+    const handleUpload = (e) => {
         if (e.target.files.length) {
-            handleUpload(e.target.files[0]);
-            /**
-            * @todo change image in user details
-            */
+            userService.updateProfileImage(e.target.files[0])
+                .then(res => {
+                    if (!res.error) {
+                        props.setToaster({
+                            error: false,
+                            title: "Success",
+                            message: 'Profile picture updated successfully.',
+                        })
+                    }
+                })
+        }
+    };
+
+    const updateProfileDetails = () => {
+        if (!isError()) {
+            props.setLoading(true);
+            userService.updateLoggedUserDetails({ firstName, lastName, ...mobile })
+            .then(res => {
+                if (res.error) {
+                    props.setToaster({
+                        error: true,
+                        title: "Error",
+                        message: res.message,
+                    })
+                } else {
+                    props.setToaster({
+                        error: false,
+                        title: "Success",
+                        message: 'Profile updated successfully.',
+                    })
+                }
+                props.setLoading(false);
+            })
+            .catch(() => props.setLoading(false))
         }
     }
 
-    const handleUpload = async file => {
-        console.log('data received', file);
-        // const formData = new FormData();
-        // formData.append("image", image.raw);
+    const isError = () => {
+        return combineBoolean(
+            validateForEmptyField(firstName, 'First Name', setErrorFirstName, true),
+            validateForEmptyField(lastName, 'Last Name', setErrorLastName, true)
+        )
+    }
 
-        // await fetch("YOUR_URL", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "multipart/form-data"
-        //     },
-        //     body: formData
-        // });
-    };
+    const handleCancel = () => {
+        setFirstName(props.data.firstName);
+        setLastName(props.data.lastName);
+        setMobile({
+            mobile: props.data.mobile,
+            country: props.data.country,
+            countryCode: props.data.countryCode
+        })
+        setErrorFirstName({});
+        setErrorLastName({});
+    }
 
     return (
         <div className={UserPreferenceStyles.profileContainer}>
@@ -67,12 +106,12 @@ const Profile = (props) => {
                                 <CameraAlt />
                                 <p>Choose File</p>
                             </div>
-                            {/* <input
+                            <input
                                 type="file"
                                 id="upload-button"
                                 style={{ display: "none" }}
-                                onChange={handleFileChange}
-                            /> */}
+                                onChange={handleUpload}
+                            />
                         </label>
                     }
                 </div>
@@ -84,6 +123,8 @@ const Profile = (props) => {
                     isEditable={props.data.role === 'ADMIN'}
                     editOn={editPersonalDetails}
                     setEditOn={setEditPersonalDetails}
+                    onSave={updateProfileDetails}
+                    handleCancel={handleCancel}
                 >
                     {
                         props.data.role !== 'ADMIN' &&
@@ -99,6 +140,8 @@ const Profile = (props) => {
                         label='First Name'
                         value={firstName}
                         setValue={setFirstName}
+                        error={errorFirstName}
+                        setError={setErrorFirstName}
                         initialValue={props.data.firstName}
                         editOn={editPersonalDetails}
                         required
@@ -108,6 +151,8 @@ const Profile = (props) => {
                         label='Last Name'
                         value={lastName}
                         setValue={setLastName}
+                        error={errorLastName}
+                        setError={setErrorLastName}
                         initialValue={props.data.lastName}
                         editOn={editPersonalDetails}
                         required

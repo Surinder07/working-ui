@@ -42,6 +42,21 @@ const Organization = (props) => {
         setAllowUserToClockInTime(props.data.organizationPreferences.allowUserToClockInTime);
     }
 
+    const handleUpload = (e) => {
+        if (e.target.files.length) {
+            organizationService.uploadLogo(e.target.files[0])
+                .then(res => {
+                    if (!res.error) {
+                        props.setToaster({
+                            error: false,
+                            title: "Success",
+                            message: 'Organization logo updated successfully.',
+                        })
+                    }
+                })
+        }
+    };
+
     const saveData = () => {
         props.setLoading(true);
         organizationService.updatePreferences({
@@ -85,7 +100,10 @@ const Organization = (props) => {
             <div className={UserPreferenceStyles.picContainer}>
                 <div
                     className={UserPreferenceStyles.pic}
-                    style={{ backgroundImage: `url(${props.img ? props.img : ImagePlaceholder.src})` }}
+                    style={{ 
+                        backgroundImage: `url(${props.data.organizationLogoUrl ? props.data.organizationLogoUrl : ImagePlaceholder.src})`,
+                        backgroundSize: props.data.organizationLogoUrl ? 'contain' : 'cover'
+                    }}
                     onMouseEnter={() => setUploadVisible(true)}
                     onMouseLeave={() => setUploadVisible(false)}
                 >
@@ -96,12 +114,12 @@ const Organization = (props) => {
                                 <CameraAlt />
                                 <p>Choose File</p>
                             </div>
-                            {/* <input
+                            <input
                                 type="file"
                                 id="upload-button"
                                 style={{ display: "none" }}
-                                onChange={handleFileChange}
-                            /> */}
+                                onChange={handleUpload}
+                            />
                         </label>
                     }
                 </div>
