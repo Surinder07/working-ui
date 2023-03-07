@@ -30,4 +30,3 @@ export {
 
 export * from "./base";
 export * from "./filterModals";
-export * from "./mobileModals";
