@@ -1,12 +1,10 @@
 .container {
-	position: relative;
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 	background: #FFFFFF;
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: -154px;
+	left: -16px;
 	min-height: 100vh;
 	min-width: 100vw;
 	z-index: 100;

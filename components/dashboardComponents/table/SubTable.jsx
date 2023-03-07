@@ -3,11 +3,13 @@ import {useEffect, useRef, useState} from "react";
 import {TableStyles} from "../../../styles/elements";
 import Options from "../Options";
 import Cell from "./Cell";
+import MobileModal from "./MobileTable";
 
 const SubTable = (props) => {
     const [displayHeaders, setDisplayHeaders] = useState([]);
     const [dataKeyList, setDataKeyList] = useState([]);
     const [colNum, setColNum] = useState(0);
+    const [showModal, setShowModal] = useState(0);
 
     const ref = useRef();
 
@@ -73,36 +75,40 @@ const SubTable = (props) => {
             {props.data &&
                 props.data.length > 0 &&
                 displayHeaders.map((subHead, j) => {
-                    props.tableWidth > 1000 && (
-                        <div
-                            key={`head_${j}`}
-                            className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
+                    if (props.tableWidth > 1000) {
+                        return (
+                            <div
+                                key={`head_${j}`}
+                                className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
                             ${TableStyles.subHeaderCell}`}
-                            style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                        >
-                            {subHead}
-                        </div>
-                    );
-                    props.tableWidth <= 1000 && props.tableWidth > 480 && j <= 3 && (
-                        <div
-                            key={`head_${j}`}
-                            className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
+                                style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                            >
+                                {subHead}
+                            </div>
+                        );
+                    } else if (props.tableWidth <= 1000 && props.tableWidth > 480 && j <= 3) {
+                        return (
+                            <div
+                                key={`head_${j}`}
+                                className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
                             ${TableStyles.subHeaderCell}`}
-                            style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                        >
-                            {subHead}
-                        </div>
-                    );
-                    props.tableWidth <= 480 && j <= 1 && (
-                        <div
-                            key={`head_${j}`}
-                            className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
+                                style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                            >
+                                {subHead}
+                            </div>
+                        );
+                    } else if (props.tableWidth <= 480 && j <= 1) {
+                        return (
+                            <div
+                                key={`head_${j}`}
+                                className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
                             ${TableStyles.subHeaderCell}`}
-                            style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                        >
-                            {subHead}
-                        </div>
-                    );
+                                style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                            >
+                                {subHead}
+                            </div>
+                        );
+                    }
                 })}
             {(props.tableWidth <= 1000 || props.actions) && <div className={TableStyles.subHeaderCell}>Actions</div>}
             {props.data &&
@@ -110,36 +116,45 @@ const SubTable = (props) => {
                 props.data.map((subData, j) => (
                     <>
                         {dataKeyList.map((subKey, k) => {
-                            props.tableWidth > 1000 && (
-                                <Cell
-                                    key={`cell_${j}_${k}`}
-                                    className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
-                                    data={subData[subKey]}
-                                    style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                                    rowNum={j}
-                                />
-                            );
-                            props.tableWidth <= 1000 && props.tableWidth > 480 && k <= 3 && (
-                                <Cell
-                                    key={`cell_${j}_${k}`}
-                                    className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
-                                    data={subData[subKey]}
-                                    style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                                    rowNum={j}
-                                />
-                            );
-                            props.tableWidth <= 480 && k <= 1 && (
-                                <Cell
-                                    key={`cell_${j}_${k}`}
-                                    className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
-                                    data={subData[subKey]}
-                                    style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
-                                    rowNum={j}
-                                />
-                            );
+                            if (props.tableWidth > 1000) {
+                                return (
+                                    <Cell
+                                        key={`cell_${j}_${k}`}
+                                        className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
+                                        data={subData[subKey]}
+                                        style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                                        rowNum={j}
+                                    />
+                                );
+                            } else if (props.tableWidth <= 1000 && props.tableWidth > 480 && k <= 3) {
+                                return (
+                                    <Cell
+                                        key={`cell_${j}_${k}`}
+                                        className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
+                                        data={subData[subKey]}
+                                        style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                                        rowNum={j}
+                                    />
+                                );
+                            } else if (props.tableWidth <= 480 && k <= 1) {
+                                return (
+                                    <Cell
+                                        key={`cell_${j}_${k}`}
+                                        className={`${displayHeaders.length === 1 && TableStyles.subBodyCellLeft} ${TableStyles.subBodyCell}`}
+                                        data={subData[subKey]}
+                                        style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
+                                        rowNum={j}
+                                    />
+                                );
+                            }
                         })}
                         {props.tableWidth <= 1000 ? (
-                            <CropFree className={TableStyles.expandIcons} />
+                            <CropFree
+                                className={TableStyles.expandIcons}
+                                onClick={() => {
+                                    setShowModal(j + 1);
+                                }}
+                            />
                         ) : (
                             props.actions && (
                                 <div className={TableStyles.subBodyCell} key={`action_${j}`}>
@@ -147,6 +162,7 @@ const SubTable = (props) => {
                                 </div>
                             )
                         )}
+                        {<MobileModal title={props.title} showModal={showModal === j + 1} setShowModal={setShowModal} data={subData} />}
                     </>
                 ))}
             {props.history &&

@@ -309,7 +309,6 @@ const Shifts = (props) => {
                             />
                         </DashboardCard>
                     )}
-                    {showShiftModal && <ShiftModal />}
                 </>
             )}
         </>

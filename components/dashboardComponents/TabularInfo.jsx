@@ -115,6 +115,7 @@ const TabularInfo = (props) => {
                     ) : (
                         <>
                             <Table
+                                title={props.title}
                                 tableWidth={tableWidth}
                                 data={props.data}
                                 actions={props.actions}

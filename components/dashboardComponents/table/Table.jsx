@@ -4,12 +4,14 @@ import Cell from "./Cell";
 import {Edit, Delete, AddCircleOutline, RemoveCircleOutline, FileDownload, CropFree} from "@mui/icons-material";
 import Options from "../Options";
 import SubTable from "./SubTable";
+import MobileModal from "./MobileTable";
 
 const Table = (props, ref) => {
     const [displayHeaders, setDisplayHeaders] = useState([]);
     const [dataKeyList, setDataKeyList] = useState([]);
     const [colNum, setColNum] = useState(0);
     const [expanded, setExpanded] = useState(0);
+    const [showModal, setShowModal] = useState(0);
 
     useEffect(() => {
         if (props.data.length > 0) {
@@ -136,7 +138,12 @@ const Table = (props, ref) => {
                             }
                         })}
                         {props.tableWidth <= 1000 ? (
-                            <CropFree className={TableStyles.expandIcons} />
+                            <CropFree
+                                className={TableStyles.expandIcons}
+                                onClick={() => {
+                                    setShowModal(i + 1);
+                                }}
+                            />
                         ) : (
                             props.actions && (
                                 <div
@@ -164,6 +171,7 @@ const Table = (props, ref) => {
                                 setSubTableHeight={props.setSubTableHeight}
                             />
                         )}
+                        {<MobileModal title={props.title} showModal={showModal === i + 1} setShowModal={setShowModal} data={row} />}
                     </>
                 ))}
         </div>
