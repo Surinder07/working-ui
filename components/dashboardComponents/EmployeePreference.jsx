@@ -5,8 +5,7 @@ import { TableStyles } from "../../styles/elements";
 import { EditableInput } from "../inputComponents";
 import { currencies } from "../../constants";
 import { memberService } from "../../services";
-import { fetchAndHandle, updatePreferenceRequestBody } from "../../helpers";
-import { isAssetError } from "next/dist/client/route-loader";
+import { fetchAndHandle, joinClasses, updatePreferenceRequestBody } from "../../helpers";
 
 const EmployeePreference = (props) => {
 
@@ -14,11 +13,12 @@ const EmployeePreference = (props) => {
     const [initialPreferences, setInitialPreferences] = useState({});
     const [preferences, setPreferences] = useState({});
     const [loading, setLoading] = useState(false);
+    const [rowError, setRowError] = useState([]);
 
     const getDayObject = (day, startTime, endTime) => {
         return {
             days: day,
-            working: startTime !== null,
+            working: startTime !== null && endTime !== null,
             startTime: {
                 hours: startTime ? startTime.split(':')[0] : '-',
                 minutes: startTime ? startTime.split(':')[1] : '-'
@@ -30,23 +30,33 @@ const EmployeePreference = (props) => {
         }
     }
 
-    const getCellData = (child, i, j) => {
+    const getCellData = (child, i, j, error) => {
         return (
-            <div className={TableStyles.bodyCell} key={`cell_${i}_${j}`}>
+            <div className={joinClasses(TableStyles.bodyCell, error && TableStyles.bodyCellError)} key={`cell_${i}_${j}`}>
                 {child}
             </div>
         )
     }
 
     const updatePreference = (value, type, index) => {
+        const indexToRemove = rowError.indexOf(index);
+        rowError.splice(indexToRemove, 1);
         const newObj = preferences.rowsData.map((preference, i) => {
             if (i === index) {
                 switch (type) {
                     case 'working':
                         return { ...preference, working: value }
                     case 'startTime':
+                        if (value.hours !== '-' && value.minutes !== '-' &&
+                            preference.endTime.hours !== '-' && preference.endTime.minutes !== '-') {
+                            return { ...preference, startTime: value, working: true }
+                        }
                         return { ...preference, startTime: value }
                     case 'endTime':
+                        if (preference.startTime.hours !== '-' && preference.startTime.minutes !== '-' &&
+                            value.hours !== '-' && value.minutes !== '-') {
+                            return { ...preference, endTime: value, working: true }
+                        }
                         return { ...preference, endTime: value }
                 }
             } else {
@@ -56,22 +66,42 @@ const EmployeePreference = (props) => {
         setPreferences({ ...preferences, rowsData: newObj })
     }
 
+    useEffect(() => {
+        console.log(preferences)
+    }, [preferences])
+
     const onCancel = () => {
         setPreferences(initialPreferences);
+        setRowError([])
     }
 
     const isError = () => {
         let error = false;
-        preferences.rowsData.map(row => {
-            if (row.working && (row.startTime.hours === '-' || row.startTime.minutes === '-' ||
-                row.endTime.hours === '-' || row.endTime.minutes === '-')) error = true;
+        let errors = [];
+        preferences.rowsData.map((row, i) => {
+            if ((row.working && (row.startTime.hours === '-' || row.startTime.minutes === '-' ||
+                row.endTime.hours === '-' || row.endTime.minutes === '-')) || (!row.working && (
+                    row.startTime.hours !== '-' || row.startTime.minutes !== '-' ||
+                    row.endTime.hours !== '-' || row.endTime.minutes !== '-'))) {
+                error = true;
+                errors.push(i)
+            }
         })
+        setRowError(errors);
         if (error) props.setToasterInfo({
             error: true,
             title: "Error!",
             message: "Please select a time for all working days",
         })
-        return error;
+        if (error) return error;
+        error = (!preferences.wagesPerHour && preferences.wagesCurrency) ||
+            (preferences.wagesPerHour && !preferences.wagesCurrency)
+        if (error) props.setToasterInfo({
+            error: true,
+            title: "Error!",
+            message: "Please provide both wages amount and currency",
+        })
+        return error
     }
 
     const onSave = () => {
@@ -87,6 +117,22 @@ const EmployeePreference = (props) => {
         }
     }
 
+    const applyToAll = (data) => {
+        const rowsData = [
+            { days: 'Sunday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Monday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Tuesday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Wednesday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Thursday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Friday', startTime: data.startTime, endTime: data.endTime, working: data.working },
+            { days: 'Saturday', startTime: data.startTime, endTime: data.endTime, working: data.working }
+        ]
+        setPreferences({
+            ...preferences,
+            rowsData
+        })
+    }
+
     useEffect(() => {
         if (props.data) {
             const preferenceObj = {
@@ -97,7 +143,7 @@ const EmployeePreference = (props) => {
                     getDayObject('Wednesday', props.data.wednesdayStartTime, props.data.wednesdayEndTime),
                     getDayObject('Thursday', props.data.thursdayStartTime, props.data.thursdayEndTime),
                     getDayObject('Friday', props.data.fridayStartTime, props.data.fridayEndTime),
-                    getDayObject('Saturday', props.data.saturdayStartTime, props.data.saturdayEndTime),
+                    getDayObject('Saturday', props.data.saturdayStartTime, props.data.saturdayEndTime)
                 ],
                 wagesPerHour: props.data.wagesPerHour,
                 wagesCurrency: props.data.wagesCurrency
@@ -123,22 +169,23 @@ const EmployeePreference = (props) => {
                 {
                     preferences.rowsData ?
                         <>
-                            <div className={TableStyles.table} style={{ gridTemplateColumns: `repeat(4, auto)` }}>
+                            <div className={TableStyles.table} style={{ gridTemplateColumns: `repeat(${editOn ? '5' : '4'}, auto)` }}>
                                 <div className={TableStyles.headerCell}>Days</div>
                                 <div className={TableStyles.headerCell}>Working</div>
                                 <div className={TableStyles.headerCell}>Start Time</div>
                                 <div className={TableStyles.headerCell}>End Time</div>
+                                {editOn && <div className={TableStyles.headerCell}>Actions</div>}
                                 {
                                     preferences.rowsData.map((row, i) => (
                                         <>
-                                            {getCellData(row['days'], i, 1)}
+                                            {getCellData(row['days'], i, 1, rowError.includes(i))}
                                             {
                                                 getCellData(
                                                     <EditableInput type='toggle' editOn={editOn}
                                                         value={row['working']}
                                                         initialValue={initialPreferences.rowsData[i]['working']}
                                                         setValue={(value) => updatePreference(value, 'working', i)}
-                                                    />, i, 2
+                                                    />, i, 2, rowError.includes(i)
                                                 )
                                             }
                                             {
@@ -150,7 +197,7 @@ const EmployeePreference = (props) => {
                                                         initialValue={initialPreferences.rowsData[i]['startTime']}
                                                         openUp={i === 6 || i === 5}
                                                         setValue={(value) => updatePreference(value, 'startTime', i)}
-                                                    />, i, 3
+                                                    />, i, 3, rowError.includes(i)
                                                 )
                                             }
                                             {
@@ -162,7 +209,17 @@ const EmployeePreference = (props) => {
                                                         initialValue={initialPreferences.rowsData[i]['endTime']}
                                                         openUp={i === 6 || i === 5}
                                                         setValue={(value) => updatePreference(value, 'endTime', i)}
-                                                    />, i, 4
+                                                    />, i, 4, rowError.includes(i)
+                                                )
+                                            }
+                                            {
+                                                editOn &&
+                                                getCellData(
+                                                    <p
+                                                        className={TableStyles.applyText}
+                                                        onClick={() => applyToAll(row)}
+                                                    >Apply to all</p>,
+                                                    i, 5, rowError.includes(i)
                                                 )
                                             }
                                         </>

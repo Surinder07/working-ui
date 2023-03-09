@@ -1,11 +1,29 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Button, NewShiftModal, ShiftsFilter, ShiftModal, DeleteModal, PaginationDropdown } from "../../../components";
-import { checkDateForPast, fetchAndHandle, fetchAndHandlePage, getShiftsListing, getSingleShiftsListing, joinClasses, secureLocalStorage } from "../../../helpers";
+import {
+    WaawNoIndexHead,
+    DashboardCard,
+    TabularInfo,
+    Button,
+    NewShiftModal,
+    ShiftsFilter,
+    ShiftModal,
+    DeleteModal,
+    PaginationDropdown,
+    EditShiftTimesheetModal
+} from "../../../components";
+import {
+    checkDateForPast,
+    fetchAndHandle,
+    fetchAndHandlePage,
+    getShiftsListing,
+    getSingleShiftsListing,
+    joinClasses
+} from "../../../helpers";
 import { shiftsService } from "../../../services";
-import EditShiftTimesheetModal from "../../../components/modals/EditShiftTimesheetModal";
 
 const Shifts = (props) => {
+    
     useEffect(() => {
         props.setPageInfo({
             authenticationRequired: true,

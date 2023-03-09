@@ -10,6 +10,7 @@ import EditRequestsModal from "./EditRequestModal";
 import CreateRequestModal from "./CreateRequestModal";
 import DeleteModal from "./DeleteModal";
 import EditShiftTimesheetModal from './EditShiftTimesheetModal';
+import SuccessEmailModal from './SuccessEmailModal';
 
 export {
     NewRoleModal,
@@ -23,6 +24,8 @@ export {
     EditRequestsModal,
     CreateRequestModal,
     DeleteModal,
+    EditShiftTimesheetModal,
+    SuccessEmailModal
 };
 
 export * from "./base";

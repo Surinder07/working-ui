@@ -14,7 +14,7 @@ const apiEndpoints = {
         validatePromoCode: '/v1/registration/user/validatePromoCode',
         updateProfileImage: '/v1/user/updateProfileImage',
         updateUser: '/v1/user/update',
-        updateEmailInit: '/v1/unAuth/user/email/update',
+        updateEmailInit: '/v1/user/email/update',
         updateEmailFinish: '/v1/unAuth/user/email/verify'
     },
     member: {
@@ -132,7 +132,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.1.3",
+        version: "1.1.4",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

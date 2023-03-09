@@ -197,6 +197,9 @@ const Dashboard = (props) => {
                     setToasterInfo={props.setToasterInfo}
                     role={props.user.role}
                     setPageLoading={props.setPageLoading}
+                    clockIn={props.clockIn}
+                    clockOut={props.clockOut}
+                    timer={props.timer}
                 />
             }
         </div>

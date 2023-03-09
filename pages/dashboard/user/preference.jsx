@@ -29,7 +29,7 @@ const UserPreference = (props) => {
         if (props.user) {
             setShownContent(getProfileElement(active, props.user, props.setUser, props.setPageLoading, props.setToasterInfo))
         }
-    }, [active])
+    }, [active, props.user])
 
     return (
         <>

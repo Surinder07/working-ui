@@ -77,6 +77,14 @@ const updateLoggedUserDetails = async (data) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateUser), data);
 }
 
+const initEmailUpdate = async (email) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.updateEmailInit, {email}))
+}
+
+const finishEmailUpdate = async (token) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.updateEmailFinish, {token}))
+}
+
 export const userService = {
     login,
     registerUser,
@@ -92,5 +100,7 @@ export const userService = {
     registerByInvitation,
     validatePromoCode,
     updateProfileImage,
-    updateLoggedUserDetails
+    updateLoggedUserDetails,
+    initEmailUpdate,
+    finishEmailUpdate
 };

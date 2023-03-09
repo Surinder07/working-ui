@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
 import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, StompSocket } from "../components";
-import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath } from "../helpers";
+import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath, checkActiveTimer, startTimer, stopTimer, refreshTimer } from "../helpers";
 import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
-import { PropaneSharp } from "@mui/icons-material";
 
 function MyApp({ Component, pageProps }) {
 
@@ -38,11 +37,59 @@ function MyApp({ Component, pageProps }) {
         holiday: false,
         invite: false,
         timesheet: {
-            allow: false,
+            timerActive: false,
             allowAfterMinutes: 0
         },
         notification: {}
     })
+    const [timer, setTimer] = useState({
+        start: "--:--",
+        startDate: new Date(),
+        duration: "00:00:00",
+        timeToday: 0,
+        todayDuration: "00:00:00",
+        playing: false,
+        disabled: true
+    });
+
+    const clockIn = (setReloadData) => {
+        startTimer(setPageLoading, setToasterInfo, user.timezone, setReloadData, setTimer, timer);
+    }
+
+    const clockOut = (setReloadData) => {
+        stopTimer(setPageLoading, setToasterInfo, setReloadData, setTimer, timer);
+    }
+
+    useEffect(() => {
+        if (pageInfo.authenticationRequired && user.role !== 'ADMIN') {
+            checkActiveTimer(setPageLoading, setToasterInfo, setTimer, timer, stompMsg, setStompMsg)
+        }
+    }, [pageInfo.authenticationRequired])
+
+    useEffect(() => {
+        if (stompMsg.timesheet.timerActive && !timer.playing) {
+            const timerFunction = setTimeout(() => {
+                debugger
+                let data = timer;
+                data = {
+                    ...data,
+                    start: "--:--",
+                    startDate: new Date(),
+                    duration: "00:00:00",
+                    disabled: false
+                }
+                setTimer(data)
+                setStompMsg({
+                    ...stompMsg,
+                    timesheet: {
+                        timerActive: false,
+                        allowAfterMinutes: 0
+                    }
+                })
+            }, stompMsg.timesheet.allowAfterMinutes * 60000);
+            return () => clearTimeout(timerFunction);
+        }
+    }, [stompMsg.timesheet.timerActive])
 
     useEffect(() => {
         if (pageInfo.authenticationRequired && !allowedRoles.includes(user.role)) {
@@ -124,6 +171,15 @@ function MyApp({ Component, pageProps }) {
         }
     }, []);
 
+    useEffect(() => {
+        if (timer.playing) {
+            const timerId = setInterval(() => refreshTimer(timer, setTimer), 1000);
+            return function cleanup() {
+                clearInterval(timerId);
+            };
+        }
+    }, [timer.playing]);
+
     const updateScreenTypeProp = () => {
         if (window.innerWidth < 640) {
             setScreenType(3);
@@ -157,6 +213,9 @@ function MyApp({ Component, pageProps }) {
                     } : false;
                     setStompMsg(temp);
                 }}
+                clockIn={clockIn}
+                clockOut={clockOut}
+                timer={timer}
             />
         );
     };
@@ -196,6 +255,9 @@ function MyApp({ Component, pageProps }) {
                         setToasterInfo={setToasterInfo}
                         setPageLoading={setPageLoading}
                         stompMsg={stompMsg.notification}
+                        clockIn={clockIn}
+                        clockOut={clockOut}
+                        timer={timer}
                     >
                         {
                             token &&

@@ -32,6 +32,7 @@ const Employees = (props) => {
     const [initialMobile, setInitialMobile] = useState({ countryCode: "", mobile: "", country: "" });
     const [firstName, setFirstName] = useState("");
     const [initialFirstName, setInitialFirstName] = useState("");
+    const [image, setImage] = useState();
     const [lastName, setLastName] = useState("");
     const [initialLastName, setInitialLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -214,6 +215,7 @@ const Employees = (props) => {
         setEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
         setInitialEmployeeType(data.fullTime ? 'Full Time' : 'Part Time');
         setEmployeePreferenceData(data.employeePreferences);
+        setImage(data.imageUrl)
     }
 
     const handleWrongId = (message) => {
@@ -336,7 +338,7 @@ const Employees = (props) => {
                             onSave={updateUserData}
                         >
                             <div className={DashboardStyles.personalContainer}>
-                                <ProfileImage size="big" />
+                                <ProfileImage size="big" src={image}/>
                                 <div className={DashboardStyles.personalContent}>
                                     <EditableInput
                                         label="First Name"

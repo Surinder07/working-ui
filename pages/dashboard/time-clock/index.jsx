@@ -15,11 +15,6 @@ const timeClock = (props) => {
     const [totalEntries, setTotalEntries] = useState(0);
     const [filters, setFilters] = useState({});
     const [showFilterModal, setShowFilterModal] = useState(false);
-    const [start, setStart] = useState("--:--");
-    const [startDate, setStartDate] = useState(new Date());
-    const [duration, setDuration] = useState("00:00:00");
-    const [playing, setPlaying] = useState(false);
-    const [disableTimer, setDisableTimer] = useState(true);
 
     useEffect(() => {
         props.setPageInfo({
@@ -29,106 +24,7 @@ const timeClock = (props) => {
             activeSubMenu: "none",
         });
         props.setAllowedRoles(["MANAGER", "EMPLOYEE"]);
-        checkActiveTimer();
     }, []);
-
-    const startTimer = () => {
-        props.setPageLoading(true)
-        timesheetService.startTimer()
-            .then(res => {
-                if (res.error) {
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: res.message,
-                    })
-                } else {
-                    const now = new Date();
-                    const timeString = now.toLocaleTimeString();
-                    const timeArray = timeString.split(' ')[0].split(':');
-                    setStart(`${timeArray[0]}:${timeArray[1]}`)
-                    setStartDate(now);
-                    setPlaying(true);
-                    setReloadData(true);
-                }
-                props.setPageLoading(false)
-            })
-    }
-
-    const stopTimer = () => {
-        props.setPageLoading(true)
-        timesheetService.stopTimer()
-            .then(res => {
-                if (res.error) {
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: res.message,
-                    })
-                } else {
-                    setPlaying(false);
-                    setDisableTimer(true);
-                    setReloadData(true);
-                }
-                props.setPageLoading(false)
-            });
-    }
-
-    const checkActiveTimer = () => {
-        props.setPageLoading(true);
-        timesheetService.getActiveTimer()
-            .then(res => {
-                if (res.error) {
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: res.message,
-                    })
-                }
-                else {
-                    if (!res) {
-                        setPlaying(false);
-                        setDisableTimer(false);
-                    } else {
-                        setStart(res.startTime)
-                        const date = new Date(Date.parse(res.startTimestamp));
-                        setStartDate(date);
-                        if (res.endDate == null) {
-                            setPlaying(true);
-                            setDisableTimer(false);
-                        } else {
-                            var newDate = new Date(new Date(Date.parse(res.endTimestamp)) - date);
-                            var hour = newDate.getUTCHours().toString().padStart(2, '0');
-                            var min = newDate.getUTCMinutes().toString().padStart(2, '0');
-                            var sec = newDate.getUTCSeconds().toString().padStart(2, '0');
-                            setDuration(`${hour}:${min}:${sec}`);
-                            setDisableTimer(true);
-                        }
-                    }
-                }
-                props.setPageLoading(false);
-            }).catch(() => {
-                props.setPageLoading(false)
-            })
-    }
-
-    const refreshTimer = () => {
-        var d = new Date();
-        var date = new Date(d - startDate);
-        var hour = date.getUTCHours().toString().padStart(2, '0');
-        var min = date.getUTCMinutes().toString().padStart(2, '0');
-        var sec = date.getUTCSeconds().toString().padStart(2, '0');
-        setDuration(`${hour}:${min}:${sec}`);
-    }
-
-    useEffect(() => {
-        if (playing) {
-            const timerId = setInterval(refreshTimer, 1000);
-            return function cleanup() {
-                clearInterval(timerId);
-            };
-        }
-    }, [playing]);
 
     useEffect(() => {
         fetchData();
@@ -161,24 +57,36 @@ const timeClock = (props) => {
                                 <div className={DashboardStyles.timerContainer}>
                                     <div style={{ paddingRight: '40px' }} className={DashboardStyles.subTimerContainer}>
                                         <h2>Start</h2>
-                                        <h3>{start}</h3>
+                                        <h3>{props.timer.start}</h3>
+                                    </div>
+                                    <div style={{ padding: '0 40px' }} className={DashboardStyles.subTimerContainer}>
+                                        <h2>Duration</h2>
+                                        <h3>{props.timer.duration}</h3>
                                     </div>
                                     <div style={{ paddingLeft: '40px' }}>
-                                        <h2>Duration</h2>
-                                        <h3>{duration}</h3>
+                                        <h2>Total time today</h2>
+                                        <h3>{props.timer.todayDuration}</h3>
                                     </div>
                                 </div>
                                 <div className={DashboardStyles.clockButtons}>
-                                    <Button type='dashboard' onClick={startTimer} disabled={playing || disableTimer}>Clock In</Button>
+                                    <Button
+                                        type='dashboard'
+                                        onClick={() => props.clockIn(setReloadData)}
+                                        disabled={props.timer.playing || props.timer.disabled}
+                                    >Clock In</Button>
                                     <div style={{ width: '30px' }}></div>
-                                    <Button type='dashboard' onClick={stopTimer} disabled={!playing || disableTimer}>Clock Out</Button>
+                                    <Button
+                                        type='dashboard'
+                                        onClick={() => props.clockOut(setReloadData)}
+                                        disabled={!props.timer.playing || props.timer.disabled}
+                                    >Clock Out</Button>
                                 </div>
                                 <p className={DashboardStyles.warnMessage}>
                                     <Warning className={DashboardStyles.warnIcon} />
-                                    Please Note you can only start timer once a day. Do not stop timer until shift is finished.
+                                    Please Note you can only start timer when a shift is assigned to you.
                                 </p>
                             </div>
-                            <Clock timezone = {props.user.timezone} />
+                            <Clock timezone={props.user.timezone} />
                         </DashboardCard>
                         <TimesheetFilter
                             showModal={showFilterModal}

@@ -14,6 +14,10 @@
     padding-left: 60px;
 }
 
+.bodyCell div {
+    align-self: unset;
+}
+
 .headerCell,
 .subHeaderCell,
 .bodyCell,
@@ -57,6 +61,12 @@
     word-wrap: break-word;
     word-break: keep-all;
     text-align: center;
+}
+
+.bodyCellError {
+    background: repeating-linear-gradient(to bottom,
+            transparent 0, transparent 49px,
+            #b61111 49px, #b61111 50px);
 }
 
 .subBodyCellLeft {
@@ -108,4 +118,15 @@
     grid-template-columns: 1fr 1fr;
     column-gap: 40px;
     margin-bottom: 15px;
+}
+
+.applyText {
+    font-size: 12px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.applyText:hover {
+    color: #2996C3;
+    text-decoration: underline;
 }

@@ -44,7 +44,13 @@ const StompSocket = (props) => {
                             })
                             break;
                         case webSocketEndpoints.topics.timesheet:
-
+                            props.setStompMsg({
+                                ...props.stompMsg,
+                                timesheet: {
+                                    timerActive: true,
+                                    allowAfterMinutes: msg
+                                }
+                            })
                             break;
                         case webSocketEndpoints.topics.userInvite:
                             props.setStompMsg({
