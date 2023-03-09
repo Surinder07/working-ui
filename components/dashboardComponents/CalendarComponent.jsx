@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { add, eachDayOfInterval, startOfWeek, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, isEqual, isToday, parse, parseISO, startOfToday, getMonth, getYear } from "date-fns";
-import { ArrowLeft, ArrowRight, PropaneSharp } from "@mui/icons-material";
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import { CalendarStyles } from "../../styles/elements";
 import { DaysOfWeekShort } from "../../constants";
 import DashboardCard from "./DashboardCard";
@@ -15,7 +15,7 @@ const CalendarComponent = (props) => {
     const [selectedEvents, setSelectedEvents] = useState();
     // ------------------------------
 
-    const today = startOfToday();
+    const today = new Date(startOfToday().toLocaleString('en', { timeZone: props.timezone }));
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
     const [currentYear, setCurrentYear] = useState();
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
@@ -96,6 +96,13 @@ const CalendarComponent = (props) => {
                     }));
                 }
             })
+    }
+
+    const isTodayDate = (date) => {
+        const todaysDate = new Date(new Date().toLocaleString('en', { timeZone: props.timezone }));
+        if (date.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+            return true;
+        }
     }
 
     useEffect(() => {
@@ -219,9 +226,9 @@ const CalendarComponent = (props) => {
                                         dateTime={format(day.date, "yyyy-MM-dd")}
                                         className={joinClasses(
                                             CalendarStyles.dateValue,
-                                            isToday(day.date) && CalendarStyles.todayDate,
-                                            !isToday(day.date) && isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notTodayDate,
-                                            !isToday(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notActiveMonth
+                                            isTodayDate(day.date) && CalendarStyles.todayDate,
+                                            !isTodayDate(day.date) && isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notTodayDate,
+                                            !isTodayDate(day.date) && !isSameMonth(day.date, firstDayCurrentMonth) && CalendarStyles.notActiveMonth
                                         )}
                                     >
                                         {format(day.date, "d")}
