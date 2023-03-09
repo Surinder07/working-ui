@@ -91,7 +91,7 @@ const CalendarComponent = (props) => {
                             ...holiday,
                             displayDate: new Date(holiday.year, holiday.month - 1, holiday.date, 0, 0, 0)
                                 .toLocaleString('default', { month: 'long', day: '2-digit', timezone: props.timezone }),
-                            date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + holiday.date + 'T00:00:00'
+                            date: holiday.year + '-' + (holiday.month + '').padStart(2, '0') + '-' + (holiday.date + '').padStart(2, '0') + 'T00:00:00'
                         }
                     }));
                 }
