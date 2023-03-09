@@ -15,7 +15,7 @@ const CalendarComponent = (props) => {
     const [selectedEvents, setSelectedEvents] = useState();
     // ------------------------------
 
-    const today = new Date(startOfToday().toLocaleString('en', { timeZone: props.timezone }));
+    const today = new Date(new Date().toLocaleString('en', { timeZone: props.timezone }));
     const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
     const [currentYear, setCurrentYear] = useState();
     const [firstDayCurrentMonth, setFirstDayCurrentMonth] = useState(parse(currentMonth, "MMM-yyyy", new Date()));
