@@ -101,6 +101,8 @@ function MyApp({Component, pageProps}) {
     useEffect(() => {
         checkPageLoading();
         updateScreenTypeProp();
+        window.addEventListener("resize", updateScreenTypeProp);
+        return () => window.removeEventListener("resize", updateScreenTypeProp);
     }, []);
 
     useEffect(() => {

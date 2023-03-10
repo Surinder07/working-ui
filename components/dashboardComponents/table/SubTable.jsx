@@ -28,7 +28,14 @@ const SubTable = (props) => {
             }).filter((item) => item.toLowerCase() !== "internal id");
             setDataKeyList(keyList);
             setDisplayHeaders(headerList);
-            let columnsNum = keyList.length;
+            let columnsNum;
+            if (props.screenType === 1) {
+                columnsNum = keyList.length;
+            } else if (props.screenType === 2) {
+                columnsNum = 5;
+            } else if (props.screenType === 3) {
+                columnsNum = 3;
+            }
             if (props.actions) columnsNum++;
             setColNum(columnsNum);
         }
@@ -75,34 +82,34 @@ const SubTable = (props) => {
             {props.data &&
                 props.data.length > 0 &&
                 displayHeaders.map((subHead, j) => {
-                    if (props.tableWidth > 1000) {
+                    if (props.screenType === 1) {
                         return (
                             <div
                                 key={`head_${j}`}
                                 className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
-                            ${TableStyles.subHeaderCell}`}
+                                ${TableStyles.subHeaderCell}`}
                                 style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
                             >
                                 {subHead}
                             </div>
                         );
-                    } else if (props.tableWidth <= 1000 && props.tableWidth > 480 && j <= 3) {
+                    } else if (props.screenType === 2 && j <= 3) {
                         return (
                             <div
                                 key={`head_${j}`}
                                 className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
-                            ${TableStyles.subHeaderCell}`}
+                                ${TableStyles.subHeaderCell}`}
                                 style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
                             >
                                 {subHead}
                             </div>
                         );
-                    } else if (props.tableWidth <= 480 && j <= 1) {
+                    } else if (props.screenType === 3 && j <= 1) {
                         return (
                             <div
                                 key={`head_${j}`}
                                 className={`${displayHeaders.length === 1 && TableStyles.subHeaderCellLeft}
-                            ${TableStyles.subHeaderCell}`}
+                                ${TableStyles.subHeaderCell}`}
                                 style={displayHeaders.length === 1 ? {paddingLeft: "20px"} : {}}
                             >
                                 {subHead}
@@ -110,13 +117,13 @@ const SubTable = (props) => {
                         );
                     }
                 })}
-            {(props.tableWidth <= 1000 || props.actions) && <div className={TableStyles.subHeaderCell}>Actions</div>}
+            {(props.screenType >= 2 || props.actions) && <div className={TableStyles.subHeaderCell}>Actions</div>}
             {props.data &&
                 props.data.length > 0 &&
                 props.data.map((subData, j) => (
                     <>
                         {dataKeyList.map((subKey, k) => {
-                            if (props.tableWidth > 1000) {
+                            if (props.screenType === 1) {
                                 return (
                                     <Cell
                                         key={`cell_${j}_${k}`}
@@ -126,7 +133,7 @@ const SubTable = (props) => {
                                         rowNum={j}
                                     />
                                 );
-                            } else if (props.tableWidth <= 1000 && props.tableWidth > 480 && k <= 3) {
+                            } else if (props.screenType === 2 && k <= 3) {
                                 return (
                                     <Cell
                                         key={`cell_${j}_${k}`}
@@ -136,7 +143,7 @@ const SubTable = (props) => {
                                         rowNum={j}
                                     />
                                 );
-                            } else if (props.tableWidth <= 480 && k <= 1) {
+                            } else if (props.screenType === 3 && j <= 1) {
                                 return (
                                     <Cell
                                         key={`cell_${j}_${k}`}
@@ -148,7 +155,7 @@ const SubTable = (props) => {
                                 );
                             }
                         })}
-                        {props.tableWidth <= 1000 ? (
+                        {props.screenType >= 2 ? (
                             <CropFree
                                 className={TableStyles.expandIcons}
                                 onClick={() => {
@@ -162,7 +169,18 @@ const SubTable = (props) => {
                                 </div>
                             )
                         )}
-                        {<MobileModal title={props.title} showModal={showModal === j + 1} setShowModal={setShowModal} data={subData} />}
+                        {
+                            <MobileModal
+                                title={props.title}
+                                screenType={props.screenType}
+                                showModal={showModal === j + 1}
+                                colNum={colNum}
+                                actions={props.subActions}
+                                setSubTableHeight={props.setSubTableHeight}
+                                setShowModal={setShowModal}
+                                data={subData}
+                            />
+                        }
                     </>
                 ))}
             {props.history &&

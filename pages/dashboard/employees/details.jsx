@@ -263,6 +263,7 @@ const Employees = (props) => {
                     expanded={expandedMenu === title.toLowerCase()}
                     toggleExpansion={() => handleExpansion(title.toLowerCase())}
                     expandable
+                    screenType={props.screenType}
                     // actions={actions}
                     pagination
                     totalEntries={title === "Attendance" ? totalEntriesAttendance : title === "Requests" ? totalEntriesRequests : totalEntriesShifts}

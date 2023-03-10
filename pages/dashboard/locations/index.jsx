@@ -137,6 +137,7 @@ const Locations = (props) => {
                             pagination
                             actions={actions}
                             totalEntries={totalEntries}
+                            screenType={props.screenType}
                             pageSize={pageSize}
                             totalPages={totalPages}
                             pageNo={pageNo}

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { DashboardCard, DeleteModal, NotificationFilter, PaginationDropdown, TabularInfo, WaawNoIndexHead } from "../../../components";
-import { fetchAndHandle, fetchAndHandlePage, getNotificationListing } from "../../../helpers";
-import { notificationService } from "../../../services";
-import { DashboardStyles } from "../../../styles/pages";
+import {useEffect, useState} from "react";
+import {DashboardCard, DeleteModal, NotificationFilter, PaginationDropdown, TabularInfo, WaawNoIndexHead} from "../../../components";
+import {fetchAndHandle, fetchAndHandlePage, getNotificationListing} from "../../../helpers";
+import {notificationService} from "../../../services";
+import {DashboardStyles} from "../../../styles/pages";
 
 const Notifications = (props) => {
-    const [showFilterModal, setShowFilterModal] = useState(false)
+    const [showFilterModal, setShowFilterModal] = useState(false);
     const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -15,12 +15,12 @@ const Notifications = (props) => {
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState({});
     const [confirmDeleteModal, setConfirmDeleteModal] = useState({
-        id: '',
+        id: "",
         show: false,
-        message: 'This will permanately delete this notification',
-        errorMessage: '',
-        type: 'delete'
-    })
+        message: "This will permanately delete this notification",
+        errorMessage: "",
+        type: "delete",
+    });
 
     useEffect(() => {
         props.setPageInfo({
@@ -29,7 +29,7 @@ const Notifications = (props) => {
             activeMenu: "NOTIFICATIONS",
             activeSubMenu: "none",
         });
-        props.setAllowedRoles(['ADMIN', 'MANAGER', 'EMPLOYEE']);
+        props.setAllowedRoles(["ADMIN", "MANAGER", "EMPLOYEE"]);
     }, []);
 
     useEffect(() => {
@@ -39,102 +39,107 @@ const Notifications = (props) => {
     useEffect(() => {
         if (reloadData) fetchData();
         setReloadData(false);
-    }, [reloadData])
+    }, [reloadData]);
 
     const fetchData = () => {
-        fetchAndHandlePage(() => notificationService.getAll(pageNo, pageSize, filters, sort),
-            setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
-            getNotificationListing, props.user.role);
-    }
+        fetchAndHandlePage(
+            () => notificationService.getAll(pageNo, pageSize, filters, sort),
+            setData,
+            setTotalEntries,
+            setTotalPages,
+            props.setPageLoading,
+            props.setToasterInfo,
+            getNotificationListing,
+            props.user.role
+        );
+    };
 
     const deleteNotification = () => {
-        fetchAndHandle(() => notificationService.delete(confirmDeleteModal.id),
-            "Notification Deleted Successfully", null, setReloadData, props.setPageLoading, null, null,
-            props.setToasterInfo);
-    }
+        fetchAndHandle(() => notificationService.delete(confirmDeleteModal.id), "Notification Deleted Successfully", null, setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
+    };
 
     const actions = {
-        key: 'Delete',
-        action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true })
-    }
+        key: "Delete",
+        action: (id) => setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true}),
+    };
 
     const markAsRead = (id, status) => {
-        if (status === 'Unread') {
-            console.log("reached", status)
-            fetchAndHandle(() => notificationService.markAsRead(id), "", null, null, props.setPageLoading,
-                null, null, null, () => {
+        if (status === "Unread") {
+            console.log("reached", status);
+            fetchAndHandle(
+                () => notificationService.markAsRead(id),
+                "",
+                null,
+                null,
+                props.setPageLoading,
+                null,
+                null,
+                null,
+                () => {
                     let newData = data;
-                    newData = newData.map(item => {
+                    newData = newData.map((item) => {
                         if (item.internalId === id) {
                             return {
-                                ...item, status: {
+                                ...item,
+                                status: {
                                     ...item.status,
-                                    text: 'Read',
-                                    status: 'ok'
-                                }
-                            }
+                                    text: "Read",
+                                    status: "ok",
+                                },
+                            };
                         }
                         return item;
-                    })
+                    });
                     setData(newData);
-                })
+                }
+            );
         }
-    }
+    };
 
     const markAllAsRead = () => {
-        fetchAndHandle(notificationService.markAllAsRead, "All notifications marked as read", null, setReloadData,
-            props.setPageLoading, null, null, props.setToasterInfo, null);
-    }
+        fetchAndHandle(notificationService.markAllAsRead, "All notifications marked as read", null, setReloadData, props.setPageLoading, null, null, props.setToasterInfo, null);
+    };
 
     return (
         <>
-            <WaawNoIndexHead title='Notifications' />
-            {
-                props.pageLoading ? <></> :
-                    <>
-                        <NotificationFilter
-                            showModal={showFilterModal}
-                            setShowModal={setShowFilterModal}
-                            filters={filters}
-                            setFilters={setFilters}
-                        />
-                        <DeleteModal
-                            modal={confirmDeleteModal}
-                            setModal={setConfirmDeleteModal}
-                            onSubmit={deleteNotification}
-                        />
-                        <div className={DashboardStyles.dashboardTitles}>
-                            <h1>Notifications</h1>
-                            <div className={DashboardStyles.rightContainer}>
-                                <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
-                                <p onClick={markAllAsRead}
-                                    style={{ fontSize: '12px', cursor: 'pointer', color: '#2996C3', margin: 0 }}>
-                                    Mark all as Read
-                                </p>
-                            </div>
+            <WaawNoIndexHead title="Notifications" />
+            {props.pageLoading ? (
+                <></>
+            ) : (
+                <>
+                    <NotificationFilter showModal={showFilterModal} setShowModal={setShowFilterModal} filters={filters} setFilters={setFilters} />
+                    <DeleteModal modal={confirmDeleteModal} setModal={setConfirmDeleteModal} onSubmit={deleteNotification} />
+                    <div className={DashboardStyles.dashboardTitles}>
+                        <h1>Notifications</h1>
+                        <div className={DashboardStyles.rightContainer}>
+                            <PaginationDropdown value={pageSize} setValue={setPageSize} rightSpace />
+                            <p onClick={markAllAsRead} style={{fontSize: "12px", cursor: "pointer", color: "#2996C3", margin: 0}}>
+                                Mark all as Read
+                            </p>
                         </div>
-                        <DashboardCard style={{ marginTop: '20px' }}>
-                            <TabularInfo
-                                title='Notifications'
-                                description='Tabular list of all your notifications.'
-                                data={data}
-                                actions={actions}
-                                pagination
-                                onExpand={markAsRead}
-                                totalEntries={totalEntries}
-                                pageSize={pageSize}
-                                totalPages={totalPages}
-                                pageNo={pageNo}
-                                setPageNo={setPageNo}
-                                showFilter
-                                setShowFilterModal={setShowFilterModal}
-                            />
-                        </DashboardCard>
-                    </>
-            }
+                    </div>
+                    <DashboardCard style={{marginTop: "20px"}}>
+                        <TabularInfo
+                            title="Notifications"
+                            description="Tabular list of all your notifications."
+                            data={data}
+                            actions={actions}
+                            pagination
+                            onExpand={markAsRead}
+                            screenType={props.screenType}
+                            totalEntries={totalEntries}
+                            pageSize={pageSize}
+                            totalPages={totalPages}
+                            pageNo={pageNo}
+                            setPageNo={setPageNo}
+                            showFilter
+                            setShowFilterModal={setShowFilterModal}
+                        />
+                    </DashboardCard>
+                </>
+            )}
         </>
-    )
-
-}
+    );
+};
 
 export default Notifications;

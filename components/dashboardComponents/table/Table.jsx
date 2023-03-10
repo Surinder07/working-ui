@@ -22,7 +22,14 @@ const Table = (props, ref) => {
             }).filter((item) => item.toLowerCase() !== "sub data" && item.toLowerCase() !== "internal id" && item.toLowerCase() !== "history");
             setDataKeyList(keyList);
             setDisplayHeaders(headerList);
-            let columnsNum = keyList.length;
+            let columnsNum;
+            if (props.screenType === 1) {
+                columnsNum = keyList.length;
+            } else if (props.screenType === 2) {
+                columnsNum = 4;
+            } else if (props.screenType === 3) {
+                columnsNum = 2;
+            }
             if (props.actions) columnsNum++;
             if (props.data[0].subData || props.data[0].history) {
                 columnsNum++;
@@ -44,19 +51,19 @@ const Table = (props, ref) => {
             {props.data[0] && (props.data[0].subData || props.data[0].history) && <div className={TableStyles.headerCell}></div>}
             {/* An empty header for expand button in the body below */}
             {displayHeaders.map((head, i) => {
-                if (props.tableWidth > 1000) {
+                if (props.screenType === 1) {
                     return (
                         <div className={TableStyles.headerCell} key={`head_${i}`}>
                             {head}
                         </div>
                     );
-                } else if (props.tableWidth > 480 && i <= 3) {
+                } else if (props.screenType === 2 && i <= 3) {
                     return (
                         <div className={TableStyles.headerCell} key={`head_${i}`}>
                             {head}
                         </div>
                     );
-                } else if (props.tableWidth <= 480 && i <= 1) {
+                } else if (props.screenType === 3 && i <= 1) {
                     return (
                         <div className={TableStyles.headerCell} key={`head_${i}`}>
                             {head}
@@ -64,7 +71,7 @@ const Table = (props, ref) => {
                     );
                 }
             })}
-            {(props.tableWidth <= 1000 || props.actions) && <div className={TableStyles.headerCell}>Actions</div>}
+            {(props.screenType >= 2 || props.actions) && <div className={TableStyles.headerCell}>Actions</div>}
 
             {/* body */}
             {dataKeyList.length > 0 &&
@@ -93,7 +100,7 @@ const Table = (props, ref) => {
                             </div>
                         )}
                         {dataKeyList.map((key, j) => {
-                            if (props.tableWidth > 1000) {
+                            if (props.screenType === 1) {
                                 return (
                                     <Cell
                                         className={TableStyles.bodyCell}
@@ -107,7 +114,7 @@ const Table = (props, ref) => {
                                         data={row[key]}
                                     />
                                 );
-                            } else if (props.tableWidth > 480 && j <= 4) {
+                            } else if (props.screenType === 2 && j <= 3) {
                                 return (
                                     <Cell
                                         className={TableStyles.bodyCell}
@@ -121,7 +128,7 @@ const Table = (props, ref) => {
                                         data={row[key]}
                                     />
                                 );
-                            } else if (props.tableWidth <= 480 && j <= 2) {
+                            } else if (props.screenType === 3 && j <= 1) {
                                 return (
                                     <Cell
                                         className={TableStyles.bodyCell}
@@ -137,7 +144,7 @@ const Table = (props, ref) => {
                                 );
                             }
                         })}
-                        {props.tableWidth <= 1000 ? (
+                        {props.screenType >= 2 ? (
                             <CropFree
                                 className={TableStyles.expandIcons}
                                 onClick={() => {
@@ -162,8 +169,8 @@ const Table = (props, ref) => {
                         )}
                         {(row.subData || row.history) && (
                             <SubTable
-                                tableWidth={props.tableWidth}
-                                data={row.subData}
+                                screenType={props.screenType}
+                                data={row["subData"]}
                                 history={row.history}
                                 mainColNum={colNum}
                                 expanded={expanded === i + 1}
@@ -171,7 +178,18 @@ const Table = (props, ref) => {
                                 setSubTableHeight={props.setSubTableHeight}
                             />
                         )}
-                        {<MobileModal title={props.title} showModal={showModal === i + 1} setShowModal={setShowModal} data={row} />}
+                        {
+                            <MobileModal
+                                title={props.title}
+                                screenType={props.screenType}
+                                showModal={showModal === i + 1}
+                                colNum={colNum}
+                                actions={props.subActions}
+                                setSubTableHeight={props.setSubTableHeight}
+                                setShowModal={setShowModal}
+                                data={row}
+                            />
+                        }
                     </>
                 ))}
         </div>

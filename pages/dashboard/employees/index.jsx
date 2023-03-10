@@ -151,6 +151,7 @@ const Employees = (props) => {
                             data={data}
                             actions={actions}
                             pagination
+                            screenType={props.screenType}
                             totalEntries={totalEntries}
                             pageSize={pageSize}
                             totalPages={totalPages}

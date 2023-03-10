@@ -11,7 +11,6 @@ const TabularInfo = (props) => {
     const [tableHeight, setTableHeight] = useState(450);
     const [subTableHeight, setSubTableHeight] = useState(0);
     const [subTableExpanded, setSubTableExpanded] = useState(false);
-    const [tableWidth, setTableWidth] = useState();
 
     const tableRef = useRef();
     const searchRef = useRef();
@@ -20,7 +19,6 @@ const TabularInfo = (props) => {
 
     useEffect(() => {
         if (tableRef.current) {
-            setTableWidth(tableRef.current.clientWidth);
             setInitialTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0));
             setTableHeight(tableRef.current.clientHeight + (props.pagination ? 50 : 0) + (subTableExpanded ? subTableHeight : 0));
         } else if (props.data) {
@@ -116,7 +114,7 @@ const TabularInfo = (props) => {
                         <>
                             <Table
                                 title={props.title}
-                                tableWidth={tableWidth}
+                                screenType={props.screenType}
                                 data={props.data}
                                 actions={props.actions}
                                 subActions={props.subActions}

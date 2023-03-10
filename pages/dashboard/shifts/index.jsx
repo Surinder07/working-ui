@@ -49,6 +49,11 @@ const Shifts = (props) => {
             startDate: "2015-2-10",
             endDate: "2015-2-13",
             status: "active",
+            subData: [
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+            ],
         },
         {
             internalId: 2,
@@ -58,6 +63,11 @@ const Shifts = (props) => {
             startDate: "2015-2-10",
             endDate: "2015-2-13",
             status: "active",
+            subData: [
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+            ],
         },
         {
             internalId: 3,
@@ -67,6 +77,11 @@ const Shifts = (props) => {
             startDate: "2015-2-10",
             endDate: "2015-2-13",
             status: "active",
+            subData: [
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+            ],
         },
         {
             internalId: 4,
@@ -76,6 +91,11 @@ const Shifts = (props) => {
             startDate: "2015-2-10",
             endDate: "2015-2-13",
             status: "active",
+            subData: [
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+            ],
         },
         {
             internalId: 5,
@@ -85,6 +105,11 @@ const Shifts = (props) => {
             startDate: "2015-2-10",
             endDate: "2015-2-13",
             status: "active",
+            subData: [
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+            ],
         },
     ];
 
@@ -169,29 +194,6 @@ const Shifts = (props) => {
         },
     ];
 
-    const subTableActions = [
-        // {
-        //     key: "Edit",
-        //     action: (id) => console.log(`/dashboard/shifts/?id=${id}`),
-        // },
-        {
-            key: "Delete",
-            action: (id) => {
-                setConfirmDeleteModal({
-                    id: id,
-                    show: true,
-                    type: "SINGLE",
-                });
-            },
-            condition: (status, date) => checkDateForPast(date),
-        },
-        {
-            key: "Release",
-            action: (id) => releaseShiftOrBatch("SHIFT", id),
-            condition: (status, date) => status === "ASSIGNED" && checkDateForPast(date),
-        },
-    ];
-
     return (
         <>
             <WaawNoIndexHead title="Shifts" />
@@ -273,7 +275,8 @@ const Shifts = (props) => {
                                 description="Tabular list of all Employee Shifts."
                                 data={infoData}
                                 actions={actions}
-                                subActions={subTableActions}
+                                // subActions={subTableActions}
+                                screenType={props.screenType}
                                 pagination
                                 totalEntries={totalEntries}
                                 pageSize={pageSize}
