@@ -169,6 +169,7 @@ const Table = (props, ref) => {
                         )}
                         {(row.subData || row.history) && (
                             <SubTable
+                                title={props.title}
                                 screenType={props.screenType}
                                 data={row["subData"]}
                                 history={row.history}
@@ -183,7 +184,7 @@ const Table = (props, ref) => {
                                 title={props.title}
                                 screenType={props.screenType}
                                 showModal={showModal === i + 1}
-                                colNum={colNum}
+                                mainColNum={colNum}
                                 actions={props.subActions}
                                 setSubTableHeight={props.setSubTableHeight}
                                 setShowModal={setShowModal}

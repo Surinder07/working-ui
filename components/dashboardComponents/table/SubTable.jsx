@@ -143,7 +143,7 @@ const SubTable = (props) => {
                                         rowNum={j}
                                     />
                                 );
-                            } else if (props.screenType === 3 && j <= 1) {
+                            } else if (props.screenType === 3 && k <= 1) {
                                 return (
                                     <Cell
                                         key={`cell_${j}_${k}`}
@@ -172,11 +172,7 @@ const SubTable = (props) => {
                         {
                             <MobileModal
                                 title={props.title}
-                                screenType={props.screenType}
                                 showModal={showModal === j + 1}
-                                colNum={colNum}
-                                actions={props.subActions}
-                                setSubTableHeight={props.setSubTableHeight}
                                 setShowModal={setShowModal}
                                 data={subData}
                             />

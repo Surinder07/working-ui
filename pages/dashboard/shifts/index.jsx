@@ -46,7 +46,7 @@ const Shifts = (props) => {
             shiftId: 25999,
             shiftName: "xyz",
             shiftValue: "xyz",
-            startDate: "2015-2-10",
+            startDate: "2015-2-9",
             endDate: "2015-2-13",
             status: "active",
             subData: [
@@ -92,7 +92,7 @@ const Shifts = (props) => {
             endDate: "2015-2-13",
             status: "active",
             subData: [
-                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
+                {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xab", startDate: "2015-2-9", endDate: "2015-2-13", status: "active"},
                 {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
                 {internalId: 1, shiftId: 25999, shiftName: "xyz", shiftValue: "xyz", startDate: "2015-2-10", endDate: "2015-2-13", status: "active"},
             ],

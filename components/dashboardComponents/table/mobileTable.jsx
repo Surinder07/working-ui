@@ -33,7 +33,18 @@ const MobileModal = (props) => {
                         );
                     })}
                 </div>
-                {/* <SubTable data={props.data["subData"]} expanded mainColNum={props.colNum} actions={props.subActions} screenType={props.screenType} /> */}
+                {props.data["subData"] && (
+                    <SubTable
+                        title={props.title}
+                        screenType={props.screenType}
+                        data={props.data["subData"]}
+                        history={props.data["history"]}
+                        mainColNum={props.mainColNum}
+                        expanded
+                        actions={props.subActions}
+                        setSubTableHeight={props.setSubTableHeight}
+                    />
+                )}
             </div>
         )
     );
