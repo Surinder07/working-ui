@@ -160,6 +160,8 @@ const SubTable = (props) => {
                                 className={TableStyles.expandIcons}
                                 onClick={() => {
                                     setShowModal(j + 1);
+                                    props.setShowModal(0);
+                                    document.body.style.overflow = "hidden";
                                 }}
                             />
                         ) : (
@@ -169,14 +171,7 @@ const SubTable = (props) => {
                                 </div>
                             )
                         )}
-                        {
-                            <MobileModal
-                                title={props.title}
-                                showModal={showModal === j + 1}
-                                setShowModal={setShowModal}
-                                data={subData}
-                            />
-                        }
+                        {<MobileModal title={props.title} showModal={showModal === j + 1} setShowModal={setShowModal} data={subData} />}
                     </>
                 ))}
             {props.history &&

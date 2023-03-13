@@ -149,6 +149,7 @@ const Table = (props, ref) => {
                                 className={TableStyles.expandIcons}
                                 onClick={() => {
                                     setShowModal(i + 1);
+                                    document.body.style.overflow = "hidden";
                                 }}
                             />
                         ) : (
@@ -173,6 +174,7 @@ const Table = (props, ref) => {
                                 screenType={props.screenType}
                                 data={row["subData"]}
                                 history={row.history}
+                                setShowModal={setShowModal}
                                 mainColNum={colNum}
                                 expanded={expanded === i + 1}
                                 actions={props.subActions}
