@@ -34,3 +34,4 @@ export {
 
 export * from "./userPreferences";
 export * from "./table";
+export * from './payments';

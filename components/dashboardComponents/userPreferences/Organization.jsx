@@ -188,7 +188,7 @@ const Organization = (props) => {
                         initialValue={props.data.organizationPreferences.clockInAllowedMinutesBeforeShift}
                         editOn={editPersonalDetails}
                     />
-                    <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+                    <div style={{  display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }} className={UserPreferenceStyles.fullWidth}>
                         <EditableInput
                             type="toggle"
                             label="Overtime Request Enabled"

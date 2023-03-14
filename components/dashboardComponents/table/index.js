@@ -1,4 +1,4 @@
 import Table from "./Table";
-import MobileModal from "./mobileTable";
+import MobileModal from "./MobileTable";
 
 export {Table, MobileModal};

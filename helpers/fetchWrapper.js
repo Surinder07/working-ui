@@ -109,7 +109,7 @@ const handleResponse = async (response, url) => {
                         Router.push('/account/complete-profile');
                         return { wait: true };
                     case 'WE_002':
-                        Router.push('/account/payment-info');
+                        Router.push('/account/add-default-payment');
                         return { wait: true };
                     default:
                         localStorage.removeItem(userService.TOKEN_KEY);

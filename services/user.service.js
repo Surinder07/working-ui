@@ -65,6 +65,10 @@ const completeProfile = async (data) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.completeProfile), data);
 }
 
+const completePaymentInfo = async (stripeTokenId) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.completePaymentInfo, {stripeTokenId}));
+}
+
 const validatePromoCode = async (promoCode) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.validatePromoCode, { promoCode }));
 }
@@ -93,6 +97,7 @@ export const userService = {
     requestResetPassword,
     finishResetPassword,
     completeProfile,
+    completePaymentInfo,
     TOKEN_KEY,
     USER_KEY,
     emailVerification,

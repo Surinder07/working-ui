@@ -6,6 +6,7 @@ const apiEndpoints = {
         registerNewUser: "/v1/unAuth/user/registration/new",
         verifyEmail: "/v1/unAuth/user/registration/verifyEmail",
         completeProfile: "/v1/user/registration/completeProfile",
+        completePaymentInfo: '/v1/user/registration/completePaymentInfo',
         validateInviteKey: "/v1/unAuth/user/invitation/validateKey",
         registerByInvite: "/v1/unAuth/user/invitation/register",
         getUserDetails: "/v1/user/getAccount",
@@ -105,8 +106,13 @@ const apiEndpoints = {
         generate: '/v1/reports/generate',
         download: '/v1/reports/download'
     },
-    openApis:{
-      subscribe: '/v1/unAuth/open/subscribe'
+    openApis: {
+        subscribe: '/v1/unAuth/open/subscribe'
+    },
+    paymentApis: {
+        createSetupIntent: '/v1/payment/setupIntent/create',
+        addNewCard: '/v1/payment/card/add',
+        getAllCards: '/v1/payment/card/getAll'
     },
     webSocket: {
         endpoint: '/ws-connect',
@@ -132,7 +138,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.1.5",
+        version: "1.1.6",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",
@@ -165,6 +171,7 @@ const nextConfig = {
             },
         },
         endpoints: apiEndpoints,
+        stripeKey: 'pk_test_51IuozbEkZ4NGJcE2neLnc10UFj4glIMdwljlunvPOyzo7u9YVTs4faJO7MPwGTIQo5fKwWAeMiKwFSb3zLHIfqQb00d2oDYr0l'
     },
 };
 

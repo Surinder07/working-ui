@@ -25,7 +25,6 @@ const CompleteProfile = (props) => {
     const [organization, setOrganization] = useState('');
     const [weekStartOn, setWeekStartOn] = useState('Monday');
     const [timezone, setTimezone] = useState('');
-    const [promoCode, setPromoCode] = useState('');
     const [showErrorFirstName, setShowErrorFirstName] = useState(false);
     const [showErrorLastName, setShowErrorLastName] = useState(false);
     const [showErrorUsername, setShowErrorUsername] = useState(false);
@@ -37,6 +36,7 @@ const CompleteProfile = (props) => {
     const [promoValue, setPromoValue] = useState('');
     const [loading, setLoading] = useState(false);
     const [promoDisabled, setPromoDisabled] = useState(false);
+    const paymentInfoAddress = '/account/add-default-payment';
 
     useEffect(() => {
         props.setPageInfo({
@@ -49,9 +49,11 @@ const CompleteProfile = (props) => {
     }, [])
 
     useEffect(() => {
-        // if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
-        //     router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? '/account/payment-info' : '/dashboard');
-        // }
+        props.setPageLoading(true);
+        if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
+            router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? paymentInfoAddress : '/dashboard');
+        }
+        props.setPageLoading(false);
     }, [props.user])
 
     const validateFields = async () => {
@@ -115,7 +117,7 @@ const CompleteProfile = (props) => {
                         firstName, lastName, username, countryCode: contact.countryCode,
                         mobile: contact.mobile, country: contact.country,
                         organizationName: organization, firstDayOfWeek: weekStartOn,
-                        timezone, promoCode
+                        timezone, promoCode: promoValue
                     })
                         .then(res => {
                             if (res.wait) return;
@@ -127,6 +129,7 @@ const CompleteProfile = (props) => {
                                         message: res.message,
                                     })
                                 }
+                                setLoading(false)
                             } else {
                                 secureLocalStorage.saveData(userService.TOKEN_KEY, res.token);
                                 props.setToken(res.token);
@@ -145,7 +148,7 @@ const CompleteProfile = (props) => {
                                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                                     props.setUser(res);
                                 })
-                                    .then(() => router.push('/dashboard'))
+                                    .then(() => router.push(paymentInfoAddress))
                             }
                         })
                 }

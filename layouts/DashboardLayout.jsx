@@ -26,7 +26,8 @@ const Dashboard = (props) => {
                 setSideNavStyle({ position: "fixed", bottom: 0 });
             }
             setY(window.scrollY);
-        }, [y]
+        },
+        [y]
     );
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const Dashboard = (props) => {
     }, [props.user]);
 
     return (
-        <div className={joinClasses(DashboardLayout.dashboardPage, navOpen ? DashboardLayout.openNavDashboard : DashboardLayout.closeNavDashboard)} >
+        <div className={joinClasses(DashboardLayout.dashboardPage, navOpen ? DashboardLayout.openNavDashboard : DashboardLayout.closeNavDashboard)}>
             <div style={{ position: "relative", width: "inherit" }}>
                 <div className={DashboardLayout.sideNav} ref={sideNavRef} style={sideNavStyle}>
                     <div>
@@ -65,7 +66,12 @@ const Dashboard = (props) => {
                                 />
                             </div>
                             <p className={DashboardLayout.version}>Version: {process.env.version}</p>
-                            <div className={DashboardLayout.profileContainer}>
+                            <div
+                                className={DashboardLayout.profileContainer}
+                                onClick={() => {
+                                    if (props.screenType === 3) setNavOpen(false);
+                                }}
+                            >
                                 <p>Hi, {userName}</p>
                                 <ProfileImage
                                     src={props.user.imageUrl}
@@ -90,7 +96,7 @@ const Dashboard = (props) => {
                                         onClick={() => { if (props.screenType === 3) setNavOpen(false) }}
                                     >
                                         <div
-                                            className={joinClasses(DashboardLayout.menuItem, (info.activeKey === props.pageInfo.activeMenu) && DashboardLayout.activeMenuItem)}
+                                            className={joinClasses(DashboardLayout.menuItem, info.activeKey === props.pageInfo.activeMenu && DashboardLayout.activeMenuItem)}
                                             style={navOpen ? {} : { margin: "auto", width: "100%" }}
                                         >
                                             {info.icon}
@@ -130,6 +136,7 @@ const Dashboard = (props) => {
                                     className={DashboardLayout.organizationLogo}
                                     heightOrient
                                     src={props.user.organizationLogoUrl}
+                                    alt={props.user.organization}
                                 /> :
                                 <p className={DashboardLayout.organizationName}>{props.user.organization}</p>
                         }

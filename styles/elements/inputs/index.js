@@ -8,6 +8,7 @@ import SearchBarStyles from './SearchBar.module.css';
 import DatePickerStyles from './DatePicker.module.css';
 import RadioStyles from './Radio.module.css';
 import MultiSelectDropDownStyles from './MultiSelectDropDown.module.css';
+import PaymentInfoStyles from './PaymentInfo.module.css';
 
 export {
     DropdownStyles,
@@ -19,5 +20,6 @@ export {
     SearchBarStyles,
     DatePickerStyles,
     RadioStyles,
-    MultiSelectDropDownStyles
+    MultiSelectDropDownStyles,
+    PaymentInfoStyles
 }

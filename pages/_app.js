@@ -7,7 +7,6 @@ import { userService } from "../services/user.service";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
 
 function MyApp({ Component, pageProps }) {
-
     // Destkop Size: 1, Tab Size: 2, Mobile Size: 3
     const [screenType, setScreenType] = useState(1);
     const [pageLoading, setPageLoading] = useState(false);
@@ -29,8 +28,8 @@ function MyApp({ Component, pageProps }) {
     const [showToaster, setShowToaster] = useState(false);
     const [notificationToast, setNotificationToast] = useState({
         show: false,
-        title: '',
-        message: ''
+        title: "",
+        message: "",
     });
     const [stompMsg, setStompMsg] = useState({
         shift: false,
@@ -112,9 +111,9 @@ function MyApp({ Component, pageProps }) {
             const timer = setTimeout(() => {
                 setNotificationToast({
                     show: false,
-                    title: '',
-                    message: ''
-                })
+                    title: "",
+                    message: "",
+                });
             }, 10000);
             return () => clearTimeout(timer);
         }
@@ -122,13 +121,11 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         router.beforePopState(({ as }) => {
-            setPageInfo(
-                {
-                    ...pageInfo,
-                    activeMenu: getActiveMenuFromPath(as),
-                    pageView: getPageLayoutFromPath(as)
-                }
-            );
+            setPageInfo({
+                ...pageInfo,
+                activeMenu: getActiveMenuFromPath(as),
+                pageView: getPageLayoutFromPath(as),
+            });
             return true;
         });
 
@@ -144,7 +141,7 @@ function MyApp({ Component, pageProps }) {
             if (localStorage.getItem(userService.USER_KEY)) {
                 setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
             }
-        }
+        };
 
         router.events.on("routeChangeStart", handleStart);
         router.events.on("routeChangeComplete", handleComplete);
@@ -165,7 +162,7 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         if (!user.role && localStorage.getItem(userService.USER_KEY)) {
             setUser(JSON.parse(secureLocalStorage.getData(userService.USER_KEY)));
-            setToken(secureLocalStorage.getData(userService.TOKEN_KEY))
+            setToken(secureLocalStorage.getData(userService.TOKEN_KEY));
         } else if (!user.role && pageInfo.authenticationRequired) {
             router.push("/login");
         }
@@ -224,29 +221,12 @@ function MyApp({ Component, pageProps }) {
         <React.Fragment>
             <WaawHead />
             <div>
-                <Toaster
-                    error={toasterInfo.error}
-                    title={toasterInfo.title}
-                    message={toasterInfo.message}
-                    show={showToaster}
-                    setShowToaster={setShowToaster}
-                />
-                <NotificationToaster
-                    title={notificationToast.title}
-                    description={notificationToast.message}
-                    show={notificationToast.show}
-                    setToast={setNotificationToast}
-                />
+                <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} setShowToaster={setShowToaster} />
+                <NotificationToaster title={notificationToast.title} description={notificationToast.message} show={notificationToast.show} setToast={setNotificationToast} />
                 {pageLoading && <LoadingScreen />}
                 <TopLoader pageLoading={pageLoading} />
-                {
-                    pageInfo.pageView === "loggedOut" &&
-                    <NavFooterPageLayout pageInfo={pageInfo} >
-                        {getComponentForPages()}
-                    </NavFooterPageLayout>
-                }
-                {
-                    pageInfo.pageView === "dashboard" &&
+                {pageInfo.pageView === "loggedOut" && <NavFooterPageLayout pageInfo={pageInfo}>{getComponentForPages()}</NavFooterPageLayout>}
+                {pageInfo.pageView === "dashboard" && (
                     <DashboardLayout
                         pageInfo={pageInfo}
                         setPageInfo={setPageInfo}
@@ -271,7 +251,7 @@ function MyApp({ Component, pageProps }) {
                         }
                         {getComponentForPages()}
                     </DashboardLayout>
-                }
+                )}
                 {pageInfo.pageView === "fullPage" && getComponentForPages()}
             </div>
         </React.Fragment>

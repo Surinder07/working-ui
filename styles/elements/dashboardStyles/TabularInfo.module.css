@@ -163,20 +163,15 @@
 @media only screen and (max-width: 480px) {
     .searchFilterContainer {
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-top: 30px;
     }
 
     .header {
         grid-template-columns: 1fr;
     }
 
-    .tableContainer h2,
-    .tableContainer h4 {
-        display: none;
-    }
-
     .tabularMapped {
-        margin-top: 45px;
+        margin-top: 20px;
     }
 
     .search {

@@ -73,7 +73,7 @@
 }
 
 .infoTile .tileTimeValue,
-.infoTile .tileDayValue  {
+.infoTile .tileDayValue {
     position: relative;
     font-size: 25px;
     font-weight: 600;
@@ -259,7 +259,7 @@
 
     .graph {
         grid-template-columns: 1fr;
-        grid-template-rows: 3fr 2fr;
+        row-gap: 30px;
     }
 
     .infoTileContainer {
@@ -267,9 +267,16 @@
         grid-template-columns: 1fr;
     }
 
-    .employeeCard {
-        background: transparent;
-        border: none;
-        padding: 0;
+    .personalContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .personalContent {
+        margin-top: 20px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboardTitles h1 {
+        font-size: 22px;
     }
 }

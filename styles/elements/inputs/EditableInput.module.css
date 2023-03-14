@@ -18,7 +18,7 @@
 
 .container p {
     font-weight: 400;
-    font-size: 12px!important;
+    font-size: 12px !important;
     line-height: 18px;
     color: #999;
     padding: 7px 0;
@@ -38,4 +38,10 @@
     line-height: 16px;
     color: #535255;
     opacity: 0.75;
+}
+
+@media only screen and (max-width: 480px) {
+    .container {
+        margin-bottom: 7px;
+    }
 }

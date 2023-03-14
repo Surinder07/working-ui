@@ -268,7 +268,7 @@
 
     .todayDate {
         color: black;
-        background-color: white;
+        background-color: #F6F6F6;
     }
 
     .todayDate::after {
@@ -280,5 +280,10 @@
         border-radius: 100%;
         top: 4px;
         left: 7px;
+    }
+
+    .eventsContainer {
+        height: unset;
+        max-height: 400px;
     }
 }
