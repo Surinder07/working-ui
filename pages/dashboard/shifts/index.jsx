@@ -7,7 +7,6 @@ import {
     Button,
     NewShiftModal,
     ShiftsFilter,
-    ShiftModal,
     DeleteModal,
     PaginationDropdown,
     EditShiftTimesheetModal
