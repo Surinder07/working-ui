@@ -129,11 +129,37 @@
     z-index: 5;
 }
 
-.openNavDashboard .header {
+.ribbon {
+    position: fixed;
+    top:53px;
+    padding: 10px 20px;
+    background-color: var(--logo-blue-color);
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    color:#FFF;
+    display: flex;
+    justify-content: space-between;
+    z-index: 4;
+}
+
+.ribbon p {
+    margin: 0;
+}
+
+.hideRibbon {
+    font-size: 20px;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.openNavDashboard .header,
+.openNavDashboard .ribbon {
     max-width: calc(100% - 180px);
 }
 
-.closeNavDashboard .header {
+.closeNavDashboard .header,
+.closeNavDashboard .ribbon {
     max-width: calc(100% - 70px);
 }
 

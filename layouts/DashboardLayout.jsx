@@ -7,6 +7,7 @@ import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
 import { joinClasses } from "../helpers";
+import { Close } from "@mui/icons-material";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
@@ -16,6 +17,7 @@ const Dashboard = (props) => {
     const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
     const [userName, setUserName] = useState("...");
     const [sideNav, setSideNav] = useState([]);
+    const [showRibbon, setShowRibbon] = useState(true);
 
     const handleNavigation = useCallback(
         (e) => {
@@ -173,6 +175,13 @@ const Dashboard = (props) => {
                         />
                     </div>
                 </div>
+                {
+                    (props.user.status === 'TRIAL_PERIOD' && showRibbon) &&
+                    <div className={DashboardLayout.ribbon}>
+                        <p>Your free trial will end in {props.user.trialDaysPending} days.</p>
+                        <Close className={DashboardLayout.hideRibbon} onClick={() => setShowRibbon(false)}/>
+                        </div>
+                }
                 <div className={DashboardLayout.content}>{props.children}</div>
                 <div className={DashboardLayout.footer}>
                     <div className={DashboardLayout.leftContainer}>
