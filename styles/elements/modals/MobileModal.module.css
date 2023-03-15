@@ -53,11 +53,16 @@
 }
 
 .contentContainer {
-	display: grid;
-	grid-template-columns: 0.7fr 1fr;
+	display: flex;
+	flex-direction: column;
 	background: #FFFFFF;
 	border: 2px solid #BFBFBF;
 	margin-top: 20px;
+}
+
+.tuple {
+	display: grid;
+	grid-template-columns: 0.7fr 1fr;
 }
 
 .key {
@@ -88,4 +93,13 @@
 	line-height: 18px;
 	letter-spacing: 0.2px;
 	color: #535255;
+}
+
+@media only screen and (min-width: 480px) {
+	.container {
+		width: calc(100% - -61px);
+		top: -166px;
+		left: -30px;
+		min-width: 0;
+	}
 }

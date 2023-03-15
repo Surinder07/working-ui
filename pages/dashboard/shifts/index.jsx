@@ -243,6 +243,7 @@ const Shifts = (props) => {
                                     actions={actions}
                                     subActions={subTableActions}
                                     pagination
+                                    screenType={props.screenType}
                                     totalEntries={totalEntries}
                                     pageSize={pageSize}
                                     totalPages={totalPages}
@@ -266,6 +267,7 @@ const Shifts = (props) => {
                                     description="Tabular list of my Shifts."
                                     data={myShiftData}
                                     pagination
+                                    screenType={props.screenType}
                                     totalEntries={totalEntriesMyShift}
                                     pageSize={pageSize}
                                     totalPages={totalPagesMyShift}

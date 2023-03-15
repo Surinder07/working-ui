@@ -86,6 +86,7 @@
 .expandIcons {
     color: #999999;
     cursor: pointer;
+    margin: auto;
 }
 
 .historyTable {
