@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
+import { joinClasses } from "../../../helpers";
 import { CellStyles } from "../../../styles/elements";
 
 const Cell = (props) => {
@@ -41,7 +42,7 @@ const Cell = (props) => {
     const getElement = () => {
         if (props.data) {
             if (!props.data.displayType) {
-                return props.data
+                return <p className={joinClasses(props.data.length > 25 && CellStyles.breakMobile)}>{props.data}</p>
             } else if (props.data.displayType === 'comment') {
                 return <div
                     className={CellStyles.commentContainer}

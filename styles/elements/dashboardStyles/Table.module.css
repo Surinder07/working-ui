@@ -73,6 +73,15 @@
     height: auto !important;
 }
 
+.subBodyCellLeft p {
+    display: unset !important;
+    overflow: unset !important;
+    word-wrap: unset !important;
+    word-break: unset !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+}
+
 .subBodyCell {
     color: #999;
 }

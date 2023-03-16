@@ -347,7 +347,9 @@
     .openNavDashboard .header,
     .closeNavDashboard .header,
     .openNavDashboard .footer,
-    .closeNavDashboard .footer {
+    .closeNavDashboard .footer,
+    .openNavDashboard .ribbon,
+    .closeNavDashboard .ribbon {
         max-width: 100%;
     }
 
