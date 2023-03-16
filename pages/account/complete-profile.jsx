@@ -148,8 +148,7 @@ const CompleteProfile = (props) => {
                                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                                     props.setUser(res);
                                 })
-                                    .then(() => router.push('/dashboard'))
-                                    // .then(() => router.push(paymentInfoAddress))
+                                    .then(() => router.push(paymentInfoAddress))
                             }
                         })
                 }

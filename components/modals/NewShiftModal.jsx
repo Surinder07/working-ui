@@ -90,7 +90,7 @@ const NewShiftModal = (props) => {
     }, [formType])
 
     const isError = () => {
-        return combineBoolean(
+        let error = combineBoolean(
             validateForEmptyField(startDate, 'Start Date', setErrorStartDate, true),
             validateForEmptyField(endDate, 'End Date', setErrorEndDate, true),
             validateForTime(startTime, setErrorStartTime, formType === 'Single Shift'),
@@ -99,6 +99,14 @@ const NewShiftModal = (props) => {
             validateForEmptyArray(role, "Role", setErrorRole, formType === 'Single Shift' && assignTo === 'Roles'),
             validateForEmptyArray(user, "User", setErrorUser, assignTo === 'Users')
         );
+        if (shiftName.length > 30) {
+            error = true;
+            setErrorShiftName({
+                message: 'Shift Name cannot be more than 30 Characters',
+                show: true
+            })
+        }
+        return error;
     }
 
     const saveData = () => {

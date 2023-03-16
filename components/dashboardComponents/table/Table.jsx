@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from "react";
-import {TableStyles} from "../../../styles/elements";
+import React, { useEffect, useRef, useState } from "react";
+import { TableStyles } from "../../../styles/elements";
 import Cell from "./Cell";
-import {Edit, Delete, AddCircleOutline, RemoveCircleOutline, FileDownload, CropFree} from "@mui/icons-material";
+import { Edit, Delete, AddCircleOutline, RemoveCircleOutline, FileDownload, CropFree } from "@mui/icons-material";
 import Options from "../Options";
 import SubTable from "./SubTable";
 import MobileModal from "./MobileTable";
@@ -9,9 +9,12 @@ import MobileModal from "./MobileTable";
 const Table = (props, ref) => {
     const [displayHeaders, setDisplayHeaders] = useState([]);
     const [dataKeyList, setDataKeyList] = useState([]);
+    const [keyListLength, setKeyListLength] = useState(0);
     const [colNum, setColNum] = useState(0);
     const [expanded, setExpanded] = useState(0);
-    const [showModal, setShowModal] = useState(0);
+    const [showMobileModal, setShowMobileModal] = useState(false);
+    const [mobileData, setMobileData] = useState({});
+    const [mobileSubData, setMobileSubData] = useState();
 
     useEffect(() => {
         if (props.data.length > 0) {
@@ -22,72 +25,71 @@ const Table = (props, ref) => {
             }).filter((item) => item.toLowerCase() !== "sub data" && item.toLowerCase() !== "internal id" && item.toLowerCase() !== "history");
             setDataKeyList(keyList);
             setDisplayHeaders(headerList);
-            let columnsNum;
-            if (props.screenType === 1) {
-                columnsNum = keyList.length;
-            } else if (props.screenType === 2) {
-                columnsNum = 4;
-            } else if (props.screenType === 3) {
-                columnsNum = 2;
-            }
+            setKeyListLength(keyList.length);
+            let columnsNum = (props.screenType === 1) ? keyList.length : ((props.screenType === 2) ? 4 : 2);
             if (props.actions) columnsNum++;
-            if (props.data[0].subData || props.data[0].history) {
-                columnsNum++;
-            }
+            if (props.data[0].subData || props.data[0].history) columnsNum++;
             setColNum(columnsNum);
         }
     }, [props.data]);
 
+    useEffect(() => {
+        if (keyListLength !== 0) {
+            let columnsNum = (props.screenType === 1) ? keyListLength : ((props.screenType === 2) ? 4 : 2);
+            if (props.actions) columnsNum++;
+            if (props.data[0].subData || props.data[0].history) columnsNum++;
+            setColNum(columnsNum);
+        }
+    }, [props.screenType])
+
     const getAction = (id, status, date) => {
         if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} date={date} />;
         else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-        else if (props.actions.key === "Delete") return <Delete style={{color: "#999"}} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
+        else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
         else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
     };
 
+    const checkAllowedDataIndex = (i) => {
+        if (props.screenType === 1) return true;
+        else if (props.screenType === 2 && i <= 3) return true;
+        else if (props.screenType === 3 && i <= 1) return true;
+        else return false;
+    }
+
     return (
-        <div className={TableStyles.table} style={{gridTemplateColumns: `repeat(${colNum}, auto)`}} ref={ref}>
+        <div className={TableStyles.table} style={{ gridTemplateColumns: `repeat(${colNum}, auto)` }} ref={ref}>
             {/* headers */}
             {props.data[0] && (props.data[0].subData || props.data[0].history) && <div className={TableStyles.headerCell}></div>}
             {/* An empty header for expand button in the body below */}
-            {displayHeaders.map((head, i) => {
-                if (props.screenType === 1) {
-                    return (
+            {
+                displayHeaders
+                    .filter((head, i) => checkAllowedDataIndex(i))
+                    .map((head, i) => (
                         <div className={TableStyles.headerCell} key={`head_${i}`}>
                             {head}
                         </div>
-                    );
-                } else if (props.screenType === 2 && i <= 3) {
-                    return (
-                        <div className={TableStyles.headerCell} key={`head_${i}`}>
-                            {head}
-                        </div>
-                    );
-                } else if (props.screenType === 3 && i <= 1) {
-                    return (
-                        <div className={TableStyles.headerCell} key={`head_${i}`}>
-                            {head}
-                        </div>
-                    );
-                }
-            })}
-            {(props.screenType >= 2 || props.actions) && <div className={TableStyles.headerCell}>Actions</div>}
+                    ))
+            }
+            {
+                (props.screenType >= 2 || props.actions) &&
+                <div className={TableStyles.headerCell}>Actions</div>
+            }
 
             {/* body */}
             {dataKeyList.length > 0 &&
                 props.data.map((row, i) => (
                     <>
-                        {(row.subData || row.history) && (
+                        {
+                            (row.subData || row.history) &&
                             <div key={`expand_${i}`} className={TableStyles.bodyCell}>
-                                {expanded === i + 1 ? (
+                                {expanded === i + 1 ?
                                     <RemoveCircleOutline
                                         className={TableStyles.expandIcons}
                                         onClick={() => {
                                             setExpanded(0);
                                             props.setSubTableExpanded(false);
                                         }}
-                                    />
-                                ) : (
+                                    /> :
                                     <AddCircleOutline
                                         className={TableStyles.expandIcons}
                                         onClick={() => {
@@ -96,12 +98,13 @@ const Table = (props, ref) => {
                                             props.setSubTableExpanded(true);
                                         }}
                                     />
-                                )}
+                                }
                             </div>
-                        )}
-                        {dataKeyList.map((key, j) => {
-                            if (props.screenType === 1) {
-                                return (
+                        }
+                        {
+                            dataKeyList
+                                .filter((key, j) => checkAllowedDataIndex(j))
+                                .map((key, j) => (
                                     <Cell
                                         className={TableStyles.bodyCell}
                                         key={`cell_${i}_${j}`}
@@ -113,47 +116,28 @@ const Table = (props, ref) => {
                                         }}
                                         data={row[key]}
                                     />
-                                );
-                            } else if (props.screenType === 2 && j <= 3) {
-                                return (
-                                    <Cell
-                                        className={TableStyles.bodyCell}
-                                        key={`cell_${i}_${j}`}
-                                        style={{
-                                            background:
-                                                !props.pagination && props.data.length === i + 1
-                                                    ? "none"
-                                                    : "repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )",
+                                ))
+                        }
+                        {
+                            props.screenType > 1 ?
+                                <div
+                                    style={{
+                                        background:
+                                            !props.pagination && props.data.length === i + 1
+                                                ? "none"
+                                                : "repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )",
+                                                display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                    }}
+                                >
+                                    <CropFree
+                                        className={TableStyles.expandIcons}
+                                        onClick={() => {
+                                            setShowMobileModal(true);
+                                            setMobileData(row);
                                         }}
-                                        data={row[key]}
                                     />
-                                );
-                            } else if (props.screenType === 3 && j <= 1) {
-                                return (
-                                    <Cell
-                                        className={TableStyles.bodyCell}
-                                        key={`cell_${i}_${j}`}
-                                        style={{
-                                            background:
-                                                !props.pagination && props.data.length === i + 1
-                                                    ? "none"
-                                                    : "repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )",
-                                        }}
-                                        data={row[key]}
-                                    />
-                                );
-                            }
-                        })}
-                        {props.screenType >= 2 ? (
-                            <CropFree
-                                className={TableStyles.expandIcons}
-                                onClick={() => {
-                                    setShowModal(i + 1);
-                                    document.body.style.overflow = "hidden";
-                                }}
-                            />
-                        ) : (
-                            props.actions && (
+                                </div> :
+                                props.actions &&
                                 <div
                                     className={TableStyles.bodyCell}
                                     key={`action_${i}`}
@@ -166,31 +150,37 @@ const Table = (props, ref) => {
                                 >
                                     {getAction(row["internalId"], row["status"] && row["status"].text, row["startDate"] && row["startDate"])}
                                 </div>
-                            )
-                        )}
-                        {(row.subData || row.history) && (
-                            <SubTable
-                                title={props.title}
-                                screenType={props.screenType}
-                                data={row["subData"]}
-                                history={row.history}
-                                setShowModal={setShowModal}
-                                mainColNum={colNum}
-                                expanded={expanded === i + 1}
-                                actions={props.subActions}
-                                setSubTableHeight={props.setSubTableHeight}
-                            />
-                        )}
+                        }
+
+                        {
+                            (row.subData || row.history) && (
+                                <SubTable
+                                    title={props.title}
+                                    screenType={props.screenType}
+                                    data={row["subData"]}
+                                    history={row.history}
+                                    setShowModal={setShowMobileModal}
+                                    setMobileData={setMobileData}
+                                    mainColNum={colNum}
+                                    expanded={expanded === i + 1}
+                                    actions={props.subActions}
+                                    setSubTableHeight={props.setSubTableHeight}
+                                />
+                            )}
                         {
                             <MobileModal
                                 title={props.title}
                                 screenType={props.screenType}
-                                showModal={showModal === i + 1}
+                                showModal={showMobileModal}
                                 mainColNum={colNum}
-                                actions={props.subActions}
+                                actions={props.actions}
+                                subActions={props.subActions}
                                 setSubTableHeight={props.setSubTableHeight}
-                                setShowModal={setShowModal}
-                                data={row}
+                                setShowModal={setShowMobileModal}
+                                setData={setMobileData}
+                                data={mobileData}
+                                subData={mobileSubData}
+                                setSubData={setMobileSubData}
                             />
                         }
                     </>

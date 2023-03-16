@@ -124,7 +124,8 @@ const TabularInfo = (props) => {
                                 setSubTableHeight={setSubTableHeight}
                                 setSubTableExpanded={setSubTableExpanded}
                             />
-                            {props.pagination && (
+                            {
+                                props.pagination &&
                                 <Pagination
                                     totalEntries={props.totalEntries}
                                     entryPerPage={props.pageSize}
@@ -134,7 +135,7 @@ const TabularInfo = (props) => {
                                     setPageNo={props.setPageNo}
                                     onExpand={props.onExpand}
                                 />
-                            )}
+                            }
                         </>
                     )
                 ) : props.children ? (
