@@ -48,13 +48,13 @@ const CompleteProfile = (props) => {
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
 
-    useEffect(() => {
-        props.setPageLoading(true);
-        if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
-            router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? paymentInfoAddress : '/dashboard');
-        }
-        props.setPageLoading(false);
-    }, [props.user])
+    // useEffect(() => {
+    //     props.setPageLoading(true);
+    //     if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
+    //         router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? paymentInfoAddress : '/dashboard');
+    //     }
+    //     props.setPageLoading(false);
+    // }, [props.user])
 
     const validateFields = async () => {
         let error = false;
@@ -148,7 +148,8 @@ const CompleteProfile = (props) => {
                                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                                     props.setUser(res);
                                 })
-                                    .then(() => router.push(paymentInfoAddress))
+                                    .then(() => router.push('/dashboard'))
+                                    // .then(() => router.push(paymentInfoAddress))
                             }
                         })
                 }
