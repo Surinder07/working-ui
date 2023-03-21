@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
-import { joinClasses } from "../../../helpers";
+import { getColorByStatus, joinClasses } from "../../../helpers";
 import { CellStyles } from "../../../styles/elements";
 
 const Cell = (props) => {
 
     const ref = useRef();
     const [commentHeight, setCommentHeight] = useState(0);
+    const [color, setColor] = useState('#FFF');
     const [activeStyle, setActiveStyle] = useState({
         height: 0,
         overflow: 'hidden',
@@ -34,9 +35,15 @@ const Cell = (props) => {
         }
     }
 
+    useEffect(() => {
+        if (props.data && props.data.status) {
+            setColor(getColorByStatus(props.data.status))
+        }
+    }, [props.data])
+
     const statusStyle = {
-        color: props.data && props.data.displayType === 'color' ? getColor() : '#FFF',
-        backgroundColor: props.data && props.data.displayType === 'color' ? 'none' : getColor()
+        color: props.data && props.data.displayType === 'color' ? color : '#FFF',
+        backgroundColor: props.data && props.data.displayType === 'color' ? 'none' : color
     }
 
     const getElement = () => {

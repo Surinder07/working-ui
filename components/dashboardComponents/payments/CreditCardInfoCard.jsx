@@ -51,7 +51,7 @@ const CreditCardInfoCard = (props) => {
                 </p>
                 <p className={PaymentInfoStyles.expiryDate}>Expires: {`${props.month}/${props.year}`}</p>
             </div>
-            <Delete className={PaymentInfoStyles.deleteIcon} />
+            {props.allowDelete && <Delete className={PaymentInfoStyles.deleteIcon} />}
         </div>
     )
 }

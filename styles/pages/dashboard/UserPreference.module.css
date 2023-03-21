@@ -69,6 +69,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     cursor: pointer;
     background-color: #33333320;
 }
@@ -79,6 +80,7 @@
     display: flex;
     color: #D9D9D9;
     align-items: center;
+    width: 100%;
 }
 
 .uploadBox p {
@@ -88,6 +90,10 @@
     line-height: 13px;
     letter-spacing: 0.3px;
     margin-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profileContainer h1 {

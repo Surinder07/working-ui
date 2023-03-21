@@ -106,6 +106,7 @@ const timeClock = (props) => {
                                 pageNo={pageNo}
                                 setPageNo={setPageNo}
                                 showFilter
+                                screenType={props.screenType}
                                 setShowFilterModal={setShowFilterModal}
                             />
                         </DashboardCard>

@@ -32,8 +32,19 @@ const Profile = (props) => {
         });
     }, []);
 
+    const allowedTypes = ['image/jpeg', 'image/png']
+
     const handleUpload = (e) => {
         if (e.target.files.length) {
+            const type = e.target.files[0].type;
+            if(!allowedTypes.includes(type)) {
+                props.setToaster({
+                    error: true,
+                    title: "Error",
+                    message: "Please upload only jpeg or png image file",
+                })
+                return
+            }
             userService.updateProfileImage(e.target.files[0])
                 .then(res => {
                     if (!res.error) {
@@ -103,8 +114,11 @@ const Profile = (props) => {
                         uploadVisible &&
                         <label className={UserPreferenceStyles.uploadContainer} htmlFor='upload-button'>
                             <div className={UserPreferenceStyles.uploadBox}>
-                                <CameraAlt />
-                                <p>Choose File</p>
+                                
+                                <p><CameraAlt /> Choose File</p>
+                            </div>
+                            <div className={UserPreferenceStyles.uploadBox}>
+                                <p>{`(.jpeg / .png)`}</p>
                             </div>
                             <input
                                 type="file"

@@ -78,7 +78,7 @@ const CreditCardElement = (props) => {
                 <CardElement />
             </div>
             <AddressElement options={{ mode: 'billing' }} />
-            <Button type='dashboard' disabled={!stripe} onClick={handleSubmit}>Submit</Button>
+            {!props.hide && <Button type='dashboard' disabled={!stripe} onClick={handleSubmit}>Submit</Button>}
         </form>
     )
 

@@ -1,8 +1,7 @@
-import { Delete, Edit, FileDownload, CropFree } from "@mui/icons-material";
+import { CropFree } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
-import { joinClasses } from "../../../helpers";
+import { checkAllowedDataIndex, getAction, getColorByStatus, joinClasses } from "../../../helpers";
 import { TableStyles } from "../../../styles/elements";
-import Options from "../Options";
 import Cell from "./Cell";
 
 const SubTable = (props) => {
@@ -44,34 +43,7 @@ const SubTable = (props) => {
             if (props.actions) columnsNum++;
             setColNum(columnsNum);
         }
-    }, [props.screenType, keyListLength])
-
-    const getColor = (type) => {
-        switch (type) {
-            case "ok":
-                return "#2996C3";
-            case "warn":
-                return "#E4BE3D";
-            case "basic":
-                return "#535255";
-            case "bad":
-                return "#CC5252";
-        }
-    };
-
-    const getAction = (id, status, date) => {
-        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} date={date} />;
-        else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-        else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-        else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-    };
-
-    const checkAllowedDataIndex = (i) => {
-        if (props.screenType === 1) return true;
-        else if (props.screenType === 2 && i <= 3) return true;
-        else if (props.screenType === 3 && i <= 1) return true;
-        else return false;
-    }
+    }, [props.screenType, keyListLength]);
 
     return (
         <div
@@ -94,7 +66,7 @@ const SubTable = (props) => {
             {(
                 props.data && props.data.length > 0) &&
                 displayHeaders
-                    .filter((subHead, j) => checkAllowedDataIndex(j))
+                    .filter((subHead, j) => checkAllowedDataIndex(j, props.screenType))
                     .map((subHead, j) => (
                         <div
                             key={`head_${j}`}
@@ -115,7 +87,7 @@ const SubTable = (props) => {
                 props.data.map((subData, j) => (
                     <>
                         {dataKeyList
-                            .filter((subKey, k) => checkAllowedDataIndex(k))
+                            .filter((subKey, k) => checkAllowedDataIndex(k, props.screenType))
                             .map((subKey, k) => (
                                 <Cell
                                     key={`cell_${j}_${k}`}
@@ -142,7 +114,14 @@ const SubTable = (props) => {
                                 (
                                     props.actions &&
                                     <div className={TableStyles.subBodyCell} key={`action_${j}`}>
-                                        {getAction(subData["internalId"], subData["status"] && subData["status"].text, subData["inTime"] && subData["inTime"])}
+                                        {
+                                            getAction(
+                                                subData["internalId"],
+                                                subData["status"] && subData["status"].text,
+                                                subData["inTime"] && subData["inTime"],
+                                                props.actions
+                                            )
+                                        }
                                     </div>
                                 )
 
@@ -153,10 +132,17 @@ const SubTable = (props) => {
                 (props.history && props.history.length > 0) &&
                 props.history.map((item, i) => (
                     <div className={TableStyles.requestContainer} key={`req_${i}`}>
-                        <div className={TableStyles.requestTitle} style={{ color: getColor(item.status), border: `solid 1px ${getColor(item.status)}` }}>
+                        <div
+                            className={TableStyles.requestTitle}
+                            style={{
+                                color: getColorByStatus(item.status),
+                                border: `solid 1px ${getColorByStatus(item.status)}`
+                            }}>
                             {item.description}
                         </div>
-                        <div style={{ color: getColor(item.status) }} className={TableStyles.requestDescription}>
+                        <div
+                            style={{ color: getColorByStatus(item.status) }}
+                            className={TableStyles.requestDescription}>
                             <div>{item.title}</div>
                             <div>{item.date}</div>
                         </div>

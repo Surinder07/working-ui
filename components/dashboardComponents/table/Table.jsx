@@ -5,6 +5,7 @@ import { Edit, Delete, AddCircleOutline, RemoveCircleOutline, FileDownload, Crop
 import Options from "../Options";
 import SubTable from "./SubTable";
 import MobileModal from "./MobileTable";
+import { checkAllowedDataIndex, getAction } from "../../../helpers";
 
 const Table = (props, ref) => {
     const [displayHeaders, setDisplayHeaders] = useState([]);
@@ -31,6 +32,7 @@ const Table = (props, ref) => {
             if (props.data[0].subData || props.data[0].history) columnsNum++;
             setColNum(columnsNum);
         }
+        console.log(displayHeaders)
     }, [props.data]);
 
     useEffect(() => {
@@ -40,21 +42,7 @@ const Table = (props, ref) => {
             if (props.data[0].subData || props.data[0].history) columnsNum++;
             setColNum(columnsNum);
         }
-    }, [props.screenType])
-
-    const getAction = (id, status, date) => {
-        if (Array.isArray(props.actions)) return <Options options={props.actions} actionId={id} status={status} date={date} />;
-        else if (props.actions.key === "Edit") return <Edit className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-        else if (props.actions.key === "Delete") return <Delete style={{ color: "#999" }} className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-        else if (props.actions.key === "Download") return <FileDownload className={TableStyles.actionIcon} onClick={() => props.actions.action(id)} />;
-    };
-
-    const checkAllowedDataIndex = (i) => {
-        if (props.screenType === 1) return true;
-        else if (props.screenType === 2 && i <= 3) return true;
-        else if (props.screenType === 3 && i <= 1) return true;
-        else return false;
-    }
+    }, [props.screenType]);
 
     return (
         <div className={TableStyles.table} style={{ gridTemplateColumns: `repeat(${colNum}, auto)` }} ref={ref}>
@@ -63,7 +51,7 @@ const Table = (props, ref) => {
             {/* An empty header for expand button in the body below */}
             {
                 displayHeaders
-                    .filter((head, i) => checkAllowedDataIndex(i))
+                    .filter((head, i) => checkAllowedDataIndex(i, props.screenType))
                     .map((head, i) => (
                         <div className={TableStyles.headerCell} key={`head_${i}`}>
                             {head}
@@ -103,7 +91,7 @@ const Table = (props, ref) => {
                         }
                         {
                             dataKeyList
-                                .filter((key, j) => checkAllowedDataIndex(j))
+                                .filter((key, j) => checkAllowedDataIndex(j, props.screenType))
                                 .map((key, j) => (
                                     <Cell
                                         className={TableStyles.bodyCell}
@@ -126,7 +114,7 @@ const Table = (props, ref) => {
                                             !props.pagination && props.data.length === i + 1
                                                 ? "none"
                                                 : "repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )",
-                                                display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                        display: 'flex', justifyContent: 'center', alignItems: 'center'
                                     }}
                                 >
                                     <CropFree
@@ -148,7 +136,14 @@ const Table = (props, ref) => {
                                                 : "repeating-linear-gradient(to bottom, transparent 0, transparent 49px, #DFE0EB 49px,#DFE0EB 50px )",
                                     }}
                                 >
-                                    {getAction(row["internalId"], row["status"] && row["status"].text, row["startDate"] && row["startDate"])}
+                                    {
+                                        getAction(
+                                            row["internalId"],
+                                            row["status"] && row["status"].text,
+                                            row["startDate"] && row["startDate"],
+                                            props.actions
+                                        )
+                                    }
                                 </div>
                         }
 

@@ -1,19 +1,9 @@
 import { MobileModalStyles } from "../../../styles/elements";
 import { ArrowBack } from "@mui/icons-material";
 import SubTable from "./SubTable";
+import { getColorByStatus } from "../../../helpers";
 
 const MobileModal = (props) => {
-
-    const getColor = (status) => {
-        switch (status) {
-            case 'ok':
-                return '#29CC97';
-            case 'warn':
-                return '#E4BE3D';
-            case 'bad':
-                return '#CC5252';
-        }
-    }
 
     return (
         props.showModal ?
@@ -44,7 +34,7 @@ const MobileModal = (props) => {
                                         <div className={MobileModalStyles.key}>{name}</div>
                                         <div style={
                                             value.status ? {
-                                                backgroundColor: getColor(value.status),
+                                                backgroundColor: getColorByStatus(value.status),
                                                 color: '#FFF'
                                             } : {}}
                                             className={MobileModalStyles.value}

@@ -1,36 +1,6 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, DashboardCard, TabularInfo, ComingSoonEl} from "../../../components";
-
-const invoices = [
-    {
-        invoiceId: "6476475",
-        service: "One time register",
-        startDate: "-",
-        endDate: "-",
-        billingDate: "01/29/2022",
-        amount: "$960",
-        status: "Paid",
-    },
-    {
-        invoiceId: "6476475",
-        service: "Monthly Fees",
-        startDate: "01/01/2022",
-        endDate: "02/01/2022",
-        billingDate: "01/29/2022",
-        amount: "$200",
-        status: "Paid",
-    },
-    {
-        invoiceId: "6476475",
-        service: "Monthly Fees",
-        startDate: "02/01/2022",
-        endDate: "03/01/2022",
-        billingDate: "02/29/2022",
-        amount: "$250",
-        status: "Due",
-    },
-];
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, PaymentOptions } from "../../../components";
 
 const PaymentHistory = (props) => {
     const [data, setData] = useState([]);
@@ -39,6 +9,10 @@ const PaymentHistory = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [payModal, setPayModal] = useState({
+        show: false,
+        invoiceId: ''
+    })
 
     useEffect(() => {
         props.setPageInfo({
@@ -52,49 +26,48 @@ const PaymentHistory = (props) => {
 
     const actions = [
         {
-            key: "View",
-            action: (id) => console.log(`/dashboard/invoices/?id=${id}`),
-            condition: (status) => true,
-        },
-        {
-            key: "Deactivate",
-            action: () => console.log("Api call will be added here"),
-            condition: (status) => true,
-        },
-        {
-            key: "Delete",
-            action: () => console.log("Api call will be added here"),
-            condition: (status) => true,
-        },
+            key: "Pay",
+            action: (id) => setPayModal({
+                show: true,
+                invoiceId: id
+            }),
+            condition: (status) => status === 'UNPAID',
+        }
     ];
 
     return (
         <>
             <WaawNoIndexHead title="Invoices" />
-            {props.pageLoading ? (
-                <></>
-            ) : (
-                <>
-                    <div className={DashboardStyles.dashboardTitles}>
-                        <h1>Payment History</h1>
-                    </div>
-                    <DashboardCard style={{marginTop: "20px"}}>
-                        <TabularInfo
-                            title="Payment History"
-                            description="Tabular list of all payments with status."
-                            data={data}
-                            actions={actions}
-                            screenType={props.screenType}
-                            pagination
-                            totalEntries={totalEntries}
-                            pageSize={pageSize}
-                            totalPages={totalPages}
-                            pageNo={pageNo}
-                            setPageNo={setPageNo}
+            {
+                props.pageLoading ?
+                    <></> :
+                    <>
+                        <PaymentOptions
+                            modal={payModal}
+                            setModal={setPayModal}
+                            setPageLoading={props.setPageLoading}
+                            setReloadData={setReloadData}
                         />
-                    </DashboardCard>
-                </>
-            )}
+                        <div className={DashboardStyles.dashboardTitles}>
+                            <h1>Payment History</h1>
+                        </div>
+                        <DashboardCard style={{ marginTop: "20px" }}>
+                            <TabularInfo
+                                title="Payment History"
+                                description="Tabular list of all payments with status."
+                                data={data}
+                                actions={actions}
+                                screenType={props.screenType}
+                                pagination
+                                totalEntries={totalEntries}
+                                pageSize={pageSize}
+                                totalPages={totalPages}
+                                pageNo={pageNo}
+                                setPageNo={setPageNo}
+                            />
+                        </DashboardCard>
+                    </>
+            }
         </>
     );
 };

@@ -8,6 +8,7 @@ import CalendarStyles from './Calendar.module.css'
 import TabsStyles from './Tabs.module.css';
 import CellStyles from './Cell.module.css';
 import ClockStyles from './Clock.module.css';
+import PaymentInfoStyles from './PaymentInfo.module.css';
 
 export {
     NotificationsStyles,
@@ -19,5 +20,6 @@ export {
     CalendarStyles,
     TabsStyles,
     CellStyles,
-    ClockStyles
+    ClockStyles,
+    PaymentInfoStyles
 }
