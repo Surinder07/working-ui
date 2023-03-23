@@ -216,6 +216,7 @@ const Dashboard = (props) => {
                     clockIn={props.clockIn}
                     clockOut={props.clockOut}
                     timer={props.timer}
+                    timezone={props.user.timezone}
                 />
             }
         </div>

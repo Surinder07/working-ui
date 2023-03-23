@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
 import { WaawNoIndexHead, DashboardCard, TabularInfo, PaymentOptions } from "../../../components";
+import { paymentService } from "../../../services";
+import { fetchAndHandlePage, getPaymentListing } from "../../../helpers";
 
 const PaymentHistory = (props) => {
     const [data, setData] = useState([]);
@@ -9,6 +11,8 @@ const PaymentHistory = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [reloadData, setReloadData] = useState(false);
+    const [filters, setFilters] = useState({});
+    const [sort, setsort] = useState({});
     const [payModal, setPayModal] = useState({
         show: false,
         invoiceId: ''
@@ -23,6 +27,28 @@ const PaymentHistory = (props) => {
         });
         props.setAllowedRoles(["ADMIN"]);
     }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [pageNo, pageSize, filters, sort]);
+
+    useEffect(() => {
+        if (reloadData) fetchData();
+        setReloadData(false);
+    }, [reloadData]);
+
+    const fetchData = () => {
+        fetchAndHandlePage(
+            () => paymentService.getAllInvoices(pageNo, pageSize, filters),
+            setData,
+            setTotalEntries,
+            setTotalPages,
+            props.setPageLoading,
+            props.setToasterInfo,
+            getPaymentListing,
+            props.user.role
+        );
+    };
 
     const actions = [
         {

@@ -73,11 +73,12 @@ const CreditCardElement = (props) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ width: '80%' }}>
+        <form onSubmit={handleSubmit} style={{ width: props.type === 'make payment' ? '100%' : '80%' }}>
             <div className={PaymentInfoStyles.cardWrapper}>
                 <CardElement />
             </div>
             <AddressElement options={{ mode: 'billing' }} />
+            <div style={{height: '20px'}}></div>
             {!props.hide && <Button type='dashboard' disabled={!stripe} onClick={handleSubmit}>Submit</Button>}
         </form>
     )

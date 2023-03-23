@@ -277,6 +277,27 @@ export const getReportListing = (data, role) => {
     })
 }
 
+export const getPaymentListing = (data) => {
+    return data.map(invoice => {
+        return {
+            internalId: invoice.id,
+            id: invoice.waawId,
+            description: `${invoice.quantity} x ${invoice.unitPrice}`,
+            total: `${invoice.totalAmount} ${invoice.currency}`,
+            type: invoice.transactionType.replace('_', ' '),
+            invoiceDate: invoice.invoiceDate,
+            paidFor: invoice.dateRange,
+            dueDate: invoice.dueDate,
+            paymentDate: invoice.paymentDate,
+            status: {
+                text: invoice.invoiceStatus,
+                displayType: 'bg',
+                status: invoice.invoiceStatus === 'FAILED' ? 'bad' : (invoice.invoiceStatus === 'PAID' ? 'ok' : 'warn')
+            }
+        }
+    })
+}
+
 export const newShiftRequestBody = (formType, locationId, roleIds, userIds, startDate, startTime,
     endDate, endTime, instantRelease, shiftName) => {
     return {

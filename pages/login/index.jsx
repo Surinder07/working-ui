@@ -108,7 +108,19 @@ const Login = (props) => {
                                     message: res.message,
                                 })
                             } else {
-                                router.push('/dashboard');
+                                switch (res.status) {
+                                    case 'PROFILE_PENDING':
+                                        router.push('/account/complete-profile');
+                                        break;
+                                    case 'PAYMENT_INFO_PENDING':
+                                        router.push('/account/add-default-payment');
+                                        break;
+                                    case 'PAYMENT_PENDING':
+                                        router.push('/dashboard/make-payment');
+                                        break;
+                                    default:
+                                        router.push('/dashboard');
+                                }
                             }
                         });
                 }

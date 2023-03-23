@@ -32,7 +32,6 @@ const Table = (props, ref) => {
             if (props.data[0].subData || props.data[0].history) columnsNum++;
             setColNum(columnsNum);
         }
-        console.log(displayHeaders)
     }, [props.data]);
 
     useEffect(() => {

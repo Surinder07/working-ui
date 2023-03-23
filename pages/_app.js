@@ -3,7 +3,7 @@ import "../styles/globals.css";
 import router from "next/router";
 import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, StompSocket } from "../components";
 import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath, checkActiveTimer, startTimer, stopTimer, refreshTimer } from "../helpers";
-import { userService } from "../services/user.service";
+import { userService } from "../services";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
 
 function MyApp({ Component, pageProps }) {
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     const [token, setToken] = useState(null);
     const [pageInfo, setPageInfo] = useState({
         authenticationRequired: false,
-        // Possible values: {loggedOut, dashboard, fullPage}
+        // Possible values: { loggedOut, dashboard, fullPage }
         pageView: "loggedOut",
         activeMenu: "none",
         activeSubMenu: "none",
@@ -68,7 +68,6 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         if (stompMsg.timesheet.timerActive && !timer.playing) {
             const timerFunction = setTimeout(() => {
-                debugger
                 let data = timer;
                 data = {
                     ...data,
@@ -101,6 +100,11 @@ function MyApp({ Component, pageProps }) {
             setShowToaster(true);
             const timer = setTimeout(() => {
                 setShowToaster(false);
+                setToasterInfo({
+                    error: false,
+                    title: "",
+                    message: "",
+                })
             }, 10000);
             return () => clearTimeout(timer);
         }

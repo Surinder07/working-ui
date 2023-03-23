@@ -19,11 +19,15 @@ const getAllInvoices = async (pageNo, pageSize, filters, sort) => {
 }
 
 const getById = async (invoiceId) => {
-    return fetchWrapper.get(fetchWrapper.getById(endpoints.confirmPayment, { invoiceId }))
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.confirmPayment, { invoiceId }))
 }
 
 const confirmPayment = async (invoiceId) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.confirmPayment, { invoiceId }))
+}
+
+const getPendingInvoice = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getPendingInvoice));
 }
 
 export const paymentService = {
@@ -32,5 +36,6 @@ export const paymentService = {
     createPaymentIntent,
     getAllInvoices,
     getById,
-    confirmPayment
+    confirmPayment,
+    getPendingInvoice
 }

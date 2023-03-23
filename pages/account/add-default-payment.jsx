@@ -34,7 +34,13 @@ const Payment = (props) => {
             activeMenu: "none",
             activeSubMenu: "none",
         });
+    }, []);
+
+    useEffect(() => {
         props.setPageLoading(true);
+        if (props.user.status && props.user.status !== 'PAYMENT_INFO_PENDING') {
+            router.push('/dashboard');
+        }
         stripePromise = loadStripe(process.env.stripeKey);
         paymentService.createSetupIntent()
             .then(res => {
@@ -47,14 +53,6 @@ const Payment = (props) => {
                 props.setPageLoading(false);
             })
             .catch(e => props.setPageLoading(false))
-    }, []);
-
-    useEffect(() => {
-        props.setPageLoading(true);
-        if (props.user.status && props.user.status !== 'PAYMENT_INFO_PENDING') {
-            router.push('/dashboard');
-        }
-        props.setPageLoading(false);
     }, [props.user])
 
     return (

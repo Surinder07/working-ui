@@ -111,6 +111,9 @@ const handleResponse = async (response, url) => {
                     case 'WE_002':
                         Router.push('/account/add-default-payment');
                         return { wait: true };
+                    case 'WE_003':
+                        Router.push('/dashboard/make-payment');
+                        return { wait: true };
                     default:
                         localStorage.removeItem(userService.TOKEN_KEY);
                         localStorage.removeItem(userService.USER_KEY);

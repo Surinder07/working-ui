@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, Clock, Button, EmployeeAttendanceFilter, TimesheetFilter } from "../../../components";
+import {
+    WaawNoIndexHead,
+    DashboardCard,
+    TabularInfo,
+    Clock,
+    Button,
+    TimesheetFilter
+} from "../../../components";
 import { Warning } from "@mui/icons-material";
 import { timesheetService } from "../../../services";
 import { fetchAndHandlePage, getTimesheetListing } from "../../../helpers";
@@ -10,7 +17,8 @@ const timeClock = (props) => {
     const [data, setData] = useState();
     const [reloadData, setReloadData] = useState(false);
     const [pageNo, setPageNo] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const pageSize = 10;
+    // const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [totalEntries, setTotalEntries] = useState(0);
     const [filters, setFilters] = useState({});
@@ -39,7 +47,6 @@ const timeClock = (props) => {
         fetchAndHandlePage(() => timesheetService.getAll(pageNo, pageSize, filters),
             setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
             getTimesheetListing, props.user.role);
-
     }
 
     return (

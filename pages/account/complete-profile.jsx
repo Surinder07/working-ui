@@ -36,6 +36,7 @@ const CompleteProfile = (props) => {
     const [promoValue, setPromoValue] = useState('');
     const [loading, setLoading] = useState(false);
     const [promoDisabled, setPromoDisabled] = useState(false);
+
     const paymentInfoAddress = '/account/add-default-payment';
 
     useEffect(() => {
@@ -48,13 +49,13 @@ const CompleteProfile = (props) => {
         dropdownService.getTimezones().then(res => setTimezones(res));
     }, [])
 
-    // useEffect(() => {
-    //     props.setPageLoading(true);
-    //     if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
-    //         router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? paymentInfoAddress : '/dashboard');
-    //     }
-    //     props.setPageLoading(false);
-    // }, [props.user])
+    useEffect(() => {
+        props.setPageLoading(true);
+        if (props.user.status && props.user.status !== 'PROFILE_PENDING') {
+            router.push(props.user.status === 'PAYMENT_INFO_PENDING' ? paymentInfoAddress : '/dashboard');
+        }
+        props.setPageLoading(false);
+    }, [props.user])
 
     const validateFields = async () => {
         let error = false;
@@ -95,6 +96,7 @@ const CompleteProfile = (props) => {
         if (!validateForEmptyField(promoValue, '', (val) => setPromoMessage({ ...val, error: true }),
             true, 'Please enter a valid promo code')) {
             setPromoDisabled(true);
+            props.setPageLoading(true);
             userService.validatePromoCode(promoValue)
                 .then(res => {
                     setPromoMessage({
@@ -102,7 +104,8 @@ const CompleteProfile = (props) => {
                         message: res.message,
                         show: true
                     })
-                    if (res.error) setPromoDisabled(false);
+                    if (res.error) { setPromoDisabled(false); }
+                    props.setPageLoading(false);
                 })
         }
     }
@@ -113,6 +116,7 @@ const CompleteProfile = (props) => {
             .then(error => {
                 if (!error) {
                     setLoading(true);
+                    props.setPageLoading(true);
                     userService.completeProfile({
                         firstName, lastName, username, countryCode: contact.countryCode,
                         mobile: contact.mobile, country: contact.country,
@@ -129,7 +133,8 @@ const CompleteProfile = (props) => {
                                         message: res.message,
                                     })
                                 }
-                                setLoading(false)
+                                setLoading(false);
+                                props.setPageLoading(false);
                             } else {
                                 secureLocalStorage.saveData(userService.TOKEN_KEY, res.token);
                                 props.setToken(res.token);
@@ -147,8 +152,12 @@ const CompleteProfile = (props) => {
                                 userService.getUser().then(res => {
                                     secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
                                     props.setUser(res);
+                                    return res.status;
                                 })
-                                    .then(() => router.push(paymentInfoAddress))
+                                    .then((res) => {
+                                        if (res === 'PAYMENT_INFO_PENDING') router.push(paymentInfoAddress);
+                                        else router.push('/dashboard/make-payment');
+                                    })
                             }
                         })
                 }

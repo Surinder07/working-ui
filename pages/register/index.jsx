@@ -96,6 +96,7 @@ const Register = (props) => {
             .then((error) => {
                 if (!error) {
                     setLoading(true);
+                    props.setPageLoading(true);
                     userService.registerUser(email, password, userRole === 'contractor')
                         .then((res) => {
                             if (res.error) {
@@ -106,6 +107,11 @@ const Register = (props) => {
                             } else {
                                 setRegistrationSuccess(true);
                             }
+                            props.setPageLoading(false);
+                        })
+                        .catch(() => {
+                            setLoading(false);
+                            props.setPageLoading(false);
                         });
                 }
             });
