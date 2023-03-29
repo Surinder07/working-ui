@@ -1,9 +1,9 @@
 import CreditCardElement from "./CreditCardElement";
 import CreditCardInfoCard from "./CreditCardInfoCard";
-import PaymentOptions from "./PaymentOptions";
+import CreditCardForm from "./CreditCardForm";
 
 export {
     CreditCardElement,
     CreditCardInfoCard,
-    PaymentOptions
+    CreditCardForm
 }

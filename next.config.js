@@ -113,6 +113,7 @@ const apiEndpoints = {
         createSetupIntent: '/v1/payment/setupIntent/create',
         createPaymentIntent: '/v1/payment/paymentIntent/create',
         addNewCard: '/v1/payment/card/add',
+        deleteCard: '/v1/payment/card/delete',
         getAllCards: '/v1/payment/card/getAll',
         getAllInvoices: '/v1/payment/invoices/get',
         getById: '/v1/payment/invoice/get',
@@ -143,7 +144,7 @@ const nextConfig = {
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "1.1.9",
+        version: "2.0.0",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

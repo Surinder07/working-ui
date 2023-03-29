@@ -1,31 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from 'next/router';
 import { CreditCardElement, LinkedImage } from "../../components";
 import { PaymentStyles } from "../../styles/pages";
 import { AmericanExpress, Visa, MasterCard } from "../../public/images";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { paymentService } from "../../services";
-
-let stripePromise;
 
 const Payment = (props) => {
 
     const router = useRouter();
-
-    const [options, setOptions] = useState({
-        clientSecret: '',
-        appearance: {
-            theme: 'stripe',
-            variables: {
-                fontFamily: 'Poppins',
-                borderRadius: '4px',
-            }
-        },
-        fonts: [{
-            cssSrc: "https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-        }]
-    });
 
     useEffect(() => {
         props.setPageInfo({
@@ -37,22 +18,9 @@ const Payment = (props) => {
     }, []);
 
     useEffect(() => {
-        props.setPageLoading(true);
         if (props.user.status && props.user.status !== 'PAYMENT_INFO_PENDING') {
             router.push('/dashboard');
         }
-        stripePromise = loadStripe(process.env.stripeKey);
-        paymentService.createSetupIntent()
-            .then(res => {
-                if (!res.error) {
-                    setOptions({
-                        ...options,
-                        clientSecret: res.clientSecret
-                    })
-                }
-                props.setPageLoading(false);
-            })
-            .catch(e => props.setPageLoading(false))
     }, [props.user])
 
     return (
@@ -76,18 +44,13 @@ const Payment = (props) => {
                         <LinkedImage className={PaymentStyles.cardImage} src={MasterCard} alt='mastercard' heightOrient />
                     </div>
                 </div>
-                {
-                    (stripePromise && options.clientSecret !== '') &&
-                    <Elements stripe={stripePromise} options={options}>
-                        <CreditCardElement
-                            type={'completeProfile'}
-                            setPageLoading={props.setPageLoading}
-                            setToasterInfo={props.setToasterInfo}
-                            setUser={props.setUser}
-                            setToken={props.setToken}
-                        />
-                    </Elements>
-                }
+                <CreditCardElement
+                    type='completeProfile'
+                    setPageLoading={props.setPageLoading}
+                    setToasterInfo={props.setToasterInfo}
+                    setUser={props.setUser}
+                    setToken={props.setToken}
+                />
             </div>
         </div>
     );

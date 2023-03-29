@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { PaymentOptions, WaawNoIndexHead } from "../../../components";
+import { CreditCardElement, WaawNoIndexHead } from "../../../components";
 import { paymentService } from "../../../services";
 
 const MakePayment = (props) => {
@@ -26,7 +26,7 @@ const MakePayment = (props) => {
                     router.push('/dashboard');
                 } else {
                     setDescription(res.transactionType === 'PLATFORM_FEE' ?
-                        `Platform fee x ${res.unitPrice}` : `Active Employees(${res.quantity} x ${res.unitPrice})`);
+                        `Platform fee x ${res.unitPrice}` : `Active Employees(${res.quantity} x ${res.currency} ${res.unitPrice})`);
                     setTotal(`${res.totalAmount} ${res.currency}`)
                     setInvoiceId(res.id);
                     setInvoice(res.waawId);
@@ -38,16 +38,17 @@ const MakePayment = (props) => {
     return (
         <>
             <WaawNoIndexHead title="Payments" />
-            <PaymentOptions
+            <CreditCardElement
+                type='payment'
+                invoiceId={invoiceId}
                 invoice={invoice}
                 description={description}
                 total={total}
-                hideSavedCards
-                modal={{ show: true, invoiceId: invoiceId }}
                 setPageLoading={props.setPageLoading}
                 setToasterInfo={props.setToasterInfo}
-                setToken={props.setToken}
                 setUser={props.setUser}
+                setToken={props.setToken}
+                modal={{ show: true }}
             />
         </>
     )

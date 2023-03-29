@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DashboardStyles } from "../../../styles/pages";
-import { WaawNoIndexHead, DashboardCard, TabularInfo, PaymentOptions } from "../../../components";
+import { WaawNoIndexHead, DashboardCard, TabularInfo, CreditCardElement } from "../../../components";
 import { paymentService } from "../../../services";
 import { fetchAndHandlePage, getPaymentListing } from "../../../helpers";
 
@@ -13,10 +13,12 @@ const PaymentHistory = (props) => {
     const [reloadData, setReloadData] = useState(false);
     const [filters, setFilters] = useState({});
     const [sort, setsort] = useState({});
-    const [payModal, setPayModal] = useState({
-        show: false,
-        invoiceId: ''
-    })
+    // Payment Modal States
+    const [payModal, setPayModal] = useState({ show: false })
+    const [invoice, setInvoice] = useState('-');
+    const [invoiceId, setInvoiceId] = useState('');
+    const [description, setDescription] = useState('- x -');
+    const [total, setTotal] = useState('0 CAD');
 
     useEffect(() => {
         props.setPageInfo({
@@ -53,26 +55,44 @@ const PaymentHistory = (props) => {
     const actions = [
         {
             key: "Pay",
-            action: (id) => setPayModal({
-                show: true,
-                invoiceId: id
-            }),
+            action: (id) => {
+                paymentService.getById(id)
+                    .then(res => {
+                        props.setPageLoading(true);
+                        if (!res.error) {
+                            setInvoice(res.waawId);
+                            setDescription(res.transactionType === 'PLATFORM_FEE' ?
+                                `Platform fee x ${res.unitPrice}` : `Active Employees(${res.quantity} x ${res.currency} ${res.unitPrice})`);
+                            setTotal(`${res.totalAmount} ${res.currency}`);
+                            setInvoiceId(res.id);
+                            setPayModal({ show: true });
+                            props.setPageLoading(false);
+                        }
+                    })
+            },
             condition: (status) => status === 'UNPAID',
         }
     ];
 
     return (
         <>
-            <WaawNoIndexHead title="Invoices" />
+            <WaawNoIndexHead title="Payments" />
             {
                 props.pageLoading ?
                     <></> :
                     <>
-                        <PaymentOptions
+                        <CreditCardElement
+                            type='payment'
+                            invoiceId={invoiceId}
+                            invoice={invoice}
+                            description={description}
+                            total={total}
+                            setPageLoading={props.setPageLoading}
+                            setToasterInfo={props.setToasterInfo}
+                            setReloadData={setReloadData}
                             modal={payModal}
                             setModal={setPayModal}
-                            setPageLoading={props.setPageLoading}
-                            setReloadData={setReloadData}
+                            showSavedCards
                         />
                         <div className={DashboardStyles.dashboardTitles}>
                             <h1>Payment History</h1>

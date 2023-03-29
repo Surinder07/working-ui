@@ -66,7 +66,9 @@ const NotificationBell = (props) => {
         }
     }, [props.stompMsg])
 
-    useEffect(() => loadNotification(), [showNotifications])
+    useEffect(() => {
+        if (showNotifications) loadNotification();
+    }, [showNotifications])
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);

@@ -1,86 +1,139 @@
-import { Button } from '@mui/material';
-import { useStripe, useElements, CardElement, AddressElement } from '@stripe/react-stripe-js';
-import { secureLocalStorage } from '../../../helpers';
-import { userService } from '../../../services';
-import { PaymentInfoStyles } from '../../../styles/elements';
+import { Close } from "@mui/icons-material";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { useEffect, useRef, useState } from "react";
+import { joinClasses } from "../../../helpers";
+import { paymentService } from "../../../services";
+import { PaymentInfoStyles } from "../../../styles/elements";
+import CreditCardForm from "./CreditCardForm";
+
+let stripePromise;
 
 const CreditCardElement = (props) => {
 
-    const stripe = useStripe();
-    const elements = useElements();
+    const modalRef = useRef();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!stripe || !elements) {
-            return;
+    const [selected, setSelected] = useState(props.hideSavedCards ? 'c' : 's');
+    const [options, setOptions] = useState({
+        clientSecret: '',
+        appearance: {
+            theme: 'stripe',
+            variables: {
+                fontFamily: props.type === 'completeProfile' ? 'Poppins' : 'Mulish',
+                borderRadius: '4px',
+            }
+        },
+        fonts: [{
+            cssSrc: `https://fonts.googleapis.com/css2?family=${props.type === 'completeProfile' ? 'Poppins' : 'Mulish'}&display=swap`
+        }]
+    });
+
+    const getPaymentOrSetupIntent = async () => {
+        return props.type === 'payment' ? paymentService.createPaymentIntent(props.invoiceId) : paymentService.createSetupIntent();
+    }
+
+    useEffect(() => {
+        if (props.modal && props.modal.show && modalRef.current) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
         }
-        const card = elements.getElement("card");
-        elements.getElement("address").getValue()
+    }, [modalRef.current, props.modal]);
+
+    useEffect(() => {
+        if (props.type === 'payment' && props.invoiceId === '') return;
+        props.setPageLoading(true);
+        stripePromise = loadStripe(process.env.stripeKey);
+        getPaymentOrSetupIntent()
             .then(res => {
-                return {
-                    name: res.value.name,
-                    address_line1: res.value.address.line1,
-                    address_line2: res.value.address.line1,
-                    address_city: res.value.address.city,
-                    address_country: res.value.address.country,
-                    address_state: res.value.address.state
-                }
-            })
-            .then(addressData => {
-                stripe.createToken(card, addressData)
-                    .then(res => {
-                        const token = res.token.id;
-                        if (props.type === 'completeProfile') {
-                            props.setPageLoading(true);
-                            userService.completePaymentInfo(token)
-                                .then(res => {
-                                    if (res.wait) return;
-                                    if (res.error) {
-                                        if (res.message) {
-                                            props.setToasterInfo({
-                                                error: true,
-                                                title: "Error!",
-                                                message: res.message,
-                                            })
-                                        }
-                                    } else {
-                                        secureLocalStorage.saveData(userService.TOKEN_KEY, res.token);
-                                        props.setToken(res.token);
-                                        props.setToasterInfo({
-                                            error: false,
-                                            title: "Success!",
-                                            message: "Profile details saved successfully",
-                                        })
-                                        return res.token;
-                                    }
-                                    return res;
-                                })
-                                .then(res => {
-                                    if (!res.error) {
-                                        userService.getUser().then(res => {
-                                            secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(res));
-                                            props.setUser(res);
-                                        })
-                                            .then(() => router.push('/dashboard'))
-                                    }
-                                    props.setPageLoading(false);
-                                })
-                        } else {
-                            // add a card
-                        }
+                if (!res.error) {
+                    setOptions({
+                        ...options,
+                        clientSecret: res.clientSecret
                     })
-            });
-    };
+                }
+                props.setPageLoading(false);
+            })
+            .catch(() => props.setPageLoading(false));
+    }, [props.invoiceId])
 
     return (
-        <form onSubmit={handleSubmit} style={{ width: props.type === 'make payment' ? '100%' : '80%' }}>
-            <div className={PaymentInfoStyles.cardWrapper}>
-                <CardElement />
-            </div>
-            <AddressElement options={{ mode: 'billing' }} />
-            <div style={{height: '20px'}}></div>
-            {!props.hide && <Button type='dashboard' disabled={!stripe} onClick={handleSubmit}>Submit</Button>}
-        </form>
+        (props.modal && props.modal.show) ?
+            <div className={PaymentInfoStyles.paymentsBackDrop} ref={modalRef} style={{ overflowY: 'scroll' }}>
+                <div className={PaymentInfoStyles.paymentsContainer}>
+                    {props.modal && <Close className={PaymentInfoStyles.closeIcon} onClick={() => props.setModal({ show: false })} />}
+                    {
+                        props.type === 'addCard' ?
+                            <h1>Add A <span style={{ color: '#28A8E0' }}>New Card</span></h1> :
+                            <h1>Pay for invoice# <span style={{ color: '#28A8E0' }}>{props.invoice}</span></h1>
+                    }
+                    <div
+                        className={joinClasses(props.type === 'payment' && PaymentInfoStyles.paymentsSubContainer)}
+                        style={props.type !== 'payment' ? { width: '80%' } : {}}
+                    >
+                        {
+                            props.type === 'payment' &&
+                            <div className={PaymentInfoStyles.priceContainer}>
+                                <h3>Description</h3>
+                                <p>{props.description}</p>
+                                <p><b>Total: </b>{props.total}</p>
+                            </div>
+                        }
+                        <div className={PaymentInfoStyles.optionsContainer}>
+                            <div>
+                                {
+                                    props.type === 'payment' &&
+                                    <div className={PaymentInfoStyles.optionsChoices}>
+                                        <p
+                                            onClick={() => setSelected('c')}
+                                            className={joinClasses(selected === 'c' && PaymentInfoStyles.selected)}
+                                        >Credit Card</p>
+                                        {
+                                            props.showSavedCards &&
+                                            <p
+                                                onClick={() => setSelected('s')}
+                                                className={joinClasses(selected === 's' && PaymentInfoStyles.selected)}
+                                            >Saved Methods</p>
+                                        }
+                                    </div>
+                                }
+                                <div className={PaymentInfoStyles.optionsNewCard}>
+                                    {
+                                        (stripePromise && options.clientSecret !== '') &&
+                                        <Elements stripe={stripePromise} options={options}>
+                                            <CreditCardForm
+                                                type={props.type}
+                                                setPageLoading={props.setPageLoading}
+                                                setToasterInfo={props.setToasterInfo}
+                                                setUser={props.setUser}
+                                                setToken={props.setToken}
+                                                showSavedCards={props.showSavedCards && selected === 's'}
+                                                setReloadData={props.setReloadData}
+                                                hideModal={() => props.setModal && props.setModal({ show: false })}
+                                                clientSecret={options.clientSecret}
+                                                invoiceId={props.invoiceId}
+                                            />
+                                        </Elements>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> : (!props.modal ?
+                (stripePromise && options.clientSecret !== '') &&
+                <Elements stripe={stripePromise} options={options}>
+                    <CreditCardForm
+                        type={props.type}
+                        setPageLoading={props.setPageLoading}
+                        setToasterInfo={props.setToasterInfo}
+                        setUser={props.setUser}
+                        setToken={props.setToken}
+                        showSavedCards={props.showSavedCards && selected === 's'}
+                    />
+                </Elements> :
+                <></>
+            )
     )
 
 }

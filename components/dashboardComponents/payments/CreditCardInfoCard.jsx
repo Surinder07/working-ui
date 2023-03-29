@@ -38,6 +38,7 @@ const CreditCardInfoCard = (props) => {
                 className={PaymentInfoStyles.brandImage}
                 widthOrient
                 src={getCardImage()}
+                alt={props.brand}
             />
             <div>
                 <p className={PaymentInfoStyles.cardDetails}>
@@ -51,7 +52,7 @@ const CreditCardInfoCard = (props) => {
                 </p>
                 <p className={PaymentInfoStyles.expiryDate}>Expires: {`${props.month}/${props.year}`}</p>
             </div>
-            {props.allowDelete && <Delete className={PaymentInfoStyles.deleteIcon} />}
+            {props.allowDelete && <Delete className={PaymentInfoStyles.deleteIcon} onClick={props.onDelete}/>}
         </div>
     )
 }
