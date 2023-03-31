@@ -1,10 +1,19 @@
 .page {
+    position: relative;
     padding: 3rem;
     min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     background-color: #FFF;
+}
+
+.page > p {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 10px;
+    width: fit-content!important;
 }
 
 .pageContainer {

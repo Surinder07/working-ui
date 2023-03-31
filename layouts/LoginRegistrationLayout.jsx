@@ -8,6 +8,7 @@ const LoginRegistrationLayout = (props) => {
         <>
             <WaawHead title={props.pageTitle} />
             <div className={LoginRegisterLayout.page}>
+                <p>Version: {process.env.version}</p>
                 <div className={LoginRegisterLayout.pageContainer}>
                     <div className={LoginRegisterLayout.gridContainer}>
                         <div className={LoginRegisterLayout.gridLeftContainer}>

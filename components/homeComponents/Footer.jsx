@@ -81,6 +81,7 @@ const Footer = () => {
                                     link={social.link}
                                     src={social.src}
                                     alt={social.alt}
+                                    heightOrient
                                     newTab
                                 />
                             ))
@@ -94,6 +95,7 @@ const Footer = () => {
                                 className={FooterStyles.footerIcon}
                                 src={footerIcons.language.src}
                                 alt={footerIcons.language.alt}
+                                heightOrient
                             />
                             <p className={FooterStyles.noMargin}>English</p>
                         </div>
@@ -102,6 +104,7 @@ const Footer = () => {
                                 className={FooterStyles.footerIcon}
                                 src={footerIcons.location.src}
                                 alt={footerIcons.location.alt}
+                                heightOrient
                             />
                             <p className={FooterStyles.noMargin}>Toronto</p>
                         </div>
@@ -116,6 +119,7 @@ const Footer = () => {
                         alt={logo.default.alt}
                         heightOrient
                     />
+                    <p>Version: {process.env.version}</p>
                 </div>
             </div>
         </footer>

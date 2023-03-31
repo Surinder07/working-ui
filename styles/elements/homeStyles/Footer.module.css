@@ -47,6 +47,10 @@
     display: flex;
 }
 
+.socialIcons {
+    justify-content: space-between;
+}
+
 .mobileIcon {
     height: 30px;
 }
@@ -78,7 +82,10 @@
     align-items: flex-end;
 }
 
-.socialIcon,
+.socialIcon {
+    height: 25px;
+}
+
 .footerIcon {
     height: 25px;
     margin: 0 10px;
@@ -87,9 +94,13 @@
 .footerLogo {
     display: flex;
     flex-direction: column;
-    display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+}
+
+.footerLogo p {
+    margin: 0;
+    font-size: 10px;
 }
 
 .logo {
