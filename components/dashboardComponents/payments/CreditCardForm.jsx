@@ -16,6 +16,7 @@ const CreditCardForm = (props) => {
 
     const [cards, setCards] = useState();
     const [selectedCard, setSelectedCard] = useState('');
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         if (props.showSavedCards) {
@@ -97,7 +98,7 @@ const CreditCardForm = (props) => {
             })
     }
 
-    const confirmPayment = (card, addressData) => {
+    const confirmPayment = (card, addressData, redirect) => {
         stripe.confirmCardPayment(props.clientSecret, {
             payment_method: card ? {
                 card: card,
@@ -106,11 +107,20 @@ const CreditCardForm = (props) => {
         })
             .then(res => {
                 if (res.error) {
+                    if (res.error.payment_intent.status === 'succeeded') {
+                        
+                    props.setToasterInfo({
+                        error: true,
+                        title: "Error!",
+                        message: "You connot make this payment. This payment has already succeded",
+                    })
+                    } else {
                     props.setToasterInfo({
                         error: true,
                         title: "Error!",
                         message: res.error.message,
                     })
+                }
                 } else {
                     paymentService.confirmPayment(props.invoiceId, res.paymentIntent.id)
                         .then(res => {
@@ -120,6 +130,7 @@ const CreditCardForm = (props) => {
                                     title: "Success!",
                                     message: "Payment Successful.",
                                 })
+                                if (redirect) router.push('/dashboard/payment-history')
                             }
                         })
                 }
@@ -130,6 +141,8 @@ const CreditCardForm = (props) => {
     }
 
     const handleSubmit = async () => {
+        if (submitting) return;
+        setSubmitting(true);
         props.setPageLoading(true);
         if (props.type === 'payment' && props.showSavedCards) {
             confirmPayment();
@@ -154,7 +167,7 @@ const CreditCardForm = (props) => {
                 })
                 .then(addressData => {
                     if (props.type === 'payment') {
-                        confirmPayment(card, addressData);
+                        confirmPayment(card, addressData, true);
                     } else {
                         stripe.createToken(card, addressData)
                             .then(res => {
@@ -216,7 +229,7 @@ const CreditCardForm = (props) => {
             <div style={{ height: '25px' }}></div>
             <Button
                 type='dashboard'
-                disabled={!stripe}
+                disabled={!stripe || submitting}
                 onClick={handleSubmit}
                 style={{ margin: 'auto' }}
             >

@@ -108,7 +108,7 @@ const Employees = (props) => {
         if (location && location !== '') {
             fetchAndHandleGet(() => dropdownService.getRoles(location), setRoles);
         }
-    }, [location])
+    }, [location]);
 
     useEffect(() => {
         if (!router.isReady) return;
