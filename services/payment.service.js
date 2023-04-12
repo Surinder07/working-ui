@@ -18,6 +18,10 @@ const deleteCard = async (cardId) => {
     return fetchWrapper.delete(fetchWrapper.getApiUrl(endpoints.deleteCard, { cardId }))
 }
 
+const updateDefaultCard = async (cardId) => {
+    return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateDefaultCard, { cardId }))
+}
+
 const createPaymentIntent = async (invoiceId) => {
     return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.createPaymentIntent, { invoiceId }));
 }
@@ -43,6 +47,7 @@ export const paymentService = {
     getAllCards,
     addNewCard,
     deleteCard,
+    updateDefaultCard,
     createPaymentIntent,
     getAllInvoices,
     getById,

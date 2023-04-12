@@ -5,18 +5,12 @@
     align-items: center;
     width: 20px;
     height: 20px;
+    margin: auto;
+    position: relative;
 }
 
 .optionsV {
-    position: absolute;
-    right: 15px;
-    top: 15px;
     flex-direction: column;
-}
-
-.optionsH {
-    position: relative;
-    margin: auto;
 }
 
 .optionsV span,

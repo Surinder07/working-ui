@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import { joinClasses } from '../../helpers';
 import { OptionsStyles } from '../../styles/elements';
 
 const Options = (props) => {

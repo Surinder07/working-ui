@@ -118,7 +118,8 @@ const apiEndpoints = {
         getAllInvoices: '/v1/payment/invoices/get',
         getById: '/v1/payment/invoice/get',
         confirmPayment: '/v1/payment/invoice/confirm',
-        getPendingInvoice: '/v1/payment/invoice/pending/get'
+        getPendingInvoice: '/v1/payment/invoice/pending/get',
+        updateDefaultCard: '/v1/payment/card/default/update'
     },
     webSocket: {
         endpoint: '/ws-connect',

@@ -1,6 +1,5 @@
 import { PaymentInfoStyles } from '../../../styles/elements';
 import LinkedImage from '../../LinkedImage';
-import { Delete } from '@mui/icons-material';
 import {
     AmericanExpress,
     Diners,
@@ -10,6 +9,7 @@ import {
     UnionPay,
     Visa
 } from '../../../public/images';
+import Options from '../Options';
 
 const CreditCardInfoCard = (props) => {
 
@@ -52,7 +52,7 @@ const CreditCardInfoCard = (props) => {
                 </p>
                 <p className={PaymentInfoStyles.expiryDate}>Expires: {`${props.month}/${props.year}`}</p>
             </div>
-            {props.allowDelete && <Delete className={PaymentInfoStyles.deleteIcon} onClick={props.onDelete}/>}
+            {props.actions && <Options options={props.actions} actionId={props.id} status={props.default ? 'default' : ''} vertical />}
         </div>
     )
 }

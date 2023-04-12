@@ -57,6 +57,36 @@ const PaymentMethods = (props) => {
         );
     }
 
+    const updateDefaultCard = (id) => {
+        fetchAndHandle(
+            () => paymentService.updateDefaultCard(id),
+            "Default card updated successfully",
+            null,
+            setReloadData,
+            props.setLoading,
+            null,
+            null,
+            props.setToaster
+        );
+    }
+
+    const actions = [
+        {
+            key: "Delete",
+            action: (id) => setConfirmDeleteModal({
+                    ...confirmDeleteModal,
+                    show: true,
+                    id: id
+                }),
+            condition: (status) => true,
+        },
+        {
+            key: "Make Default",
+            action: (id) => updateDefaultCard(id),
+            condition: (status) => status !== 'default',
+        },
+    ];
+
     return (
         <>
             <DeleteModal
@@ -91,14 +121,7 @@ const PaymentMethods = (props) => {
                                             year={card.year}
                                             last4={card.last4}
                                             default={card.default}
-                                            allowDelete
-                                            onDelete={() => {
-                                                setConfirmDeleteModal({
-                                                    ...confirmDeleteModal,
-                                                    show: true,
-                                                    id: card.id
-                                                })
-                                            }}
+                                            actions={actions}
                                         />
                                     )) :
                                     <p>No Cards to show</p>
