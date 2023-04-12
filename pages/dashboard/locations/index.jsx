@@ -92,7 +92,7 @@ const Locations = (props) => {
             key: "activeToggle",
             action: (id, status) => {
                 if (status === "ACTIVE") setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true, type: "disable"});
-                else toggleRoleActivity(id);
+                else toggleLocationActivity(id);
             },
             condition: (status) => true,
         },

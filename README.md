@@ -22,7 +22,7 @@ You can access our deployed apps at
 |   https://staging.waaw.ca   |   https://waaw.ca   |
 
 ### API Documentation
-- Our API documentation is available [here](https://staging-api/swagger-ui.html)
+- Our API documentation is available [here](https://staging-api.waaw.ca/swagger-ui.html)
 - All endpoints are configured within our `next.config.js` file for ease of use.
 - Usage for our APIs can be found in `services` folder.
 - All API call should be done using our own helper class `fetchWrapper` which contains methods for `get`, `post`, `put`, `delete` and also `form-data post request` with some other methods.

@@ -17,7 +17,7 @@ const Clock = ({ className, timezone }) => {
             const timeString = now.toLocaleTimeString();
             setDate(now.toLocaleString('default', { month: 'long', day: 'numeric' }))
             const timeArray = timeString.substring(0, timeString.length - 3).split(':');
-            let hour = (timeString.substring(timeString.length - 2, timeString.length).toLowerCase() === 'pm' ?
+            let hour = (timeString.substring(timeString.length - 2, timeString.length).toLowerCase() === 'pm' && parseInt(timeArray[0]) !== 12 ?
             parseInt(timeArray[0]) + 12 : timeArray[0]).toString().padStart(2, '0');
             if (timeString.substring(timeString.length - 2, timeString.length).toLowerCase() === 'am' && parseInt(hour) >= 12) {
                 hour = hour - 12;
