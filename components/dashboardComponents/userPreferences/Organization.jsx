@@ -42,8 +42,19 @@ const Organization = (props) => {
         setAllowUserToClockInTime(props.data.organizationPreferences.allowUserToClockInTime);
     }
 
+    const allowedTypes = ['image/jpeg', 'image/png'];
+
     const handleUpload = (e) => {
         if (e.target.files.length) {
+            const type = e.target.files[0].type;
+            if(!allowedTypes.includes(type)) {
+                props.setToaster({
+                    error: true,
+                    title: "Error",
+                    message: "Please upload only jpeg or png image file",
+                })
+                return;
+            }
             organizationService.uploadLogo(e.target.files[0])
                 .then(res => {
                     if (!res.error) {
@@ -51,6 +62,13 @@ const Organization = (props) => {
                             error: false,
                             title: "Success",
                             message: 'Organization logo updated successfully.',
+                        })
+                        window.location.reload();
+                    } else {
+                        props.setToaster({
+                            error: true,
+                            title: "Error",
+                            message: "Something went wrong. Please try again later",
                         })
                     }
                 })
@@ -111,8 +129,10 @@ const Organization = (props) => {
                         uploadVisible &&
                         <label className={UserPreferenceStyles.uploadContainer} htmlFor='upload-button'>
                             <div className={UserPreferenceStyles.uploadBox}>
-                                <CameraAlt />
-                                <p>Choose File</p>
+                                <p><CameraAlt /> Choose File</p>
+                            </div>
+                            <div className={UserPreferenceStyles.uploadBox}>
+                                <p>{`(.jpeg / .png)`}</p>
                             </div>
                             <input
                                 type="file"

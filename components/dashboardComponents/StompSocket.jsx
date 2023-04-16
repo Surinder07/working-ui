@@ -25,6 +25,7 @@ const StompSocket = (props) => {
                     console.log("Disconnected from Websocket");
                 }}
                 onMessage={(msg, topic) => {
+                    console.log(topic, msg)
                     switch (topic) {
                         case webSocketEndpoints.topics.notification:
                             props.setNotificationToast({
@@ -66,6 +67,7 @@ const StompSocket = (props) => {
                             break;
                         case webSocketEndpoints.topics.updateUserDetail:
                             secureLocalStorage.saveData(userService.USER_KEY, JSON.stringify(msg));
+                            props.setUser({});
                             props.setUser(msg);
                     }
                 }}

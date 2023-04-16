@@ -20,7 +20,7 @@ const Options = (props) => {
     }, [])
 
     return (
-        <div ref={ref} className={props.vertical ? OptionsStyles.optionsV : OptionsStyles.optionsH} onClick={() => setShowOptions(!showOptions)}>
+        <div ref={ref} style={props.style} className={props.vertical ? OptionsStyles.optionsV : OptionsStyles.optionsH} onClick={() => setShowOptions(!showOptions)}>
             <span></span>
             <span></span>
             <span></span>

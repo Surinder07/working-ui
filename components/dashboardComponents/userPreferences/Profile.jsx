@@ -32,7 +32,7 @@ const Profile = (props) => {
         });
     }, []);
 
-    const allowedTypes = ['image/jpeg', 'image/png']
+    const allowedTypes = ['image/jpeg', 'image/png'];
 
     const handleUpload = (e) => {
         if (e.target.files.length) {
@@ -43,7 +43,7 @@ const Profile = (props) => {
                     title: "Error",
                     message: "Please upload only jpeg or png image file",
                 })
-                return
+                return;
             }
             userService.updateProfileImage(e.target.files[0])
                 .then(res => {
@@ -52,6 +52,13 @@ const Profile = (props) => {
                             error: false,
                             title: "Success",
                             message: 'Profile picture updated successfully.',
+                        })
+                        window.location.reload();
+                    } else {
+                        props.setToaster({
+                            error: true,
+                            title: "Error",
+                            message: "Something went wrong. Please try again later",
                         })
                     }
                 })
@@ -114,7 +121,6 @@ const Profile = (props) => {
                         uploadVisible &&
                         <label className={UserPreferenceStyles.uploadContainer} htmlFor='upload-button'>
                             <div className={UserPreferenceStyles.uploadBox}>
-                                
                                 <p><CameraAlt /> Choose File</p>
                             </div>
                             <div className={UserPreferenceStyles.uploadBox}>

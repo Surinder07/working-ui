@@ -1,7 +1,7 @@
 import { MobileModalStyles } from "../../../styles/elements";
 import { ArrowBack } from "@mui/icons-material";
 import SubTable from "./SubTable";
-import { getColorByStatus } from "../../../helpers";
+import { getAction, getColorByStatus } from "../../../helpers";
 
 const MobileModal = (props) => {
 
@@ -22,6 +22,16 @@ const MobileModal = (props) => {
                         }}
                     />
                     <div className={MobileModalStyles.header}>{props.title}</div>
+                    {
+                        getAction(
+                            (props.subData ? props.subData : props.data)["internalId"],
+                            (props.subData ? props.subData : props.data)["status"] && (props.subData ? props.subData : props.data)["status"].text,
+                            (props.subData ? props.subData : props.data)["startDate"] && (props.subData ? props.subData : props.data)["startDate"],
+                            props.actions,
+                            {position: 'absolute', right: '20px', top: '10px'},
+                            true
+                        )
+                    }
                     <div className={MobileModalStyles.contentContainer}>
                         {
                             Object.entries(props.subData ? props.subData : props.data).map((info, key) => {
