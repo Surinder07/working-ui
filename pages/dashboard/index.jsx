@@ -7,33 +7,6 @@ import {Chart, ArcElement, Legend, CategoryScale, LinearScale, PointElement, Lin
 import {dashboardService} from "../../services";
 Chart.register(ArcElement, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, Title, SubTitle);
 
-const shifts = [
-    {
-        Id: "8977890",
-        employeeName: "xyzabc",
-        employeeEmail: "XYZABC@GMAIL.COM",
-        locationName: "ABC",
-        shiftStartTime: "HH:MM",
-        shiftEndTime: "HH:MM",
-    },
-    {
-        Id: "8977890",
-        employeeName: "xyzabc",
-        employeeEmail: "XYZABC@GMAIL.COM",
-        locationName: "ABC",
-        shiftStartTime: "HH:MM",
-        shiftEndTime: "HH:MM",
-    },
-    {
-        Id: "8977890",
-        employeeName: "xyzabc",
-        employeeEmail: "XYZABC@GMAIL.COM",
-        locationName: "ABC",
-        shiftStartTime: "HH:MM",
-        shiftEndTime: "HH:MM",
-    },
-];
-
 const Dashboard = (props) => {
     const [tileInfo, setTileInfo] = useState();
     const [lineGraphData, setLineGraphData] = useState();
@@ -107,7 +80,7 @@ const Dashboard = (props) => {
                         <h1>Overview and Analytics</h1>
                     </div>
                     <InfoTileBanner data={tileInfo} role={props.user.role} />
-                    <DashboardTabular role={props.user.role} />
+                    <DashboardTabular role={props.user.role} screenType={props.screenType}/>
                     <DashboardCard className={DashboardStyles.graph}>
                         {lineGraphData ? (
                             <div style={{position: "relative", height: "100%", minHeight: "350px", display: "flex", justifyContent: "center", alignItems: "center"}}>

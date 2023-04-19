@@ -21,6 +21,7 @@ const LinkedImage = (props) => {
             <div className={joinClasses(props.className, CommonStyles.imageContainer)} style={style} >
                 <Image
                     className={joinClasses(CommonStyles.image, props.heightOrient ? CommonStyles.imageHeight : CommonStyles.imageWidth)}
+                    style={props.imgStyle}
                     src={props.src}
                     alt={props.alt}
                     quality={props.keepQuality ? 100 : 75}

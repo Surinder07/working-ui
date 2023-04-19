@@ -35,7 +35,7 @@ const FloatingClock = (props) => {
                 showModal &&
                 <div className={ClockStyles.modalBackdrop}>
                     <div className={ClockStyles.modal}>
-                        <h1>{startDate.toLocaleString('default', { month: 'long', day: 'numeric', timezone: props.timezone })}</h1>
+                        <h1>{(new Date()).toLocaleString('default', { month: 'long', day: 'numeric', timezone: props.timezone })}</h1>
                         <Close className={ClockStyles.closeIcon} onClick={handleClose} />
                         <div className={ClockStyles.modalTimer}>
                             <div>
@@ -45,6 +45,10 @@ const FloatingClock = (props) => {
                             <div>
                                 <h2>Duration</h2>
                                 <h3>{props.timer.duration}</h3>
+                            </div>
+                            <div>
+                                <h2>Total time today</h2>
+                                <h3>{props.timer.todayDuration}</h3>
                             </div>
                         </div>
                         <p className={ClockStyles.warnMessage}>

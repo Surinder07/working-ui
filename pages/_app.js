@@ -246,7 +246,7 @@ function MyApp({ Component, pageProps }) {
                         timer={timer}
                     >
                         {
-                            token &&
+                            (token !== null) &&
                             <StompSocket
                                 token={token}
                                 setNotificationToast={setNotificationToast}

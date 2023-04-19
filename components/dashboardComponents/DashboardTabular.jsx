@@ -50,6 +50,7 @@ const DashboardTabular = (props) => {
                 totalPages={totalPages}
                 pageNo={pageNo}
                 setPageNo={setPageNo}
+                screenType={props.screenType}
             />
         </DashboardCard>
     )

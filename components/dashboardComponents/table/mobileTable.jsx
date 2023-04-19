@@ -1,7 +1,7 @@
 import { MobileModalStyles } from "../../../styles/elements";
 import { ArrowBack } from "@mui/icons-material";
 import SubTable from "./SubTable";
-import { getAction, getColorByStatus } from "../../../helpers";
+import { checkForTimeKey, getAction, getColorByStatus } from "../../../helpers";
 
 const MobileModal = (props) => {
 
@@ -26,9 +26,9 @@ const MobileModal = (props) => {
                         getAction(
                             (props.subData ? props.subData : props.data)["internalId"],
                             (props.subData ? props.subData : props.data)["status"] && (props.subData ? props.subData : props.data)["status"].text,
-                            (props.subData ? props.subData : props.data)["startDate"] && (props.subData ? props.subData : props.data)["startDate"],
+                            (checkForTimeKey(props.data, props.subData)),
                             props.actions,
-                            {position: 'absolute', right: '20px', top: '10px'},
+                            { position: 'absolute', right: '20px', top: '10px' },
                             true
                         )
                     }
@@ -43,13 +43,15 @@ const MobileModal = (props) => {
                                     <div className={MobileModalStyles.tuple} key={key}>
                                         <div className={MobileModalStyles.key}>{name}</div>
                                         <div style={
-                                            value.status ? {
+                                            (value && value.status) ? {
                                                 backgroundColor: getColorByStatus(value.status),
                                                 color: '#FFF'
                                             } : {}}
                                             className={MobileModalStyles.value}
                                         >
-                                            {(value.text || value.displayType) ? value.text : value}
+                                            {
+                                                value ? ((value.text || value.displayType) ? value.text : value) : `-`
+                                            }
                                         </div>
                                     </div>
                                 );

@@ -41,6 +41,7 @@ const ProfileImage = (props) => {
                 <LinkedImage
                     heightOrient
                     style={{ cursor: 'pointer', height: `${height}px` }}
+                    imgStyle={props.header ? { minHeight: '100%', minWidth: '100%', objectFit: 'cover' } : {}}
                     src={props.src ? props.src : ProfilePlaceholderSmall}
                     alt={props.user ? (props.user.firstName + ' ' + props.user.lastName) : 'profile'}
                     link={(props.header && !props.dropdown) ? '/dashboard/user/preference' : '#'}

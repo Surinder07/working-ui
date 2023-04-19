@@ -25,7 +25,6 @@ const StompSocket = (props) => {
                     console.log("Disconnected from Websocket");
                 }}
                 onMessage={(msg, topic) => {
-                    console.log(topic, msg)
                     switch (topic) {
                         case webSocketEndpoints.topics.notification:
                             props.setNotificationToast({
