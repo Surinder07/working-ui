@@ -110,7 +110,7 @@ export const checkActiveTimer = (setPageLoading, setToasterInfo, setData, data, 
                             ...stompMsg,
                             timesheet: {
                                 timerActive: true,
-                                allowAfterMinutes: res.shiftsAfterSeconds
+                                allowAfterSeconds: res.shiftsAfterSeconds
                             }
                         })
                     }

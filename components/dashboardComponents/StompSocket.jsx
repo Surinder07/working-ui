@@ -48,7 +48,7 @@ const StompSocket = (props) => {
                                 ...props.stompMsg,
                                 timesheet: {
                                     timerActive: true,
-                                    allowAfterMinutes: msg
+                                    allowAfterSeconds: msg
                                 }
                             })
                             break;

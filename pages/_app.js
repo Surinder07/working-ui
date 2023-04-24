@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
         invite: false,
         timesheet: {
             timerActive: false,
-            allowAfterMinutes: 0
+            allowAfterSeconds: 0
         },
         notification: {}
     })
@@ -81,10 +81,10 @@ function MyApp({ Component, pageProps }) {
                     ...stompMsg,
                     timesheet: {
                         timerActive: false,
-                        allowAfterMinutes: 0
+                        allowAfterSeconds: 0
                     }
                 })
-            }, stompMsg.timesheet.allowAfterMinutes * 60000);
+            }, stompMsg.timesheet.allowAfterSeconds * 1000);
             return () => clearTimeout(timerFunction);
         }
     }, [stompMsg.timesheet.timerActive])
@@ -212,7 +212,7 @@ function MyApp({ Component, pageProps }) {
                     let temp = stompMsg;
                     temp[topic] = topic === 'timesheet' ? {
                         allow: false,
-                        allowAfterMinutes: 0
+                        allowAfterSeconds: 0
                     } : false;
                     setStompMsg(temp);
                 }}
