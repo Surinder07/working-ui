@@ -26,8 +26,8 @@ export const checkAllowedDataIndex = (i, screenType) => {
 
 export const getAction = (id, status, date, actions, style, vertical) => {
     if (!style) style = {};
-    if (Array.isArray(actions)) return <Options style={style} options={actions} actionId={id} status={status} date={date} vertical={vertical}/>;
-    else if (actions.key === "Edit") return <Edit style={style} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
-    else if (actions.key === "Delete") return <Delete style={{ ...style, color: "#999" }} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
-    else if (actions.key === "Download") return <FileDownload style={style} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
+    if (Array.isArray(actions)) return <Options style={style} options={actions} actionId={id} status={status} date={date} vertical={vertical} />;
+    else if (actions.key === "Edit") return <Edit style={{ ...style, color: '#0091d0' }} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
+    else if (actions.key === "Delete") return <Delete style={{ ...style, color: "#CC1111" }} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
+    else if (actions.key === "Download") return <FileDownload style={{ ...style, color: '#0091d0' }} className={TableStyles.actionIcon} onClick={() => actions.action(id)} />;
 };

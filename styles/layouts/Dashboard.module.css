@@ -42,7 +42,6 @@
 .organizationLogo {
     margin: 0 15px;
     height: 40px;
-    margin-left: 15px;
 }
 
 .organizationName {
@@ -50,11 +49,6 @@
     margin: 0;
     font-weight: 700;
     color: #B1B1B1;
-}
-
-.openNavDashboard .organizationLogo, 
-.openNavDashboard .organizationName {
-    margin-left: 0;
 }
 
 .sideNav {
@@ -291,6 +285,11 @@
 
     .footer {
         max-width: unset !important;
+    }
+
+    .openNavDashboard .organizationLogo, 
+    .openNavDashboard .organizationName {
+        margin-left: 0;
     }
 
 }

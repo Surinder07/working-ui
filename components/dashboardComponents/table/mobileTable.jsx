@@ -28,7 +28,7 @@ const MobileModal = (props) => {
                             (props.subData ? props.subData : props.data)["status"] && (props.subData ? props.subData : props.data)["status"].text,
                             (checkForTimeKey(props.data, props.subData)),
                             props.actions,
-                            { position: 'absolute', right: '20px', top: '10px' },
+                            { position: 'absolute', right: '20px', top: '15px' },
                             true
                         )
                     }
@@ -40,20 +40,21 @@ const MobileModal = (props) => {
                                 let value = info[1];
                                 return (
                                     (info[0] !== "internalId" && info[0] !== "subData" && info[0] !== 'history') &&
-                                    <div className={MobileModalStyles.tuple} key={key}>
-                                        <div className={MobileModalStyles.key}>{name}</div>
+                                    <>
+                                        <div className={MobileModalStyles.key} key={`key_${key}`}>{name}</div>
                                         <div style={
                                             (value && value.status) ? {
                                                 backgroundColor: getColorByStatus(value.status),
                                                 color: '#FFF'
                                             } : {}}
                                             className={MobileModalStyles.value}
+                                            key={`value_${key}`}
                                         >
                                             {
                                                 value ? ((value.text || value.displayType) ? value.text : value) : `-`
                                             }
                                         </div>
-                                    </div>
+                                    </>
                                 );
                             })}
                     </div>

@@ -141,7 +141,7 @@ const nextConfig = {
     eslint: { ignoreDuringBuilds: true },
     publicRuntimeConfig: {
         apiUrl: process.env.NODE_ENV === 'development'
-            ? 'https://staging-api.waaw.ca/api' // development api
+            ? 'http://localhost:8080/api' // development api
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {

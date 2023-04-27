@@ -24,6 +24,7 @@ const Organization = (props) => {
     const [data, setData] = useState({});
 
     useEffect(() => {
+        console.log(props.data)
         if (props.data) {
             resetData();
         }
@@ -38,7 +39,7 @@ const Organization = (props) => {
         setWaawId(props.data.organizationWaawId);
         setOverTimeRequest(props.data.organizationPreferences.isOvertimeRequestEnabled);
         setTimeOff(props.data.organizationPreferences.isTimeoffEnabledDefault);
-        setTimeSheet(props.data.organizationPreferences.isTimeClockEnabledDefault);
+        setTimeSheet(props.data.organizationPreferences.isTimeclockEnabledDefault);
         setAllowUserToClockInTime(props.data.organizationPreferences.allowUserToClockInTime);
     }
 

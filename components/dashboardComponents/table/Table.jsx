@@ -20,7 +20,7 @@ const Table = (props, ref) => {
     useEffect(() => {
         if (props.data.length > 0) {
             let keyList = Object.keys(props.data[0]).filter((item) => item !== "subData" && item !== "internalId" && item !== "history");
-            let headerList = Array.from(Object.keys(props.data[0]), (el) => {
+            let headerList = Array.from(Object.keys(props.data[0]), (el, key) => {
                 const result = el.replace(/([A-Z])/g, " $1");
                 return result.charAt(0).toUpperCase() + result.slice(1);
             }).filter((item) => item.toLowerCase() !== "sub data" && item.toLowerCase() !== "internal id" && item.toLowerCase() !== "history");

@@ -59,20 +59,18 @@ const timeClock = (props) => {
                             <h1>Time Clock</h1>
                         </div>
                         <DashboardCard className={DashboardStyles.timerCard} style={{ marginTop: "20px" }}>
-                            <div>
-                                <h1>Time Clock</h1>
+                            <div className={DashboardStyles.timerConsole}>
+                                <h2 style={{ fontWeight: 700 }}>Time worked today</h2>
+                                <h3 style ={{borderBottom: '2px #33333333 solid', width: '50%', textAlign: 'center'}}>{props.timer.todayDuration}</h3>
+                                <h1 style={{ fontWeight: 700 }}>New Timer</h1>
                                 <div className={DashboardStyles.timerContainer}>
                                     <div style={{ paddingRight: '40px' }} className={DashboardStyles.subTimerContainer}>
                                         <h2>Start</h2>
                                         <h3>{props.timer.start}</h3>
                                     </div>
-                                    <div style={{ padding: '0 40px' }} className={DashboardStyles.subTimerContainer}>
+                                    <div style={{ padding: '0 40px' }}>
                                         <h2>Duration</h2>
                                         <h3>{props.timer.duration}</h3>
-                                    </div>
-                                    <div style={{ paddingLeft: '40px' }}>
-                                        <h2>Total time today</h2>
-                                        <h3>{props.timer.todayDuration}</h3>
                                     </div>
                                 </div>
                                 <div className={DashboardStyles.clockButtons}>

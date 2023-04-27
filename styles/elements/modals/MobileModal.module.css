@@ -1,102 +1,75 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	background: #FFFFFF;
-	position: fixed;
-	top: 49px;
-	left: 0;
-	min-height: 100vh;
-	min-width: 100vw;
-	z-index: 100;
-	padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    position: fixed;
+    top: 49px;
+    left: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: 100;
+    padding: 10px 20px;
 }
 
 .header {
-	font-family: 'Mulish';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 24px;
-	line-height: 30px;
-	letter-spacing: 0.3px;
-	color: #252733;
-	width: 100%;
-	text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.3px;
+    color: #252733;
+    width: 100%;
+    text-align: center;
 }
 
 .arrowBackIcon {
-	position: absolute;
-	position: absolute;
-	top: 20px;
-	left: 10px;
-	cursor: pointer;
-}
-
-.actions {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.editIcon {
-	color: #2996C3;
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-}
-
-.deleteIcon {
-	color: red;
-	width: 20px;
-	height: 20px;
-
+    position: absolute;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    cursor: pointer;
 }
 
 .contentContainer {
-	display: flex;
-	flex-direction: column;
-	background: #FFFFFF;
-	border: 2px solid #BFBFBF;
-	margin-top: 20px;
-}
-
-.tuple {
-	display: grid;
-	grid-template-columns: 0.7fr 1fr;
+    display: grid;
+    grid-template-columns: auto auto;
+    border: 1px solid #BFBFBF;
+    margin-top: 20px;
 }
 
 .key {
-	background: #363740;
-	color: #fff;
-	width: 100%;
-	height: 60px;
-	border: 1px solid #999999;
-	padding-left: 20px;
-	padding-top: 18px;
-	font-family: 'Mulish';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.2px;
-	color: #FFFFFF;
+    background: #363740;
+    color: #fff;
+    width: 100%;
+    height: 60px;
+    border: 1px solid #999999;
+    padding-left: 20px;
+    padding-top: 18px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
 }
 
 .value {
-	border: 1px solid #999999;
-	padding-left: 20px;
-	padding-top: 18px;
-	font-family: 'Mulish';
-	font-style: normal;
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.2px;
-	color: #535255;
+    border: 1px solid #999999;
+    padding-left: 20px;
+    padding-top: 18px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    color: #535255;
 }
 
 @media only screen and (min-width: 480px) {
-	.container {
-		width: calc(100% - -61px);
-	}
+    .container {
+        width: calc(100% - -61px);
+    }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 1000px) {
