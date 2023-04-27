@@ -17,10 +17,10 @@
     height: unset !important;
 }
 
-/* .imageContainer {
+.imageContainer {
     position: relative !important;
 }
-
+/* 
 .image {
     object-fit: contain;
     max-height: 100% !important;

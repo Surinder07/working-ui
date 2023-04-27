@@ -13,6 +13,7 @@ import DashboardTabular from "./DashboardTabular";
 import FloatingClock from './FloatingClock';
 import NotificationToaster from "./NotificationToaster";
 import StompSocket from './StompSocket';
+import MobileNavigation from "./MobileNavigation";
 
 export {
     CalendarComponent,
@@ -29,7 +30,8 @@ export {
     DashboardTabular,
     FloatingClock,
     NotificationToaster,
-    StompSocket
+    StompSocket,
+    MobileNavigation
 };
 
 export * from "./userPreferences";

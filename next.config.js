@@ -141,11 +141,11 @@ const nextConfig = {
     eslint: { ignoreDuringBuilds: true },
     publicRuntimeConfig: {
         apiUrl: process.env.NODE_ENV === 'development'
-            ? 'http://localhost:8080/api' // development api
+            ? 'https://staging-api.waaw.ca/api' // development api
             : 'https://staging-api.waaw.ca/api' // production api
     },
     env: {
-        version: "2.0.4",
+        version: "2.0.5",
         termsAndPrivacyData: {
             deployedAddress: "www.waaw.ca",
             businessAddress: "25 Plentywood drive, Bramptom, Canada, L6Y 0V2",

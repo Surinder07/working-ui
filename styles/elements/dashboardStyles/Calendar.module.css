@@ -268,7 +268,7 @@
 
     .todayDate {
         color: black;
-        background-color: #F6F6F6;
+        background-color: unset;
     }
 
     .todayDate::after {
@@ -284,6 +284,6 @@
 
     .eventsContainer {
         height: unset;
-        max-height: 400px;
+        overflow-y: unset;
     }
 }

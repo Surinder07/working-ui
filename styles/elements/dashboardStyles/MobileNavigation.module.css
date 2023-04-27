@@ -1,0 +1,70 @@
+.circularShadow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    box-shadow: 1px 0px 6px 1px rgb(54 55 64 / 30%);
+}
+
+.container {
+    position: fixed;
+    width: 100vw;
+    height: 50px;
+    background-color: #363740;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    justify-items: center;
+    box-shadow: 1px 0px 6px 1px rgba(33, 33, 33, 0.3);
+    transition: all 0.2s ease;
+    left: 0;
+}
+
+.containerVisible {
+    bottom: 0;
+}
+
+.containerHidden {
+    bottom: -100px;
+}
+
+.middleIconContainer, .iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.middleIconContainer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    color: #000;
+    border: 2px white solid;
+    cursor: pointer;
+}
+
+.iconContainer {
+    color: #FFF;
+    width: 100%;
+    height: 100%;
+}
+
+.activeButton {
+    color: var(--logo-blue-color);
+    background-color: #51525a;
+}
+
+@media only screen and (min-width: 1000px) {
+    .container {
+        display: none;
+    }
+}

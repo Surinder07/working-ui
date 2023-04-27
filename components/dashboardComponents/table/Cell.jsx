@@ -73,14 +73,14 @@ const Cell = (props) => {
             } else {
                 return <p className={CellStyles.status} style={statusStyle}>{props.data.text}</p>
             }
+        } else {
+            return <p>{'-'}</p>
         }
     }
 
     return (
         <div className={`${props.className}`} style={props.style}>
-            {
-                getElement()
-            }
+            {getElement()}
         </div>
     )
 }

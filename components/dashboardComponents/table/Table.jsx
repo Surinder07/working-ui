@@ -28,7 +28,7 @@ const Table = (props, ref) => {
             setDisplayHeaders(headerList);
             setKeyListLength(keyList.length);
             let columnsNum = (props.screenType === 1) ? keyList.length : ((props.screenType === 2) ? 4 : 2);
-            if (props.actions) columnsNum++;
+            if (props.actions || props.screenType !== 1) columnsNum++;
             if (props.data[0].subData || props.data[0].history) columnsNum++;
             setColNum(columnsNum);
         }

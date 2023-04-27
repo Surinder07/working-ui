@@ -40,15 +40,21 @@
 }
 
 .organizationLogo {
+    margin: 0 15px;
     height: 40px;
     margin-left: 15px;
 }
 
 .organizationName {
+    margin: 0 15px;
     margin: 0;
-    margin-left: 15px;
     font-weight: 700;
     color: #B1B1B1;
+}
+
+.openNavDashboard .organizationLogo, 
+.openNavDashboard .organizationName {
+    margin-left: 0;
 }
 
 .sideNav {
@@ -131,13 +137,13 @@
 
 .ribbon {
     position: fixed;
-    top:53px;
+    top: 53px;
     padding: 10px 20px;
     background-color: var(--logo-blue-color);
     width: 100%;
     font-size: 14px;
     font-weight: 700;
-    color:#FFF;
+    color: #FFF;
     display: flex;
     justify-content: space-between;
     z-index: 4;
@@ -277,14 +283,51 @@
 
 }
 
+@media only screen and (max-width: 1000px) and (min-width: 480px) {
+
+    .openNavDashboard {
+        grid-template-columns: 180px auto !important;
+    }
+
+    .footer {
+        max-width: unset !important;
+    }
+
+}
+
 @media only screen and (max-width: 1000px) {
 
-    .organizationLogo {
-        display: none;
+    .dashboardPage {
+        grid-template-columns: 1fr;
     }
-    
-    .organizationName {
-        display: none;
+
+    .closeNavRightContainer {
+        max-width: 100vw;
+    }
+
+    .sideNav {
+        padding-bottom: 70px;
+    }
+
+    .closeNavDashboard .sideNav {
+        width: 0;
+        overflow-x: hidden;
+        position: fixed;
+        z-index: 100;
+    }
+
+    .closeNavDashboard .header,
+    .closeNavDashboard .footer,
+    .closeNavDashboard .ribbon {
+        max-width: 100%;
+    }
+
+    .footer {
+        position: unset;
+    }
+
+    .mobileLogo {
+        display: block;
     }
 
 }
@@ -295,22 +338,27 @@
         grid-template-columns: 1fr;
     }
 
+    .organizationLogo,
+    .organizationName {
+        margin-right: 0;
+    }
+
     .header {
-        box-shadow: none;
         background-color: white;
     }
 
     .content {
-        background-color: white;
         padding-left: 15px;
         padding-right: 15px;
         min-width: 100%;
     }
 
     .sideNav {
-        position: absolute;
+        position: fixed;
         z-index: 100;
         overflow-x: hidden;
+        padding-bottom: 70px;
+        overflow-y: scroll;
     }
 
     .logoContainer {
@@ -336,7 +384,6 @@
     }
 
     .header {
-        flex-direction: row-reverse;
         justify-content: space-between;
     }
 
@@ -400,14 +447,8 @@
         margin: 29px 20px;
     }
 
-    .mobileLogo {
-        display: block;
-    }
-
     .footer {
         width: 100%;
-        position: fixed;
-        bottom: 0;
         display: grid;
         grid-template-columns: 1fr;
         row-gap: 5px;

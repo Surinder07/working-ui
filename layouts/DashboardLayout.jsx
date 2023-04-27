@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger, FloatingClock } from "../components";
+import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger, FloatingClock, MobileNavigation } from "../components";
 import { footerIcons, SideNavInfo } from "../constants";
 import { LogoWhite, Favicon, Logo } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
@@ -8,26 +8,30 @@ import { Logout, Settings } from "@mui/icons-material";
 import { userService } from "../services";
 import { joinClasses } from "../helpers";
 import { Close } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
-    const [navOpen, setNavOpen] = useState(props.screenType === 3 ? false : true);
+    const [navOpen, setNavOpen] = useState(props.screenType !== 1 ? false : true);
     const [userName, setUserName] = useState("...");
     const [sideNav, setSideNav] = useState([]);
     const [showRibbon, setShowRibbon] = useState(true);
+    const router = useRouter();
 
     const handleNavigation = useCallback(
         (e) => {
-            const window = e.currentTarget;
-            if (sideNavRef.current.clientHeight > window.scrollY + window.innerHeight) {
-                setSideNavStyle({});
-            } else if (y < window.scrollY && sideNavRef.current.clientHeight < window.scrollY + window.innerHeight) {
-                setSideNavStyle({ position: "fixed", bottom: 0 });
+            if (props.screenType !== 3) {
+                const window = e.currentTarget;
+                if (sideNavRef.current.clientHeight > window.scrollY + window.innerHeight) {
+                    setSideNavStyle({});
+                } else if (y < window.scrollY && sideNavRef.current.clientHeight < window.scrollY + window.innerHeight) {
+                    setSideNavStyle({ position: "fixed", bottom: 0 });
+                }
+                setY(window.scrollY);
             }
-            setY(window.scrollY);
         },
         [y]
     );
@@ -52,11 +56,6 @@ const Dashboard = (props) => {
             <div style={{ position: "relative", width: "inherit" }}>
                 <div className={DashboardLayout.sideNav} ref={sideNavRef} style={sideNavStyle}>
                     <div>
-                        <Hamburger
-                            className={DashboardLayout.sideNavHamburger}
-                            setOpenMenu={setNavOpen}
-                            openMenu={navOpen}
-                        />
                         <div>
                             <div className={DashboardLayout.logoContainer}>
                                 <LinkedImage
@@ -72,6 +71,7 @@ const Dashboard = (props) => {
                                 className={DashboardLayout.profileContainer}
                                 onClick={() => {
                                     if (props.screenType === 3) setNavOpen(false);
+                                    router.push('/dashboard/user/preference')
                                 }}
                             >
                                 <p>Hi, {userName}</p>
@@ -130,8 +130,20 @@ const Dashboard = (props) => {
             </div>
             <div className={joinClasses(navOpen ? DashboardLayout.openNavRightContainer : DashboardLayout.closeNavRightContainer)}>
                 <div className={DashboardLayout.header}>
+                    {
+                        (props.screenType !== 2 || !navOpen) &&
+                        <div style={{ width: "fit-content" }} className={DashboardLayout.mobileLogo}>
+                            <LinkedImage
+                                className={DashboardLayout.logo}
+                                src={Logo}
+                                heightOrient
+                                alt="Logo"
+                                link="/dashboard"
+                            />
+                        </div>
+                    }
                     <div className={DashboardLayout.leftHeader}>
-                        <ConstantHamburger setOpen={setNavOpen} open={navOpen} />
+                        {props.screenType === 1 && <ConstantHamburger setOpen={setNavOpen} open={navOpen} />}
                         {
                             (props.user && props.user.organizationLogoUrl) ?
                                 <LinkedImage
@@ -150,12 +162,14 @@ const Dashboard = (props) => {
                             placeholder="Search"
                             disabled
                         />
-                        <div className={DashboardLayout.helpIcon}>?</div>
-                        <NotificationBell
-                            setPageLoading={props.setPageLoading}
-                            setNotificationToast={props.setNotificationToast}
-                            stompMsg={props.stompMsg}
-                        />
+                        {props.screenType !== 3 && <div className={DashboardLayout.helpIcon}>?</div>}
+                        {
+                            props.screenType === 1 &&
+                            <NotificationBell
+                                setPageLoading={props.setPageLoading}
+                                setNotificationToast={props.setNotificationToast}
+                                stompMsg={props.stompMsg}
+                            />}
                         <h3 className={DashboardLayout.userName}>{userName}</h3>
                         <ProfileImage
                             src={props.user.imageUrl}
@@ -165,22 +179,13 @@ const Dashboard = (props) => {
                             dropdown
                         />
                     </div>
-                    <div style={{ width: "fit-content" }} className={DashboardLayout.mobileLogo}>
-                        <LinkedImage
-                            className={DashboardLayout.logo}
-                            src={Logo}
-                            heightOrient
-                            alt="Logo"
-                            link="/dashboard"
-                        />
-                    </div>
                 </div>
                 {
                     (props.user.status === 'TRIAL_PERIOD' && showRibbon) &&
                     <div className={DashboardLayout.ribbon}>
                         <p>Your free trial will end in {props.user.trialDaysPending} days.</p>
-                        <Close className={DashboardLayout.hideRibbon} onClick={() => setShowRibbon(false)}/>
-                        </div>
+                        <Close className={DashboardLayout.hideRibbon} onClick={() => setShowRibbon(false)} />
+                    </div>
                 }
                 <div className={DashboardLayout.content}>{props.children}</div>
                 <div className={DashboardLayout.footer}>
@@ -208,7 +213,7 @@ const Dashboard = (props) => {
                 </div>
             </div>
             {
-                props.user.role !== 'ADMIN' &&
+                (props.user.role !== 'ADMIN' && props.screenType === 1) &&
                 <FloatingClock
                     setToasterInfo={props.setToasterInfo}
                     role={props.user.role}
@@ -219,6 +224,12 @@ const Dashboard = (props) => {
                     timezone={props.user.timezone}
                 />
             }
+            <MobileNavigation
+                role={props.user.role}
+                pageInfo={props.pageInfo}
+                setPageInfo={props.setPageInfo}
+                setNavOpen={setNavOpen}
+            />
         </div>
     );
 };

@@ -9,6 +9,7 @@ import TabsStyles from './Tabs.module.css';
 import CellStyles from './Cell.module.css';
 import ClockStyles from './Clock.module.css';
 import PaymentInfoStyles from './PaymentInfo.module.css';
+import MobileNavigationStyles from './MobileNavigation.module.css';
 
 export {
     NotificationsStyles,
@@ -21,5 +22,6 @@ export {
     TabsStyles,
     CellStyles,
     ClockStyles,
-    PaymentInfoStyles
+    PaymentInfoStyles,
+    MobileNavigationStyles
 }
