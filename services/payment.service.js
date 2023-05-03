@@ -22,24 +22,24 @@ const updateDefaultCard = async (cardId) => {
     return fetchWrapper.put(fetchWrapper.getApiUrl(endpoints.updateDefaultCard, { cardId }))
 }
 
-const createPaymentIntent = async (invoiceId) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.createPaymentIntent, { invoiceId }));
+const createPaymentIntent = async (paymentId) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.createPaymentIntent, { paymentId }));
 }
 
-const getAllInvoices = async (pageNo, pageSize, filters, sort) => {
-    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getAllInvoices, pageNo, pageSize, { ...filters, ...sort }));
+const getAllPayments = async (pageNo, pageSize, filters, sort) => {
+    return fetchWrapper.get(fetchWrapper.getPaginationUrl(endpoints.getAllPayments, pageNo, pageSize, { ...filters, ...sort }));
 }
 
-const getById = async (invoiceId) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getById, { invoiceId }))
+const getById = async (paymentId) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getPaymentById, { paymentId }))
 }
 
-const confirmPayment = async (invoiceId, stripeId) => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.confirmPayment, { invoiceId, stripeId }))
+const confirmPayment = async (paymentId, success) => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.confirmPayment, { paymentId, success }))
 }
 
-const getPendingInvoice = async () => {
-    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getPendingInvoice));
+const getPendingPayment = async () => {
+    return fetchWrapper.get(fetchWrapper.getApiUrl(endpoints.getPendingPayment));
 }
 
 export const paymentService = {
@@ -49,8 +49,8 @@ export const paymentService = {
     deleteCard,
     updateDefaultCard,
     createPaymentIntent,
-    getAllInvoices,
+    getAllPayments,
     getById,
     confirmPayment,
-    getPendingInvoice
+    getPendingPayment
 }

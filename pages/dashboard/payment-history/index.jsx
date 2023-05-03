@@ -41,7 +41,7 @@ const PaymentHistory = (props) => {
 
     const fetchData = () => {
         fetchAndHandlePage(
-            () => paymentService.getAllInvoices(pageNo, pageSize, filters),
+            () => paymentService.getAllPayments(pageNo, pageSize, filters),
             setData,
             setTotalEntries,
             setTotalPages,

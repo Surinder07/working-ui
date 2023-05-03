@@ -108,21 +108,31 @@ const CreditCardForm = (props) => {
             .then(res => {
                 if (res.error) {
                     if (res.error.payment_intent.status === 'succeeded') {
-                        
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: "You connot make this payment. This payment has already succeded",
-                    })
+                        props.setToasterInfo({
+                            error: true,
+                            title: "Error!",
+                            message: "You connot make this payment. This payment has already succeded",
+                        })
                     } else {
-                    props.setToasterInfo({
-                        error: true,
-                        title: "Error!",
-                        message: res.error.message,
-                    })
-                }
+                        paymentService.confirmPayment(props.invoiceId, false)
+                            .then(res => {
+                                if (!res.error) {
+                                    props.setToasterInfo({
+                                        error: true,
+                                        title: "Error!",
+                                        message: res.error.message,
+                                    })
+                                } else {
+                                    props.setToasterInfo({
+                                        error: true,
+                                        title: "Error!",
+                                        message: "Something went wrong and we couldn't update your payment status. If some money is deducted from your account please contact the application admin.",
+                                    })
+                                }
+                            })
+                    }
                 } else {
-                    paymentService.confirmPayment(props.invoiceId, res.paymentIntent.id)
+                    paymentService.confirmPayment(props.invoiceId, true)
                         .then(res => {
                             if (!res.error) {
                                 props.setToasterInfo({
@@ -131,6 +141,12 @@ const CreditCardForm = (props) => {
                                     message: "Payment Successful.",
                                 })
                                 if (redirect) router.push('/dashboard/payment-history')
+                            }else {
+                                props.setToasterInfo({
+                                    error: true,
+                                    title: "Error!",
+                                    message: "Something went wrong and we couldn't update your payment status. If some money is deducted from your account please contact the application admin.",
+                                })
                             }
                         })
                 }

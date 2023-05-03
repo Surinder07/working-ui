@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchAndHandlePage, getSingleShiftsListing } from "../../helpers";
-import { dashboardService } from "../../services";
+import { fetchAndHandlePage, getPaymentListing, getSingleShiftsListing } from "../../helpers";
+import { dashboardService, paymentService } from "../../services";
 import DashboardCard from "./DashboardCard";
 import TabularInfo from "./TabularInfo";
 
@@ -21,10 +21,8 @@ const DashboardTabular = (props) => {
         if (props.role === 'ADMIN') {
             setTitle('Payment History');
             setDescription('Tabular list of payment history');
-            setData([]);
-            // fetchAndHandlePage(() => notificationService.getAll(pageNo, 5, filters, sort),
-            //     setData, setTotalEntries, setTotalPages, props.setPageLoading, props.setToasterInfo,
-            //     getNotificationListing, props.user.role);
+            fetchAndHandlePage(() => paymentService.getAllPayments(pageNo, 5), setData, setTotalEntries,
+                setTotalPages, null, null, getPaymentListing, props.role);
         } else if (props.role === 'MANAGER') {
             setTitle('Schedule shift for today');
             setDescription('Tabular list of all shifts assigned to employees for today');

@@ -278,21 +278,22 @@ export const getReportListing = (data, role) => {
 }
 
 export const getPaymentListing = (data) => {
-    return data.map(invoice => {
+    return data.map(payment => {
         return {
-            internalId: invoice.id,
-            id: invoice.waawId,
-            description: `${invoice.quantity} x ${invoice.unitPrice}`,
-            total: `${invoice.totalAmount} ${invoice.currency}`,
-            type: invoice.transactionType.replace('_', ' '),
-            invoiceDate: invoice.invoiceDate,
-            invoiceFor: invoice.dateRange,
-            dueDate: invoice.dueDate,
-            paymentDate: invoice.paymentDate,
+            internalId: payment.id,
+            invoiceId: payment.invoiceId,
+            transactionId: payment.transactionId,
+            description: `${payment.quantity} x ${payment.unitPrice}`,
+            total: `${payment.totalAmount} ${payment.currency}`,
+            type: payment.transactionType.replace('_', ' '),
+            invoiceDate: payment.invoiceDate,
+            invoiceFor: payment.dateRange,
+            dueDate: payment.dueDate,
+            paymentDate: payment.paymentDate,
             status: {
-                text: invoice.invoiceStatus,
+                text: payment.paymentStatus,
                 displayType: 'bg',
-                status: invoice.invoiceStatus === 'FAILED' ? 'bad' : (invoice.invoiceStatus === 'PAID' ? 'ok' : 'warn')
+                status: payment.paymentStatus === 'FAILED' ? 'bad' : (payment.paymentStatus === 'PAID' ? 'ok' : 'warn')
             }
         }
     })

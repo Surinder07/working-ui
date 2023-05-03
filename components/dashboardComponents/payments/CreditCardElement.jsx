@@ -61,7 +61,7 @@ const CreditCardElement = (props) => {
         (props.modal && props.modal.show) ?
             <div className={PaymentInfoStyles.paymentsBackDrop} ref={modalRef} style={{ overflowY: 'scroll' }}>
                 <div className={PaymentInfoStyles.paymentsContainer}>
-                    {(props.modal && props.showSavedCards) && <Close className={PaymentInfoStyles.closeIcon} onClick={() => props.setModal({ show: false })} />}
+                    {(props.modal && (props.showSavedCards || props.allowClose)) && <Close className={PaymentInfoStyles.closeIcon} onClick={() => props.setModal({ show: false })} />}
                     {
                         props.type === 'addCard' ?
                             <h1>Add A <span style={{ color: '#28A8E0' }}>New Card</span></h1> :

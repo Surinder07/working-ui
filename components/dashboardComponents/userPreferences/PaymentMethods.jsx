@@ -103,6 +103,7 @@ const PaymentMethods = (props) => {
                 modal={addCard}
                 setModal={setAddCard}
                 setReloadData={setReloadData}
+                allowClose
             />
             <div className={PaymentInfoStyles.userPreferenceCard}>
                 <div>
