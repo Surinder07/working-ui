@@ -82,6 +82,7 @@ const Profile = (props) => {
                         title: "Success",
                         message: 'Profile updated successfully.',
                     })
+                    setEditPersonalDetails(false);
                 }
                 props.setLoading(false);
             })

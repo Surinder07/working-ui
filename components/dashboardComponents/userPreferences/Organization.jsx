@@ -40,7 +40,7 @@ const Organization = (props) => {
         setOverTimeRequest(props.data.organizationPreferences.isOvertimeRequestEnabled);
         setTimeOff(props.data.organizationPreferences.isTimeoffEnabledDefault);
         setTimeSheet(props.data.organizationPreferences.isTimeclockEnabledDefault);
-        setAllowUserToClockInTime(props.data.organizationPreferences.allowUserToClockInTime);
+        setAllowUserToClockInTime(props.data.organizationPreferences.clockInAllowedMinutesBeforeShift);
     }
 
     const allowedTypes = ['image/jpeg', 'image/png'];
@@ -108,6 +108,7 @@ const Organization = (props) => {
                         clockInAllowedMinutesBeforeShift: allowUserToClockInTime
                     }
                 })
+                setEditPersonalDetails(false);
             }
             props.setLoading(false);
         })

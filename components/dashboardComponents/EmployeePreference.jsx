@@ -66,10 +66,6 @@ const EmployeePreference = (props) => {
         setPreferences({ ...preferences, rowsData: newObj })
     }
 
-    useEffect(() => {
-        console.log(preferences)
-    }, [preferences])
-
     const onCancel = () => {
         setPreferences(initialPreferences);
         setRowError([])

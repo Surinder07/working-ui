@@ -5,7 +5,7 @@ import { InputBoxStyles } from '../../../styles/elements';
 const NumberInput = (props) => {
 
     useEffect(() => {
-        props.setValue(0);
+        if (typeof props.value !== 'number') props.setValue(0);
     }, [])
 
     return (

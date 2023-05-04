@@ -7,6 +7,7 @@ import { RadioButtons, Toggle, ToggleWithValue } from './toggles';
 import { joinClasses } from '../../helpers';
 
 const EditableInput = (props) => {
+    
     const setValue = (value) => {
         props.setError &&
             props.setError({
