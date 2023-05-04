@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal, DeleteModal, PaginationDropdown, RolesFilter} from "../../../components";
-import {locationAndRoleService} from "../../../services";
-import {fetchAndHandle, fetchAndHandlePage, getRoleListing} from "../../../helpers";
+import { useEffect, useState } from "react";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, NewRoleModal, DeleteModal, PaginationDropdown, RolesFilter } from "../../../components";
+import { locationAndRoleService } from "../../../services";
+import { fetchAndHandle, fetchAndHandlePage, getRoleListing } from "../../../helpers";
 
 const Roles = (props) => {
     const [updateModal, setUpdateModal] = useState(false);
@@ -69,11 +69,11 @@ const Roles = (props) => {
             null,
             props.setToasterInfo,
             null,
-            (msg) => setConfirmDeleteModal({...confirmDeleteModal, errorMessage: msg})
+            (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg })
         );
     };
 
-    const toggleRoleActivity = (id) => {
+    const toggleRoleActivity = (id, type) => {
         fetchAndHandle(
             () => locationAndRoleService.toggleActiveLocationRole(id ? id : confirmDeleteModal.id),
             "Role updated Successfully",
@@ -84,7 +84,8 @@ const Roles = (props) => {
             null,
             props.setToasterInfo,
             null,
-            (msg) => setConfirmDeleteModal({...confirmDeleteModal, errorMessage: msg})
+            (msg) => setConfirmDeleteModal(type ? { ...confirmDeleteModal, errorMessage: msg, show: true, type } :
+                { ...confirmDeleteModal, errorMessage: msg, show: true })
         );
     };
 
@@ -102,14 +103,14 @@ const Roles = (props) => {
         {
             key: "activeToggle",
             action: (id, status) => {
-                if (status === "ACTIVE") setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true, type: "disable"});
-                else toggleRoleActivity(id);
+                if (status === "ACTIVE") setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: "disable" });
+                else toggleRoleActivity(id, "activate");
             },
             condition: (status) => true,
         },
         {
             key: "Delete",
-            action: (id) => setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true, type: "delete"}),
+            action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: "delete" }),
             condition: (status) => true,
         },
     ];
@@ -126,6 +127,7 @@ const Roles = (props) => {
                         setModal={setConfirmDeleteModal}
                         onSubmit={confirmDeleteModal.type === "delete" ? deleteRole : toggleRoleActivity}
                         disable={confirmDeleteModal.type === "disable"}
+                        hideTitle={confirmDeleteModal.type === "activate"}
                     />
                     <NewRoleModal
                         setShowModal={setShowModal}
@@ -161,7 +163,7 @@ const Roles = (props) => {
                             </Button>
                         </div>
                     </div>
-                    <DashboardCard style={{marginTop: "20px"}}>
+                    <DashboardCard style={{ marginTop: "20px" }}>
                         <TabularInfo
                             title="Roles"
                             description="Tabular list for current role."
@@ -176,7 +178,7 @@ const Roles = (props) => {
                             setPageNo={setPageNo}
                             showSearch
                             search={filters.searchKey}
-                            setSearch={(val) => setFilters({...filters, searchKey: val})}
+                            setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                             showFilter
                             setShowFilterModal={setShowFilterModal}
                         />

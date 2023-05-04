@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {DashboardStyles} from "../../../styles/pages";
-import {WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal, DeleteModal, PaginationDropdown, EmployeeFilter} from "../../../components";
-import {memberService} from "../../../services";
-import {getEmployeeListing, fetchAndHandle, fetchAndHandlePage} from "../../../helpers";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { DashboardStyles } from "../../../styles/pages";
+import { WaawNoIndexHead, Button, DashboardCard, TabularInfo, InviteUserModal, DeleteModal, PaginationDropdown, EmployeeFilter } from "../../../components";
+import { memberService } from "../../../services";
+import { getEmployeeListing, fetchAndHandle, fetchAndHandlePage } from "../../../helpers";
 
 const Employees = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -76,11 +76,11 @@ const Employees = (props) => {
             null,
             props.setToasterInfo,
             null,
-            (msg) => setConfirmDeleteModal({...confirmDeleteModal, errorMessage: msg})
+            (msg) => setConfirmDeleteModal({ ...confirmDeleteModal, errorMessage: msg })
         );
     };
 
-    const toggleUserActivity = (id) => {
+    const toggleUserActivity = (id, type) => {
         fetchAndHandle(
             () => memberService.toggleActiveMember(id ? id : confirmDeleteModal.id),
             "User updated Successfully",
@@ -91,7 +91,8 @@ const Employees = (props) => {
             null,
             props.setToasterInfo,
             null,
-            (msg) => setConfirmDeleteModal({...confirmDeleteModal, errorMessage: msg})
+            (msg) => setConfirmDeleteModal(type ? { ...confirmDeleteModal, errorMessage: msg, show: true, type } :
+                { ...confirmDeleteModal, errorMessage: msg, show: true })
         );
     };
 
@@ -107,15 +108,15 @@ const Employees = (props) => {
                 if (status === "INVITED") {
                     fetchAndHandle(() => memberService.resendInvite(id), "Invite was successfully resent", null, setReloadData, props.setPageLoading, null, null, props.setToasterInfo);
                 } else {
-                    if (status === "ACTIVE") setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true, type: "disable"});
-                    else toggleUserActivity(id);
+                    if (status === "ACTIVE") setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: "disable" });
+                    else toggleUserActivity(id, "activate");
                 }
             },
             condition: (status) => true,
         },
         {
             key: "Delete",
-            action: (id) => setConfirmDeleteModal({...confirmDeleteModal, id: id, show: true, type: "delete"}),
+            action: (id) => setConfirmDeleteModal({ ...confirmDeleteModal, id: id, show: true, type: "delete" }),
             condition: (status) => true,
         },
     ];
@@ -132,6 +133,7 @@ const Employees = (props) => {
                         setModal={setConfirmDeleteModal}
                         onSubmit={confirmDeleteModal.type === "delete" ? deleteUser : toggleUserActivity}
                         disable={confirmDeleteModal.type === "disable"}
+                        hideTitle={confirmDeleteModal.type === "activate"}
                     />
                     <InviteUserModal
                         setShowModal={setShowModal}
@@ -151,7 +153,7 @@ const Employees = (props) => {
                             </Button>
                         </div>
                     </div>
-                    <DashboardCard style={{marginTop: "20px"}} className={DashboardStyles.employeeCard}>
+                    <DashboardCard style={{ marginTop: "20px" }} className={DashboardStyles.employeeCard}>
                         <TabularInfo
                             title="Employee Sheet"
                             description="Tabular list Employee details."
@@ -166,7 +168,7 @@ const Employees = (props) => {
                             setPageNo={setPageNo}
                             showSearch
                             search={filters.searchKey}
-                            setSearch={(val) => setFilters({...filters, searchKey: val})}
+                            setSearch={(val) => setFilters({ ...filters, searchKey: val })}
                             showFilter
                             setShowFilterModal={setShowFilterModal}
                         />
