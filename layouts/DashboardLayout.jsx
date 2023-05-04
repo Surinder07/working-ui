@@ -1,17 +1,18 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, Hamburger, FloatingClock, MobileNavigation } from "../components";
+import { ProfileImage, NotificationBell, SearchBar, LinkedImage, ConstantHamburger, FloatingClock, MobileNavigation } from "../components";
 import { footerIcons, SideNavInfo } from "../constants";
 import { LogoWhite, Favicon, Logo } from "../public/images";
 import { DashboardLayout } from "../styles/layouts";
 import { Logout, Settings } from "@mui/icons-material";
-import { userService } from "../services";
-import { joinClasses } from "../helpers";
+import { notificationService, userService } from "../services";
+import { fetchAndHandlePage, getNotificationListingForBell, joinClasses } from "../helpers";
 import { Close } from "@mui/icons-material";
 import { useRouter } from "next/router";
 
 const Dashboard = (props) => {
     const sideNavRef = useRef();
+    const router = useRouter();
 
     const [y, setY] = useState(window.scrollY);
     const [sideNavStyle, setSideNavStyle] = useState({});
@@ -19,7 +20,9 @@ const Dashboard = (props) => {
     const [userName, setUserName] = useState("...");
     const [sideNav, setSideNav] = useState([]);
     const [showRibbon, setShowRibbon] = useState(true);
-    const router = useRouter();
+    const [unreadNotifications, setUnreadNotifications] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    const [reloadNotifications, setReloadNotifications] = useState(false);
 
     const handleNavigation = useCallback(
         (e) => {
@@ -36,6 +39,11 @@ const Dashboard = (props) => {
         [y]
     );
 
+    const loadNotification = () => {
+        fetchAndHandlePage(() => notificationService.getAll(1, 5, {}, {}),
+            setNotifications, null, null, null, null, getNotificationListingForBell, null);
+    }
+
     useEffect(() => {
         setY(window.scrollY);
         window.addEventListener("scroll", handleNavigation);
@@ -50,6 +58,35 @@ const Dashboard = (props) => {
             setSideNav(SideNavInfo[props.user.role.toLowerCase()]);
         }
     }, [props.user]);
+
+    useEffect(() => {
+        if (props.stompMsg.id) {
+            notifications.pop();
+            setNotifications([{
+                internalId: props.stompMsg.id,
+                title: props.stompMsg.title,
+                type: props.stompMsg.type,
+                date: 'now',
+                read: props.stompMsg.read,
+                message: props.stompMsg.description
+            }].concat(notifications))
+            setUnreadNotifications(true);
+        }
+    }, [props.stompMsg]);
+
+    useEffect(() => loadNotification(), [])
+
+    useEffect(() => {
+        if (reloadNotifications) {
+            loadNotification();
+            setReloadNotifications(false);
+        }
+    }, [reloadNotifications]);
+
+    useEffect(() => {
+        const unRead = notifications.some(notification => !notification.read);
+        setUnreadNotifications(unRead);
+    }, [notifications]);
 
     return (
         <div className={joinClasses(DashboardLayout.dashboardPage, navOpen ? DashboardLayout.openNavDashboard : DashboardLayout.closeNavDashboard)}>
@@ -71,7 +108,7 @@ const Dashboard = (props) => {
                                 className={DashboardLayout.profileContainer}
                                 onClick={() => {
                                     if (props.screenType === 3) setNavOpen(false);
-                                    props.setPageInfo({...props.pageInfo, activeMenu: 'profile'})
+                                    props.setPageInfo({ ...props.pageInfo, activeMenu: 'profile' })
                                     router.push('/dashboard/user/preference')
                                 }}
                             >
@@ -169,7 +206,10 @@ const Dashboard = (props) => {
                             <NotificationBell
                                 setPageLoading={props.setPageLoading}
                                 setNotificationToast={props.setNotificationToast}
-                                stompMsg={props.stompMsg}
+                                data={notifications}
+                                setData={setNotifications}
+                                setReloadData={setReloadNotifications}
+                                unread={unreadNotifications}
                             />}
                         <h3 className={DashboardLayout.userName}>{userName}</h3>
                         <ProfileImage

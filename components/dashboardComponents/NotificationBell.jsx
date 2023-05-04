@@ -4,18 +4,15 @@ import { useRef, useState } from "react";
 import { NotificationsStyles } from "../../styles/elements";
 import Link from 'next/link';
 import { notificationService } from '../../services';
-import { fetchAndHandle, fetchAndHandlePage, getNotificationListingForBell, joinClasses, secureLocalStorage } from "../../helpers";
+import { fetchAndHandle, joinClasses } from "../../helpers";
 
 const NotificationBell = (props) => {
 
     const ref = useRef();
     const containerRef = useRef();
 
-    const [unread, setUnread] = useState(false);
     const [showNotifications, setShowNotifications] = useState(false);
     const [boxHeight, setBoxHeight] = useState(0);
-    const [data, setData] = useState([]);
-    const [reloadData, setReloadData] = useState(false);
 
     const handleClickOutside = (e) => {
         if (containerRef.current && !containerRef.current.contains(e.target)) {
@@ -23,16 +20,11 @@ const NotificationBell = (props) => {
         }
     }
 
-    const loadNotification = () => {
-        fetchAndHandlePage(() => notificationService.getAll(1, 5, {}, {}),
-            setData, null, null, null, null, getNotificationListingForBell, null);
-    }
-
     const markAsRead = (id, read) => {
         if (!read) {
             fetchAndHandle(() => notificationService.markAsRead(id), "", null, null, props.setPageLoading,
                 null, null, null, () => {
-                    let newData = data;
+                    let newData = props.data;
                     newData = newData.map(item => {
                         if (item.internalId === id) {
                             return {
@@ -41,33 +33,18 @@ const NotificationBell = (props) => {
                         }
                         return item;
                     })
-                    setData(newData);
+                    props.setData(newData);
                 })
         }
     }
 
     const markAllAsRead = () => {
-        fetchAndHandle(notificationService.markAllAsRead, null, null, setReloadData,
+        fetchAndHandle(notificationService.markAllAsRead, null, null, props.setReloadData,
             props.setPageLoading, null, null, null, null)
     }
 
     useEffect(() => {
-        if (props.stompMsg.id) {
-            data.pop();
-            setData([{
-                internalId: props.stompMsg.id,
-                title: props.stompMsg.title,
-                type: props.stompMsg.type,
-                date: 'now',
-                read: props.stompMsg.read,
-                message: props.stompMsg.description
-            }].concat(data))
-            setUnread(true);
-        }
-    }, [props.stompMsg])
-
-    useEffect(() => {
-        if (showNotifications) loadNotification();
+        if (showNotifications) props.setReloadData(true);
     }, [showNotifications])
 
     useEffect(() => {
@@ -75,23 +52,13 @@ const NotificationBell = (props) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-    }, [])
-
-    useEffect(() => {
-        if (reloadData) loadNotification();
-        setReloadData(false);
-    }, [reloadData])
-
-    useEffect(() => {
-        const unRead = data.some(notification => !notification.read);
-        setUnread(unRead);
-    }, [data])
+    }, []);
 
     useEffect(() => {
         if (ref.current) {
             setBoxHeight(ref.current.clientHeight + 100);
         }
-    }, [ref.current, data])
+    }, [ref.current, props.data])
 
     return (
         <div className={NotificationsStyles.container} ref={containerRef}>
@@ -101,7 +68,7 @@ const NotificationBell = (props) => {
                     setShowNotifications(!showNotifications);
                 }}
             />
-            {unread && <div className={NotificationsStyles.unreadInd}></div>}
+            {props.unread && <div className={NotificationsStyles.unreadInd}></div>}
             <div className={NotificationsStyles.notifications}
                 style={{ height: showNotifications ? `${boxHeight}px` : 0, border: showNotifications ? '1px solid #94CAE1' : 'none' }}>
                 <div className={NotificationsStyles.header}>
@@ -110,8 +77,8 @@ const NotificationBell = (props) => {
                 </div>
                 <div className={NotificationsStyles.content} ref={ref}>
                     {
-                        data.length > 0 ?
-                            data.map((notification, i) => (
+                        props.data.length > 0 ?
+                            props.data.map((notification, i) => (
                                 <div
                                     key={i}
                                     className={joinClasses(NotificationsStyles.notification, notification.read && NotificationsStyles.readNotification)}

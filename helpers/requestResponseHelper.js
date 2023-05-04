@@ -517,7 +517,6 @@ export const fetchAndHandlePage = (fetchFunction, setData, setTotalEntries, setT
             loaderFunction && loaderFunction(false);
         })
         .catch((e) => {
-            console.log(e)
             loaderFunction && loaderFunction(false)
         });
 }
