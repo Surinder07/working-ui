@@ -53,9 +53,10 @@ const TimesheetFilter = (props) => {
                 onClick={applyFilter}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Clock In Date</h4>
                 <EditableInput
                     type='date'
-                    label='Start Date'
+                    label='From'
                     value={startDate}
                     setValue={setStartDate}
                     error={errorDate}

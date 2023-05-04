@@ -110,9 +110,10 @@ const ReportsFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Gereration Date</h4>
                 <EditableInput
                     type="date"
-                    label="Gereration Date From"
+                    label="From"
                     value={startDate}
                     setValue={setStartDate}
                     error={errorDate}

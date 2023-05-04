@@ -71,6 +71,7 @@ const Dashboard = (props) => {
                                 className={DashboardLayout.profileContainer}
                                 onClick={() => {
                                     if (props.screenType === 3) setNavOpen(false);
+                                    props.setPageInfo({...props.pageInfo, activeMenu: 'profile'})
                                     router.push('/dashboard/user/preference')
                                 }}
                             >

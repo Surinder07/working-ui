@@ -53,9 +53,10 @@ const NotificationFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Notification Date</h4>
                 <EditableInput
                     type="date"
-                    label="Date"
+                    label="From"
                     value={startDate}
                     setValue={setStartDate}
                     error={errorDate}

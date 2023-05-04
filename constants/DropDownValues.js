@@ -126,3 +126,9 @@ export const notificationType = stringToDropdownObj([
 export const notificationStatus = stringToDropdownObj([
     'Read', 'Unread'
 ], true);
+
+export const shiftTypeOptions = {
+    admin: stringToDropdownObj(['All', 'Upcoming', 'Todays'], true),
+    manager: stringToDropdownObj(['All', 'Upcoming', 'Todays'], true),
+    employee: stringToDropdownObj(['All', 'Upcoming'], true)
+}

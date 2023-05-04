@@ -3,7 +3,7 @@ import { FilterModal } from "../base";
 import { DashboardModalStyles } from "../../../styles/elements";
 import { EditableInput } from "../../inputComponents";
 import { combineBoolean, fetchAndHandleGet } from "../../../helpers";
-import { batchStatusOptions, shiftStatusOptions } from "../../../constants";
+import { batchStatusOptions, shiftStatusOptions, shiftTypeOptions } from "../../../constants";
 import { dropdownService } from "../../../services";
 const ShiftsFilter = (props) => {
 
@@ -11,6 +11,7 @@ const ShiftsFilter = (props) => {
     const [locations, setLocations] = useState([]);
     const [roles, setRoles] = useState([]);
     //-----------------------------
+    const [shiftType, setShiftType] = useState("ALL");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [roleId, setRoleId] = useState("");
@@ -44,6 +45,7 @@ const ShiftsFilter = (props) => {
     const clearAllFilter = () => {
         setStartDate("")
         setEndDate("")
+        setShiftType("ALL")
         setRoleId("")
         setLocationId("")
         setShiftStatus("")
@@ -64,7 +66,7 @@ const ShiftsFilter = (props) => {
 
     const applyFilters = () => {
         if (!isError()) {
-            props.setFilters({ ...props.filters, startDate, endDate, locationId, roleId, shiftStatus, batchStatus });
+            props.setFilters({ ...props.filters, startDate, endDate, shiftType, locationId, roleId, shiftStatus, batchStatus });
             return true;
         } else return false
     }
@@ -80,9 +82,10 @@ const ShiftsFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Shift Date</h4>
                 <EditableInput
                     type="date"
-                    label="Shifts From"
+                    label="From"
                     value={startDate}
                     setValue={setStartDate}
                     error={errorDate}
@@ -98,6 +101,19 @@ const ShiftsFilter = (props) => {
                     setError={setErrorDate}
                     editOn
                 />
+                {
+                    props.role &&
+                    <EditableInput
+                        type="dropdown"
+                        label="Shift Group"
+                        placeholder="Shift Group"
+                        value={shiftType}
+                        setValue={setShiftType}
+                        options={shiftTypeOptions[props.role.toLowerCase()]}
+                        className={DashboardModalStyles.singleColumn}
+                        editOn
+                    />
+                }
                 {
                     props.role === 'ADMIN' &&
                     <EditableInput

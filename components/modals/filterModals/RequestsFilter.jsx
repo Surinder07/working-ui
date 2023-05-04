@@ -104,9 +104,10 @@ const RequestsFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
+                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Initiation Date</h4>
                 <EditableInput
                     type="date"
-                    label="Initiation Date"
+                    label="From"
                     value={props.tabularType === 'emp' ? startDate : myStartDate}
                     setValue={props.tabularType === 'emp' ? setStartDate : setMyStartDate}
                     error={props.tabularType === 'emp' ? errorDate : errorMyDate}
