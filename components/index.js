@@ -4,6 +4,7 @@ import LinkedImage from './LinkedImage';
 import PasswordPolicy from './PasswordPolicy';
 import Toaster from './Toaster';
 import LinkExpired from './LinkExpired';
+import ErrorBoundary from './ErrorBoundary';
 
 export {
     Card,
@@ -11,7 +12,8 @@ export {
     LinkedImage,
     PasswordPolicy,
     Toaster,
-    LinkExpired
+    LinkExpired,
+    ErrorBoundary
 }
 
 export * from './dashboardComponents';

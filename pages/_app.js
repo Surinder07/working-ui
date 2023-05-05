@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/globals.css";
 import router from "next/router";
-import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, StompSocket } from "../components";
+import { WaawHead, TopLoader, LoadingScreen, NotificationToaster, Toaster, StompSocket, ErrorBoundary } from "../components";
 import { secureLocalStorage, getActiveMenuFromPath, getPageLayoutFromPath, checkActiveTimer, startTimer, stopTimer, refreshTimer } from "../helpers";
 import { userService } from "../services";
 import { NavFooterPageLayout, DashboardLayout } from "../layouts";
@@ -203,7 +203,7 @@ function MyApp({ Component, pageProps }) {
                 token={token}
                 setToken={setToken}
                 pageInfo={pageInfo}
-                setPageInfo={setPageInfo}
+                setPageInfo={pageInfo}
                 setToasterInfo={setToasterInfo}
                 setAllowedRoles={setAllowedRoles}
                 setPageLoading={setPageLoading}
@@ -228,37 +228,46 @@ function MyApp({ Component, pageProps }) {
             <WaawHead />
             <div>
                 <Toaster error={toasterInfo.error} title={toasterInfo.title} message={toasterInfo.message} show={showToaster} setShowToaster={setShowToaster} />
-                <NotificationToaster title={notificationToast.title} description={notificationToast.message} show={notificationToast.show} setToast={setNotificationToast} />
-                {pageLoading && <LoadingScreen />}
-                <TopLoader pageLoading={pageLoading} />
-                {pageInfo.pageView === "loggedOut" && <NavFooterPageLayout pageInfo={pageInfo}>{getComponentForPages()}</NavFooterPageLayout>}
-                {pageInfo.pageView === "dashboard" && (
-                    <DashboardLayout
-                        pageInfo={pageInfo}
-                        setPageInfo={setPageInfo}
-                        screenType={screenType}
-                        user={user}
-                        setToasterInfo={setToasterInfo}
-                        setPageLoading={setPageLoading}
-                        stompMsg={stompMsg.notification}
-                        clockIn={clockIn}
-                        clockOut={clockOut}
-                        timer={timer}
-                    >
-                        {
-                            (token !== null) &&
-                            <StompSocket
-                                token={token}
-                                setNotificationToast={setNotificationToast}
-                                stompMsg={stompMsg}
-                                setStompMsg={setStompMsg}
-                                setUser={setUser}
-                            />
-                        }
-                        {getComponentForPages()}
-                    </DashboardLayout>
-                )}
-                {pageInfo.pageView === "fullPage" && getComponentForPages()}
+                <ErrorBoundary>
+                    <NotificationToaster title={notificationToast.title} description={notificationToast.message} show={notificationToast.show} setToast={setNotificationToast} />
+                    {pageLoading && <LoadingScreen />}
+                    <TopLoader pageLoading={pageLoading} />
+                    {
+                        pageInfo.pageView === "loggedOut" &&
+                        <NavFooterPageLayout
+                            pageInfo={pageInfo}
+                        >
+                            {getComponentForPages()}
+                        </NavFooterPageLayout>
+                    }
+                    {pageInfo.pageView === "dashboard" && (
+                        <DashboardLayout
+                            pageInfo={pageInfo}
+                            setPageInfo={setPageInfo}
+                            screenType={screenType}
+                            user={user}
+                            setToasterInfo={setToasterInfo}
+                            setPageLoading={setPageLoading}
+                            stompMsg={stompMsg.notification}
+                            clockIn={clockIn}
+                            clockOut={clockOut}
+                            timer={timer}
+                        >
+                            {
+                                (token !== null) &&
+                                <StompSocket
+                                    token={token}
+                                    setNotificationToast={setNotificationToast}
+                                    stompMsg={stompMsg}
+                                    setStompMsg={setStompMsg}
+                                    setUser={setUser}
+                                />
+                            }
+                            {getComponentForPages()}
+                        </DashboardLayout>
+                    )}
+                    {pageInfo.pageView === "fullPage" && getComponentForPages()}
+                </ErrorBoundary>
             </div>
         </React.Fragment>
     );
