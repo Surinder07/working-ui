@@ -287,7 +287,7 @@ export const getPaymentListing = (data) => {
             total: `${payment.totalAmount} ${payment.currency}`,
             type: payment.transactionType.replace('_', ' '),
             invoiceDate: payment.invoiceDate,
-            invoiceFor: payment.dateRange,
+            invoiceFor: { text: payment.dateRange, dateRange: true },
             dueDate: payment.dueDate,
             paymentDate: payment.paymentDate,
             status: {

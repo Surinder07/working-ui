@@ -83,7 +83,7 @@ const NotificationBell = (props) => {
                                     key={i}
                                     className={joinClasses(NotificationsStyles.notification, notification.read && NotificationsStyles.readNotification)}
                                     style={{
-                                        borderBottom: data.length !== i + 1 ? '1.5px solid #999998' : 'none'
+                                        borderBottom: props.data.length !== i + 1 ? '1.5px solid #999998' : 'none'
                                     }}
                                     onClick={() => markAsRead(notification.internalId, notification.read)}>
                                     {!notification.read && <div className={NotificationsStyles.unreadInd}></div>}

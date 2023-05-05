@@ -22,19 +22,6 @@ const Cell = (props) => {
         }
     }, [ref.current, props.data]);
 
-    const getColor = () => {
-        if (props.data) {
-            switch (props.data.status) {
-                case 'ok':
-                    return '#29CC97';
-                case 'warn':
-                    return '#E4BE3D';
-                case 'bad':
-                    return '#CC5252';
-            }
-        }
-    }
-
     useEffect(() => {
         if (props.data && props.data.status) {
             setColor(getColorByStatus(props.data.status))
@@ -48,7 +35,7 @@ const Cell = (props) => {
 
     const getElement = () => {
         if (props.data) {
-            if (!props.data.displayType) {
+            if (!props.data.displayType && !props.data.dateRange) {
                 return <p className={joinClasses(props.data.length > 25 && CellStyles.breakMobile)}>{props.data}</p>
             } else if (props.data.displayType === 'comment') {
                 return <div
@@ -70,6 +57,12 @@ const Cell = (props) => {
                     <p className={CellStyles.comment}>{props.data.text}</p>
                     <p ref={ref} style={activeStyle} className={CellStyles.fullComment}>{props.data.text}</p>
                 </div>
+            } else if (props.data.dateRange) {
+                const ranges = props.data.text.split('-');
+                return <>
+                    <p style={{margin: 0}}>{ranges[0].trim()} -</p>
+                    <p style={{margin: 0}}>{ranges[1].trim()}</p>
+                </>
             } else {
                 return <p className={CellStyles.status} style={statusStyle}>{props.data.text}</p>
             }
@@ -79,7 +72,7 @@ const Cell = (props) => {
     }
 
     return (
-        <div className={`${props.className}`} style={props.style}>
+        <div className={`${props.className}`} style={{...props.style, ...(props.data && props.data.dateRange) ? {flexDirection: 'column'} : {}}}>
             {getElement()}
         </div>
     )
