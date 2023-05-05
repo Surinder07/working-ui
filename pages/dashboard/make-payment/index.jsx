@@ -20,7 +20,7 @@ const MakePayment = (props) => {
             activeSubMenu: 'none'
         })
         props.setPageLoading(true);
-        paymentService.getPendingInvoice()
+        paymentService.getPendingPayment()
             .then(res => {
                 if (res.error) {
                     router.push('/dashboard');

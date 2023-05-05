@@ -269,6 +269,7 @@ const Dashboard = (props) => {
                 role={props.user.role}
                 pageInfo={props.pageInfo}
                 setPageInfo={props.setPageInfo}
+                navOpen={navOpen}
                 setNavOpen={setNavOpen}
             />
         </div>

@@ -82,25 +82,30 @@ const ShiftsFilter = (props) => {
                 onClick={applyFilters}
                 clearAllFilter={clearAllFilter}
             >
-                <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Shift Date</h4>
-                <EditableInput
-                    type="date"
-                    label="From"
-                    value={startDate}
-                    setValue={setStartDate}
-                    error={errorDate}
-                    setError={setErrorDate}
-                    editOn
-                />
-                <EditableInput
-                    type="date"
-                    label="To"
-                    value={endDate}
-                    setValue={setEndDate}
-                    error={errorDate}
-                    setError={setErrorDate}
-                    editOn
-                />
+                {
+                    shiftType === 'ALL' &&
+                    <>
+                        <h4 className={DashboardModalStyles.singleColumn} style={{ width: '100%', textAlign: 'center', margin: 0, color: '#535255' }}>Shift Date</h4>
+                        <EditableInput
+                            type="date"
+                            label="From"
+                            value={startDate}
+                            setValue={setStartDate}
+                            error={errorDate}
+                            setError={setErrorDate}
+                            editOn
+                        />
+                        <EditableInput
+                            type="date"
+                            label="To"
+                            value={endDate}
+                            setValue={setEndDate}
+                            error={errorDate}
+                            setError={setErrorDate}
+                            editOn
+                        />
+                    </>
+                }
                 {
                     props.role &&
                     <EditableInput
@@ -109,7 +114,7 @@ const ShiftsFilter = (props) => {
                         placeholder="Shift Group"
                         value={shiftType}
                         setValue={setShiftType}
-                        options={shiftTypeOptions[props.role.toLowerCase()]}
+                        options={shiftTypeOptions}
                         className={DashboardModalStyles.singleColumn}
                         editOn
                     />

@@ -5,7 +5,7 @@ import { paymentService } from "../../../services";
 import { fetchAndHandlePage, getPaymentListing } from "../../../helpers";
 
 const PaymentHistory = (props) => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);

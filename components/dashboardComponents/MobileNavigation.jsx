@@ -88,7 +88,7 @@ const MobileNavigation = (props) => {
             <div
                 onClick={() => {
                     props.setPageInfo({ ...props.pageInfo, activeMenu: 'MENU' })
-                    props.setNavOpen(true)
+                    props.setNavOpen(!props.navOpen)
                 }}
                 className={joinClasses(
                     MobileNavigationStyles.iconContainer,

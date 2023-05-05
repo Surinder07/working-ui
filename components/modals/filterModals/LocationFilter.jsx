@@ -25,7 +25,7 @@ const LocationFilter = (props) => {
 
     const applyFilters = () => {
         props.setFilters({
-            active: activeStatus === '' ? '' : activeStatus === 'Active',
+            active: activeStatus === '' ? '' : activeStatus === 'ACTIVE',
             timezone
         })
         props.setShowModal(false);
