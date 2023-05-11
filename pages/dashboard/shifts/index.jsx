@@ -185,6 +185,7 @@ const Shifts = (props) => {
                             setToasterInfo={props.setToasterInfo}
                             setReloadData={setReloadData}
                             role={props.user.role}
+                            timezone={props.user.organizationTimezone}
                             setPageLoading={props.setPageLoading}
                         />
                         <ShiftsFilter

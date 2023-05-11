@@ -4,7 +4,8 @@ import { DashboardModalStyles } from "../../styles/elements";
 import { Checkbox, EditableInput } from "../inputComponents";
 import Tabs from "../dashboardComponents/Tabs";
 import { dropdownService, shiftsService } from "../../services";
-import { combineBoolean, fetchAndHandle, fetchAndHandleGet, newShiftRequestBody, validateForEmptyArray, validateForEmptyField, validateForTime } from "../../helpers";
+import { combineBoolean, fetchAndHandle, fetchAndHandleGet, joinClasses, newShiftRequestBody, validateForEmptyArray, validateForEmptyField, validateForTime } from "../../helpers";
+import { Warning } from "@mui/icons-material";
 
 const NewShiftModal = (props) => {
     //------------- Dropdown values
@@ -136,6 +137,10 @@ const NewShiftModal = (props) => {
                 setSelected={setFormType}
                 size="big"
             />
+            <p className={joinClasses(DashboardModalStyles.warnMessage, DashboardModalStyles.singleColumn)}>
+                <Warning className={DashboardModalStyles.warnIcon} />
+                {`Please Note, Shift will be assigned according to your timezone (${props.timezone})`}
+            </p>
             <EditableInput
                 type="date"
                 value={startDate}

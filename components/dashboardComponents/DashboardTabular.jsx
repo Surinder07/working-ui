@@ -25,7 +25,7 @@ const DashboardTabular = (props) => {
                 setTotalPages, null, null, getPaymentListing, props.role);
         } else if (props.role === 'MANAGER') {
             setTitle('Schedule shift for today');
-            setDescription('Tabular list of all shifts assigned to employees for today');
+            setDescription('Tabular list of all shifts released to employees for today');
             fetchAndHandlePage(() => dashboardService.getShiftData(pageNo, 5), setData, setTotalEntries,
                 setTotalPages, null, null, getSingleShiftsListing, props.role);
         } else {
