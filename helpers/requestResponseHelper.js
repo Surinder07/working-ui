@@ -147,7 +147,7 @@ export const getShiftsListing = (data) => {
             outTime: subData.end.date + " " + subData.end.time,
             comments: {
                 displayType: 'comment',
-                text: subData.notes
+                text: subData.comments
             },
             status: {
                 text: subData.shiftStatus,
