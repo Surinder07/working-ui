@@ -153,7 +153,7 @@ const nextConfig = {
             customerSupport: "waaw.management@waaw.ca",
         },
         firebase: {
-            apiKey: "AIzaSyC9hb4US1VRHJqcYE4yZ9jQeOM6h6vJycE",
+            apiKey: "",
             authDomain: "waaw-waitlist.firebaseapp.com",
             projectId: "waaw-waitlist",
             storageBucket: "waaw-waitlist.appspot.com",
